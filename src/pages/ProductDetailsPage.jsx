@@ -3,8 +3,7 @@ import ProductDetailsComponents from '../components/ProductDetailsComponents'
 
 const ProductDetailsPage = () => {
     return (
-        <div>
-            Trang chu
+        <div className='produc-details'>
             <ProductDetailsComponents />
         </div>
     )

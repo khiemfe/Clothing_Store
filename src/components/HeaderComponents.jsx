@@ -11,8 +11,9 @@ import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
 // import Dropdown from 'react-bootstrap/Dropdown';
 
-import { FiSearch, FiCamera, FiHeart } from "react-icons/fi";
+import { FiSearch, FiHeart } from "react-icons/fi";
 import { BsCart2 } from "react-icons/bs";
+import CameraComponents from './CameraComponents';
 // import { FaRegUser } from "react-icons/fa";
 
 const HeaderComponents = () => {
@@ -40,7 +41,7 @@ const HeaderComponents = () => {
                     </Col>
                     <Col xxl={6} xl={6} className='right '>
                         <Form className="d-flex form align-items_center">
-                            <a href="/webcam"><FiCamera className='icon camera' /></a>
+                            <CameraComponents />
                             <div className='search'>
                                 <Form.Control
                                     type="search"

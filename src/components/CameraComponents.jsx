@@ -2,6 +2,7 @@ import React from 'react'
 import Webcam from 'react-webcam';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { FiCamera } from "react-icons/fi";
 
 // const CameraComponents = () => {
 //     const webcamRef = React.useRef(null);
@@ -37,8 +38,6 @@ import Modal from 'react-bootstrap/Modal';
 const CameraComponents = () => {
 
     const webcamRef = React.useRef(null);
-    const [imgSrc, setImgSrc] = React.useState(null);
-    
     const [show, setShow] = React.useState(false);
     const [showClose, setShowClose] = React.useState(false);
     const capture = React.useCallback(() => {
@@ -62,8 +61,8 @@ const CameraComponents = () => {
   
     return (
       <>
-        <Button variant="primary" onClick={handleShow}>
-          Launch Modal Webcam
+        <Button variant="" onClick={handleShow} className='btn-camera'>
+            <FiCamera className='icon camera' />
         </Button>
         <Modal show={show} onHide={handleClose} size="lg">
           <Modal.Header closeButton={showClose}>
@@ -79,19 +78,12 @@ const CameraComponents = () => {
             />
           </Modal.Body>
           
-
-          {/* <Webcam className='cam'
-            audio={false}
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-          /> */}
           <button className='btn-capture' onClick={capture}>Capture photo</button>
             {show && (
                 <img
                 src={show}
                 />
             )}
-
 
             <Modal.Footer>
                 {showClose && (
