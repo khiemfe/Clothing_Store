@@ -1,0 +1,200 @@
+@import 'variables';
+
+.header {
+    padding: 10px 50px;
+    border-bottom: 1px solid #ccc;
+
+    .container {  
+        // width: 100%; 
+        max-width: none;    
+    }
+
+    .logo {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+    }
+
+    .row {
+        width: 100%;
+    }
+
+    .center {
+        font-size: 1.6rem;
+        text-transform: uppercase;
+        font-weight: bold;
+
+        .item {
+            padding: 0 15px;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .item:last-child {
+            color: red;
+        }
+    }
+
+    .right {
+        .form {
+            justify-content: flex-end;
+
+            .icon {
+                color: black;
+                font-size: 2.6rem;
+                cursor: pointer;
+            }
+            
+            .icon .camera {
+    
+            }
+
+            .search {
+                display: flex;
+                width: 50%;
+                margin: 0 15px;
+
+                input {
+                    padding: 8px;
+                    font-size: 1.4rem;
+                }
+
+                button {
+                    padding: 10px 15px;
+                    font-size: 1.8rem;
+                    border-color: #000;
+                    color: #000;
+                }
+            }
+
+            .btn-cart {
+                margin: 0 10px;
+                background-color: transparent;
+                border: none;
+
+                .badge.bg-warning {
+                    right: -30px;
+                    top: -8px;
+                    font-size: 0.8rem;
+                }
+            }
+
+            .btn-sign {
+                font-size: 1.4rem;
+                
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+.home {
+    padding: 0 70px;
+    margin-bottom: 30px;
+    
+    .content {
+        display: flex;
+        margin: 20px 0;
+
+        ._navbar {
+            padding-left: 0;
+        }
+
+        .nav {
+            // background-color: #eee;
+            border: 1px solid #777;
+            border-radius: 15px;
+            padding: 10px 20px;
+
+            .nav-link {
+                font-size: 1.8rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                color: #333;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .slide {
+        width: 800px;
+        overflow: hidden;
+        height: 400px;
+        margin: 0 auto;
+        display: block;
+
+        .item {
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .slick-arrow {
+            z-index: 10;
+
+            &.slick-prev {
+                left: 12px;
+            }
+            &.slick-next {
+                right: 12px;
+            }
+        }
+
+        .slick-dots {
+            bottom: 4px;
+        }
+    }
+
+    .product {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 20px 0;
+
+        .row {
+            width: 100%;
+        }
+
+        .card {
+            // margin: 0 15px;
+            margin-top: 10px;
+            width: 100% !important;
+
+            .card-title {
+                margin-top: 5px;
+                font-size: 1.6rem;
+                font-weight: 400;
+            }
+
+            .price-heart {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: 8px 0;
+
+                h3 {
+                    margin: 0;
+                }
+
+                svg {
+                    font-size: 2rem;
+                }
+            }
+        }
+    }
+
+    .see-more {
+        display: flex;
+        justify-content: center;
+
+        .btn {
+            font-size: 2rem;
+        }
+    }
+}
+
