@@ -6,6 +6,7 @@ import TypeProductPage from '../pages/TypeProductPage';
 import SignUpPage from '../pages/SignUpPage';
 import SignInPage from '../pages/SignInPage';
 import ProductDetailsPage from '../pages/ProductDetailsPage';
+import WebcamPage from '../pages/WebcamPage';
 
 export const routes = [
     {
@@ -41,6 +42,11 @@ export const routes = [
     {
         path: '/product-details',
         page: ProductDetailsPage,
+        isShowHeader: true,
+    },
+    {
+        path: '/webcam',
+        page: WebcamPage,
         isShowHeader: true,
     },
     {

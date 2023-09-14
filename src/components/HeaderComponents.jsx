@@ -40,7 +40,7 @@ const HeaderComponents = () => {
                     </Col>
                     <Col xxl={6} xl={6} className='right '>
                         <Form className="d-flex form align-items_center">
-                            <FiCamera className='icon camera' />
+                            <a href="/webcam"><FiCamera className='icon camera' /></a>
                             <div className='search'>
                                 <Form.Control
                                     type="search"
