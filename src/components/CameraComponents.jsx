@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FiCamera } from "react-icons/fi";
 
+
 // const CameraComponents = () => {
 //     const webcamRef = React.useRef(null);
 //     const [imgSrc, setImgSrc] = React.useState(null);
@@ -80,14 +81,19 @@ const CameraComponents = () => {
           
           <button className='btn-capture' onClick={capture}>Capture photo</button>
             {show && (
-                <img
-                src={show}
-                />
+                <div>
+                    <img
+                    src={show}
+                    />
+                    <div className='webcam'>
+                    <a className='Ok' href="/propose">OK</a>
+                  </div>
+                </div>
             )}
 
             <Modal.Footer>
                 {showClose && (
-                <Button variant="secondary" onClick={handleClose}>
+                <Button className='close' variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
                 )}

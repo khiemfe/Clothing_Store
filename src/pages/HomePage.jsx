@@ -21,7 +21,7 @@ const HomePage = () => {
                     <div className='slide-product'>
                         <div className='slide'><SlideComponents arrImages={[slide1, slide2, slide3]}/></div>
                         <div className='product'>
-                            <CardComponents />
+                            <a href="/product-details"><CardComponents /></a>
                         </div>
                         <div className='see-more'>
                             <Button variant="outline-primary">Xem thêm</Button>{' '}

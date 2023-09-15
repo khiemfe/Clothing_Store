@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .color-red {
   color: red; }
 
@@ -107,6 +108,8 @@
     display: flex;
     flex-wrap: wrap;
     margin: 20px 0; }
+    .home .product a {
+      text-decoration: none; }
     .home .product .row {
       width: 100%; }
     .home .product .card {
@@ -118,6 +121,7 @@
       .home .product .card .image {
         overflow: hidden; }
         .home .product .card .image .card-img-top {
+          height: 300px !important;
           transition: all .2s ease-in-out; }
           .home .product .card .image .card-img-top:hover {
             transform: scale(1.2); }
@@ -142,5 +146,72 @@
     .home .see-more .btn {
       font-size: 2rem; }
 
-.btn-capture {
-  width: 70px; }
+.img-đetails {
+  width: 300px;
+  cursor: pointer; }
+
+.modal-dialog .btn-capture {
+  width: 100px;
+  margin: auto;
+  border-radius: 10px;
+  font-size: 1.4rem; }
+  .modal-dialog .btn-capture:hover {
+    background-color: #ddd; }
+
+.modal-dialog .webcam {
+  text-align: center; }
+  .modal-dialog .webcam .Ok {
+    font-size: 1.6rem;
+    text-decoration: none;
+    color: #000;
+    background-color: #ddd;
+    padding: 5px 10px;
+    border-radius: 10px; }
+
+.modal-dialog .close {
+  font-size: 1.6rem !important; }
+
+.card-propose {
+  padding: 50px;
+  position: relative; }
+  .card-propose h2 {
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2rem;
+    text-transform: uppercase; }
+  .card-propose .img-propose {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover; }
+  .card-propose .card {
+    margin-top: 10px;
+    width: 100% !important;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-align: center; }
+    .card-propose .card .image {
+      overflow: hidden; }
+      .card-propose .card .image .card-img-top {
+        height: 350px !important;
+        transition: all .2s ease-in-out; }
+        .card-propose .card .image .card-img-top:hover {
+          transform: scale(1.2); }
+    .card-propose .card .card-title {
+      margin-top: 5px;
+      font-size: 1.6rem;
+      font-weight: 400;
+      height: 40px;
+      justify-content: center; }
+    .card-propose .card .price-heart {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 12px 0; }
+      .card-propose .card .price-heart h3 {
+        margin: 0; }
+      .card-propose .card .price-heart svg {
+        font-size: 2rem; }

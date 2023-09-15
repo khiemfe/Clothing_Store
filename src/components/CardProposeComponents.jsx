@@ -5,7 +5,7 @@ import { FiHeart } from "react-icons/fi";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-const CardComponents = () => {
+const CardProposeComponents = () => {
     const arrProduct = [
         {
             image: "https://img.trolymuasam.com/wp-content/uploads/2022/07/07e358b0e79c6cd146ae18b0fddc0e13.jpg",
@@ -76,4 +76,4 @@ const CardComponents = () => {
     )
 }
 
-export default CardComponents
+export default CardProposeComponents
