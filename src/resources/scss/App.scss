@@ -40,6 +40,17 @@
     .right {
         .form {
             justify-content: flex-end;
+            position: relative;
+
+            .img-propose {
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                border-radius: 50%;
+                bottom: -150px;
+                right: -20px;
+            }
 
             .icon {
                 color: black;
@@ -49,9 +60,15 @@
             
             .btn-camera {
                 border: none;
+
+                
                 &:active {
                     border: none !important;
                 }
+            }
+            
+            .img-header {
+                display: none;
             }
 
             .search {
@@ -238,6 +255,13 @@
 
 .modal-dialog {
 
+    .modal-body {
+        
+        video {
+            width: 100%;
+        }
+    }
+
     .btn-capture {
         width: 100px;
         margin: auto;
@@ -249,23 +273,21 @@
         }
     }
 
-    .webcam {
-        text-align: center;
-        .Ok {
-            font-size: 1.6rem;
-            text-decoration: none;
-            color: #000;
-            background-color: #ddd;
-            padding: 5px 10px;
-            border-radius: 10px;
-        }
-    }
+    // .webcam {
+    //     text-align: center;
+    //     .Ok {
+    //         font-size: 1.6rem;
+    //         text-decoration: none;
+    //         color: #000;
+    //         background-color: #ddd;
+    //         padding: 5px 10px;
+    //         border-radius: 10px;
+    //     }
+    // }
     
-    .close {
+    .ok-pripose {
         font-size: 1.6rem !important;
     }
-    
-
 }
 
 
@@ -274,6 +296,10 @@
 .card-propose {
     padding: 50px;
     position: relative;
+
+    .icon.camera {
+        // display: none;
+    }
 
     h2 {
         margin-bottom: 30px;

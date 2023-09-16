@@ -9,6 +9,9 @@
 .transparent {
   color: transparent; }
 
+.hidden {
+  display: none; }
+
 .header {
   padding: 10px 50px;
   border-bottom: 1px solid #ccc; }
@@ -31,7 +34,16 @@
     .header .center .item:last-child {
       color: red; }
   .header .right .form {
-    justify-content: flex-end; }
+    justify-content: flex-end;
+    position: relative; }
+    .header .right .form .img-propose {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      bottom: -150px;
+      right: -20px; }
     .header .right .form .icon {
       color: black;
       font-size: 2.6rem;
@@ -40,6 +52,8 @@
       border: none; }
       .header .right .form .btn-camera:active {
         border: none !important; }
+    .header .right .form .img-header {
+      display: none; }
     .header .right .form .search {
       display: flex;
       width: 50%;
@@ -150,6 +164,9 @@
   width: 300px;
   cursor: pointer; }
 
+.modal-dialog .modal-body video {
+  width: 100%; }
+
 .modal-dialog .btn-capture {
   width: 100px;
   margin: auto;
@@ -158,17 +175,7 @@
   .modal-dialog .btn-capture:hover {
     background-color: #ddd; }
 
-.modal-dialog .webcam {
-  text-align: center; }
-  .modal-dialog .webcam .Ok {
-    font-size: 1.6rem;
-    text-decoration: none;
-    color: #000;
-    background-color: #ddd;
-    padding: 5px 10px;
-    border-radius: 10px; }
-
-.modal-dialog .close {
+.modal-dialog .ok-pripose {
   font-size: 1.6rem !important; }
 
 .card-propose {

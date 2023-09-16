@@ -52,7 +52,7 @@ const CardProposeComponents = () => {
         <Row>
             {arrProduct.map((product, index) => {
                 return (
-                    <Col xxl={3} xl={3}>
+                    <Col xxl={3} xl={3} key={index}>
                         <Card style={{ width: '18rem' }}>
                             <div className='image'>
                                 <Card.Img variant="top" src={product.image} />
