@@ -103,9 +103,10 @@ const CameraComponents = () => {
           </Modal.Body>
           
           <button className='btn-capture' onClick={capture}>Capture photo</button>
-            {show!=true && (
+            {show!==true && (
                 <div>
                     <img 
+                      alt=''
                       ref={countRef}
                       src={show.toString()}
                     />

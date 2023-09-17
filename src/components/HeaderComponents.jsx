@@ -14,10 +14,17 @@ import Badge from 'react-bootstrap/Badge';
 import { FiSearch, FiHeart } from "react-icons/fi";
 import { BsCart2 } from "react-icons/bs";
 import CameraComponents from './CameraComponents';
+import { useNavigate } from 'react-router-dom';
 // import { FaRegUser } from "react-icons/fa";
 
 const HeaderComponents = () => {
     const item = ['nam', 'nữ', 'new', 'best', 'sale đồng giá']
+
+    const navigate = useNavigate()
+    const handleNavigateLogin = () => {
+        navigate('/sign-in')
+    }
+
     return (
         <Navbar className=" justify-content-between header ">
             <Container>
@@ -58,7 +65,7 @@ const HeaderComponents = () => {
                                 <Badge bg="warning">9</Badge>
                                 <BsCart2 className='icon cart'/>
                             </Button>
-                            <Button className='btn-sign' variant="">Đăng nhập <br /> Đăng ký</Button>{' '}
+                            <Button onClick={handleNavigateLogin} className='btn-sign' variant="">Đăng nhập <br /> Đăng ký</Button>{' '}
                             {/* <Dropdown>
                                 <Dropdown.Toggle variant="" id="dropdown-basic">
                                     <FaRegUser className='icon'/>

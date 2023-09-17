@@ -1,6 +1,6 @@
 import React from 'react'
 import CardProposeComponents from './CardProposeComponents'
-import CameraComponents from './CameraComponents'
+// import CameraComponents from './CameraComponents'
 import { linkSrc } from '../components/CameraComponents'
 
 const ProposeComponents = () => {

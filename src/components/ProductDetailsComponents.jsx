@@ -262,6 +262,8 @@ const ProductDetailsComponents = () => {
         img4 : "https://levents.asia/wp-content/uploads/2022/06/BASIC-ID-TEE-D4-1-scaled.jpg"
     })
 
+    console.log(setImages)
+
     const [activeImg, setActiveImage] = useState(images.img1)
 
     const [amount, setAmount] = useState(1);
