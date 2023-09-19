@@ -7,6 +7,7 @@ import SignUpPage from '../pages/SignUpPage';
 import SignInPage from '../pages/SignInPage';
 import ProductDetailsPage from '../pages/ProductDetailsPage';
 import ProposePage from '../pages/ProposePage';
+import ProfilePage from '../pages/ProfilePage';
 
 export const routes = [
     {
@@ -47,6 +48,11 @@ export const routes = [
     {
         path: '/propose',
         page: ProposePage,
+        isShowHeader: true,
+    },
+    {
+        path: '/profile-user',
+        page: ProfilePage,
         isShowHeader: true,
     },
     {

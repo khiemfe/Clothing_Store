@@ -135,6 +135,7 @@
       .home .product .card .image {
         overflow: hidden; }
         .home .product .card .image .card-img-top {
+          width: 100%;
           height: 300px !important;
           transition: all .2s ease-in-out; }
           .home .product .card .image .card-img-top:hover {
@@ -222,3 +223,6 @@
         margin: 0; }
       .card-propose .card .price-heart svg {
         font-size: 2rem; }
+
+.ant-upload-list.ant-upload-list-text {
+  display: none; }

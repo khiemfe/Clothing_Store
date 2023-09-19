@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Webcam from 'react-webcam';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -38,7 +38,8 @@ import { useRef } from "react"
 //     );
 // }
 
-export let linkSrc
+
+// export let linkSrc
 
 const CameraComponents = () => {
   
@@ -63,32 +64,17 @@ const CameraComponents = () => {
       setShowClose
     ]);
 
-    const countRef = useRef() 
-    linkSrc = countRef.current ? countRef.current.src : undefined
-
-    const countRefHidden = useRef() 
-    const handleRemoveHidden = () => {
-      handleClose()
-      countRefHidden.current.classList.remove("hidden");
-    }
-
-    const handleAddHidden = () => {
-      handleClose()
-      countRefHidden.current.classList.add("hidden");
-    }
-
-    const handleShowAddHidden = () => {
-      handleShow()
-      countRefHidden.current.classList.add("hidden");
+    if(show && show !== false && show !== true) {
+      localStorage.setItem('img', JSON.stringify(show))
     }
 
     return (
       <>
-        <Button variant="" onClick={handleShowAddHidden} className='btn-camera'>
+        <Button variant="" onClick={handleShow} className='btn-camera'>
             <FiCamera className='icon camera' />
         </Button>
-        <img ref={countRefHidden} src={linkSrc} className='img-propose hidden' alt="" />
-        <Modal show={show} onHide={handleAddHidden} size="lg">
+        {/* <img ref={countRefHidden} src={linkSrc} className='img-propose hidden' alt="" /> */}
+        <Modal show={show} onHide={handleClose} size="lg">
           <Modal.Header closeButton={showClose}>
             <Modal.Title>React Webcam Modal Example</Modal.Title>
           </Modal.Header>
@@ -107,7 +93,7 @@ const CameraComponents = () => {
                 <div>
                     <img 
                       alt=''
-                      ref={countRef}
+                      // ref={countRef}
                       src={show.toString()}
                     />
                 </div>
@@ -115,7 +101,7 @@ const CameraComponents = () => {
 
             <Modal.Footer>
                 {showClose && (
-                <Button className='ok-pripose' variant="secondary" onClick={handleRemoveHidden}>
+                <Button className='ok-pripose' variant="secondary" onClick={handleClose}>
                     <a href="/propose">Ok</a>
                 </Button>
                 )}

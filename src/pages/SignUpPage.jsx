@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   MDBBtn,
   MDBContainer,
@@ -10,10 +10,14 @@ import {
   MDBIcon,
   MDBInput
 }
-from 'mdb-react-ui-kit';
+from 'mdb-react-ui-kit'
 import * as UserServcie from '../services/userServices'
-import LoadingComponents from '../components/LoadingComponents';
-import { useMutationHook } from '../hooks/useMutationHook';
+import LoadingComponents from '../components/LoadingComponents'
+import { useMutationHook } from '../hooks/useMutationHook'
+import { useNavigate } from 'react-router-dom'
+import { success, error, warning } from '../components/Message'
+
+
 
 
 const SignUpPage = () => {
@@ -23,8 +27,18 @@ const SignUpPage = () => {
     const [confirmPassword, setConfirmPassword] = useState()
 
     const mutation = useMutationHook(data => UserServcie.signupUser(data))
-    const { data, isLoading } = mutation
+    const { data, isLoading, isSuccess, isError } = mutation
     console.log(mutation)
+    useEffect(() => {
+      if(isSuccess && data?.status !== 'ERR') {
+        success()
+        handleNavigateSignIn()
+      }
+      else if(isError) {
+        error()
+        console.log('er')
+      }
+    }, [isSuccess, isError])
 
     const handleOnChangeEmail = (e) => {
         const value = e.target.value
@@ -48,6 +62,11 @@ const SignUpPage = () => {
           confirmPassword
         })
         console.log('sign-up', email, password, confirmPassword)
+    }
+
+    const navigate = useNavigate()
+    const handleNavigateSignIn = () => {
+      navigate('/sign-in')
     }
 
     return (

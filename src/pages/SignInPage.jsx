@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   MDBBtn,
   MDBContainer,
@@ -10,22 +10,53 @@ import {
   MDBIcon,
   MDBInput
 }
-from 'mdb-react-ui-kit';
+from 'mdb-react-ui-kit'
 import * as UserServcie from '../services/userServices'
 import { useMutationHook } from '../hooks/useMutationHook'
-import LoadingComponents from '../components/LoadingComponents';
+import LoadingComponents from '../components/LoadingComponents'
+import { useNavigate } from 'react-router-dom'
+// import * as message from '../components/Message'
+import jwt_decode from "jwt-decode"
+import { useDispatch } from 'react-redux'
+import { updateUser } from '../redux/slices/userSlice'
 
 const SignInPage = () => {
 
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
 
+    const dispatch = useDispatch()
 
     const mutation = useMutationHook(data => UserServcie.loginUser(data))
     console.log('mutation', mutation)
 
-    const { data, isLoading } = mutation
+    const { data, isLoading, isSuccess, isError } = mutation
     console.log(data, isLoading)
+
+    useEffect(() => {
+      if(isSuccess && data?.status !== 'ERR') {
+        // message.success() 
+        handleNavigateHome()
+        localStorage.setItem('access_token', JSON.stringify(data?.access_token))
+        // localStorage.setItem('refresh_token', JSON.stringify(data?.refresh_token))
+        if(data?.access_token) {
+          const decoded = jwt_decode(data?.access_token)
+          console.log('decoded', decoded)
+          if(decoded?.id) {
+            handleGetDetailsUser(decoded?.id, data?.access_token)
+          }
+        }
+      }
+    }, [isSuccess, isError])
+
+    const handleGetDetailsUser = async (id, token) => {
+      // const storage = localStorage.getItem('refresh_token')
+      // const refreshToken = JSON.parse(storage)
+      const res = await UserServcie.getDetailsUser(id, token)
+      dispatch(updateUser({...res?.data, access_token: token}))
+      console.log('lllllll', token)
+      console.log('res', res)
+    }
 
     const handleOnChangeEmail = (e) => {
         const value = e.target.value
@@ -43,6 +74,11 @@ const SignInPage = () => {
         password
       })
       console.log('sign-in', email, password)
+    }
+
+    const navigate = useNavigate()
+    const handleNavigateHome = () => {
+      navigate('/')
     }
 
     return (
