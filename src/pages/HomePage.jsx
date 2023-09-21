@@ -10,6 +10,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { useQuery } from '@tanstack/react-query'
 import * as ProductServices from '../services/ProductServices'
+import LoadingComponents from '../components/LoadingComponents'
 
 const HomePage = () => {
 
@@ -31,6 +32,7 @@ const HomePage = () => {
                     <div className='slide-product'>
                         <div className='slide'><SlideComponents arrImages={[slide1, slide2, slide3]}/></div>
                         <div className='product'>
+                        <LoadingComponents isLoading={isLoading}>
                             <Row>
                                 {product?.data?.map((product) => {
                                     return (
@@ -52,6 +54,7 @@ const HomePage = () => {
                                     )
                                 })}
                             </Row>
+                        </LoadingComponents>
                         </div>
                         <div className='see-more'>
                             <Button variant="outline-primary">Xem thêm</Button>{' '}

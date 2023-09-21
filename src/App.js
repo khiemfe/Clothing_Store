@@ -1,5 +1,5 @@
 // import { Button } from 'antd'
-import React, { useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { routes } from './routes';
 import DefaultComponents from './components/DefaultComponents';
@@ -9,8 +9,9 @@ import { useQuery } from '@tanstack/react-query';
 import { isJsonString } from './utils';
 import jwt_decode from "jwt-decode";
 import * as UserService from './services/userServices'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { updateUser } from './redux/slices/userSlice';
+import LoadingComponents from './components/LoadingComponents';
 
 function App() {
 
@@ -28,13 +29,17 @@ function App() {
   // console.log(query)
 
   const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(false)
+  const user = useSelector((state) => state.user)
 
   useEffect(() => {
+    setIsLoading(true)
     const { storageData, decoded } = handleDecoded()
     if(decoded?.id) {
       handleGetDetailsUser(decoded?.id, storageData)
     }
     console.log('storageData', storageData)
+    setIsLoading(false)
   }, [])
 
   const handleDecoded = () => {
@@ -85,6 +90,7 @@ function App() {
     const res = await UserService.getDetailsUser(id, token)
     dispatch(updateUser({ ...res?.data, access_token: token }))
     console.log('res', res)
+    // setIsLoading(false)
   }
 
   // const handleGetDetailsUser = async (id, token) => {
@@ -98,21 +104,24 @@ function App() {
   return (
     <div>
       {/* <HeaderComponents /> */}
-      <Router>
-        <Routes>
-          {routes.map((route, index) => {
-            const Page = route.page
-            const Layout = route.isShowHeader ? DefaultComponents : NotFoundPage
-            return (
-              <Route key={index} path={route.path} element={
-                <Layout>
-                  <Page />
-                </Layout>
-              } />
-            )
-          })}
-        </Routes>
-      </Router>
+      <LoadingComponents isLoading={isLoading}>
+        <Router>
+          <Routes>
+            {routes.map((route, index) => {
+              const Page = route.page
+              // const isCheckAuth = !route.isPrivate || user.isAdmin //nếu isPrivate flase thì hiển thị bth, còn true thì hiển thị user.isAdmin
+              const Layout = route.isShowHeader ? DefaultComponents : Fragment
+              return (
+                <Route key={index} path={route.path} element={
+                  <Layout>
+                    <Page />
+                  </Layout>
+                } />
+              )
+            })}
+          </Routes>
+        </Router>
+      </LoadingComponents>
     </div>
   )
 }

@@ -155,6 +155,9 @@
           margin: 0; }
         .home .product .card .price-heart svg {
           font-size: 2rem; }
+  .home .loading-component {
+    display: flex !important;
+    justify-content: center; }
   .home .see-more {
     display: flex;
     justify-content: center; }

@@ -234,6 +234,15 @@
         }
     }
 
+    //Loading
+    .loading-component {
+        display: flex !important;
+        justify-content: center;
+        
+        .loading {
+        }
+    }
+
     .see-more {
         display: flex;
         justify-content: center;
@@ -369,3 +378,5 @@
 .ant-upload-list.ant-upload-list-text {
     display: none;
 }
+
+

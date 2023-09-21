@@ -18,5 +18,8 @@ const ProposeComponents = () => {
     )
 }
 
+ const imgStorage = localStorage.getItem("img");
+ export const imageCamera = JSON.parse(imgStorage)
+
 export default ProposeComponents
 

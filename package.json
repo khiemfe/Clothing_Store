@@ -13,6 +13,7 @@
     "axios": "^1.5.0",
     "bootstrap": "^5.3.1",
     "dotenv": "^16.3.1",
+    "fs-extra": "^2.0.0",
     "jwt-decode": "^3.1.2",
     "mdb-react-ui-kit": "^6.3.0",
     "react": "^18.2.0",
@@ -38,7 +39,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch": "node-sass -w src/resources/scss/App.scss src/public/css/App.css"
+    "watch": "node-sass -w src/resources/scss -o src/public/css"
   },
   "eslintConfig": {
     "extends": [
