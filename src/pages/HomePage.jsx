@@ -48,6 +48,8 @@ const HomePage = () => {
                                                         type={product.type}
                                                         discount={product.discount}
                                                         selled={product.selled}
+                                                        age={product.age}
+                                                        bmi={product.bmi}
                                                     />
                                                 </a>
                                             </Col>

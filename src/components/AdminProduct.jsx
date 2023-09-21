@@ -16,30 +16,23 @@ import { AiOutlineEdit } from "react-icons/ai"
 
 
 function MyVerticallyCenteredModal(props) {
-    const handleOnchangeAvatar = async ({fileList}) => {
-        const file = fileList[0]
-        if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj);
-        }
-        setStateProduct({
-            ...stateProduct,
-            image: file.preview
+
+  const [form] = Form.useForm();
+  const [isModelOpen, setIsModalOpen] = useState(false)
+  const [stateProduct, setStateProduct] = useState({
+    name: '',
+          image: '',
+          type: '',
+          price: '',
+          age: '',
+          bmi: '',
         })
-    }
-
-    const [form] = Form.useForm();
-    const [isModelOpen, setIsModalOpen] = useState(false)
-    const [stateProduct, setStateProduct] = useState({
-        name: '',
-        image: '',
-        type: '',
-        price: '',
-    })
-
-    const mutation = useMutationHook(
-      (data) => {
-        const { name, image, type, price } = data
-        const res = ProducttServcie.createProduct({ name, image, type, price })
+      
+      const mutation = useMutationHook(
+        (data) => {
+        console.log(data)
+        const { name, image, type, price, age, bmi } = data
+        const res = ProducttServcie.createProduct({ name, image, type, price, age, bmi })
         return res
       }
     )
@@ -53,6 +46,17 @@ function MyVerticallyCenteredModal(props) {
         error()
       }
     }, [isSuccess])
+    
+        const handleOnchangeAvatar = async ({fileList}) => {
+            const file = fileList[0]
+            if (!file.url && !file.preview) {
+                file.preview = await getBase64(file.originFileObj);
+            }
+            setStateProduct({
+                ...stateProduct,
+                image: file.preview
+            })
+        }
 
     const handleOnchange = (e) => {
         setStateProduct({
@@ -62,7 +66,7 @@ function MyVerticallyCenteredModal(props) {
     }
 
     const onFinish = () => {
-        if(stateProduct.name !== '' && stateProduct.image !== '' && stateProduct.type !== '' && stateProduct.price !== '') {
+        if(stateProduct.name !== '' && stateProduct.image !== '' && stateProduct.type !== '' && stateProduct.price !== '' && stateProduct.age !== '' && stateProduct.bmi !== '') {
             console.log('Success:', stateProduct);
         } else {
             console.log('err stateProduct');
@@ -151,6 +155,32 @@ function MyVerticallyCenteredModal(props) {
             </Form.Item>
 
             <Form.Item
+              label="Age"
+              name="age"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your age!',
+                },
+              ]}
+            >
+              <Input onChange={handleOnchange}  name='age'/>
+            </Form.Item>
+
+            <Form.Item
+              label="BMI"
+              name="bmi"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your bmi!',
+                },
+              ]}
+            >
+              <Input onChange={handleOnchange}  name='bmi'/>
+            </Form.Item>
+
+            <Form.Item
               label="Upload"
               name="upload"
               valuePropName="fileList"
@@ -221,6 +251,14 @@ const AdminProduct = () => {
       {
         title: 'Price',
         dataIndex: 'price',
+      },
+      {
+        title: 'Age',
+        dataIndex: 'age',
+      },
+      {
+        title: 'BMI',
+        dataIndex: 'bmi',
       },
       {
         title: 'Action',
