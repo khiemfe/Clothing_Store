@@ -96,32 +96,34 @@ const HeaderComponents = () => {
                                 <Badge bg="warning">9</Badge>
                                 <BsCart2 className='icon cart'/>
                             </Button>
-                            {userAvatar ? (
-                                <img src={userAvatar} alt='avatar' style={{width: '50px'}} />
-                            ): (
-                                <img style={{width: '50px'}} src='https://haycafe.vn/wp-content/uploads/2022/02/Avatar-trang.jpg' alt='avatar' />
-                                )
-                            }
-                            {user?.email ? (
-                                <Dropdown>
-                                    <Dropdown.Toggle variant="" id="dropdown-basic">
-                                        {/* <FaRegUser className='icon'/> */}
-                                        <div>{ userName || user.email || 'User' }</div>
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu>
-                                        <Dropdown.Item href="/profile-user">Thông tin người dùng</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                                        <Dropdown.Divider />
-                                        <LoadingComponents isLoading={loading}>
-                                            <Dropdown.Item onClick={handleLogout} href="#">Đăng xuất</Dropdown.Item>
-                                        </LoadingComponents>
-                                    </Dropdown.Menu>
-                                </Dropdown>
-                            ) : (
-                                <div>
-                                    <Button onClick={handleNavigateLogin} className='btn-sign' variant="">Đăng nhập <br /> Đăng ký</Button>{' '}
-                                </div>
-                            )}
+                            <div className='info-user'>
+                                        {userAvatar ? (
+                                            <img className='avatar' src={userAvatar} alt='avatar' style={{width: '50px'}} />
+                                            ): (
+                                                <img className='avatar' style={{width: '50px'}} src='https://haycafe.vn/wp-content/uploads/2022/02/Avatar-trang.jpg' alt='avatar' />
+                                                )
+                                            }
+                                            {user?.email ? (
+                                                <Dropdown>
+                                                    <Dropdown.Toggle variant="" id="dropdown-basic">
+                                            {/* <FaRegUser className='icon'/> */}
+                                            <div>{ userName || user.email || 'User' }</div>
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            <Dropdown.Item href="/profile-user">Thông tin người dùng</Dropdown.Item>
+                                            <Dropdown.Item href="/system/admin">Trang chủ ADMIN</Dropdown.Item>
+                                            <Dropdown.Divider />
+                                            <LoadingComponents isLoading={loading}>
+                                                <Dropdown.Item onClick={handleLogout} href="#">Đăng xuất</Dropdown.Item>
+                                            </LoadingComponents>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                ) : (
+                                    <div>
+                                        <Button onClick={handleNavigateLogin} className='btn-sign' variant="">Đăng nhập <br /> Đăng ký</Button>{' '}
+                                    </div>
+                                )}
+                            </div>
                             
                         </Form>
                     </Col>

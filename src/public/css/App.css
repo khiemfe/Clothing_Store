@@ -80,6 +80,15 @@
       font-size: 1.4rem; }
       .header .right .form .btn-sign:hover {
         text-decoration: underline; }
+    .header .right .form .info-user {
+      text-align: center; }
+      .header .right .form .info-user .dropdown-toggle {
+        border: none; }
+      .header .right .form .info-user .avatar {
+        width: 40px !important;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%; }
 
 .home {
   padding: 0 70px;

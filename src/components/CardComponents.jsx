@@ -12,7 +12,7 @@ const CardComponents = (props) => {
     return (
         <Card style={{ width: '18rem' }}>
             <div className='image'>
-                <Card.Img variant="top" src='https://media.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/April2023/Ao_thun_oversize_84RISING_ICONIC_LOGOshadow6.jpg' />
+                <Card.Img variant="top" src={image} />
             </div>
             <Card.Body>
                 <Card.Title className='align-items_center'>{name}</Card.Title>
@@ -20,7 +20,7 @@ const CardComponents = (props) => {
                     <div className='transparent'>
                     <FiHeart/>
                     </div>
-                    <h3>{price}đ</h3>
+                    <h3>{price}.000đ</h3>
                     <FiHeart/>
                 </div>
                 {/* <Button variant="primary">Mua</Button> */}

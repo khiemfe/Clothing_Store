@@ -53,7 +53,7 @@ const NotFoundPage = () => {
                 }}
                 items={items}
                 onClick={handleOnClick}
-                />
+            />
             <div style={{ flex: 1, padding: '15px 0 15px 15px' }}>
                 {renderPage(keySelected)}
             </div>

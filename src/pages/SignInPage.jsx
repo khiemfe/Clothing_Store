@@ -86,7 +86,7 @@ const SignInPage = () => {
           <MDBCard>
             <MDBRow className='g-0'>
               <MDBCol md='6'>
-                <MDBCardImage src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp' alt="login form" className='rounded-start w-100'/>
+                <MDBCardImage src='https://binbadecor.vn/wp-content/uploads/2022/03/thiet-ke-shop-quan-ao-2.jpg ' alt="login form" className='rounded-start w-100'/>
               </MDBCol>
               <MDBCol md='6'>
                 <MDBCardBody className='d-flex flex-column'>

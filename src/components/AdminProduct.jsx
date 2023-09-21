@@ -67,6 +67,7 @@ function MyVerticallyCenteredModal(props) {
         } else {
             console.log('err stateProduct');
         }
+        
         mutation.mutate(stateProduct)
     };
 
@@ -156,7 +157,7 @@ function MyVerticallyCenteredModal(props) {
               rules={[
                 {
                   required: true,
-                  message: 'Please input your image!',
+                  message: stateProduct?.image ? '' : 'Please input your image!',
                 },
               ]}
             >
@@ -228,7 +229,8 @@ const AdminProduct = () => {
       },
     ];
     const dataTable = data?.data?.length && data?.data?.map((product) => {
-      return {...product, key: product._id}
+      console.log(product?.price + '.000đ')
+      return {...product, price: product?.price + '.000đ', key: product._id}
     })
 
     return (

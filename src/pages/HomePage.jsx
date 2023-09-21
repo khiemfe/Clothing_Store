@@ -32,29 +32,29 @@ const HomePage = () => {
                     <div className='slide-product'>
                         <div className='slide'><SlideComponents arrImages={[slide1, slide2, slide3]}/></div>
                         <div className='product'>
-                        <LoadingComponents isLoading={isLoading}>
-                            <Row>
-                                {product?.data?.map((product) => {
-                                    return (
-                                        <Col xxl={3} xl={3} key={product._id} >
-                                            <a href="/product-details">
-                                                <CardComponents 
-                                                    countInstock={product.countInstock}
-                                                    description={product.description}
-                                                    image={product.image}
-                                                    name={product.name}
-                                                    price={product.price}
-                                                    rating={product.rating}
-                                                    type={product.type}
-                                                    discount={product.discount}
-                                                    selled={product.selled}
-                                                />
-                                            </a>
-                                        </Col>
-                                    )
-                                })}
-                            </Row>
-                        </LoadingComponents>
+                            <LoadingComponents isLoading={isLoading}>
+                                <Row>
+                                    {product?.data?.map((product) => {
+                                        return (
+                                            <Col xxl={3} xl={3} key={product._id} >
+                                                <a href="/product-details">
+                                                    <CardComponents 
+                                                        countInstock={product.countInstock}
+                                                        description={product.description}
+                                                        image={product.image}
+                                                        name={product.name}
+                                                        price={product.price}
+                                                        rating={product.rating}
+                                                        type={product.type}
+                                                        discount={product.discount}
+                                                        selled={product.selled}
+                                                    />
+                                                </a>
+                                            </Col>
+                                        )
+                                    })}
+                                </Row>
+                            </LoadingComponents>
                         </div>
                         <div className='see-more'>
                             <Button variant="outline-primary">Xem thêm</Button>{' '}

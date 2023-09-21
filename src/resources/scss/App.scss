@@ -111,6 +111,21 @@
                     text-decoration: underline;
                 }
             }
+
+            .info-user {
+                text-align: center;
+                
+                .dropdown-toggle {
+                    border: none;
+                }
+                
+                .avatar {
+                    width: 40px !important;
+                    height: 40px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+            }
         }
     }
 }

@@ -4,11 +4,11 @@ import { Alert, Space, Spin } from 'antd';
 
 const LoadingComponents = ({ children, isLoading, delay = 200 }) => {
     return (
-        <div >
+        < >
              <span className='loading-component'>
                 <ClipLoader className='loading'
                     color='#36d7b7'
-                    loading={true}
+                    loading={isLoading}
                     // CSSProperties={override}
                     size={30}
                     // aria-label="Loading Spinner"
@@ -20,7 +20,7 @@ const LoadingComponents = ({ children, isLoading, delay = 200 }) => {
                 </Spin> */}
              </span>
             {children}
-        </div>
+        </>
     )
 }
 
