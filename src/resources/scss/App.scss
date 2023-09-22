@@ -247,16 +247,16 @@
                 }
             }
         }
-    }
-
-    //Loading
-    .loading-component {
-        display: flex !important;
-        justify-content: center;
-        
-        .loading {
+        //Loading
+        .loading-component {
+            display: flex !important;
+            justify-content: center;
+            width: 100%;
+            .loading {
+            }
         }
     }
+
 
     .see-more {
         display: flex;
@@ -394,4 +394,31 @@
     display: none;
 }
 
+//ADMIN product
+.adminProduct {
+
+    .body-product {
+        // position: relative;
+
+        .loading {
+            display: flex !important;
+            justify-content: center;
+            width: 100%;
+        }
+    }
+
+}
+
+.modal-body {
+
+    .ant-form-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .loading {
+        display: flex !important;
+        justify-content: center;
+        width: 100%;
+    }
+}
 

@@ -164,9 +164,10 @@
           margin: 0; }
         .home .product .card .price-heart svg {
           font-size: 2rem; }
-  .home .loading-component {
-    display: flex !important;
-    justify-content: center; }
+    .home .product .loading-component {
+      display: flex !important;
+      justify-content: center;
+      width: 100%; }
   .home .see-more {
     display: flex;
     justify-content: center; }
@@ -238,3 +239,16 @@
 
 .ant-upload-list.ant-upload-list-text {
   display: none; }
+
+.adminProduct .body-product .loading {
+  display: flex !important;
+  justify-content: center;
+  width: 100%; }
+
+.modal-body .ant-form-item:last-child {
+  margin-bottom: 0; }
+
+.modal-body .loading {
+  display: flex !important;
+  justify-content: center;
+  width: 100%; }

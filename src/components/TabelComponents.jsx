@@ -19,18 +19,22 @@ const TabelComponents = (props) => {
   const {selectionType = 'checkbox', dataTable=[], columns=[], products=[], isLoading=false } = props
 
   return (
-      <LoadingComponents isLoading={isLoading}>
-        {/* <Divider /> */}
+      <>
 
+        {/* <Divider /> */}
+        <div className='loading'>
+        <LoadingComponents isLoading={isLoading}>
+          </LoadingComponents>
+        </div>
         <Table
             rowSelection={{
-                type: selectionType,
-                ...rowSelection,
+              type: selectionType,
+              ...rowSelection,
             }}
             columns={columns}
             dataSource={dataTable}
         />
-      </LoadingComponents>
+      </>
     )
 }
 

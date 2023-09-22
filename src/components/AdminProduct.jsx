@@ -98,7 +98,6 @@ function MyVerticallyCenteredModal(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <LoadingComponents isLoading={isLoading}>
           <Form
             name="basic"
             labelCol={{
@@ -210,7 +209,9 @@ function MyVerticallyCenteredModal(props) {
               </Button>
             </Form.Item>
           </Form>
-        </LoadingComponents>
+            <div className='loading'>
+              <LoadingComponents isLoading={isLoading}></LoadingComponents>
+            </div>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onClose} aria-label="Close">Close</Button>
@@ -274,14 +275,14 @@ const AdminProduct = () => {
     return (
         <>
             <h1>Quản lí sản phẩm</h1>
-            <div>
+            <div className='adminProduct'>
                 <Button onClick={() => setModalShow(true)} style={{backgroundColor: '#fff', width: '150px', height: '150px', fontSize:'40px'}}>
                     <GrAdd />
                 </Button>
-                <div>
+                <div className='body-product'>
                     <TabelComponents columns={columns} dataTable={dataTable} products={data?.data} isLoading={isLoading} />
                 </div>
-                <div>
+                <div className='createProduct'>
                     <MyVerticallyCenteredModal
                         show={modalShow}
                         onHide={() => setModalShow(false)}
