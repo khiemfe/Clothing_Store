@@ -252,3 +252,83 @@
   display: flex !important;
   justify-content: center;
   width: 100%; }
+
+.produc-details .container {
+  display: flex;
+  padding: 50px;
+  padding-right: 200px; }
+
+.produc-details .img-3 {
+  padding: 10px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover; }
+
+.produc-details .img-anhphu {
+  display: flex; }
+
+.produc-details .img-1 {
+  width: 500px;
+  height: 450px; }
+
+.produc-details .notify {
+  font-size: 20px;
+  margin-top: 100px;
+  margin-left: 50px; }
+
+.produc-details h6 {
+  font-size: 20px; }
+
+.produc-details .mota {
+  font-size: 20px;
+  opacity: 0.5; }
+
+.produc-details .font-bold {
+  font-weight: 1000;
+  margin-top: 5px; }
+
+.produc-details .tieude {
+  color: purple;
+  font-weight: 1000;
+  margin-top: 100px; }
+
+.produc-details .choose {
+  font-size: 25px;
+  display: flex;
+  align-items: center; }
+
+.produc-details .cangiua {
+  display: flex;
+  align-items: center;
+  gap: 10px; }
+
+.produc-details .congtru {
+  display: flex;
+  font-size: 30px;
+  height: 40px;
+  width: 40px;
+  color: black;
+  background-color: #f5ccf5;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center; }
+
+.produc-details .number {
+  font-size: 30px;
+  padding: 0 10px; }
+
+.produc-details .add {
+  text-align: center;
+  margin: 0 40px;
+  background-color: #df43df;
+  border-radius: 15px;
+  padding: 0px 50px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  height: 50px; }
+
+.produc-details .gia {
+  margin: 5px 10px; }

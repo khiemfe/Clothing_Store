@@ -100,7 +100,8 @@ const HeaderComponents = () => {
                                         {userAvatar ? (
                                             <img className='avatar' src={userAvatar} alt='avatar' style={{width: '50px'}} />
                                             ): (
-                                                <img className='avatar' style={{width: '50px'}} src='https://haycafe.vn/wp-content/uploads/2022/02/Avatar-trang.jpg' alt='avatar' />
+                                                // <img className='avatar' style={{width: '50px'}} src='https://haycafe.vn/wp-content/uploads/2022/02/Avatar-trang.jpg' alt='avatar' />
+                                                undefined
                                                 )
                                             }
                                             {user?.email ? (
