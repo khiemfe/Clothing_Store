@@ -15,11 +15,6 @@ const CardProposeComponents = (props) => {
     const isMaleOrFemale = type.includes(MaleOrFemale)
 
     const Tuoi = 20
-    // if(+age?.split('-')[1] >= Tuoi && Tuoi >= +age?.split('-')[0]) {
-    //    console.log('đúng') 
-    // }else {
-    //     console.log('sai')
-    // }
     
     const GiaTriBMI = 'hơi mập'
     const isGiaTriBMI = bmi?.includes(GiaTriBMI)
