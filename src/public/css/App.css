@@ -195,6 +195,10 @@
 .card-propose {
   padding: 50px;
   position: relative; }
+  .card-propose .agenho, .card-propose .agelon {
+    display: none; }
+    .card-propose .agenho:first-child, .card-propose .agelon:first-child {
+      display: block; }
   .card-propose h2 {
     margin-bottom: 30px;
     text-align: center;
@@ -332,3 +336,16 @@
 
 .produc-details .gia {
   margin: 5px 10px; }
+
+.card_Propose {
+  position: relative; }
+
+.render_model {
+  display: none; }
+  .render_model:first-child {
+    display: flex;
+    position: absolute;
+    top: 20px;
+    right: 10px; }
+    .render_model:first-child h3 {
+      padding: 0 10px; }

@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FiCamera } from "react-icons/fi";
 import { useRef } from "react"
+// import FileSaver from 'file-saver';
 
 
 
@@ -50,6 +51,29 @@ const CameraComponents = () => {
     const imageSrc = webcamRef.current.getScreenshot();
     setShow(imageSrc);
   }, [webcamRef, setShow]);
+
+  // const wc = webcamRef.current
+
+  // wc?.takeShot()
+  //   .then((image) => {
+  //     // Save the image to the images directory
+  //   });
+
+
+  // console.log(blob)
+  // Save the Blob object to the images directory
+
+  // Save the Blob object to the images directory
+  // const saveFile = new FileSaver(blob);
+  // saveFile.save("my_image.png");
+  // async function captureScreenshot() {
+  //   // Take a screenshot
+  //   const image = await webcamRef.current?.takeShot();
+  //   // Save the screenshot with a JPEG format
+  //   image?.saveImage("my_image.jpeg");
+  // }
+
+  // captureScreenshot()
   
   const handleShow = React.useCallback(() => setShow(true), [setShow]);
   

@@ -6,6 +6,10 @@
 /.pnp
 .pnp.js
 src/public/css/App.css
+Model_Age.pt
+Model_BMI.pt
+Model_gender.pt
+model.ptyolov5s.pt
 
 # testing
 /coverage
