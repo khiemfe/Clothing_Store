@@ -13,18 +13,18 @@ import axios from 'axios'
 import agetxt from './age.txt'
 import bmitxt from './bmi.txt'
 import gendertxt from './gender.txt'
-
+import isLoadingtxt from './isLoading.txt'
 
 const ProposeComponents = () => {
 
     const imgStorage = localStorage.getItem("img");
-    const imageCamera = JSON.parse(imgStorage)
-    // console.log(imageCamera)
+    const imageBase64 = JSON.parse(imgStorage)
     const [isLoaded, setIsLoaded] = useState(false);
+    
     useEffect(() => {
         if (!isLoaded) {
             axios.post("http://localhost:3001/save", {
-            imageCamera,
+                imageBase64,
             })
             .then((res) => {
                 console.log('ok', res)
@@ -33,21 +33,33 @@ const ProposeComponents = () => {
                 console.log('err', err)
             })
             setIsLoaded(true);
-          }
+        }
     }, [isLoaded])
-
+    
+    
+    const fetchProductAll = async () => {
+        const res = await ProductServices.getAllProduct()
+        return res
+    }
+    
     const [result_age, set_result_age] = useState('')
+    
+    
     useEffect(()=>{
         axios(agetxt)
         .then(res => res.data)
-        .then(data => set_result_age(data))
+        .then(data => {
+            set_result_age(data)
+        })
     },[agetxt])
+
     const [result_bmi, set_result_bmi] = useState('')
     useEffect(()=>{
         axios(bmitxt)
         .then(res => res.data)
         .then(data => set_result_bmi(data))
     },[bmitxt])
+    
     const [result_gender, set_result_gender] = useState('')
     useEffect(()=>{
         axios(gendertxt)
@@ -55,38 +67,35 @@ const ProposeComponents = () => {
         .then(data => set_result_gender(data))
     },[gendertxt])
 
+
+    let {isLoading, data: product} = useQuery(['products'], fetchProductAll, { retry: 3, retryDelay: 1000 })
+    console.log('qqqqqqqqqqqqqqq', product)
+    console.log('loading', isLoading)
+    
+
+    const [checkLoad, setCheckLoad] = useState(false)
+    useEffect(()=>{
+        axios(isLoadingtxt)
+        .then(res => res.data)
+        .then(data => {
+            setCheckLoad(data)
+        })
+    }, [])
+
+    if(checkLoad) {
+        isLoading = true
+        product = undefined
+    } 
+
     console.log('age', result_age)
     console.log('bmi', result_bmi)
     console.log('gender', result_gender)
-
     
-
-    // const [base64, setBase64] = useState(imageCamera);
-    
-    // const handleSaveImage = async () => {
-    //     // Convert base64 to blob
-    //     const blob = new Blob([imageCamera], { type: "image/png" });
-    
-    //     // Save the blob to the desired directory
-    //     await fs.writeFile("my_images/image.png", blob);
-    
-    //     // Display a success message
-    //     console.log("Tệp ảnh đã được lưu thành công.");
-    // };
-    // handleSaveImage()
-
-    const fetchProductAll = async () => {
-        const res = await ProductServices.getAllProduct()
-        return res
-    }
-
-    const {isLoading, data: product} = useQuery(['products'], fetchProductAll, { retry: 3, retryDelay: 1000 })
-    console.log('qqqqqqqqqqqqqqq', product)
     return (
         <div className='card-propose'>
             {/* <DuDoan /> */}
             <h2>Sản phẩm đề xuất cho bạn</h2>
-            <img className='img-propose' src={imageCamera} alt="" />
+            <img className='img-propose' src={imageBase64} alt="" />
 
             {/* <CardProposeComponents /> */}
             <div className="products">
@@ -125,14 +134,14 @@ const ProposeComponents = () => {
     )
 }
 
- const imgStorage = localStorage.getItem("img");
- export const imageCamera = JSON.parse(imgStorage)
 
 export default ProposeComponents
+// const imgStorage = localStorage.getItem("img");
+// export const imageCamera = JSON.parse(imgStorage)
 
-export const dulieu = () => {
-    const imgStorage = localStorage.getItem("img");
-    const imageCamera = JSON.parse(imgStorage)
-    return imageCamera
-}
+// export const dulieu = () => {
+//     const imgStorage = localStorage.getItem("img");
+//     const imageCamera = JSON.parse(imgStorage)
+//     return imageCamera
+// }
 

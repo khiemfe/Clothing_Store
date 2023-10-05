@@ -8,7 +8,6 @@ import axios from 'axios';
 // import agetxt from './age.txt'
 // import bmitxt from './bmi.txt'
 // import gendertxt from './gender.txt'
-import base64 from './base64.txt'
 import { saveAs } from 'file-saver';
 
 const CardProposeComponents = (props) => {
@@ -80,35 +79,48 @@ const CardProposeComponents = (props) => {
     // return <p>/* code */</p>
 
 
-    const { result_age, result_bmi, result_gender, key, countInstock, description, image, name, price, rating, type, discount, selled, age, bmi } = props
+    let { result_age, result_bmi, result_gender, key, countInstock, description, image, name, price, rating, type, discount, selled, age, bmi } = props
     
-    const MaleOrFemale = result_gender.toLowerCase()
-    const isMaleOrFemale = type.includes(MaleOrFemale)
-    console.log('Giới tính: ',isMaleOrFemale)
+    let MaleOrFemale 
+    MaleOrFemale = result_gender.toLowerCase()
+    if(result_gender === 'Nu') {
+        MaleOrFemale = 'nữ'
+    }
+    let isMaleOrFemale = type.includes(MaleOrFemale)
+    if(result_gender !== 'Nam' && result_gender !== 'Nu') {
+        isMaleOrFemale = true
+        result_gender = 'undefined'
+    }
+
     const Tuoi = result_age
     const Tuoi_Tu = Tuoi?.split('-')[0]
     const Tuoi_Den = Tuoi?.split('-')[1]
-    console.log('tuổi 1: ',Tuoi?.split('-')[0])
-    console.log('tuổi 2: ',Tuoi?.split('-')[1])
 
     const Tuoi_Sp_Tu = age?.split('-')[0]
     const Tuoi_Sp_Den = age?.split('-')[1]
-    console.log('tuổi sp 1', age?.split('-')[0])
-    console.log('tuổi sp 2', age?.split('-')[1])
 
-    console.log('Tuoi 1111' ,+Tuoi_Tu>=+Tuoi_Sp_Tu)
-    console.log('Tuoi 2222' ,+Tuoi_Den<=+Tuoi_Sp_Den)
-    const isGiaTriTuoi = +Tuoi_Tu>=+Tuoi_Sp_Tu || +Tuoi_Den<=+Tuoi_Sp_Den
-    console.log('Giá trị tuổi', isGiaTriTuoi)
-    // let sortAge = []
-    // sortAge.push(age?.split('-')[1])
-    // console.log(sortAge)
+    let isGiaTriTuoi = +Tuoi_Tu == +Tuoi_Sp_Tu || +Tuoi_Tu == +Tuoi_Sp_Den || 
+                        +Tuoi_Den == +Tuoi_Sp_Tu || +Tuoi_Den == +Tuoi_Sp_Den ||
+                        +Tuoi_Tu < Tuoi_Sp_Tu && +Tuoi_Den > Tuoi_Sp_Tu || 
+                        +Tuoi_Sp_Den > +Tuoi_Tu > +Tuoi_Sp_Tu
+    if(!result_age.includes('-')) {
+        isGiaTriTuoi = true
+        result_age = 'undefined'
+    }
+    
     let GiaTriBMI
     if(result_bmi === 'Beo') {
         GiaTriBMI = 'mập'
     }
-    const isGiaTriBMI = bmi?.includes(GiaTriBMI)
-    console.log('BMI: ',isGiaTriBMI)
+    if(result_bmi === 'Om') {
+        GiaTriBMI = 'ốm'
+    }
+    let isGiaTriBMI = bmi.toLowerCase()?.includes(GiaTriBMI)
+    if(result_bmi !== 'Om' && result_bmi !== 'thuong' && result_bmi !== 'Beo') {
+        isGiaTriBMI = true
+        result_bmi = 'undefined'
+    }
+    
 
     return (
        <>
@@ -121,7 +133,7 @@ const CardProposeComponents = (props) => {
                 <h3 className='agenho'>Xin lỗi quý khách, shop chỉ kinh doanh các loại sản phẩm cho trẻ vị thành niên, nên chúng tôi không tìm thấy sản phẩm phù hợp. Cảm ơn quý khách!!!</h3>   
             ) : undefined}
 
-            {Tuoi_Den>60 ? (
+            {Tuoi_Tu>60 ? (
                 <h3 className='agelon'>Xin lỗi quý khách, shop chỉ chủ yếu kinh doanh các mặc hàng cho giới trẻ, nên chúng tôi không tìm thấy sản phẩm phù hợp. Cảm ơn quý khách!!!</h3>   
             ) : undefined}
 
