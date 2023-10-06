@@ -1,9 +1,6 @@
 import React from 'react'
-// import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import { FiHeart } from "react-icons/fi";
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import { FiHeart } from "react-icons/fi"
 
 const CardComponents = (props) => {
 

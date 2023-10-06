@@ -1,21 +1,17 @@
-import React, { useState } from 'react'
-import Webcam from 'react-webcam';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import { FiCamera } from "react-icons/fi";
-import { useRef } from "react"
-// import FileSaver from 'file-saver';
-
-
+import React from 'react'
+import Webcam from 'react-webcam'
+import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
+import { FiCamera } from "react-icons/fi"
 
 // const CameraComponents = () => {
-//     const webcamRef = React.useRef(null);
-//     const [imgSrc, setImgSrc] = React.useState(null);
+//     const webcamRef = React.useRef(null)
+//     const [imgSrc, setImgSrc] = React.useState(null)
   
 //     const capture = React.useCallback(() => {
-//       const imageSrc = webcamRef.current.getScreenshot();
-//       setImgSrc(imageSrc);
-//     }, [webcamRef, setImgSrc]);
+//       const imageSrc = webcamRef.current.getScreenshot()
+//       setImgSrc(imageSrc)
+//     }, [webcamRef, setImgSrc])
 
 //     const close = () => {
 
@@ -36,7 +32,7 @@ import { useRef } from "react"
 //           )}
 //           <button onClick={close}>Close</button>
 //       </div>
-//     );
+//     )
 // }
 
 
@@ -44,49 +40,49 @@ import { useRef } from "react"
 
 const CameraComponents = () => {
   
-  const webcamRef = React.useRef(null);
-  const [show, setShow] = React.useState(false);
-  const [showClose, setShowClose] = React.useState(false);
+  const webcamRef = React.useRef(null)
+  const [show, setShow] = React.useState(false)
+  const [showClose, setShowClose] = React.useState(false)
   const capture = React.useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    setShow(imageSrc);
-  }, [webcamRef, setShow]);
+    const imageSrc = webcamRef.current.getScreenshot()
+    setShow(imageSrc)
+  }, [webcamRef, setShow])
 
   // const wc = webcamRef.current
 
   // wc?.takeShot()
   //   .then((image) => {
   //     // Save the image to the images directory
-  //   });
+  //   })
 
 
   // console.log(blob)
   // Save the Blob object to the images directory
 
   // Save the Blob object to the images directory
-  // const saveFile = new FileSaver(blob);
-  // saveFile.save("my_image.png");
+  // const saveFile = new FileSaver(blob)
+  // saveFile.save("my_image.png")
   // async function captureScreenshot() {
   //   // Take a screenshot
-  //   const image = await webcamRef.current?.takeShot();
+  //   const image = await webcamRef.current?.takeShot()
   //   // Save the screenshot with a JPEG format
-  //   image?.saveImage("my_image.jpeg");
+  //   image?.saveImage("my_image.jpeg")
   // }
 
   // captureScreenshot()
   
-  const handleShow = React.useCallback(() => setShow(true), [setShow]);
+  const handleShow = React.useCallback(() => setShow(true), [setShow])
   
   const handleClose = React.useCallback(
     () => {
-      setShow(false);
-      setShowClose(false);
+      setShow(false)
+      setShowClose(false)
     },
     [setShow, setShowClose]
-    );
+    )
     const handleOnUserMedia = React.useCallback(() => setShowClose(true), [
       setShowClose
-    ]);
+    ])
 
     if(show && show !== false && show !== true) {
       localStorage.setItem('img', JSON.stringify(show))
@@ -132,7 +128,7 @@ const CameraComponents = () => {
             </Modal.Footer>
         </Modal>
       </>
-    );
-  };
+    )
+  }
 
 export default CameraComponents

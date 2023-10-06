@@ -1,6 +1,5 @@
 import React from 'react'
-import { ClipLoader, PuffLoader  } from 'react-spinners'
-import { Alert, Space, Spin } from 'antd';
+import { ClipLoader } from 'react-spinners'
 
 const LoadingComponents = ({ children, isLoading, delay = 200 }) => {
     return (

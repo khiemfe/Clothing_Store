@@ -13,7 +13,7 @@ import { success, error, warning } from '../components/Message'
 import { updateUser } from '../redux/slices/userSlice'
 import { getBase64 } from '../utils'
 import { Upload } from 'antd'
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons'
 
 const ProfilePage = () => {
     

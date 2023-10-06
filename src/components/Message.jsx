@@ -1,8 +1,4 @@
 import toast from 'react-hot-toast';
-// import toast from 'react-toastify';
-
-
-// toast("Default Notification !");
 
 const success = () => {
     toast.success('Successfully toasted!')

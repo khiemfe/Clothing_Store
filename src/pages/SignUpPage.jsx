@@ -17,9 +17,6 @@ import { useMutationHook } from '../hooks/useMutationHook'
 import { useNavigate } from 'react-router-dom'
 import { success, error, warning } from '../components/Message'
 
-
-
-
 const SignUpPage = () => {
 
     const [email, setEmail] = useState()

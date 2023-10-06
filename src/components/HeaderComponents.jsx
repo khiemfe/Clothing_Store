@@ -9,13 +9,11 @@ import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Badge from 'react-bootstrap/Badge'
-// import Dropdown from 'react-bootstrap/Dropdown'
 
 import { FiSearch, FiHeart } from "react-icons/fi"
 import { BsCart2 } from "react-icons/bs"
 import CameraComponents from './CameraComponents'
 import { useNavigate } from 'react-router-dom'
-// import { FaRegUser } from "react-icons/fa"
 
 import { Toaster } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'

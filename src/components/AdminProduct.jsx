@@ -14,10 +14,6 @@ import { useQuery } from '@tanstack/react-query';
 import { MdDeleteOutline } from "react-icons/md"
 import { AiOutlineEdit } from "react-icons/ai"
 
-// import tf from "@tensorflow/tfjs";
-
-
-
 function MyVerticallyCenteredModal(props) {
 
   const [form] = Form.useForm();
@@ -131,7 +127,7 @@ function MyVerticallyCenteredModal(props) {
             </Form.Item>
             {/* name, image, type, price, countInStock, rating, description */}
             <Form.Item
-              label="Type"
+              label="Gender"
               name="type"
               rules={[
                 {
@@ -170,7 +166,7 @@ function MyVerticallyCenteredModal(props) {
             </Form.Item>
 
             <Form.Item
-              label="BMI"
+              label="Size"
               name="bmi"
               rules={[
                 {
@@ -249,7 +245,7 @@ const AdminProduct = () => {
         render: (text) => <a>{text}</a>,
       },
       {
-        title: 'Type',
+        title: 'Gender',
         dataIndex: 'type',
       },
       {
@@ -261,7 +257,7 @@ const AdminProduct = () => {
         dataIndex: 'age',
       },
       {
-        title: 'BMI',
+        title: 'Size',
         dataIndex: 'bmi',
       },
       {

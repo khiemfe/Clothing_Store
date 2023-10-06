@@ -3,12 +3,7 @@ import CardProposeComponents from './CardProposeComponents'
 import * as ProductServices from '../services/ProductServices'
 import { useQuery } from '@tanstack/react-query'
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import LoadingComponents from './LoadingComponents'
-// import DuDoan from './DuDoan'
-// import fs from 'fs'
-// import base64ToImage from 'base64-to-image'
-// import { nodeify } from "react-nodeify";
 import axios from 'axios'
 import agetxt from './age.txt'
 import bmitxt from './bmi.txt'
@@ -30,7 +25,7 @@ const ProposeComponents = () => {
                 console.log('ok', res)
             })
             .catch((err) => {
-                console.log('err', err)
+                console.log('err qua dung luong', err)
             })
             setIsLoaded(true);
         }
@@ -67,22 +62,20 @@ const ProposeComponents = () => {
         .then(data => set_result_gender(data))
     },[gendertxt])
 
-
     let {isLoading, data: product} = useQuery(['products'], fetchProductAll, { retry: 3, retryDelay: 1000 })
-    console.log('qqqqqqqqqqqqqqq', product)
     console.log('loading', isLoading)
-    
 
     const [checkLoad, setCheckLoad] = useState(false)
     useEffect(()=>{
         axios(isLoadingtxt)
         .then(res => res.data)
         .then(data => {
+            console.log('dataaaaaaa', data)
             setCheckLoad(data)
         })
-    }, [])
+    })
 
-    if(checkLoad) {
+    if(checkLoad === true) {
         isLoading = true
         product = undefined
     } 
@@ -103,28 +96,24 @@ const ProposeComponents = () => {
                     <Row>
                         {product?.data?.map((product, index) => {
                             return (
-                                // <Col xxl={3} xl={3} key={product._id} >
-                                //     <a href="/product-details" style={{textDecoration: 'none'}}>
-                                        // <span key={index}>
-                                            <CardProposeComponents className='card_Propose'
-                                                // countInstock={product.countInstock}
-                                                // description={product.description}
-                                                image={product.image}
-                                                name={product.name}
-                                                price={product.price}
-                                                // rating={product.rating}
-                                                type={product.type}
-                                                // discount={product.discount}
-                                                // selled={product.selled}
-                                                age={product.age}
-                                                bmi={product.bmi}
-                                                result_age={result_age}
-                                                result_bmi={result_bmi}
-                                                result_gender={result_gender}
-                                            />
-                                        // </span>
-                                //     </a>
-                                // </Col>
+                                // <span key={index}>
+                                    <CardProposeComponents className='card_Propose'
+                                        // countInstock={product.countInstock}
+                                        // description={product.description}
+                                        image={product.image}
+                                        name={product.name}
+                                        price={product.price}
+                                        // rating={product.rating}
+                                        type={product.type}
+                                        // discount={product.discount}
+                                        // selled={product.selled}
+                                        age={product.age}
+                                        bmi={product.bmi}
+                                        result_age={result_age}
+                                        result_bmi={result_bmi}
+                                        result_gender={result_gender}
+                                    />
+                                // </span>
                             )
                         })}
                     </Row>
@@ -134,14 +123,4 @@ const ProposeComponents = () => {
     )
 }
 
-
 export default ProposeComponents
-// const imgStorage = localStorage.getItem("img");
-// export const imageCamera = JSON.parse(imgStorage)
-
-// export const dulieu = () => {
-//     const imgStorage = localStorage.getItem("img");
-//     const imageCamera = JSON.parse(imgStorage)
-//     return imageCamera
-// }
-
