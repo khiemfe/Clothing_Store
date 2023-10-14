@@ -7,7 +7,7 @@ const CardComponents = (props) => {
     const { key, countInstock, description, image, name, price, rating, type, discount, selled } = props
 
     return (
-        <Card style={{ width: '18rem' }}>
+        <Card style={{ width: '18rem' }} key={key}>
             <div className='image'>
                 <Card.Img variant="top" src={image} />
             </div>
@@ -20,7 +20,6 @@ const CardComponents = (props) => {
                     <h3>{price}.000đ</h3>
                     <FiHeart/>
                 </div>
-                {/* <Button variant="primary">Mua</Button> */}
             </Card.Body>
         </Card>
     )

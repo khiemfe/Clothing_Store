@@ -1,8 +1,9 @@
 import React from 'react'
 import SlideComponents from '../components/SlideComponents'
-import slide1 from '../public/img/slide1.jpg'
-import slide2 from '../public/img/slide2.jpg'
-import slide3 from '../public/img/slide3.jpg'
+import slide1 from '../public/img/slide1.jpeg'
+import slide2 from '../public/img/slide2.jpeg'
+import slide3 from '../public/img/slide3.jpeg'
+import slide4 from '../public/img/slide4.jpeg'
 import CardComponents from '../components/CardComponents'
 import NavbarComponents from '../components/NavbarComponents'
 import Button from 'react-bootstrap/Button'
@@ -11,6 +12,7 @@ import Col from 'react-bootstrap/Col'
 import { useQuery } from '@tanstack/react-query'
 import * as ProductServices from '../services/ProductServices'
 import LoadingComponents from '../components/LoadingComponents'
+import LoadingCardComponent from '../components/LoadingCardComponent'
 
 const HomePage = () => {
 
@@ -19,8 +21,15 @@ const HomePage = () => {
         return res
     }
     console.log(useQuery(['products'], fetchProductAll, { retry: 3, retryDelay: 1000 }))
-    const {isLoading, data: product} = useQuery(['products'], fetchProductAll, { retry: 3, retryDelay: 1000 })
-    console.log('data', product)
+    const {isLoading, data: products} = useQuery(['products'], fetchProductAll, { retry: 3, retryDelay: 1000 })
+    console.log('data', products)
+
+    let lengthProducts = 28
+    const arrayProducts = [];
+
+    for (let i = 1; i <= lengthProducts; i++) {
+        arrayProducts.push(i);
+    }
    
     return (
         <div className='home'>
@@ -30,11 +39,11 @@ const HomePage = () => {
                 </Col>
                 <Col xxl={10} xl={10}>
                     <div className='slide-product'>
-                        <div className='slide'><SlideComponents arrImages={[slide1, slide2, slide3]}/></div>
+                        <div className='slide'><SlideComponents arrImages={[slide1, slide2, slide3, slide4]}/></div>
                         <div className='product'>
-                            <LoadingComponents isLoading={isLoading}>
+                            <LoadingCardComponent isLoading={isLoading} arrayProducts={arrayProducts}>
                                 <Row>
-                                    {product?.data?.map((product) => {
+                                    {products?.data?.map((product) => {
                                         return (
                                             <Col xxl={3} xl={3} key={product._id} >
                                                 <a href="/product-details">
@@ -56,7 +65,7 @@ const HomePage = () => {
                                         )
                                     })}
                                 </Row>
-                            </LoadingComponents>
+                            </LoadingCardComponent>
                         </div>
                         <div className='see-more'>
                             <Button variant="outline-primary">Xem thêm</Button>{' '}

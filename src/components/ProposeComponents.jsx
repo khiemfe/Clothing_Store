@@ -9,6 +9,7 @@ import agetxt from './age.txt'
 import bmitxt from './bmi.txt'
 import gendertxt from './gender.txt'
 import isLoadingtxt from './isLoading.txt'
+import LoadingCardComponent from './LoadingCardComponent'
 
 const ProposeComponents = () => {
 
@@ -25,7 +26,7 @@ const ProposeComponents = () => {
                 console.log('ok', res)
             })
             .catch((err) => {
-                console.log('err qua dung luong', err)
+                console.log('ERR', err)
             })
             setIsLoaded(true);
         }
@@ -38,7 +39,6 @@ const ProposeComponents = () => {
     }
     
     const [result_age, set_result_age] = useState('')
-    
     
     useEffect(()=>{
         axios(agetxt)
@@ -83,6 +83,13 @@ const ProposeComponents = () => {
     console.log('age', result_age)
     console.log('bmi', result_bmi)
     console.log('gender', result_gender)
+
+    let lengthProducts = 8
+    const arrayProducts = [];
+
+    for (let i = 1; i <= lengthProducts; i++) {
+        arrayProducts.push(i);
+    }
     
     return (
         <div className='card-propose'>
@@ -92,7 +99,7 @@ const ProposeComponents = () => {
 
             {/* <CardProposeComponents /> */}
             <div className="products">
-                <LoadingComponents isLoading={isLoading}>
+                <LoadingCardComponent isLoading={isLoading} arrayProducts={arrayProducts}>
                     <Row>
                         {product?.data?.map((product, index) => {
                             return (
@@ -117,7 +124,7 @@ const ProposeComponents = () => {
                             )
                         })}
                     </Row>
-                </LoadingComponents>
+                </LoadingCardComponent>
             </div>
         </div>
     )

@@ -10,11 +10,10 @@ import { isJsonString } from './utils';
 import jwt_decode from "jwt-decode";
 import * as UserService from './services/userServices'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateUser } from './redux/slices/userSlice';
+import { resetUser, updateUser } from './redux/slices/userSlice';
 import LoadingComponents from './components/LoadingComponents';
 
 function App() {
-
 
   // useEffect(() => {
   //   fetchAPI()
@@ -38,6 +37,7 @@ function App() {
     if(decoded?.id) {
       handleGetDetailsUser(decoded?.id, storageData)
     }
+    console.log('decoded-id', decoded?.id)
     console.log('storageData', storageData)
     setIsLoading(false)
   }, [])
@@ -45,7 +45,9 @@ function App() {
   const handleDecoded = () => {
     let storageData = localStorage.getItem('access_token')
     let decoded = {}
-    if(storageData && isJsonString(storageData)) {
+    console.log('isJsonString(storageData)', isJsonString(storageData))
+    console.log('storageData', storageData)
+    if(storageData && isJsonString(storageData) && !user?.access_token) {
       storageData = JSON.parse(storageData)
       decoded = jwt_decode(storageData)
     }
@@ -63,42 +65,50 @@ function App() {
   //   return { decoded, storageData }
   // }
 
-
   UserService.axiosJWT.interceptors.request.use( async (config) => {
     //Chạy vào đây trước khi getDetails, mình sẽ check nếu token hết hạn, thì sẽ gọi đến refreshToken và lấy thằng access token mới đập vào thằng config, và getDetails sẽ có access token mới
     //decoded?.exp là thời gian token hết hạn
     const currentTime = new Date() //thời gian hiện tại
     const { decoded } = handleDecoded()
     console.log(',,.,.,.,.,', decoded)
-    console.log(decoded?.exp < currentTime.getTime() / 1000)
+    let storageRefreshToken = localStorage.getItem('refresh_token')
+    const refreshToken = JSON.parse(storageRefreshToken)
+    const decodedRefreshToken = jwt_decode(refreshToken)
+    console.log('exp', decoded?.exp < currentTime.getTime() / 1000)
+    console.log('expR', decodedRefreshToken?.exp > currentTime.getTime() / 1000)
     if(decoded?.exp < currentTime.getTime() / 1000) {
-      console.log('config', config)
-      const data = await UserService.refreshToken()
-      config.headers['token'] = `Bearer ${data?.access_token}`
-      return config;
+      if(decodedRefreshToken?.exp > currentTime.getTime() / 1000) {
+        console.log('config', config)
+        const data = await UserService.refreshToken()
+        config.headers['token'] = `Bearer ${data?.access_token}`
+        // return config
+      }
     } else {
+      dispatch(resetUser())
       console.log('config', config)
-      return config;
+      // return config;
     }
-    
+    return config
   }, (err) => {
     return Promise.reject(err);
   })
 
-  const handleGetDetailsUser = async (id, token) => {
-    console.log('///', token)
-    const res = await UserService.getDetailsUser(id, token)
-    dispatch(updateUser({ ...res?.data, access_token: token }))
-    console.log('res', res)
-    // setIsLoading(false)
-  }
-
   // const handleGetDetailsUser = async (id, token) => {
-  //   let storageRefreshToken = localStorage.getItem('refresh_token')
-  //   const refreshToken = JSON.parse(storageRefreshToken)
+  //   console.log('///', token)
   //   const res = await UserService.getDetailsUser(id, token)
-  //   dispatch(updateUser({ ...res?.data, access_token: token, refreshToken: refreshToken}))
+  //   dispatch(updateUser({ ...res?.data, access_token: token }))
+  //   console.log('res', res)
+  //   // setIsLoading(false)
   // }
+
+  const handleGetDetailsUser = async (id, token) => {
+    let storageRefreshToken = localStorage.getItem('refresh_token')
+    const refreshToken = JSON.parse(storageRefreshToken)
+    const res = await UserService.getDetailsUser(id, token)
+    console.log('chayyyyyyyy')
+    dispatch(updateUser({ ...res?.data, access_token: token, refreshToken: refreshToken}))
+    setIsLoading(false)
+  }
 
 
   return (

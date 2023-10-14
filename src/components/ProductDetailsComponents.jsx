@@ -268,7 +268,6 @@ const ProductDetailsComponents = () => {
 
     const [amount, setAmount] = useState(1);
 
-
     return (
         <div className='flex flex-col justify-between lg:flex-row gap-16 lg:items-center container'>
             <div className='flex flex-col gap-6 lg:w-2/4 img-main'>

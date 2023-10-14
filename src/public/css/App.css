@@ -13,13 +13,13 @@
   display: none; }
 
 .header {
-  padding: 10px 52px;
+  padding: 5px 40px 5px 50px;
   border-bottom: 1px solid #ccc; }
   .header .container {
     max-width: none; }
   .header .logo {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     object-fit: cover; }
   .header .row {
     width: 100%; }
@@ -57,21 +57,29 @@
     .header .right .form .search {
       display: flex;
       width: 50%;
-      margin: 0 15px; }
+      margin: 0 25px 0 15px; }
       .header .right .form .search input {
-        padding: 8px;
-        font-size: 1.4rem; }
+        padding: 12px;
+        font-size: 1.4rem;
+        border-radius: 30px; }
+        .header .right .form .search input:focus {
+          box-shadow: 0 3px 5px 0.2rem rgba(32, 32, 33, 0.25);
+          border-color: rgba(32, 32, 33, 0.25); }
       .header .right .form .search button {
         padding: 10px 15px;
         font-size: 1.8rem;
         border-color: #ddd;
-        color: #333; }
+        color: #333;
+        border-radius: 30px; }
         .header .right .form .search button:hover {
-          background-color: #eee; }
+          background-color: #fff;
+          box-shadow: 0 3px 5px 0.25rem rgba(32, 32, 33, 0.25);
+          border-color: rgba(32, 32, 33, 0.25); }
     .header .right .form .btn-cart {
-      margin: 0 10px;
+      margin: 0 20px 0 12px;
       background-color: transparent;
-      border: none; }
+      border: none;
+      padding: 0; }
       .header .right .form .btn-cart .badge.bg-warning {
         right: -30px;
         top: -8px;
@@ -81,17 +89,39 @@
       .header .right .form .btn-sign:hover {
         text-decoration: underline; }
     .header .right .form .info-user {
-      text-align: center; }
+      text-align: center;
+      height: 70px;
+      line-height: 70px; }
       .header .right .form .info-user .dropdown-toggle {
-        border: none; }
+        border: none;
+        padding: auto 0 !important; }
+        .header .right .form .info-user .dropdown-toggle::after {
+          border: none; }
+      .header .right .form .info-user .dropdown-menu {
+        top: 96%;
+        box-shadow: #3c4650 0px 10px 30px -10px;
+        border-radius: 10px; }
+        .header .right .form .info-user .dropdown-menu::before {
+          content: '';
+          position: absolute;
+          border-left: 6px solid transparent;
+          border-right: 6px solid transparent;
+          border-bottom: 6px solid #000;
+          left: 50%;
+          top: -10px; }
       .header .right .form .info-user .avatar {
         width: 40px !important;
         height: 40px;
         object-fit: cover;
         border-radius: 50%; }
+      .header .right .form .info-user .textName {
+        margin-top: 5px;
+        font-size: 12px; }
+      .header .right .form .info-user .dropdown-item {
+        line-height: 24px; }
 
 .home {
-  padding: 0 70px;
+  padding: 0 52px;
   margin-bottom: 30px; }
   .home .content {
     display: flex;
@@ -99,11 +129,10 @@
     .home .content ._navbar {
       padding-left: 0; }
       .home .content ._navbar .nav {
-        border: 1px solid #ccc;
         border-radius: 10px;
-        padding: 10px 20px; }
+        padding: 10px 25px; }
         .home .content ._navbar .nav .nav-link {
-          font-size: 1.6rem;
+          font-size: 1.8rem;
           font-weight: bold;
           text-transform: uppercase;
           color: #333; }
@@ -112,12 +141,12 @@
   .home .slide {
     width: 800px;
     overflow: hidden;
-    height: 400px;
+    height: 350px;
     margin: 0 auto;
     display: block;
     border-radius: 5px; }
     .home .slide .item {
-      height: 400px;
+      height: 350px;
       object-fit: cover; }
     .home .slide .slick-arrow {
       z-index: 10; }
@@ -130,7 +159,7 @@
   .home .product {
     display: flex;
     flex-wrap: wrap;
-    margin: 20px 0; }
+    margin: 30px 0 20px 0; }
     .home .product a {
       text-decoration: none; }
     .home .product .row {
@@ -140,6 +169,9 @@
       width: 100% !important;
       cursor: pointer;
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      border: none;
+      border-radius: 10px;
+      overflow: hidden;
       text-align: center; }
       .home .product .card .image {
         overflow: hidden; }
@@ -151,8 +183,9 @@
             transform: scale(1.2); }
       .home .product .card .card-title {
         margin-top: 5px;
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         font-weight: 400;
+        text-transform: uppercase;
         height: 40px;
         justify-content: center; }
       .home .product .card .price-heart {
@@ -178,6 +211,9 @@
   width: 300px;
   cursor: pointer; }
 
+.modal-dialog .modal-content {
+  padding-bottom: 12px; }
+
 .modal-dialog .modal-body video {
   width: 100%; }
 
@@ -188,6 +224,11 @@
   font-size: 1.4rem; }
   .modal-dialog .btn-capture:hover {
     background-color: #ddd; }
+
+.modal-dialog .modal-footer {
+  justify-content: center; }
+  .modal-dialog .modal-footer button {
+    padding: 10px 20px; }
 
 .modal-dialog .ok-pripose {
   font-size: 1.6rem !important; }
@@ -217,7 +258,10 @@
     width: 100% !important;
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    text-align: center; }
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden; }
     .card-propose .card .image {
       overflow: hidden; }
       .card-propose .card .image .card-img-top {
@@ -241,16 +285,79 @@
       .card-propose .card .price-heart svg {
         font-size: 2rem; }
 
+.sign {
+  width: 60%;
+  margin-top: 50px !important; }
+  .sign .card {
+    border: none;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    border-radius: 15px;
+    overflow: hidden; }
+  .sign .image {
+    height: 100%;
+    object-fit: cover; }
+  .sign .title {
+    font-size: 2.6rem !important; }
+  .sign .card-body {
+    padding: 30px 30px; }
+  .sign .input {
+    display: flex;
+    align-items: center;
+    margin: 15px 0; }
+    .sign .input .text {
+      width: 150px;
+      font-size: 1.6rem;
+      margin: 0; }
+    .sign .input .input-nhap {
+      width: 280px;
+      padding: 10px;
+      font-size: 1.5rem; }
+      .sign .input .input-nhap:focus {
+        box-shadow: none;
+        border-color: #000; }
+    .sign .input .form-outline {
+      margin: 0 !important; }
+  .sign .btn-login {
+    padding: 15px 0;
+    width: 120px;
+    font-size: 1.6rem; }
+    .sign .btn-login:hover {
+      opacity: 0.8; }
+  .sign .err {
+    font-size: 1.5rem;
+    margin-bottom: 20px; }
+  .sign .qmk-dk {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-top: 30px; }
+    .sign .qmk-dk a {
+      display: block;
+      color: #000 !important; }
+  .sign .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    .sign .footer .button {
+      display: block; }
+
 .ant-upload-list.ant-upload-list-text {
   display: none; }
 
-.adminProduct .body-product .loading {
-  display: flex !important;
-  justify-content: center;
-  width: 100%; }
+.adminProduct .body-product {
+  margin-top: 20px; }
+  .adminProduct .body-product .loading {
+    display: flex !important;
+    justify-content: center;
+    width: 100%; }
+
+.text_QLSP {
+  margin-bottom: 20px; }
 
 .modal-body .ant-form-item:last-child {
   margin-bottom: 0; }
+
+.modal-body .submit_btn:hover {
+  background-color: #333 !important; }
 
 .modal-body .loading {
   display: flex !important;
@@ -349,3 +456,33 @@
     right: 10px; }
     .render_model:first-child h3 {
       padding: 0 10px; }
+
+.formProfile {
+  margin: auto;
+  width: 600px;
+  font-size: 1.6rem; }
+  .formProfile .rowProfile {
+    display: block; }
+    .formProfile .rowProfile .item {
+      display: flex;
+      align-items: center;
+      margin: 20px;
+      width: 500px; }
+      .formProfile .rowProfile .item label {
+        width: 100px;
+        font-weight: 500; }
+      .formProfile .rowProfile .item input {
+        font-size: 1.4rem;
+        padding: 10px 15px; }
+        .formProfile .rowProfile .item input:focus {
+          box-shadow: none;
+          border-color: #000; }
+  .formProfile .submit {
+    background-color: #000 !important;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    border-radius: 10px; }
+    .formProfile .submit:hover {
+      opacity: 0.8; }

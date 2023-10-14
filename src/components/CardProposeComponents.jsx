@@ -7,19 +7,22 @@ const CardProposeComponents = (props) => {
 
     let { result_age, result_bmi, result_gender, key, countInstock, description, image, name, price, rating, type, discount, selled, age, bmi } = props
     
-    // result_age = '36-50'
-    // result_bmi = 'Beo'
-    // result_gender = 'Nu'
+    // result_age = '10-20'
+    // result_bmi = 'Om'
+    // result_gender = 'Nam'
 
     let MaleOrFemale 
-    MaleOrFemale = result_gender.toLowerCase()
-    if(result_gender === 'Nu') {
-        MaleOrFemale = 'nữ'
+    MaleOrFemale = result_gender?.toLowerCase()
+    if(MaleOrFemale == 'nam') {
+        MaleOrFemale = 'Nam'
     }
-    let isMaleOrFemale = type.toLowerCase().includes(MaleOrFemale)
-    if(result_gender !== 'Nam' && result_gender !== 'Nu') {
+    if(MaleOrFemale == 'nu') {
+        MaleOrFemale = 'Nữ'
+    }
+    let isMaleOrFemale = type?.toLowerCase().includes(MaleOrFemale?.toLowerCase())
+    if(result_gender?.toLowerCase() !== 'nam' && result_gender?.toLowerCase() !== 'nu') {
         isMaleOrFemale = true
-        result_gender = 'undefined'
+        MaleOrFemale = 'undefined'
     }
 
     const Tuoi = result_age
@@ -40,32 +43,35 @@ const CardProposeComponents = (props) => {
     
     let GiaTriBMI
     if(result_bmi === 'Beo') {
-        GiaTriBMI = 'mập'
+        GiaTriBMI = 'Mập'
+    }
+    if(result_bmi === 'thuong') {
+        GiaTriBMI = 'Bình thường'
     }
     if(result_bmi === 'Om') {
-        GiaTriBMI = 'ốm'
+        GiaTriBMI = 'Ốm'
     }
-    let isGiaTriBMI = bmi.toLowerCase()?.includes(GiaTriBMI)
+    let isGiaTriBMI = bmi?.toLowerCase()?.includes(GiaTriBMI?.toLowerCase())
     if(result_bmi !== 'Om' && result_bmi !== 'thuong' && result_bmi !== 'Beo') {
         isGiaTriBMI = true
-        result_bmi = 'undefined'
+        GiaTriBMI = 'undefined'
     }
 
     return (
        <>
             <div className='render_model'>
-                <h3>{result_gender}</h3>
+                <h3>{MaleOrFemale}</h3>
                 <h3>{result_age}</h3>
-                <h3>{result_bmi}</h3>
+                <h3>{GiaTriBMI}</h3>
             </div>
             {Tuoi_Tu<10 ? (
-                <h3 className='agenho'>Xin lỗi quý khách, shop chỉ kinh doanh các loại sản phẩm cho trẻ vị thành niên, nên chúng tôi không tìm thấy sản phẩm phù hợp cho bạn. Cảm ơn quý khách!!!</h3>   
+                <h3 className='agenho'>Xin lỗi quý khách, shop chỉ kinh doanh các loại sản phẩm cho trẻ vị thành niên, 
+                    nên chúng tôi không tìm thấy sản phẩm phù hợp cho bạn. Cảm ơn quý khách!!!</h3>   
             ) : undefined}
-
             {Tuoi_Tu>60 ? (
-                <h3 className='agelon'>Xin lỗi quý khách, shop chỉ chủ yếu kinh doanh các mặc hàng cho giới trẻ, nên chúng tôi không tìm thấy sản phẩm phù hợp cho bạn. Cảm ơn quý khách!!!</h3>   
+                <h3 className='agelon'>Xin lỗi quý khách, shop chỉ chủ yếu kinh doanh các mặc hàng cho giới trẻ, 
+                    nên chúng tôi không tìm thấy sản phẩm phù hợp cho bạn. Cảm ơn quý khách!!!</h3>   
             ) : undefined}
-
             {isMaleOrFemale && isGiaTriBMI && isGiaTriTuoi ?
                 (
                     <Col xxl={3} xl={3}>
@@ -83,7 +89,6 @@ const CardProposeComponents = (props) => {
                                         <h3>{price}.000đ</h3>
                                         <FiHeart/>
                                     </div>
-                                    {/* <Button variant="primary">Mua</Button> */}
                                 </Card.Body>
                             </Card>
                         </a>

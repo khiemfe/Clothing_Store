@@ -103,81 +103,93 @@ const ProfilePage = () => {
 
     return (
         <div>
-            <h1>Thông tin người dùng</h1>
+            <h1 style={{textTransform: 'uppercase', margin: '20px 0', textAlign: 'center'}}>Thông tin người dùng</h1>
             <LoadingComponents isLoading={isLoading}>
-                <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                <Row className="mb-3">
+                <Form noValidate validated={validated} onSubmit={handleSubmit} className='formProfile'>
+                <Row className="mb-3 rowProfile">
                     <Form.Group as={Col} md="4" controlId="validationCustom01">
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control
-                            // required
-                            value={name}
-                            type="text"
-                            onChange={handleOnchangeName}
-                            placeholder="Name?"
-                        />
+                        <div className='item'>
+                            <Form.Label>Name:</Form.Label>
+                            <Form.Control
+                                // required
+                                value={name}
+                                type="text"
+                                onChange={handleOnchangeName}
+                                placeholder="Name?"
+                            />
+                        </div>
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col} md="4" controlId="validationCustom02">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            // required
-                            value={email}
-                            type="email"
-                            onChange={handleOnchangeEmail}
-                            placeholder="email@gmail.com"
-                        />
+                        <div className='item'>
+                            <Form.Label>Email:</Form.Label>
+                            <Form.Control
+                                // required
+                                value={email}
+                                type="email"
+                                onChange={handleOnchangeEmail}
+                                placeholder="email@gmail.com"
+                            />
+                        </div>
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                        <Form.Label>Phone</Form.Label>
-                        <InputGroup hasValidation>
-                            <Form.Control
-                                value={phone}
-                                type="number"
-                                onChange={handleOnchangePhone}
-                                placeholder="Phone?"
-                                // required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                            Please choose a username.
-                            </Form.Control.Feedback>
-                        </InputGroup>
+                        <div className='item'>
+                            <Form.Label>Phone:</Form.Label>
+                            <InputGroup hasValidation>
+                                <Form.Control
+                                    value={phone}
+                                    type="number"
+                                    onChange={handleOnchangePhone}
+                                    placeholder="Phone?"
+                                    // required
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Please choose a username.
+                                </Form.Control.Feedback>
+                            </InputGroup>
+                        </div>
                     </Form.Group>
                 </Row>
-                <Row className="mb-3">
+                <Row className="mb-3 rowProfile">
                     <Form.Group as={Col} md="6" controlId="validationCustom03">
-                        <Form.Label>Address</Form.Label>
-                        <Form.Control 
-                            value={address}
-                            type="text" 
-                            onChange={handleOnchangeAddress}
-                            placeholder="Address" 
-                            // required 
-                        />
+                        <div className='item'>
+                            <Form.Label>Address:</Form.Label>
+                            <Form.Control 
+                                value={address}
+                                type="text" 
+                                onChange={handleOnchangeAddress}
+                                placeholder="Address" 
+                                // required 
+                            />
+                        </div>
                         <Form.Control.Feedback type="invalid">
                             Please provide a valid city.
                         </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col} md="3" controlId="validationCustom04">
-                        <Form.Label>Avatar</Form.Label>
-                        {/* <Form.Control 
-                            type="file" 
-                            onChange={handleOnchangeAvatar}
-                        /> */}
-                        <Upload onChange={handleOnchangeAvatar} maxCount={1}>
-                            <Button icon={<UploadOutlined />}>Select File</Button>
-                        </Upload> 
-                        {avatar && (
-                            <img src={avatar} alt="avatar" style={{width: '60px', objectFit: 'cover'}} />
-                        )}
+                        <div className='item'>
+                            <Form.Label>Avatar:</Form.Label>
+                            {/* <Form.Control 
+                                type="file" 
+                                onChange={handleOnchangeAvatar}
+                            /> */}
+                            <Upload onChange={handleOnchangeAvatar} maxCount={1}>
+                                <Button icon={<UploadOutlined />}>Select File</Button>
+                            </Upload> 
+                            {avatar && (
+                                <img src={avatar} alt="avatar" style={{width: '60px', objectFit: 'cover'}} />
+                            )}
+                        </div>
                         <Form.Control.Feedback type="invalid">
                             Please provide a valid state.
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Row>
-                {/* <Button type="submit">Submit form</Button> */}
-                <Button onClick={handleUpdate}>Update form</Button>
+                    {/* <Button type="submit">Submit form</Button> */}
+                    <div style={{width: '100%', textAlign: 'center'}}>
+                        <Button className='submit' onClick={handleUpdate}>Update form</Button>
+                    </div>
                 </Form>
             </LoadingComponents>
         </div>
