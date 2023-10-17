@@ -86,7 +86,7 @@ const ModelBodyComponent = ({stateProduct, form, handleOnchange, handleOnchangeA
               rules={[
                 {
                   required: true,
-                  message: 'Please input your type!',
+                  message: 'Please input your gender!',
                 },
               ]}
             >
@@ -125,7 +125,7 @@ const ModelBodyComponent = ({stateProduct, form, handleOnchange, handleOnchangeA
               rules={[
                 {
                   required: true,
-                  message: 'Please input your bmi!',
+                  message: 'Please input your size!',
                 },
               ]}
             >

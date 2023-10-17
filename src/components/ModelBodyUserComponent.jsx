@@ -1,10 +1,8 @@
 import React from 'react'
 import LoadingComponents from './LoadingComponents'
 import { Modal } from 'react-bootstrap'
-import { Form, Input, Upload } from 'antd'
+import { Form, Input } from 'antd'
 import { Button } from 'react-bootstrap'
-import { UploadOutlined } from '@ant-design/icons'
-import { GrAdd } from "react-icons/gr"
 
 const ModelBodyUserComponent = ({stateUser, form, handleOnchange, handleOnchangeAvatar, onFinish, isLoading, title}) => {
     return (

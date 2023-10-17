@@ -1,7 +1,6 @@
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import React from 'react'
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Placeholder from 'react-bootstrap/Placeholder';
 
@@ -10,7 +9,6 @@ const LoadingCard = (props) => {
     return (
         <div>
             <Card style={{ width: '18rem', height: '412px',  border: 'none'}} key={key}>
-                {/* <Card.Img style={{height: '300px'}} variant="top" /> */}
                 <Placeholder animation="wave">
                         <Placeholder style={{height: '300px', backgroundColor: '#ccc'}} xs={12} />
                 </Placeholder>
@@ -23,7 +21,6 @@ const LoadingCard = (props) => {
                     <Placeholder style={{lineHeight: '40px'}} as={Card.Title} animation="glow">
                         <Placeholder style={{backgroundColor: '#999'}} xs={6} />
                     </Placeholder>
-                    {/* <Placeholder.Button variant="primary" xs={6} /> */}
                 </Card.Body>
             </Card>
         </div>

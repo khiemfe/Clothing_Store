@@ -11,7 +11,6 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { useQuery } from '@tanstack/react-query'
 import * as ProductServices from '../services/ProductServices'
-import LoadingComponents from '../components/LoadingComponents'
 import LoadingCardComponent from '../components/LoadingCardComponent'
 
 const HomePage = () => {

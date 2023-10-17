@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap'
 import { GrAdd } from "react-icons/gr"
 import TabelComponents from './TabelComponents'
 import Modal from 'react-bootstrap/Modal'
-import { Form } from 'antd'
+import { Form, Input, Space } from 'antd'
 import { SearchOutlined, CloseOutlined } from '@ant-design/icons'
 import { getBase64 } from '../utils'
 import * as ProducttServcie from '../services/ProductServices'
@@ -17,8 +17,6 @@ import DrawerComponent from './DrawerComponent'
 import ModelBodyComponent from './ModelBodyComponent'
 import { useSelector } from 'react-redux'
 import ModelComponent from './ModelComponent'
-import { Input } from 'antd'
-import { Space } from 'antd'
 
 // function MyVerticallyCenteredModal(props) {
 

@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Webcam from 'react-webcam'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { FiCamera } from "react-icons/fi"
-import { useWebcam } from "react-webcam";
 
 // const CameraComponents = () => {
 //     const webcamRef = React.useRef(null)
@@ -41,23 +40,24 @@ import { useWebcam } from "react-webcam";
 
 const CameraComponents = () => {
   
-  const webcamRef = React.useRef(null)
-  const [show, setShow] = React.useState(false)
-  const [showClose, setShowClose] = React.useState(false)
-  const capture = React.useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot()
-    setShow(imageSrc)
-  }, [webcamRef, setShow])
-  
-  const handleShow = React.useCallback(() => setShow(true), [setShow])
-  
-  const handleClose = React.useCallback(
-    () => {
-      setShow(false)
-      setShowClose(false)
-    },
-    [setShow, setShowClose]
+    const webcamRef = React.useRef(null)
+    const [show, setShow] = React.useState(false)
+    const [showClose, setShowClose] = React.useState(false)
+    const capture = React.useCallback(() => {
+      const imageSrc = webcamRef.current.getScreenshot()
+      setShow(imageSrc)
+    }, [webcamRef, setShow])
+    
+    const handleShow = React.useCallback(() => setShow(true), [setShow])
+    
+    const handleClose = React.useCallback(
+      () => {
+        setShow(false)
+        setShowClose(false)
+      },
+      [setShow, setShowClose]
     )
+    
     const handleOnUserMedia = React.useCallback(() => setShowClose(true), [
       setShowClose
     ])

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import TabelComponents from './TabelComponents'
-import { Form } from 'antd'
 import { SearchOutlined, CloseOutlined } from '@ant-design/icons'
 import { getBase64 } from '../utils'
 import * as userServices from '../services/userServices'
@@ -15,8 +14,8 @@ import DrawerComponent from './DrawerComponent'
 import ModelBodyUserComponent from './ModelBodyUserComponent'
 import { useSelector } from 'react-redux'
 import ModelComponent from './ModelComponent'
-import { Input } from 'antd'
-import { Space } from 'antd'
+import { Form, Input, Space } from 'antd'
+
 // import { getAllUser } from '../services/userServices'
 
 const AdminUser = () => {
