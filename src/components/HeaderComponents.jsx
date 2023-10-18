@@ -35,6 +35,13 @@ const HeaderComponents = () => {
     const dataEmail = user?.email;
     localStorage.setItem("email", JSON.stringify(dataEmail));
   }
+
+  console.log("user", user);
+  useEffect(() => {
+    if (user?.access_token && user?.id === undefined) {
+      localStorage.setItem("email", JSON.stringify(false));
+    }
+  });
   let storageEmail = localStorage.getItem("email");
   console.log("storageEmail", storageEmail);
 
@@ -45,7 +52,8 @@ const HeaderComponents = () => {
     await UserServcie.logoutUser();
     dispatch(resetUser());
     localStorage.setItem("email", JSON.stringify(false));
-    localStorage.setItem("log-out", JSON.stringify(true));
+    // localStorage.setItem("log-out", JSON.stringify(true));
+    localStorage.setItem("access_token", JSON.stringify(false));
     setLoading(false);
   };
 
@@ -58,10 +66,10 @@ const HeaderComponents = () => {
     setLoading(false);
   }, [user?.name, user?.avatar]);
 
-  let storageLogOut = localStorage.getItem("log-out");
-  console.log("storageLogOut", storageLogOut !== "true");
+  // let storageLogOut = localStorage.getItem("log-out");
+  // console.log("storageLogOut", storageLogOut !== "true");
 
-  const [loadingInfo, setLoadingInfo] = useState(false);
+  // const [loadingInfo, setLoadingInfo] = useState(false);
 
   return (
     <Navbar className=" justify-content-between header ">
@@ -111,68 +119,68 @@ const HeaderComponents = () => {
                 <BsCart2 className="icon cart" />
               </Button>
               <div className="info-user">
-                <LoadingComponents isLoading={loadingInfo}>
-                  {user?.email && storageLogOut !== "true" ? (
-                    <Dropdown style={{ width: "70px" }}>
-                      <Dropdown.Toggle variant="" id="dropdown-basic">
-                        {userAvatar ? (
-                          <img
-                            className="avatar"
-                            src={userAvatar}
-                            alt="avatar"
-                            style={{ width: "50px" }}
-                          />
-                        ) : (
-                          <img
-                            className="avatar"
-                            src=""
-                            alt=""
-                            style={{ width: "50px" }}
-                          />
-                          // undefined
-                        )}
-                        <div className="textName">
-                          {/* {userName || user.email || "User"} */}
-                          {userName || user.email.split("@")[0]}
-                        </div>
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu style={{ left: "-60%", fontSize: "13px" }}>
-                        {user?.isAdmin && (
-                          <Dropdown.Item href="/system/admin">
-                            Trang chủ ADMIN
-                          </Dropdown.Item>
-                        )}
-                        <Dropdown.Item href="/profile-user">
-                          Thông tin người dùng
-                        </Dropdown.Item>
-                        <Dropdown.Divider />
-                        <LoadingComponents isLoading={loading}>
-                          <Dropdown.Item onClick={handleLogout} href="#">
-                            Đăng xuất
-                          </Dropdown.Item>
-                        </LoadingComponents>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  ) : (
-                    <>
-                      {storageEmail !== "false" && storageLogOut !== "true" ? (
-                        <div>
-                          <LoadingCardInfoComponent
-                            isLoading={true}
-                          ></LoadingCardInfoComponent>
-                        </div>
+                {/* <LoadingComponents isLoading={loadingInfo}> */}
+                {user?.email ? (
+                  <Dropdown style={{ width: "70px" }}>
+                    <Dropdown.Toggle variant="" id="dropdown-basic">
+                      {userAvatar ? (
+                        <img
+                          className="avatar"
+                          src={userAvatar}
+                          alt="avatar"
+                          style={{ width: "50px" }}
+                        />
                       ) : (
-                        <Button
-                          onClick={handleNavigateLogin}
-                          className="btn-sign"
-                          variant=""
-                        >
-                          Đăng nhập <br /> Đăng ký
-                        </Button>
+                        <img
+                          className="avatar"
+                          src=""
+                          alt=""
+                          style={{ width: "50px" }}
+                        />
+                        // undefined
                       )}
-                    </>
-                  )}
-                </LoadingComponents>
+                      <div className="textName">
+                        {/* {userName || user.email || "User"} */}
+                        {userName || user.email?.split("@")[0]}
+                      </div>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu style={{ left: "-60%", fontSize: "13px" }}>
+                      {user?.isAdmin && (
+                        <Dropdown.Item href="/system/admin">
+                          Trang chủ ADMIN
+                        </Dropdown.Item>
+                      )}
+                      <Dropdown.Item href="/profile-user">
+                        Thông tin người dùng
+                      </Dropdown.Item>
+                      <Dropdown.Divider />
+                      <LoadingComponents isLoading={loading}>
+                        <Dropdown.Item onClick={handleLogout} href="#">
+                          Đăng xuất
+                        </Dropdown.Item>
+                      </LoadingComponents>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                ) : (
+                  <>
+                    {storageEmail !== "false" ? (
+                      <div>
+                        <LoadingCardInfoComponent
+                          isLoading={true}
+                        ></LoadingCardInfoComponent>
+                      </div>
+                    ) : (
+                      <Button
+                        onClick={handleNavigateLogin}
+                        className="btn-sign"
+                        variant=""
+                      >
+                        Đăng nhập <br /> Đăng ký
+                      </Button>
+                    )}
+                  </>
+                )}
+                {/* </LoadingComponents> */}
               </div>
             </Form>
           </Col>
