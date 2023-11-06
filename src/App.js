@@ -33,6 +33,7 @@ function App() {
   useEffect(() => {
     setIsLoading(true);
     const { storageData, decoded } = handleDecoded();
+    console.log("decoded?.id", decoded?.id);
     if (decoded?.id) {
       handleGetDetailsUser(decoded?.id, storageData);
     }
@@ -46,12 +47,7 @@ function App() {
     console.log("storageData", storageData);
     let decoded = {};
     // console.log('isJsonString(storageData)', isJsonString(storageData))
-    // console.log('storageData', storageData)
-    if (
-      storageData !== "false" &&
-      isJsonString(storageData) &&
-      !user?.access_token
-    ) {
+    if (storageData && isJsonString(storageData) && !user?.access_token) {
       storageData = JSON.parse(storageData);
       decoded = jwt_decode(storageData);
     }
@@ -59,34 +55,17 @@ function App() {
     return { decoded, storageData };
   };
 
-  // const [isLoaded, setIsLoaded] = useState(false);
-  // useEffect(() => {
-  //   if (!isLoaded) {
-  //     axios
-  //       .post("/access", {
-  //         storageData,
-  //       })
-  //       .then((res) => {
-  //         console.log("ok", res);
-  //       })
-  //       .catch((err) => {
-  //         console.log("ERR", err);
-  //       });
-  //     setIsLoaded(true);
-  //   }
-  // }, [isLoaded]);
-
   UserService.axiosJWT.interceptors.request.use(
     async (config) => {
       //Chạy vào đây trước khi getDetails, mình sẽ check nếu token hết hạn, thì sẽ gọi đến refreshToken và lấy thằng access token mới đập vào thằng config, và getDetails sẽ có access token mới
       //decoded?.exp là thời gian token hết hạn
       const currentTime = new Date(); //thời gian hiện tại
       const { decoded } = handleDecoded();
-      console.log(",,.,.,.,.,", decoded);
+      console.log("decoded", decoded);
       let storageRefreshToken = localStorage.getItem("refresh_token");
       const refreshToken = JSON.parse(storageRefreshToken);
       const decodedRefreshToken = jwt_decode(refreshToken);
-      console.log("exp", decoded?.exp < currentTime.getTime() / 1000);
+      console.log("exp", decoded?.exp > currentTime.getTime() / 1000);
       console.log(
         "expR",
         decodedRefreshToken?.exp > currentTime.getTime() / 1000
@@ -99,8 +78,8 @@ function App() {
           // return config
         }
       } else {
-        dispatch(resetUser());
-        console.log("config", config);
+        // dispatch(resetUser());
+        console.log("ResetUser");
         // return config;
       }
       return config;
@@ -110,17 +89,12 @@ function App() {
     }
   );
 
-  // const handleGetDetailsUser = async (id, token) => {
-  //   console.log('///', token)
-  //   const res = await UserService.getDetailsUser(id, token)
-  //   dispatch(updateUser({ ...res?.data, access_token: token }))
-  //   console.log('res', res)
-  //   // setIsLoading(false)
-  // }
-
   const handleGetDetailsUser = async (id, token) => {
+    console.log('id update', id)
     let storageRefreshToken = localStorage.getItem("refresh_token");
     const refreshToken = JSON.parse(storageRefreshToken);
+    console.log("refreshToken", refreshToken);
+    console.log("token", token);
     const res = await UserService.getDetailsUser(id, token);
     console.log("chayyyyyyyy");
     dispatch(

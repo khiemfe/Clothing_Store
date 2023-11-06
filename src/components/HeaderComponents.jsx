@@ -19,6 +19,7 @@ import * as UserServcie from "../services/userServices";
 import { resetUser } from "../redux/slices/userSlice";
 import LoadingComponents from "./LoadingComponents";
 import LoadingCardInfoComponent from "./LoadingCardInfoComponent";
+import { searchProduct } from "../redux/slices/productSlice";
 
 const HeaderComponents = () => {
   const item = ["nam", "nữ", "new", "best", "sale đồng giá"];
@@ -52,8 +53,7 @@ const HeaderComponents = () => {
     await UserServcie.logoutUser();
     dispatch(resetUser());
     localStorage.setItem("email", JSON.stringify(false));
-    // localStorage.setItem("log-out", JSON.stringify(true));
-    localStorage.setItem("access_token", JSON.stringify(false));
+    // localStorage.setItem("access_token", JSON.stringify(false));
     setLoading(false);
   };
 
@@ -66,10 +66,21 @@ const HeaderComponents = () => {
     setLoading(false);
   }, [user?.name, user?.avatar]);
 
-  // let storageLogOut = localStorage.getItem("log-out");
-  // console.log("storageLogOut", storageLogOut !== "true");
+  console.log("user?.name", user?.name);
+  console.log("storageEmail", storageEmail);
 
-  // const [loadingInfo, setLoadingInfo] = useState(false);
+  const [search, setSearch] = useState("");
+  const onSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const BtnSearchProduct = () => {
+    dispatch(searchProduct(search));
+    console.log("e.target.value", search);
+    if (search) {
+      navigate("/product-search");
+    }
+  };
 
   return (
     <Navbar className=" justify-content-between header ">
@@ -105,10 +116,12 @@ const HeaderComponents = () => {
                   placeholder="Tìm kiếm sản phẩm"
                   className="me-2"
                   aria-label="Search"
+                  onChange={onSearch}
                 />
                 <Button
                   variant="outline-success"
                   className="align-items_center"
+                  onClick={BtnSearchProduct}
                 >
                   <FiSearch />
                 </Button>
@@ -163,10 +176,10 @@ const HeaderComponents = () => {
                   </Dropdown>
                 ) : (
                   <>
-                    {storageEmail !== "false" ? (
+                    {storageEmail && storageEmail !== "false" ? (
                       <div>
                         <LoadingCardInfoComponent
-                          isLoading={true}
+                        // isLoading={true}
                         ></LoadingCardInfoComponent>
                       </div>
                     ) : (

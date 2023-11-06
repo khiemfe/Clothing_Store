@@ -9,6 +9,7 @@ import ProductDetailsPage from '../pages/ProductDetailsPage';
 import ProposePage from '../pages/ProposePage';
 import ProfilePage from '../pages/ProfilePage';
 import AdminPage from '../pages/AdminPage';
+import ProductSearchPage from '../pages/ProductSearchPage';
 
 export const routes = [
     {
@@ -42,8 +43,13 @@ export const routes = [
         isShowHeader: true,
     },
     {
-        path: '/product-details',
+        path: '/product-details/:id',
         page: ProductDetailsPage,
+        isShowHeader: true,
+    },
+    {
+        path: '/product-search',
+        page: ProductSearchPage,
         isShowHeader: true,
     },
     {

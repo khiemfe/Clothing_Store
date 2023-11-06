@@ -12,6 +12,9 @@
 .hidden {
   display: none; }
 
+body {
+  font-family: "Roboto Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
 .header {
   padding: 5px 40px 5px 50px;
   border-bottom: 1px solid #ccc; }
@@ -201,11 +204,13 @@
       display: flex !important;
       justify-content: center;
       width: 100%; }
-  .home .see-more {
-    display: flex;
-    justify-content: center; }
-    .home .see-more .btn {
-      font-size: 2rem; }
+
+.see-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; }
+  .see-more .btn {
+    font-size: 2rem; }
 
 .img-đetails {
   width: 300px;
@@ -285,6 +290,45 @@
       .card-propose .card .price-heart h3 {
         margin: 0; }
       .card-propose .card .price-heart svg {
+        font-size: 2rem; }
+
+.search-page {
+  padding: 20px; }
+  .search-page p {
+    text-align: center;
+    font-size: 20px; }
+    .search-page p span {
+      font-weight: bold; }
+  .search-page .card {
+    margin-top: 10px;
+    width: 100% !important;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden; }
+    .search-page .card .image {
+      overflow: hidden; }
+      .search-page .card .image .card-img-top {
+        height: 350px !important;
+        transition: all 0.2s ease-in-out; }
+        .search-page .card .image .card-img-top:hover {
+          transform: scale(1.2); }
+    .search-page .card .card-title {
+      margin-top: 5px;
+      font-size: 1.6rem;
+      font-weight: 400;
+      height: 40px;
+      justify-content: center; }
+    .search-page .card .price-heart {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 12px 0; }
+      .search-page .card .price-heart h3 {
+        margin: 0; }
+      .search-page .card .price-heart svg {
         font-size: 2rem; }
 
 .sign {
@@ -369,7 +413,7 @@
 .produc-details .container {
   display: flex;
   padding: 50px;
-  padding-right: 200px; }
+  padding-right: 100px; }
 
 .produc-details .img-anhphu {
   display: flex;
@@ -392,70 +436,92 @@
   height: 450px; }
 
 .produc-details .notify {
-  font-size: 20px;
   margin-top: 100px;
-  margin-left: 50px; }
-
-.produc-details h6 {
-  font-size: 20px; }
-
-.produc-details .mota {
-  font-size: 20px;
-  opacity: 0.5; }
-
-.produc-details .font-bold {
-  font-weight: 1000;
-  margin-top: 5px; }
-
-.produc-details .tieude {
-  color: purple;
-  font-weight: 1000;
-  margin-top: 100px; }
-
-.produc-details .choose {
-  font-size: 25px;
-  display: flex;
-  align-items: center; }
-
-.produc-details .cangiua {
-  display: flex;
-  align-items: center;
-  gap: 10px; }
-
-.produc-details .congtru {
-  display: flex;
-  font-size: 30px;
-  height: 40px;
-  width: 40px;
-  color: #000;
-  background-color: #fff;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #000;
-  line-height: 40px; }
-
-.produc-details .number {
-  font-size: 30px;
-  padding: 0 10px; }
-
-.produc-details .add {
-  text-align: center;
-  margin: 0 40px;
-  background-color: #000;
-  border-radius: 15px;
-  padding: 0px 50px;
-  border: none;
-  cursor: pointer;
-  font-size: 15px;
-  height: 50px; }
-  .produc-details .add:hover {
-    opacity: 0.8; }
-
-.produc-details .gia {
-  margin: 5px 10px; }
+  margin-left: 50px;
+  margin: 0 0 0 20px;
+  padding: 20px; }
+  .produc-details .notify .name {
+    font-weight: 500;
+    font-size: 20px;
+    text-transform: uppercase; }
+  .produc-details .notify .gia {
+    margin-top: 50px;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px; }
+    .produc-details .notify .gia span {
+      text-decoration: underline; }
+  .produc-details .notify .size {
+    margin-top: 50px; }
+    .produc-details .notify .size .size-text {
+      font-size: 18px; }
+      .produc-details .notify .size .size-text span {
+        font-weight: bold;
+        margin-left: 5px; }
+    .produc-details .notify .size .size-list {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      padding: 0;
+      margin-top: 20px; }
+      .produc-details .notify .size .size-list .size-item {
+        padding: 12px 0;
+        width: 50px;
+        border: 1.5px solid #ccc;
+        margin: 0 10px;
+        font-size: 16px;
+        text-align: center;
+        cursor: pointer; }
+        .produc-details .notify .size .size-list .size-item:first-child {
+          margin-left: 0; }
+        .produc-details .notify .size .size-list .size-item:hover {
+          border-color: #888; }
+      .produc-details .notify .size .size-list .size-item.active {
+        color: #fff;
+        background-color: #000;
+        border: none; }
+  .produc-details .notify .choose {
+    display: flex;
+    align-items: center;
+    margin-top: 50px; }
+    .produc-details .notify .choose .cangiua {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #ccc;
+      padding: 5px 0; }
+      .produc-details .notify .choose .cangiua .congtru {
+        display: flex;
+        height: 40px;
+        width: 40px;
+        color: #000;
+        background-color: #fff;
+        cursor: pointer;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        font-size: 26px;
+        font-weight: 500; }
+    .produc-details .notify .choose .number {
+      font-size: 26px;
+      padding: 0;
+      font-weight: 500; }
+    .produc-details .notify .choose .add {
+      text-align: center;
+      margin: 0 40px;
+      background-color: #000;
+      border-radius: 10px;
+      padding: 0px 100px;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      height: 50px;
+      text-transform: uppercase; }
+      .produc-details .notify .choose .add:hover {
+        opacity: 0.8; }
+    .produc-details .notify .choose .iconHeart {
+      font-size: 40px;
+      cursor: pointer; }
 
 .card_Propose {
   position: relative; }
