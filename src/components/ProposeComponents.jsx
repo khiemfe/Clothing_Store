@@ -55,51 +55,11 @@ const ProposeComponents = () => {
     arrResult();
   }, []);
 
-  // console.log('duLieu', printAddress)
-
-  // const [result_age, set_result_age] = useState('')
-
-  // useEffect(() =>{
-  //     axios(agetxt)
-  //     .then(res => res.data)
-  //     .then(data => {
-  //         set_result_age(data)
-  //     })
-  // },[agetxt])
-
-  // const [result_bmi, set_result_bmi] = useState('')
-  // useEffect(() =>{
-  //     axios(bmitxt)
-  //     .then(res => res.data)
-  //     .then(data => set_result_bmi(data))
-  // },[bmitxt])
-
-  // const [result_gender, set_result_gender] = useState('')
-  // useEffect(() =>{
-  //     axios(gendertxt)
-  //     .then(res => res.data)
-  //     .then(data => set_result_gender(data))
-  // },[gendertxt])
-
-  //   useEffect(() => {
-  //     axios(isLoadingtxt)
-  //       .then((res) => res.data)
-  //       .then((data) => {
-  //         console.log("dataaaaaaa", data);
-  //         setCheckLoad(data);
-  //       });
-  //   });
-
   let { isLoading, data: product } = useQuery(["products"], fetchProductAll, {
     retry: 3,
     retryDelay: 1000,
   });
-  console.log("loading", isLoading);
-
-  // if (checkLoad === true) {
-  //     isLoading = true
-  //     product = undefined
-  // }
+  console.log("productproduct", product);
 
   if (result_gender === "" && result_age === "" && result_bmi === "") {
     isLoading = true;
@@ -133,6 +93,7 @@ const ProposeComponents = () => {
               return (
                 // <span key={index}>
                 <CardProposeComponents
+                  id={product._id}
                   key={index}
                   className="card_Propose"
                   // countInstock={product.countInstock}

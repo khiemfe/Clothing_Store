@@ -2,10 +2,12 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import { FiHeart } from "react-icons/fi";
 import Col from "react-bootstrap/Col";
+import { useNavigate } from "react-router-dom";
 
 let countProducts = 0;
 const CardProposeComponents = (props) => {
   let {
+    id,
     result_age,
     result_bmi,
     result_gender,
@@ -22,6 +24,11 @@ const CardProposeComponents = (props) => {
     age,
     bmi,
   } = props;
+
+  const navigate = useNavigate()
+    const handleDetailsProduct = (id) => {
+        navigate(`/product-details/${id}`)
+    }
 
   // result_age = '10-20'
   // result_bmi = 'Om'
@@ -104,8 +111,8 @@ const CardProposeComponents = (props) => {
       ) : undefined}
       {isMaleOrFemale && isGiaTriBMI && isGiaTriTuoi ? (
         <Col xxl={3} xl={3}>
-          <a href="/product-details" style={{ textDecoration: "none" }}>
-            <Card style={{ width: "18rem" }}>
+          {/* <a href="/product-details" style={{ textDecoration: "none" }}> */}
+            <Card style={{ width: "18rem" }} onClick={() => handleDetailsProduct(id)}>
               <div className="image">
                 <Card.Img variant="top" src={image} />
               </div>
@@ -120,7 +127,7 @@ const CardProposeComponents = (props) => {
                 </div>
               </Card.Body>
             </Card>
-          </a>
+          {/* </a> */}
         </Col>
       ) : undefined}
     </>

@@ -8,15 +8,17 @@ import { Col, Row } from "react-bootstrap";
 import CardComponents from "../components/CardComponents";
 import Button from "react-bootstrap/Button";
 import LoadingComponents from "../components/LoadingComponents";
+import { useSearchParams } from "react-router-dom";
 
 const ProductSearchPage = () => {
   const [textSearch, setTextSearch] = useState("");
   const [limit, setLimit] = useState(8);
+  const searchStorage = localStorage.getItem("search");
 
   const fetchProductAll = async (context) => {
     console.log("contextcontext", context);
     const limit = context?.queryKey && context?.queryKey[1];
-    const search = context?.queryKey && context?.queryKey[2];
+    const search = (context?.queryKey && context?.queryKey[2]) || searchStorage;
     setTextSearch(search);
     console.log("contextsearch", search);
     console.log("limit", limit);
@@ -25,13 +27,13 @@ const ProductSearchPage = () => {
   };
 
   const searchProduct =
-    useSelector((state) => state.product?.search) || undefined;
+    useSelector((state) => state.product?.search) || searchStorage || undefined;
   console.log("productSearch", searchProduct);
 
   const searchDebounce = useDebounce(searchProduct, 1000);
 
   const [isLoading, setIsLoading] = useState(false);
-  const {
+  let {
     isLoading: isLoadingAll,
     data: products,
     isPreviousData,
@@ -66,10 +68,15 @@ const ProductSearchPage = () => {
     soluongPage = 1;
   }
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    setSearchParams({ search: `${searchStorage}` });
+  }, [textSearch]);
+
   return (
     <div className="search-page">
       <p>
-        Sản phẩm cho từ khoá tìm kiếm: <span>{textSearch}</span>
+        Sản phẩm cho từ khoá tìm kiếm: <span>{searchStorage}</span>
       </p>
       <div className="product">
         <LoadingCardComponent
