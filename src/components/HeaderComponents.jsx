@@ -69,31 +69,25 @@ const HeaderComponents = () => {
   console.log("user?.name", user?.name);
   console.log("storageEmail", storageEmail);
 
-  // const [value, setValue] = useState("");
+  const [value, setValue] = useState("");
 
   const [search, setSearch] = useState("");
   const onSearch = (e) => {
     setSearch(e.target.value);
-    // setValue(e.target.value);
+    setValue(e.target.value)
   };
 
-  // const searchStorage = localStorage.getItem("search");
-  // useEffect(() => {
-  //   setValue(searchStorage);
-  // }, []);
+  const searchStorage = localStorage.getItem("search");
 
   const BtnSearchProduct = () => {
     dispatch(searchProduct(search));
     console.log("e.target.value", search);
-    if (search) {
+    localStorage.setItem("search", search);
+    if (search && search !== searchStorage) {
       navigate("/product-search");
-      localStorage.setItem("search", search);
+      setValue("");
     }
   };
-
-  // const resetSearchStorage = () => {
-  //   localStorage.setItem("search", '');
-  // }
 
   return (
     <Navbar className=" justify-content-between header ">
@@ -122,7 +116,7 @@ const HeaderComponents = () => {
               <div className="search">
                 <Form.Control
                   // type="search"
-                  // value={value}
+                  value={value}
                   placeholder="Tìm kiếm sản phẩm"
                   className="me-2"
                   aria-label="Search"

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as ProductServices from "../services/ProductServices";
 import { useDebounce } from "../hooks/useDebounce";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import LoadingCardComponent from "../components/LoadingCardComponent";
 import { Col, Row } from "react-bootstrap";
@@ -9,11 +9,15 @@ import CardComponents from "../components/CardComponents";
 import Button from "react-bootstrap/Button";
 import LoadingComponents from "../components/LoadingComponents";
 import { useSearchParams } from "react-router-dom";
+import { searchProduct } from "../redux/slices/productSlice";
 
 const ProductSearchPage = () => {
+  const dispatch = useDispatch();
   const [textSearch, setTextSearch] = useState("");
   const [limit, setLimit] = useState(8);
+  const [search, setSearch] = useState();
   const searchStorage = localStorage.getItem("search");
+  console.log("searchStorage", searchStorage);
 
   const fetchProductAll = async (context) => {
     console.log("contextcontext", context);
@@ -26,11 +30,11 @@ const ProductSearchPage = () => {
     return res;
   };
 
-  const searchProduct =
+  const searchProductRedux =
     useSelector((state) => state.product?.search) || searchStorage || undefined;
-  console.log("productSearch", searchProduct);
+  console.log("productSearch", searchProductRedux);
 
-  const searchDebounce = useDebounce(searchProduct, 1000);
+  const searchDebounce = useDebounce(searchProductRedux, 1000);
 
   const [isLoading, setIsLoading] = useState(false);
   let {
@@ -43,7 +47,9 @@ const ProductSearchPage = () => {
     keepPreviousData: true,
   });
   useEffect(() => {
-    if (products?.noProduct?.split(":")[1]?.trim() !== searchProduct?.trim()) {
+    if (
+      products?.noProduct?.split(":")[1]?.trim() !== searchProductRedux?.trim()
+    ) {
       setIsLoading(true);
     } else {
       console.log("===");
@@ -52,7 +58,7 @@ const ProductSearchPage = () => {
   });
   console.log("datadata", products);
   console.log("datadata1", products?.noProduct?.split(":")[1]?.trim());
-  console.log("datadata2", searchProduct?.trim());
+  console.log("datadata2", searchProductRedux?.trim());
   console.log("isLoading", isLoading);
 
   let lengthProducts = 28;
@@ -69,14 +75,49 @@ const ProductSearchPage = () => {
   }
 
   const [searchParams, setSearchParams] = useSearchParams();
+
+  // search ở trên
   useEffect(() => {
+    console.log("searchStorage", searchStorage);
     setSearchParams({ search: `${searchStorage}` });
   }, [textSearch]);
+
+  useEffect(() => {
+    setSearch(searchStorage);
+  }, [searchStorage]);
+
+  const onSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  useEffect(() => {
+    setSearch(searchStorage);
+  }, []);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      console.log("validate", search);
+      dispatch(searchProduct(search));
+      localStorage.setItem("search", search);
+      setSearchParams({ search: `${search}` });
+    }
+  };
 
   return (
     <div className="search-page">
       <p>
-        Sản phẩm cho từ khoá tìm kiếm: <span>{searchStorage}</span>
+        Sản phẩm cho từ khoá tìm kiếm:{" "}
+        <input
+          style={{
+            width: "150px",
+            borderRadius: "15px",
+            border: "2px solid #ccc",
+            padding: "5px",
+          }}
+          onChange={onSearch}
+          value={search}
+          onKeyDown={handleKeyDown}
+        />
       </p>
       <div className="product">
         <LoadingCardComponent
