@@ -92,7 +92,9 @@ const HomePage = () => {
     <div className="home">
       <Row className="content">
         <Col xxl={2} xl={2} className="_navbar">
-          <NavbarComponents />
+          <div style={{ position: "fixed" }}>
+            <NavbarComponents />
+          </div>
         </Col>
         <Col xxl={10} xl={10}>
           <div className="slide-product">
@@ -131,28 +133,33 @@ const HomePage = () => {
                 </Row>
               </LoadingCardComponent>
             </div>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              marginTop: '15px'
-            }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "15px",
+              }}
+            >
               <LoadingComponents isLoading={isPreviousData} />
             </div>
             <div>
-              {products?.totalPage !== 1 && soluongPage !== 1 && !isLoading && !isPreviousData && (
-                <div className="see-more">
-                  <Button
-                    // disabled={
-                    //   isPreviousData ||
-                    //   products?.totalProduct === products?.data.length
-                    // }
-                    onClick={() => setLimit((prev) => prev + 8)}
-                    variant="outline-primary"
-                  >
-                    Xem thêm
-                  </Button>{" "}
-                </div>
-              )}
+              {products?.totalPage !== 1 &&
+                soluongPage !== 1 &&
+                !isLoading &&
+                !isPreviousData && (
+                  <div className="see-more">
+                    <Button
+                      // disabled={
+                      //   isPreviousData ||
+                      //   products?.totalProduct === products?.data.length
+                      // }
+                      onClick={() => setLimit((prev) => prev + 8)}
+                      variant="outline-primary"
+                    >
+                      Xem thêm
+                    </Button>{" "}
+                  </div>
+                )}
             </div>
           </div>
         </Col>

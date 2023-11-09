@@ -81,9 +81,9 @@ const HeaderComponents = () => {
 
   const BtnSearchProduct = () => {
     dispatch(searchProduct(search));
-    console.log("e.target.value", search);
     localStorage.setItem("search", search);
     if (search && search !== searchStorage) {
+      console.log("e.target.value", search);
       navigate("/product-search");
       setValue("");
     }

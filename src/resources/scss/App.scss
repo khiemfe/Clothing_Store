@@ -5,11 +5,17 @@ body {
   // background-color: rgb(245, 245, 245);
   font-family: "Roboto Condensed", "Helvetica Neue", Helvetica, Arial,
     sans-serif;
+  padding-top: 100px;
 }
 
 .header {
   padding: 5px 40px 5px 50px;
   border-bottom: 1px solid #ccc;
+  position: fixed;
+  z-index: 1;
+  background-color: #fff;
+  top: 0;
+  width: 100%;
 
   .container {
     max-width: none;
@@ -183,6 +189,7 @@ body {
 .home {
   padding: 0 52px;
   margin-bottom: 30px;
+  // margin-top: 110px;
 
   .content {
     display: flex;
@@ -193,11 +200,10 @@ body {
 
       .nav {
         // background-color: #eee;
-        // border-right: 1px solid #ddd;
-        border-radius: 10px;
+        border-right: 1px solid #ddd;
         // box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 
-        padding: 10px 25px;
+        padding: 10px 20px;
 
         .nav-link {
           font-size: 1.8rem;
@@ -211,6 +217,9 @@ body {
         }
       }
     }
+  }
+
+  .slide-product {
   }
 
   .slide {

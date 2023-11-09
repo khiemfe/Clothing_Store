@@ -4,6 +4,7 @@ import { useDebounce } from "../hooks/useDebounce";
 import { useSelector, useDispatch } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import LoadingCardComponent from "../components/LoadingCardComponent";
+import {LoadingCardComponent5SP} from "../components/LoadingCardComponent";
 import { Col, Row } from "react-bootstrap";
 import CardComponents from "../components/CardComponents";
 import Button from "react-bootstrap/Button";
@@ -120,15 +121,21 @@ const ProductSearchPage = () => {
         />
       </p>
       <div className="product">
-        <LoadingCardComponent
+        <LoadingCardComponent5SP
           isLoading={isLoading || isLoadingAll}
           arrayProducts={arrayProducts}
+        //   width={}
         >
           <Row>
             {products?.data?.map((product) => {
               console.log("productmap", product);
               return (
-                <Col xxl={3} xl={3} key={product._id}>
+                <Col
+                  style={{ flex: "0 0 auto", width: "20%" }}
+                //   xxl={3}
+                //   xl={3}
+                  key={product._id}
+                >
                   {/* <a href="/product-details"> */}
                   <CardComponents
                     id={product._id}
@@ -149,7 +156,7 @@ const ProductSearchPage = () => {
               );
             })}
           </Row>
-        </LoadingCardComponent>
+        </LoadingCardComponent5SP>
       </div>
       <div
         style={{
