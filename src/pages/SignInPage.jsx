@@ -85,8 +85,14 @@ const SignInPage = () => {
     navigate("/");
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSignIn()
+    }
+  };
+
   return (
-    <MDBContainer className="my-5 sign">
+    <MDBContainer className="my-5 sign" onKeyDown={handleKeyDown}>
       <MDBCard>
         <MDBRow className="g-0">
           <MDBCol md="6">

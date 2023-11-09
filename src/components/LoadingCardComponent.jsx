@@ -9,12 +9,12 @@ const LoadingCard = (props) => {
   return (
     <div>
       <Card
-        style={{ width: "18rem", height: "412px", border: "none" }}
+        style={{ width: "18rem", height: "445px", border: "none" }}
         key={key}
       >
         <Placeholder animation="wave">
           <Placeholder
-            style={{ height: "300px", backgroundColor: "#ccc" }}
+            style={{ height: "330px", backgroundColor: "#ccc", borderRadius: '10px' }}
             xs={12}
           />
         </Placeholder>
@@ -27,7 +27,7 @@ const LoadingCard = (props) => {
             <Placeholder style={{ backgroundColor: "#999" }} xs={8} />
           </Placeholder>
           <Placeholder
-            style={{ lineHeight: "40px" }}
+            style={{ lineHeight: "30px" }}
             as={Card.Title}
             animation="glow"
           >

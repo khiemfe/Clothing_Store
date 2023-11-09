@@ -3,19 +3,19 @@ import * as ProductServices from "../services/ProductServices";
 import { useDebounce } from "../hooks/useDebounce";
 import { useSelector, useDispatch } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-import LoadingCardComponent from "../components/LoadingCardComponent";
-import {LoadingCardComponent5SP} from "../components/LoadingCardComponent";
+import { LoadingCardComponent5SP } from "../components/LoadingCardComponent";
 import { Col, Row } from "react-bootstrap";
 import CardComponents from "../components/CardComponents";
 import Button from "react-bootstrap/Button";
 import LoadingComponents from "../components/LoadingComponents";
 import { useSearchParams } from "react-router-dom";
 import { searchProduct } from "../redux/slices/productSlice";
+import Form from "react-bootstrap/Form";
 
 const ProductSearchPage = () => {
   const dispatch = useDispatch();
   const [textSearch, setTextSearch] = useState("");
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(10);
   const [search, setSearch] = useState();
   const searchStorage = localStorage.getItem("search");
   console.log("searchStorage", searchStorage);
@@ -38,7 +38,7 @@ const ProductSearchPage = () => {
   const searchDebounce = useDebounce(searchProductRedux, 1000);
 
   const [isLoading, setIsLoading] = useState(false);
-  let {
+  const {
     isLoading: isLoadingAll,
     data: products,
     isPreviousData,
@@ -62,7 +62,7 @@ const ProductSearchPage = () => {
   console.log("datadata2", searchProductRedux?.trim());
   console.log("isLoading", isLoading);
 
-  let lengthProducts = 28;
+  let lengthProducts = 10;
   const arrayProducts = [];
 
   for (let i = 1; i <= lengthProducts; i++) {
@@ -70,7 +70,8 @@ const ProductSearchPage = () => {
   }
 
   let soluongProducts = products?.data.length;
-  let soluongPage = Math.ceil(products?.totalProduct / soluongProducts);
+  //   let soluongPage = Math.ceil(products?.totalProduct / soluongProducts);
+  let soluongPage = products?.data.totalPage;
   if (products?.data.length === 0) {
     soluongPage = 1;
   }
@@ -97,24 +98,20 @@ const ProductSearchPage = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      console.log("validate", search);
-      dispatch(searchProduct(search));
-      localStorage.setItem("search", search);
-      setSearchParams({ search: `${search}` });
+      if (search.trim()) {
+        console.log("validate", search);
+        dispatch(searchProduct(search));
+        localStorage.setItem("search", search);
+        setSearchParams({ search: `${search}` });
+      }
     }
   };
 
   return (
     <div className="search-page">
-      <p>
+      <p className="title">
         Sản phẩm cho từ khoá tìm kiếm:{" "}
-        <input
-          style={{
-            width: "150px",
-            borderRadius: "15px",
-            border: "2px solid #ccc",
-            padding: "5px",
-          }}
+        <Form.Control className="input"
           onChange={onSearch}
           value={search}
           onKeyDown={handleKeyDown}
@@ -124,7 +121,7 @@ const ProductSearchPage = () => {
         <LoadingCardComponent5SP
           isLoading={isLoading || isLoadingAll}
           arrayProducts={arrayProducts}
-        //   width={}
+          //   width={}
         >
           <Row>
             {products?.data?.map((product) => {
@@ -132,8 +129,8 @@ const ProductSearchPage = () => {
               return (
                 <Col
                   style={{ flex: "0 0 auto", width: "20%" }}
-                //   xxl={3}
-                //   xl={3}
+                  //   xxl={3}
+                  //   xl={3}
                   key={product._id}
                 >
                   {/* <a href="/product-details"> */}
@@ -174,7 +171,7 @@ const ProductSearchPage = () => {
           !isLoadingAll && (
             <div className="see-more">
               <Button
-                onClick={() => setLimit((prev) => prev + 8)}
+                onClick={() => setLimit((prev) => prev + 10)}
                 variant="outline-primary"
               >
                 Xem thêm

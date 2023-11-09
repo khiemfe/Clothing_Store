@@ -16,14 +16,18 @@ body {
   font-family: "Roboto Condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding-top: 100px; }
 
+.row > * {
+  padding-right: 10px;
+  padding-left: 10px; }
+
 .header {
   padding: 5px 40px 5px 50px;
-  border-bottom: 1px solid #ccc;
   position: fixed;
   z-index: 1;
   background-color: #fff;
   top: 0;
-  width: 100%; }
+  width: 100%;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 1px 10px 0px; }
   .header .container {
     max-width: none; }
   .header .logo {
@@ -66,24 +70,24 @@ body {
     .header .right .form .search {
       display: flex;
       width: 50%;
-      margin: 0 25px 0 15px; }
+      margin: 0 25px 0 15px;
+      position: relative;
+      border-bottom: 1px solid #999; }
       .header .right .form .search input {
-        padding: 12px;
-        font-size: 1.4rem;
-        border-radius: 30px; }
+        padding: 0;
+        font-size: 1.6rem;
+        border-radius: 0px;
+        border: none; }
         .header .right .form .search input:focus {
-          box-shadow: 0 3px 5px 0.2rem rgba(32, 32, 33, 0.25);
-          border-color: rgba(32, 32, 33, 0.25); }
+          border-bottom: none;
+          box-shadow: none; }
       .header .right .form .search button {
-        padding: 10px 15px;
+        padding: 10px;
+        border-radius: 50%;
         font-size: 1.8rem;
-        border-color: #ddd;
         color: #333;
-        border-radius: 30px; }
-        .header .right .form .search button:hover {
-          background-color: #fff;
-          box-shadow: 0 3px 5px 0.25rem rgba(32, 32, 33, 0.25);
-          border-color: rgba(32, 32, 33, 0.25); }
+        border: none;
+        background-color: transparent; }
     .header .right .form .btn-cart {
       margin: 0 20px 0 12px;
       background-color: transparent;
@@ -177,46 +181,56 @@ body {
       margin-top: 10px;
       width: 100% !important;
       cursor: pointer;
-      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       border: none;
-      border-radius: 10px;
-      overflow: hidden;
-      text-align: center; }
+      overflow: hidden; }
+      .home .product .card .card-body {
+        padding: 10px 0; }
       .home .product .card .image {
-        overflow: hidden; }
+        overflow: hidden;
+        border-radius: 10px;
+        object-fit: cover; }
         .home .product .card .image .card-img-top {
           width: 100%;
-          height: 300px !important;
-          transition: all 0.2s ease-in-out; }
-          .home .product .card .image .card-img-top:hover {
-            transform: scale(1.2); }
+          height: 330px !important; }
       .home .product .card .card-title {
         margin-top: 5px;
         font-size: 1.5rem;
         font-weight: 400;
-        text-transform: uppercase;
-        height: 40px;
-        justify-content: center; }
-      .home .product .card .price-heart {
+        height: 35px;
+        align-items: start;
+        margin-top: 0;
+        margin-bottom: 0; }
+      .home .product .card .name-heart {
         display: flex;
         justify-content: space-between;
-        align-items: center;
         margin: 12px 0; }
-        .home .product .card .price-heart h3 {
+        .home .product .card .name-heart h3 {
           margin: 0; }
-        .home .product .card .price-heart svg {
-          font-size: 2rem; }
+        .home .product .card .name-heart svg {
+          font-size: 2.7rem;
+          margin-left: 10px; }
     .home .product .loading-component {
       display: flex !important;
       justify-content: center;
       width: 100%; }
 
+.loading-component .loading {
+  border-color: black black transparent !important; }
+
 .see-more {
   display: flex;
   justify-content: center;
-  margin-top: 10px; }
+  margin-top: 10px;
+  margin-bottom: 20px; }
   .see-more .btn {
-    font-size: 2rem; }
+    font-size: 1.6rem;
+    padding: 8px 18px;
+    color: #000;
+    border-color: #000;
+    border-radius: 10px; }
+    .see-more .btn:hover {
+      background-color: #000;
+      color: #fff; }
 
 .img-đetails {
   width: 300px;
@@ -246,6 +260,7 @@ body {
 
 .card-propose {
   padding: 50px;
+  padding-bottom: 0;
   position: relative; }
   .card-propose .agenho,
   .card-propose .agelon {
@@ -266,76 +281,57 @@ body {
     height: 80px;
     border-radius: 50%;
     object-fit: cover; }
-  .card-propose .card {
-    margin-top: 10px;
-    width: 100% !important;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    text-align: center;
-    border: none;
+
+.card {
+  margin-top: 10px;
+  width: 100% !important;
+  cursor: pointer;
+  border: none;
+  overflow: hidden; }
+  .card .card-body {
+    padding: 10px 0; }
+  .card .image {
+    overflow: hidden;
     border-radius: 10px;
-    overflow: hidden; }
-    .card-propose .card .image {
-      overflow: hidden; }
-      .card-propose .card .image .card-img-top {
-        height: 350px !important;
-        transition: all 0.2s ease-in-out; }
-        .card-propose .card .image .card-img-top:hover {
-          transform: scale(1.2); }
-    .card-propose .card .card-title {
-      margin-top: 5px;
-      font-size: 1.6rem;
-      font-weight: 400;
-      height: 40px;
-      justify-content: center; }
-    .card-propose .card .price-heart {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 12px 0; }
-      .card-propose .card .price-heart h3 {
-        margin: 0; }
-      .card-propose .card .price-heart svg {
-        font-size: 2rem; }
+    object-fit: cover; }
+    .card .image .card-img-top {
+      width: 100%;
+      height: 330px !important; }
+  .card .card-title {
+    margin-top: 5px;
+    font-size: 1.5rem;
+    font-weight: 400;
+    height: 35px;
+    align-items: start;
+    margin-top: 0;
+    margin-bottom: 0; }
+  .card .name-heart {
+    display: flex;
+    justify-content: space-between;
+    margin: 12px 0; }
+    .card .name-heart h3 {
+      margin: 0; }
+    .card .name-heart svg {
+      font-size: 2.7rem;
+      margin-left: 10px; }
 
 .search-page {
   padding: 20px; }
-  .search-page p {
+  .search-page .title {
     text-align: center;
-    font-size: 20px; }
-    .search-page p span {
+    font-size: 2rem; }
+    .search-page .title span {
       font-weight: bold; }
-  .search-page .card {
-    margin-top: 10px;
-    width: 100% !important;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    text-align: center;
-    border: none;
-    border-radius: 10px;
-    overflow: hidden; }
-    .search-page .card .image {
-      overflow: hidden; }
-      .search-page .card .image .card-img-top {
-        height: 350px !important;
-        transition: all 0.2s ease-in-out; }
-        .search-page .card .image .card-img-top:hover {
-          transform: scale(1.2); }
-    .search-page .card .card-title {
-      margin-top: 5px;
-      font-size: 1.6rem;
-      font-weight: 400;
-      height: 40px;
-      justify-content: center; }
-    .search-page .card .price-heart {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 12px 0; }
-      .search-page .card .price-heart h3 {
-        margin: 0; }
-      .search-page .card .price-heart svg {
-        font-size: 2rem; }
+    .search-page .title .input {
+      font-size: 2rem;
+      width: 150px;
+      border: none;
+      border-radius: 0;
+      border-bottom: 1.5px solid #000;
+      padding: 5px 5px 0 5px;
+      display: inline; }
+      .search-page .title .input:focus {
+        box-shadow: none; }
 
 .sign {
   width: 60%;

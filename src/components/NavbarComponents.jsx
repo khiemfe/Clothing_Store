@@ -13,7 +13,6 @@ const NavbarComponents = () => {
             <Nav.Link eventKey="link-2">Áo sơ mi nam</Nav.Link>
             <Nav.Link eventKey="link-2">Quần đùi nữ</Nav.Link>
             <Nav.Link eventKey="link-2">Quần dài nam</Nav.Link>
-            {/* <Nav.Link eventKey="link-2">Link</Nav.Link> */}
       </Nav>
     )
 }

@@ -74,18 +74,28 @@ const HeaderComponents = () => {
   const [search, setSearch] = useState("");
   const onSearch = (e) => {
     setSearch(e.target.value);
-    setValue(e.target.value)
+    setValue(e.target.value);
   };
 
   const searchStorage = localStorage.getItem("search");
 
   const BtnSearchProduct = () => {
     dispatch(searchProduct(search));
-    localStorage.setItem("search", search);
-    if (search && search !== searchStorage) {
-      console.log("e.target.value", search);
-      navigate("/product-search");
-      setValue("");
+    if (search.trim()) {
+      if (search.trim() !== searchStorage.trim()) {
+        navigate("/product-search");
+        localStorage.setItem("search", search);
+        console.log("searchsearch", search);
+        setValue("");
+      } else {
+        navigate("/product-search");
+      }
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      BtnSearchProduct();
     }
   };
 
@@ -114,14 +124,6 @@ const HeaderComponents = () => {
             <Form className="d-flex form align-items_center">
               <CameraComponents />
               <div className="search">
-                <Form.Control
-                  // type="search"
-                  value={value}
-                  placeholder="Tìm kiếm sản phẩm"
-                  className="me-2"
-                  aria-label="Search"
-                  onChange={onSearch}
-                />
                 <Button
                   variant="outline-success"
                   className="align-items_center"
@@ -129,6 +131,15 @@ const HeaderComponents = () => {
                 >
                   <FiSearch />
                 </Button>
+                <Form.Control
+                  // type="search"
+                  value={value}
+                  placeholder="Tìm kiếm"
+                  className="me-2"
+                  aria-label="Search"
+                  onChange={onSearch}
+                  onKeyDown={handleKeyDown}
+                />
               </div>
               <FiHeart className="icon heart" />
               <Button className="btn-cart">
