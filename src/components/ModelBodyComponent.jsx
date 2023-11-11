@@ -120,7 +120,7 @@ const ModelBodyComponent = ({
         {/* name, image, type, price, countInStock, rating, description */}
         <Form.Item
           label="Gender"
-          name="type"
+          name="gender"
           rules={[
             {
               required: true,
@@ -129,9 +129,9 @@ const ModelBodyComponent = ({
           ]}
         >
           <Input
-            value={stateProduct.type}
+            value={stateProduct.gender}
             onChange={handleOnchange}
-            name="type"
+            name="gender"
           />
         </Form.Item>
 
@@ -171,7 +171,7 @@ const ModelBodyComponent = ({
 
         <Form.Item
           label="Size"
-          name="bmi"
+          name="size"
           rules={[
             {
               required: true,
@@ -180,9 +180,9 @@ const ModelBodyComponent = ({
           ]}
         >
           <Input
-            value={stateProduct.bmi}
+            value={stateProduct.size}
             onChange={handleOnchange}
-            name="bmi"
+            name="size"
           />
         </Form.Item>
 

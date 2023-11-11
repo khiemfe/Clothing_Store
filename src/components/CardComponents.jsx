@@ -12,6 +12,7 @@ const CardComponents = (props) => {
     image,
     name,
     price,
+    gender,
     rating,
     type,
     discount,

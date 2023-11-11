@@ -113,11 +113,11 @@ const ProposePage = () => {
                     name={product.name}
                     price={product.price}
                     // rating={product.rating}
-                    type={product.type}
+                    gender={product.gender}
                     // discount={product.discount}
                     // selled={product.selled}
                     age={product.age}
-                    bmi={product.bmi}
+                    size={product.size}
                     result_age={result_age}
                     result_bmi={result_bmi}
                     result_gender={result_gender}

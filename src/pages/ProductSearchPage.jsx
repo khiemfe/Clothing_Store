@@ -111,7 +111,8 @@ const ProductSearchPage = () => {
     <div className="search-page">
       <p className="title">
         Sản phẩm cho từ khoá tìm kiếm:{" "}
-        <Form.Control className="input"
+        <Form.Control
+          className="input"
           onChange={onSearch}
           value={search}
           onKeyDown={handleKeyDown}
@@ -142,11 +143,11 @@ const ProductSearchPage = () => {
                     name={product.name}
                     price={product.price}
                     // rating={product.rating}
-                    type={product.type}
+                    gender={product.gender}
                     // discount={product.discount}
                     // selled={product.selled}
                     age={product.age}
-                    bmi={product.bmi}
+                    size={product.size}
                   />
                   {/* </a> */}
                 </Col>

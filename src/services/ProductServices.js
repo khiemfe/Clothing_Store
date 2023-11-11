@@ -18,10 +18,33 @@ export const getAllProduct = async (search, limit) => {
   return res.data;
 };
 
-export const createProduct = async (data) => {
-  const res = await axios.post(
+export const getAllProductPropose = async (search, limit) => {
+  let res;
+  console.log("searchsearch", search);
+  if (search?.length > 0) {
+    res = await axios.get(
+      `${process.env.REACT_APP_API_URL}/product/get-all?filter=type&filter=${search}&limit=${limit}`
+    );
+  } else {
+    console.log("landau");
+    console.log("limit", limit);
+    res = await axios.get(
+      `${process.env.REACT_APP_API_URL}/product/get-all?limit=${limit}`
+    );
+  }
+  return res.data;
+};
+
+export const createProduct = async (access_token, data) => {
+  console.log("access_tokencr", access_token);
+  const res = await axiosJWT.post(
     `${process.env.REACT_APP_API_URL}/product/create`,
-    data
+    data,
+    {
+      headers: {
+        token: `Bearer ${access_token}`,
+      },
+    }
   );
   console.log("iiiiiiiiiiiiiiiiii", res);
   return res.data;

@@ -20,9 +20,9 @@ const CardProposeComponents = (props) => {
     // rating,
     // discount,
     // selled,
-    type,
+    gender,
     age,
-    bmi,
+    size,
   } = props;
 
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const CardProposeComponents = (props) => {
   if (MaleOrFemale == "nu") {
     MaleOrFemale = "Nữ";
   }
-  let isMaleOrFemale = type
+  let isMaleOrFemale = gender
     ?.toLowerCase()
     .includes(MaleOrFemale?.toLowerCase());
   if (
@@ -82,7 +82,7 @@ const CardProposeComponents = (props) => {
   if (result_bmi === "Om") {
     GiaTriBMI = "Ốm";
   }
-  let isGiaTriBMI = bmi?.toLowerCase()?.includes(GiaTriBMI?.toLowerCase());
+  let isGiaTriBMI = size?.toLowerCase()?.includes(GiaTriBMI?.toLowerCase());
   if (result_bmi !== "Om" && result_bmi !== "thuong" && result_bmi !== "Beo") {
     isGiaTriBMI = true;
     GiaTriBMI = "undefined";

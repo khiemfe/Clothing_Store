@@ -18,98 +18,6 @@ import ModelBodyComponent from "./ModelBodyComponent";
 import { useSelector } from "react-redux";
 import ModelComponent from "./ModelComponent";
 
-// function MyVerticallyCenteredModal(props) {
-
-//   const [form] = Form.useForm()
-//   const [isModelOpen, setIsModalOpen] = useState(false)
-//   const [stateProduct, setStateProduct] = useState({
-//     name: '',
-//           image: '',
-//           type: '',
-//           price: '',
-//           age: '',
-//           bmi: '',
-//         })
-
-//       const mutation = useMutationHook(
-//         (data) => {
-//         console.log(data)
-//         const { name, image, type, price, age, bmi } = data
-//         const res = ProducttServcie.createProduct({ name, image, type, price, age, bmi })
-//         return res
-//       }
-//     )
-
-//     const { data, isLoading, isSuccess, isError } = mutation
-//     useEffect(() => {
-//       if(isSuccess && data?.status === 'OK') {
-//         success()
-//         onClose()
-//       } else if(isError) {
-//         error()
-//       }
-//     }, [isSuccess])
-
-//         const handleOnchangeAvatar = async ({fileList}) => {
-//             const file = fileList[0]
-//             if (!file.url && !file.preview) {
-//                 file.preview = await getBase64(file.originFileObj)
-//             }
-//             setStateProduct({
-//                 ...stateProduct,
-//                 image: file.preview
-//             })
-//         }
-
-//     const handleOnchange = (e) => {
-//         setStateProduct({
-//             ...stateProduct,
-//             [e.target.name]: e.target.value
-//         })
-//     }
-
-//     const onFinish = () => {
-//         if(stateProduct.name !== '' && stateProduct.image !== '' && stateProduct.type !== '' && stateProduct.price !== '' && stateProduct.age !== '' && stateProduct.bmi !== '') {
-//             console.log('Success:', stateProduct)
-//         } else {
-//             console.log('err stateProduct')
-//         }
-
-//         mutation.mutate(stateProduct)
-//     }
-
-//     const onClose = () => {
-//         // setIsModalOpen(false)
-//         setStateProduct({
-//             image: '', //xóa image
-//         })
-//         form.resetFields() //xóa các label
-//         props.onHide() //đóng form
-//     }
-
-//     return (
-//       <Modal
-//         {...props}
-//         size="lg"
-//         aria-labelledby="contained-modal-title-vcenter"
-//         centered
-//         // open={isModelOpen}
-//       >
-//         <Modal.Header closeButton>
-//           <Modal.Title id="contained-modal-title-vcenter">
-//             Tạo sản phẩm
-//           </Modal.Title>
-//         </Modal.Header>
-
-//         <ModelBodyComponent stateProduct={stateProduct} form={form} handleOnchange={handleOnchange} handleOnchangeAvatar={handleOnchangeAvatar} onFinish={onFinish} isLoading={isLoading}/>
-
-//         <Modal.Footer>
-//           <Button onClick={onClose} aria-label="Close">Close</Button>
-//         </Modal.Footer>
-//       </Modal>
-//     )
-//   }
-
 const AdminProduct = () => {
   const [form] = Form.useForm();
   const [formUpdate] = Form.useForm();
@@ -125,34 +33,37 @@ const AdminProduct = () => {
   const [stateProduct, setStateProduct] = useState({
     name: "",
     image: "",
-    type: "",
+    gender: "",
     price: "",
     age: "",
-    bmi: "",
+    size: "",
   });
 
   const [stateProductDetails, setStateProductDetails] = useState({
     name: "",
     image: "",
-    type: "",
+    gender: "",
     price: "",
     age: "",
-    bmi: "",
+    size: "",
   });
 
   const mutation = useMutationHook((data) => {
-    console.log(data);
-    const { name, image, type, price, age, bmi } = data;
-    const res = ProducttServcie.createProduct({
+    console.log('dateCreate', data);
+    const { name, image, gender, price, age, size } = data;
+
+    const res = ProducttServcie.createProduct(data?.token, {
       name,
       image,
-      type,
+      gender,
       price,
       age,
-      bmi,
+      size,
     });
     return res;
   });
+
+  const { data, isLoading, isSuccess, isError } = mutation;
 
   const mutationUpdate = useMutationHook((data) => {
     console.log("dataUpdate: ", data);
@@ -161,8 +72,6 @@ const AdminProduct = () => {
     console.log("resssss", res);
     return res;
   });
-
-  const { data, isLoading, isSuccess, isError } = mutation;
 
   const {
     data: dataUpdated,
@@ -287,16 +196,16 @@ const AdminProduct = () => {
     if (
       stateProduct.name !== "" &&
       stateProduct.image !== "" &&
-      stateProduct.type !== "" &&
+      stateProduct.gender !== "" &&
       stateProduct.price !== "" &&
       stateProduct.age !== "" &&
-      stateProduct.bmi !== ""
+      stateProduct.size !== ""
     ) {
       console.log("Success:", stateProduct);
     } else {
       console.log("err stateProduct");
     }
-    mutation.mutate(stateProduct, {
+    mutation.mutate({token: user?.access_token, ...stateProduct}, {
       //onSettled & queryProduct.refetch() nó mới cập nhật lại không cần load lại trang
       onSettled: () => {
         queryProduct.refetch();
@@ -330,10 +239,10 @@ const AdminProduct = () => {
       setStateProductDetails({
         name: res?.data?.name,
         image: res?.data?.image,
-        type: res?.data?.type,
+        gender: res?.data?.gender,
         price: res?.data?.price,
         age: res?.data?.age,
-        bmi: res?.data?.bmi,
+        size: res?.data?.size,
       });
     }
     setIsLoadingUpdate(false);
@@ -384,10 +293,10 @@ const AdminProduct = () => {
     setStateProductDetails({
       name: "",
       image: "",
-      type: "",
+      gender: "",
       price: "",
       age: "",
-      bmi: "",
+      size: "",
     });
     formUpdate.resetFields();
   };
@@ -541,7 +450,7 @@ const AdminProduct = () => {
     },
     {
       title: "Gender",
-      dataIndex: "type",
+      dataIndex: "gender",
       filters: [
         {
           text: "Nam",
@@ -552,7 +461,7 @@ const AdminProduct = () => {
           value: "Nữ",
         },
       ],
-      onFilter: (value, record) => record.type.includes(value),
+      onFilter: (value, record) => record.gender.includes(value),
     },
     {
       title: "Price",
@@ -613,7 +522,7 @@ const AdminProduct = () => {
     },
     {
       title: "Size",
-      dataIndex: "bmi",
+      dataIndex: "size",
       filters: [
         {
           text: "Ốm",
@@ -628,7 +537,7 @@ const AdminProduct = () => {
           value: "Mập",
         },
       ],
-      onFilter: (value, record) => record.bmi.includes(value),
+      onFilter: (value, record) => record.size.includes(value),
     },
     {
       title: "Action",
