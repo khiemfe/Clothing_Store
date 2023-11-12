@@ -15,6 +15,7 @@ const ModelBodyComponent = ({
   isLoading,
   title,
 }) => {
+  console.log('stateProduct', stateProduct)
   return (
     <Modal.Body>
       <Form
@@ -118,6 +119,7 @@ const ModelBodyComponent = ({
           />
         </Form.Item>
         {/* name, image, type, price, countInStock, rating, description */}
+
         <Form.Item
           label="Gender"
           name="gender"
@@ -183,6 +185,23 @@ const ModelBodyComponent = ({
             value={stateProduct.size}
             onChange={handleOnchange}
             name="size"
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Type"
+          name="type"
+          rules={[
+            {
+              required: true,
+              message: "Please input your type!",
+            },
+          ]}
+        >
+          <Input
+            value={stateProduct.type}
+            onChange={handleOnchange}
+            name="type"
           />
         </Form.Item>
 

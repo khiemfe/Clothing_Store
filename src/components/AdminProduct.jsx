@@ -37,6 +37,7 @@ const AdminProduct = () => {
     price: "",
     age: "",
     size: "",
+    type: ""
   });
 
   const [stateProductDetails, setStateProductDetails] = useState({
@@ -46,11 +47,13 @@ const AdminProduct = () => {
     price: "",
     age: "",
     size: "",
+    type: ""
   });
+
 
   const mutation = useMutationHook((data) => {
     console.log('dateCreate', data);
-    const { name, image, gender, price, age, size } = data;
+    const { name, image, gender, price, age, size, type } = data;
 
     const res = ProducttServcie.createProduct(data?.token, {
       name,
@@ -59,6 +62,7 @@ const AdminProduct = () => {
       price,
       age,
       size,
+      type
     });
     return res;
   });
@@ -199,7 +203,8 @@ const AdminProduct = () => {
       stateProduct.gender !== "" &&
       stateProduct.price !== "" &&
       stateProduct.age !== "" &&
-      stateProduct.size !== ""
+      stateProduct.size !== "" &&
+      stateProduct.type !== ""
     ) {
       console.log("Success:", stateProduct);
     } else {
@@ -243,6 +248,7 @@ const AdminProduct = () => {
         price: res?.data?.price,
         age: res?.data?.age,
         size: res?.data?.size,
+        type: res?.data?.type,
       });
     }
     setIsLoadingUpdate(false);
@@ -297,6 +303,7 @@ const AdminProduct = () => {
       price: "",
       age: "",
       size: "",
+      type: "",
     });
     formUpdate.resetFields();
   };
@@ -538,6 +545,29 @@ const AdminProduct = () => {
         },
       ],
       onFilter: (value, record) => record.size.includes(value),
+    },
+    {
+      title: "Type",
+      dataIndex: "type",
+      filters: [
+        {
+          text: "Áo ấm",
+          value: "Áo ấm",
+        },
+        {
+          text: "Quần Jean",
+          value: "Quần Jean",
+        },
+        {
+          text: "Áo thun",
+          value: "Áo thun",
+        },
+        {
+          text: "Đồ thể thao",
+          value: "Đồ thể thao",
+        },
+      ],
+      onFilter: (value, record) => record.type?.includes(value),
     },
     {
       title: "Action",

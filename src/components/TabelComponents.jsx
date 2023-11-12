@@ -51,7 +51,8 @@ const TabelComponents = (props) => {
           Xoá tất cả
         </div>
       )}
-      <DownloadTableExcel
+      
+      {/* <DownloadTableExcel
         filename={filename}
         sheet={sheet}
         currentTableRef={tableRef.current}
@@ -65,7 +66,7 @@ const TabelComponents = (props) => {
         currentTableRef={tableRefAll.current}
       >
         <button> Export Excel All </button>
-      </DownloadTableExcel>
+      </DownloadTableExcel> */}
 
       <Table
         // style={{display: 'none'}}

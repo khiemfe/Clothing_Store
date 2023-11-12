@@ -30,9 +30,9 @@ const CardProposeComponents = (props) => {
     navigate(`/product-details/${id}`);
   };
 
-  // result_age = 'no'
-  // result_bmi = 'no'
-  // result_gender = 'no'
+  result_age = "40-50";
+  result_bmi = "no";
+  result_gender = "no";
 
   let MaleOrFemale;
   MaleOrFemale = result_gender?.toLowerCase();
@@ -67,6 +67,7 @@ const CardProposeComponents = (props) => {
     +Tuoi_Den == +Tuoi_Sp_Den ||
     (+Tuoi_Tu < Tuoi_Sp_Tu && +Tuoi_Den > Tuoi_Sp_Tu) ||
     (+Tuoi_Sp_Den > +Tuoi_Tu && +Tuoi_Tu > +Tuoi_Sp_Tu);
+
   if (!result_age.includes("-")) {
     isGiaTriTuoi = true;
     result_age = "undefined";
