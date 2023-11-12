@@ -69,13 +69,6 @@ const ProductSearchPage = () => {
     arrayProducts.push(i);
   }
 
-  let soluongProducts = products?.data.length;
-  //   let soluongPage = Math.ceil(products?.totalProduct / soluongProducts);
-  let soluongPage = products?.data.totalPage;
-  if (products?.data.length === 0) {
-    soluongPage = 1;
-  }
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   // search ở trên
@@ -167,7 +160,6 @@ const ProductSearchPage = () => {
       </div>
       <div>
         {products?.totalPage !== 1 &&
-          soluongPage !== 1 &&
           !isPreviousData &&
           !isLoadingAll && (
             <div className="see-more">

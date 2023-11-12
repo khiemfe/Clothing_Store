@@ -18,20 +18,11 @@ export const getAllProduct = async (search, limit) => {
   return res.data;
 };
 
-export const getAllProductPropose = async (search, limit) => {
-  let res;
-  console.log("searchsearch", search);
-  if (search?.length > 0) {
-    res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/product/get-all?filter=type&filter=${search}&limit=${limit}`
-    );
-  } else {
-    console.log("landau");
-    console.log("limit", limit);
-    res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/product/get-all?limit=${limit}`
-    );
-  }
+export const getAllProductPropose = async (gender, age, size, limit) => {
+  console.log('kqqq', gender, age, size, limit)
+  const res = await axios.get(
+    `${process.env.REACT_APP_API_URL}/product/get-all?filter=gender&filter=${gender}&filter=age&filter=${age}&filter=size&filter=${size}&limit=${limit}`
+  );
   return res.data;
 };
 

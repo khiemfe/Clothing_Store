@@ -10,7 +10,7 @@ const CardProposeComponents = (props) => {
     id,
     // key,
     result_age,
-    result_bmi,
+    result_size,
     result_gender,
     // countInstock,
     // description,
@@ -31,7 +31,7 @@ const CardProposeComponents = (props) => {
   };
 
   result_age = "40-50";
-  result_bmi = "no";
+  result_size = "no";
   result_gender = "no";
 
   let MaleOrFemale;
@@ -74,17 +74,21 @@ const CardProposeComponents = (props) => {
   }
 
   let GiaTriBMI;
-  if (result_bmi === "Beo") {
+  if (result_size === "Beo") {
     GiaTriBMI = "Mập";
   }
-  if (result_bmi === "thuong") {
+  if (result_size === "thuong") {
     GiaTriBMI = "Bình thường";
   }
-  if (result_bmi === "Om") {
+  if (result_size === "Om") {
     GiaTriBMI = "Ốm";
   }
   let isGiaTriBMI = size?.toLowerCase()?.includes(GiaTriBMI?.toLowerCase());
-  if (result_bmi !== "Om" && result_bmi !== "thuong" && result_bmi !== "Beo") {
+  if (
+    result_size !== "Om" &&
+    result_size !== "thuong" &&
+    result_size !== "Beo"
+  ) {
     isGiaTriBMI = true;
     GiaTriBMI = "undefined";
   }

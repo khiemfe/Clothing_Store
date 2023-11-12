@@ -4,16 +4,18 @@ import Button from "react-bootstrap/Button";
 import { useQuery } from "@tanstack/react-query";
 import * as ProductServices from "../services/ProductServices";
 import CardProposeComponents from "../components/CardProposeComponents";
-import Row from "react-bootstrap/Row";
+import { Col, Row } from "react-bootstrap";
 import axios from "axios";
 import { LoadingCardComponent5SP } from "../components/LoadingCardComponent";
 import LoadingComponents from "../components/LoadingComponents";
+import CardComponents from "../components/CardComponents";
 
 const ProposePage = () => {
   const imgStorage = localStorage.getItem("img");
   const imageBase64 = JSON.parse(imgStorage);
   const [isLoaded, setIsLoaded] = useState(false);
   const [limit, setLimit] = useState(10);
+  const [isLoadingPropose, setIsLoadingPropose] = useState(true);
 
   useEffect(() => {
     if (!isLoaded) {
@@ -31,15 +33,8 @@ const ProposePage = () => {
     }
   }, [isLoaded]);
 
-  const fetchProductAll = async (context) => {
-    const limit = context?.queryKey && context?.queryKey[1];
-    console.log("limit", limit);
-    const res = await ProductServices.getAllProduct("", limit);
-    return res;
-  };
-
   const [result_age, set_result_age] = useState("");
-  const [result_bmi, set_result_bmi] = useState("");
+  const [result_size, set_result_size] = useState("");
   const [result_gender, set_result_gender] = useState("");
 
   useEffect(() => {
@@ -51,29 +46,41 @@ const ProposePage = () => {
       console.log("duLieu", arr);
       set_result_gender(arr[0]);
       set_result_age(arr[1]);
-      set_result_bmi(arr[2]);
+      set_result_size(arr[2]);
     };
     arrResult();
   }, []);
+
+  const fetchProductAll = async (context) => {
+    const gender = context?.queryKey && context?.queryKey[1];
+    const age = context?.queryKey && context?.queryKey[2];
+    const size = context?.queryKey && context?.queryKey[3];
+    const limit = context?.queryKey && context?.queryKey[4];
+    if (gender && age && size) {
+      setIsLoadingPropose(false);
+      const res = await ProductServices.getAllProductPropose(
+        gender,
+        age,
+        size,
+        limit
+      );
+      return res;
+    }
+  };
 
   let {
     isLoading,
     data: product,
     isPreviousData,
-  } = useQuery(["product", limit], fetchProductAll, {
-    retry: 3,
-    keepPreviousData: true,
-  });
+  } = useQuery(
+    ["product", result_gender, result_age, result_size, limit],
+    fetchProductAll,
+    {
+      retry: 3,
+      keepPreviousData: true,
+    }
+  );
   console.log("productproduct", product);
-
-  if (result_gender === "" && result_age === "" && result_bmi === "") {
-    isLoading = true;
-    product = undefined;
-  }
-
-  console.log("gender", result_gender);
-  console.log("age", result_age);
-  console.log("bmi", result_bmi);
 
   let lengthProducts = 10;
   const arrayProducts = [];
@@ -81,15 +88,14 @@ const ProposePage = () => {
     arrayProducts.push(i);
   }
 
-  let soluongProducts = product?.data.length;
-  let soluongPage = Math.ceil(product?.totalProduct / soluongProducts);
-  if (product?.data.length === 0) {
-    soluongPage = 1;
-  }
-
   return (
     <div>
       <div className="card-propose">
+        <div style={{ display: "flex" }}>
+          <h3>{result_gender}</h3>
+          <h3>{result_age}</h3>
+          <h3>{result_size}</h3>
+        </div>
         {/* <DuDoan /> */}
         <h2>Sản phẩm đề xuất cho bạn</h2>
         <img className="img-propose" src={imageBase64} alt="" />
@@ -97,31 +103,38 @@ const ProposePage = () => {
         {/* <CardProposeComponents /> */}
         <div className="products">
           <LoadingCardComponent5SP
-            isLoading={isLoading}
+            isLoading={isLoadingPropose || isLoading}
             arrayProducts={arrayProducts}
           >
             <Row>
               {product?.data?.map((product, index) => {
                 return (
-                  <CardProposeComponents
-                    id={product._id}
-                    key={index}
-                    className="card_Propose"
-                    // countInstock={product.countInstock}
-                    // description={product.description}
-                    image={product.image}
-                    name={product.name}
-                    price={product.price}
-                    // rating={product.rating}
-                    gender={product.gender}
-                    // discount={product.discount}
-                    // selled={product.selled}
-                    age={product.age}
-                    size={product.size}
-                    result_age={result_age}
-                    result_bmi={result_bmi}
-                    result_gender={result_gender}
-                  />
+                  <Col
+                    style={{ flex: "0 0 auto", width: "20%" }}
+                    //   xxl={3}
+                    //   xl={3}
+                    key={product._id}
+                  >
+                    <CardComponents
+                      id={product._id}
+                      key={index}
+                      className="card_Propose"
+                      // countInstock={product.countInstock}
+                      // description={product.description}
+                      image={product.image}
+                      name={product.name}
+                      price={product.price}
+                      // rating={product.rating}
+                      // discount={product.discount}
+                      // selled={product.selled}
+                      //   gender={product.gender}
+                      //   age={product.age}
+                      //   size={product.size}
+                      //   result_age={result_age}
+                      //   result_size={result_size}
+                      //   result_gender={result_gender}
+                    />
+                  </Col>
                 );
               })}
             </Row>
@@ -139,9 +152,9 @@ const ProposePage = () => {
       </div>
       <div>
         {product?.totalPage !== 1 &&
-          soluongPage !== 1 &&
           !isPreviousData &&
-          !isLoading && (
+          !isLoading &&
+          !isLoadingPropose && (
             <div className="see-more">
               <Button
                 onClick={() => setLimit((prev) => prev + 10)}

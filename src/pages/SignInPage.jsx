@@ -22,6 +22,7 @@ import { Button } from "react-bootstrap";
 const SignInPage = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [disabled, setDisabled] = useState(false)
 
   const dispatch = useDispatch();
 
@@ -78,6 +79,7 @@ const SignInPage = () => {
     });
     console.log("sign-in", email, password);
     localStorage.setItem("email", JSON.stringify(true));
+    setDisabled(true)
   };
 
   const navigate = useNavigate();
@@ -166,7 +168,7 @@ const SignInPage = () => {
                     <LoadingComponents isLoading={isLoading} />
                   </div>
                   <Button
-                    disabled={false}
+                    disabled={disabled}
                     onClick={handleSignIn}
                     className="btn-login"
                     style={{
