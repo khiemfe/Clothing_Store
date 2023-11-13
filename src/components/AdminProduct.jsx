@@ -5,7 +5,7 @@ import TabelComponents from "./TabelComponents";
 import Modal from "react-bootstrap/Modal";
 import { Form, Input, Space } from "antd";
 import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
-import { getBase64 } from "../utils";
+import { getBase64, renderOptions } from "../utils";
 import * as ProducttServcie from "../services/ProductServices";
 import { useMutationHook } from "../hooks/useMutationHook";
 import LoadingComponents from "../components/LoadingComponents";
@@ -17,6 +17,7 @@ import DrawerComponent from "./DrawerComponent";
 import ModelBodyComponent from "./ModelBodyComponent";
 import { useSelector } from "react-redux";
 import ModelComponent from "./ModelComponent";
+import { Select } from "antd";
 
 const AdminProduct = () => {
   const [form] = Form.useForm();
@@ -37,7 +38,7 @@ const AdminProduct = () => {
     price: "",
     age: "",
     size: "",
-    type: ""
+    type: "",
   });
 
   const [stateProductDetails, setStateProductDetails] = useState({
@@ -47,12 +48,11 @@ const AdminProduct = () => {
     price: "",
     age: "",
     size: "",
-    type: ""
+    type: "",
   });
 
-
   const mutation = useMutationHook((data) => {
-    console.log('dateCreate', data);
+    console.log("dateCreate", data);
     const { name, image, gender, price, age, size, type } = data;
 
     const res = ProducttServcie.createProduct(data?.token, {
@@ -62,7 +62,7 @@ const AdminProduct = () => {
       price,
       age,
       size,
-      type
+      type,
     });
     return res;
   });
@@ -189,6 +189,43 @@ const AdminProduct = () => {
     });
   };
 
+  const fetchAllType = async () => {
+    const res = await ProducttServcie.getAllType();
+    return res?.data;
+  };
+  const typeProduct = useQuery(["type-product"], fetchAllType);
+  console.log("typeProduct", typeProduct?.data);
+
+  const options = renderOptions(typeProduct?.data);
+  console.log("options", options);
+
+  const [typeSelect, setTypeSelect] = useState("");
+  const [placeholder, setPlaceholder] = useState('')
+  const handleChangeSelect = (e) => {
+    console.log("options value", e);
+    if (e?.value !== "add_type") {
+      setStateProduct({
+        ...stateProduct,
+        type: e?.value,
+      });
+      setStateProductDetails({
+        ...stateProductDetails,
+        type: e?.value,
+      });
+    } else {
+      setStateProduct({
+        ...stateProduct,
+        type: "",
+      });
+      setStateProductDetails({
+        ...stateProductDetails,
+        type: "",
+      });
+    }
+    setTypeSelect(e?.value);
+  };
+  console.log("typeSelect", typeSelect);
+
   const handleOnchangeDetails = (e) => {
     setStateProductDetails({
       ...stateProductDetails,
@@ -197,6 +234,7 @@ const AdminProduct = () => {
   };
 
   const onFinish = () => {
+    setTypeSelect("");
     if (
       stateProduct.name !== "" &&
       stateProduct.image !== "" &&
@@ -210,12 +248,15 @@ const AdminProduct = () => {
     } else {
       console.log("err stateProduct");
     }
-    mutation.mutate({token: user?.access_token, ...stateProduct}, {
-      //onSettled & queryProduct.refetch() nó mới cập nhật lại không cần load lại trang
-      onSettled: () => {
-        queryProduct.refetch();
-      },
-    });
+    mutation.mutate(
+      { token: user?.access_token, ...stateProduct },
+      {
+        //onSettled & queryProduct.refetch() nó mới cập nhật lại không cần load lại trang
+        onSettled: () => {
+          queryProduct.refetch();
+        },
+      }
+    );
   };
 
   const onClose = () => {
@@ -226,6 +267,7 @@ const AdminProduct = () => {
     form.resetFields(); //xóa các label
     // props.onHide() //đóng form
     setModalShow(false);
+    setTypeSelect("");
   };
 
   // --------------
@@ -252,7 +294,9 @@ const AdminProduct = () => {
       });
     }
     setIsLoadingUpdate(false);
-    console.log("ressss", res);
+    setTypeSelect(res?.data?.type);
+    setPlaceholder(res?.data?.type)
+    console.log("ressss", res.data.type);
   };
 
   console.log("stateProductDetails", stateProductDetails);
@@ -291,6 +335,7 @@ const AdminProduct = () => {
         },
       }
     );
+    setTypeSelect("");
     console.log("stateProductDetailss", stateProductDetails);
   };
 
@@ -598,7 +643,10 @@ const AdminProduct = () => {
       </h1>
       <div className="adminProduct">
         <Button
-          onClick={() => setModalShow(true)}
+          onClick={() => {
+            setModalShow(true);
+            setTypeSelect("");
+          }}
           style={{
             backgroundColor: "#fff",
             width: "100px",
@@ -649,35 +697,60 @@ const AdminProduct = () => {
               stateProduct={stateProduct}
               form={form}
               handleOnchange={handleOnchange}
+              handleChangeSelect={handleChangeSelect}
+              options={options}
+              typeSelect={typeSelect}
               handleOnchangeAvatar={handleOnchangeAvatar}
               onFinish={onFinish}
               isLoading={isLoading}
               title="Add"
             />
-
-            {/* <Modal.Footer>
-                        <Button onClick={onClose} aria-label="Close">Close</Button>
-                      </Modal.Footer> */}
           </Modal>
         </div>
         <div>
-          <DrawerComponent
-            title="Chi tiết sản phẩm"
-            isOpen={isOpenDrawer}
-            onClose={() => setIsOpenDrawer(false)}
+          {/* <DrawerComponent
+              title="Chi tiết sản phẩm"
+              isOpen={isOpenDrawer}
+              onClose={() => {
+                setIsOpenDrawer(false);
+                setTypeSelect("");
+              }}
+            > */}
+          <Modal
+            show={isOpenDrawer}
+            onHide={() => {
+              setIsOpenDrawer(false);
+              setTypeSelect("");
+              setPlaceholder('')
+            }}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
           >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Chỉnh sửa sản phẩm
+              </Modal.Title>
+            </Modal.Header>
             <LoadingComponents isLoading={isLoadingUpdate}>
-              <ModelBodyComponent
-                stateProduct={stateProductDetails}
-                form={formUpdate}
-                handleOnchange={handleOnchangeDetails}
-                handleOnchangeAvatar={handleOnchangeAvatarDetails}
-                onFinish={onUpdateProduct}
-                isLoading={isLoadingUpdated}
-                title="Update"
-              />
+              {!isLoadingUpdate && (
+                <ModelBodyComponent
+                  stateProduct={stateProductDetails}
+                  form={formUpdate}
+                  handleOnchange={handleOnchangeDetails}
+                  handleChangeSelect={handleChangeSelect}
+                  options={options}
+                  typeSelect={typeSelect}
+                  placeholder={placeholder}
+                  handleOnchangeAvatar={handleOnchangeAvatarDetails}
+                  onFinish={onUpdateProduct}
+                  isLoading={isLoadingUpdated}
+                  title="Update"
+                />
+              )}
             </LoadingComponents>
-          </DrawerComponent>
+          </Modal>
+          {/* </DrawerComponent> */}
         </div>
         <div>
           <ModelComponent

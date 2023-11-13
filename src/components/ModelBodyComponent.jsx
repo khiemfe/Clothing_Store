@@ -1,21 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LoadingComponents from "./LoadingComponents";
 import { Modal } from "react-bootstrap";
 import { Form, Input, Upload } from "antd";
 import { Button } from "react-bootstrap";
 import { UploadOutlined } from "@ant-design/icons";
 import { GrAdd } from "react-icons/gr";
+import Select from "react-select";
 
 const ModelBodyComponent = ({
   stateProduct,
   form,
   handleOnchange,
+  handleChangeSelect,
+  options,
+  typeSelect,
+  placeholder,
   handleOnchangeAvatar,
   onFinish,
   isLoading,
   title,
 }) => {
-  console.log('stateProduct', stateProduct)
+  console.log("stateProducttt", stateProduct.type);
+  console.log("typeSelect2", typeSelect);
+
   return (
     <Modal.Body>
       <Form
@@ -191,18 +198,30 @@ const ModelBodyComponent = ({
         <Form.Item
           label="Type"
           name="type"
-          rules={[
-            {
-              required: true,
-              message: "Please input your type!",
-            },
-          ]}
+          // rules={[
+          //   {
+          //     required: true,
+          //     message: "Please input your type!",
+          //   },
+          // ]}
         >
-          <Input
-            value={stateProduct.type}
-            onChange={handleOnchange}
-            name="type"
-          />
+          <div className="App">
+            <Select
+              name="type"
+              placeholder={placeholder || ''}
+              // defaultValue={stateProduct.type}
+              onChange={handleChangeSelect}
+              options={options}
+            />
+            {typeSelect === "add_type" && (
+              <Input
+                value={stateProduct.type}
+                onChange={handleOnchange}
+                placeholder="Nhập type bạn muốn thêm"
+                name="type"
+              />
+            )}
+          </div>
         </Form.Item>
 
         <Form.Item

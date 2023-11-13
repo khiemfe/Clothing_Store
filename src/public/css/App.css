@@ -20,6 +20,9 @@ body {
   padding-right: 10px;
   padding-left: 10px; }
 
+.css-1jqq78o-placeholder {
+  color: #000 !important; }
+
 .header {
   padding: 5px 40px 5px 50px;
   position: fixed;
@@ -257,30 +260,6 @@ body {
 
 .modal-dialog .ok-pripose {
   font-size: 1.6rem !important; }
-
-.card-propose {
-  padding: 50px;
-  padding-bottom: 0;
-  position: relative; }
-  .card-propose .agenho,
-  .card-propose .agelon {
-    display: none; }
-    .card-propose .agenho:first-child,
-    .card-propose .agelon:first-child {
-      display: block; }
-  .card-propose h2 {
-    margin-bottom: 30px;
-    text-align: center;
-    font-size: 2rem;
-    text-transform: uppercase; }
-  .card-propose .img-propose {
-    position: absolute;
-    top: 10px;
-    right: 50px;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover; }
 
 .card {
   margin-top: 10px;

@@ -26,3 +26,20 @@ export function getItem(label, key, icon, children, type) {
         type,
     };
 }
+
+export const renderOptions = (arr) => {
+    let results = []
+    if(arr) {
+        results = arr?.map((item) => {
+            return {
+                value: item,
+                label: item
+            }
+        })
+    }
+    results.push({
+        value: 'add_type',
+        label: 'Thêm type'
+    })
+    return results
+}

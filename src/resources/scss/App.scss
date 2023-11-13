@@ -13,9 +13,12 @@ body {
   padding-left: 10px;
 }
 
+.css-1jqq78o-placeholder {
+  color: #000 !important;
+}
+
 .header {
   padding: 5px 40px 5px 50px;
-  // border-bottom: 1px solid #ccc;
   position: fixed;
   z-index: 1;
   background-color: #fff;
@@ -401,88 +404,88 @@ body {
 
 // Card Propose
 
-.card-propose {
-  padding: 50px;
-  padding-bottom: 0;
-  position: relative;
+// .card-propose {
+//   padding: 50px;
+//   padding-bottom: 0;
+//   position: relative;
 
-  .agenho,
-  .agelon {
-    display: none;
+//   .agenho,
+//   .agelon {
+//     display: none;
 
-    &:first-child {
-      display: block;
-    }
-  }
+//     &:first-child {
+//       display: block;
+//     }
+//   }
 
-  h2 {
-    margin-bottom: 30px;
-    text-align: center;
-    font-size: 2rem;
-    text-transform: uppercase;
-  }
+//   h2 {
+//     margin-bottom: 30px;
+//     text-align: center;
+//     font-size: 2rem;
+//     text-transform: uppercase;
+//   }
 
-  .img-propose {
-    position: absolute;
-    top: 10px;
-    right: 50px;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
+//   .img-propose {
+//     position: absolute;
+//     top: 10px;
+//     right: 50px;
+//     width: 80px;
+//     height: 80px;
+//     border-radius: 50%;
+//     object-fit: cover;
+//   }
 
-  //trùng:
-  // .card {
-  //   margin-top: 10px;
-  //   width: 100% !important;
-  //   cursor: pointer;
-  //   // box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  //   border: none;
-  //   overflow: hidden;
-  //   // text-align: center;
+//   //trùng:
+//   // .card {
+//   //   margin-top: 10px;
+//   //   width: 100% !important;
+//   //   cursor: pointer;
+//   //   // box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+//   //   border: none;
+//   //   overflow: hidden;
+//   //   // text-align: center;
 
-  //   .card-body {
-  //     padding: 10px 0;
-  //   }
+//   //   .card-body {
+//   //     padding: 10px 0;
+//   //   }
 
-  //   .image {
-  //     overflow: hidden;
-  //     border-radius: 10px;
-  //     object-fit: cover;
+//   //   .image {
+//   //     overflow: hidden;
+//   //     border-radius: 10px;
+//   //     object-fit: cover;
 
-  //     .card-img-top {
-  //       width: 100%;
-  //       height: 330px !important;
-  //     }
-  //   }
+//   //     .card-img-top {
+//   //       width: 100%;
+//   //       height: 330px !important;
+//   //     }
+//   //   }
 
-  //   .card-title {
-  //     margin-top: 5px;
-  //     font-size: 1.5rem;
-  //     font-weight: 400;
-  //     height: 35px;
-  //     align-items: start;
-  //     margin-top: 0;
-  //     margin-bottom: 0;
-  //   }
+//   //   .card-title {
+//   //     margin-top: 5px;
+//   //     font-size: 1.5rem;
+//   //     font-weight: 400;
+//   //     height: 35px;
+//   //     align-items: start;
+//   //     margin-top: 0;
+//   //     margin-bottom: 0;
+//   //   }
 
-  //   .name-heart {
-  //     display: flex;
-  //     justify-content: space-between;
-  //     margin: 12px 0;
+//   //   .name-heart {
+//   //     display: flex;
+//   //     justify-content: space-between;
+//   //     margin: 12px 0;
 
-  //     h3 {
-  //       margin: 0;
-  //     }
+//   //     h3 {
+//   //       margin: 0;
+//   //     }
 
-  //     svg {
-  //       font-size: 2.7rem;
-  //       margin-left: 10px;
-  //     }
-  //   }
-  // }
-}
+//   //     svg {
+//   //       font-size: 2.7rem;
+//   //       margin-left: 10px;
+//   //     }
+//   //   }
+//   // }
+// }
 
 .card {
   margin-top: 10px;

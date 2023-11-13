@@ -88,12 +88,23 @@ const HomePage = () => {
   const soluongPage = Math.ceil(products?.totalProduct / soluongProducts);
   console.log("soluongPage", soluongPage);
 
+  const [arrType, setArrType] = useState([]);
+  const fetchAllType = async () => {
+    const res = await ProductServices.getAllType();
+    if (res?.status === "OK") {
+      setArrType(res?.data);
+    }
+  };
+  useEffect(() => {
+    fetchAllType();
+  }, []);
+
   return (
     <div className="home">
       <Row className="content">
         <Col xxl={2} xl={2} className="_navbar">
           <div style={{ position: "fixed" }}>
-            <NavbarComponents />
+            <NavbarComponents arrType={arrType} />
           </div>
         </Col>
         <Col xxl={10} xl={10}>

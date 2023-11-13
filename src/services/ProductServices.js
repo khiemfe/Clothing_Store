@@ -19,7 +19,7 @@ export const getAllProduct = async (search, limit) => {
 };
 
 export const getAllProductPropose = async (gender, age, size, limit) => {
-  console.log('kqqq', gender, age, size, limit)
+  console.log("kqqq", gender, age, size, limit);
   const res = await axios.get(
     `${process.env.REACT_APP_API_URL}/product/get-all?filter=gender&filter=${gender}&filter=age&filter=${age}&filter=size&filter=${size}&limit=${limit}`
   );
@@ -83,6 +83,13 @@ export const deleteManyProduct = async (data, access_token) => {
         token: `Bearer ${access_token}`,
       },
     }
+  );
+  return res.data;
+};
+
+export const getAllType = async () => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_API_URL}/product/get-all-type`
   );
   return res.data;
 };
