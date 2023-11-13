@@ -82,9 +82,8 @@ const ProposePage = () => {
   );
   console.log("productproduct", product);
 
-  let lengthProducts = 10;
   const arrayProducts = [];
-  for (let i = 1; i <= lengthProducts; i++) {
+  for (let i = 1; i <= 10; i++) {
     arrayProducts.push(i);
   }
 
@@ -151,7 +150,7 @@ const ProposePage = () => {
         <LoadingComponents isLoading={isPreviousData} />
       </div>
       <div>
-        {product?.totalPage !== 1 &&
+        {product?.totalPage > 1 &&
           !isPreviousData &&
           !isLoading &&
           !isLoadingPropose && (

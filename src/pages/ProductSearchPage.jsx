@@ -37,9 +37,8 @@ const ProductSearchPage = () => {
 
   const searchDebounce = useDebounce(searchProductRedux, 1000);
 
-  const [isLoading, setIsLoading] = useState(false);
   const {
-    isLoading: isLoadingAll,
+    isLoading: isLoading,
     data: products,
     isPreviousData,
   } = useQuery(["products", limit, searchDebounce], fetchProductAll, {
@@ -47,33 +46,13 @@ const ProductSearchPage = () => {
     retryDelay: 1000,
     keepPreviousData: true,
   });
-  useEffect(() => {
-    if (
-      products?.noProduct?.split(":")[1]?.trim() !== searchProductRedux?.trim()
-    ) {
-      setIsLoading(true);
-    } else {
-      console.log("===");
-      setIsLoading(false);
-    }
-  });
+
   console.log("datadata", products);
-  console.log("datadata1", products?.noProduct?.split(":")[1]?.trim());
-  console.log("datadata2", searchProductRedux?.trim());
   console.log("isLoading", isLoading);
 
-  let lengthProducts = 10;
-  const arrayProducts = [];
-
-  for (let i = 1; i <= lengthProducts; i++) {
-    arrayProducts.push(i);
-  }
-
   const [searchParams, setSearchParams] = useSearchParams();
-
   // search ở trên
   useEffect(() => {
-    console.log("searchStorage", searchStorage);
     setSearchParams({ search: `${searchStorage}` });
   }, [textSearch]);
 
@@ -100,6 +79,11 @@ const ProductSearchPage = () => {
     }
   };
 
+  const arrayProducts = [];
+  for (let i = 1; i <= 10; i++) {
+    arrayProducts.push(i);
+  }
+
   return (
     <div className="search-page">
       <p className="title">
@@ -111,9 +95,10 @@ const ProductSearchPage = () => {
           onKeyDown={handleKeyDown}
         />
       </p>
+      {products?.noProduct && <h2>{products?.noProduct}</h2>}
       <div className="product">
         <LoadingCardComponent5SP
-          isLoading={isLoading || isLoadingAll}
+          isLoading={isLoading}
           arrayProducts={arrayProducts}
           //   width={}
         >
@@ -159,18 +144,16 @@ const ProductSearchPage = () => {
         <LoadingComponents isLoading={isPreviousData} />
       </div>
       <div>
-        {products?.totalPage !== 1 &&
-          !isPreviousData &&
-          !isLoadingAll && (
-            <div className="see-more">
-              <Button
-                onClick={() => setLimit((prev) => prev + 10)}
-                variant="outline-primary"
-              >
-                Xem thêm
-              </Button>{" "}
-            </div>
-          )}
+        {products?.totalPage > 1 && !isPreviousData && !isLoading && (
+          <div className="see-more">
+            <Button
+              onClick={() => setLimit((prev) => prev + 10)}
+              variant="outline-primary"
+            >
+              Xem thêm
+            </Button>{" "}
+          </div>
+        )}
       </div>
     </div>
   );
