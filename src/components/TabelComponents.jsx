@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { Table } from "antd";
 import LoadingComponents from "./LoadingComponents";
 import { DownloadTableExcel } from "react-export-table-to-excel";
+import LoadingTableComponent from "./LoadingTableComponent";
 
 const TabelComponents = (props) => {
   const {
@@ -11,6 +12,7 @@ const TabelComponents = (props) => {
     products = [],
     isLoading = false,
     handleDeleteManyProduct,
+    text,
     filename,
     sheet,
   } = props;
@@ -35,23 +37,20 @@ const TabelComponents = (props) => {
   const tableRef = useRef(null);
   const tableRefAll = useRef(null);
 
-  console.log('tableRef.current', tableRef.current)
-  console.log('dataTable', dataTable)
+  console.log("tableRef.current", tableRef.current);
+  console.log("dataTable", dataTable);
 
   // const newColumns = columns.pop()
 
   return (
     <>
       {/* <Divider /> */}
-      <div className="loading">
-        <LoadingComponents isLoading={isLoading}></LoadingComponents>
-      </div>
       {rowSelectedKeys.length > 0 && (
         <div style={{ cursor: "pointer" }} onClick={hanleDeleteAll}>
           Xoá tất cả
         </div>
       )}
-      
+
       {/* <DownloadTableExcel
         filename={filename}
         sheet={sheet}
@@ -79,6 +78,18 @@ const TabelComponents = (props) => {
         dataSource={dataTable}
         {...props}
       />
+      {!isLoading && dataTable.length === 0 && (
+        <h3
+          style={{
+            textAlign: "center",
+            marginTop: "50px",
+            textTransform: "uppercase",
+          }}
+        >
+          Không có {text}
+        </h3>
+      )}
+      <LoadingTableComponent isLoading={isLoading}></LoadingTableComponent>
       {/* <Table
         style={{display: 'none'}}
         ref={tableRefAll}

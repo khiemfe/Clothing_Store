@@ -18,6 +18,8 @@ import ModelBodyComponent from "./ModelBodyComponent";
 import { useSelector } from "react-redux";
 import ModelComponent from "./ModelComponent";
 import { Select } from "antd";
+import LoadingCardInfoComponent from "./LoadingCardInfoComponent";
+import LoadingUpdateComponent from "./LoadingUpdateComponent";
 
 const AdminProduct = () => {
   const [form] = Form.useForm();
@@ -200,7 +202,7 @@ const AdminProduct = () => {
   console.log("options", options);
 
   const [typeSelect, setTypeSelect] = useState("");
-  const [placeholder, setPlaceholder] = useState('')
+  const [placeholder, setPlaceholder] = useState("");
   const handleChangeSelect = (e) => {
     console.log("options value", e);
     if (e?.value !== "add_type") {
@@ -281,6 +283,7 @@ const AdminProduct = () => {
   const { data: dataProduct, isLoading: isLoadingProduct } = queryProduct;
 
   const fetchGetDetailsProduct = async (rowSelected) => {
+    setIsLoadingUpdate(true)
     const res = await ProducttServcie.getDetailsProduct(rowSelected);
     if (res?.data) {
       setStateProductDetails({
@@ -295,7 +298,7 @@ const AdminProduct = () => {
     }
     setIsLoadingUpdate(false);
     setTypeSelect(res?.data?.type);
-    setPlaceholder(res?.data?.type)
+    setPlaceholder(res?.data?.type);
     console.log("ressss", res.data.type);
   };
 
@@ -652,6 +655,7 @@ const AdminProduct = () => {
             width: "100px",
             height: "100px",
             fontSize: "40px",
+            borderColor: "#000",
           }}
         >
           <GrAdd />
@@ -665,6 +669,7 @@ const AdminProduct = () => {
             isLoading={isLoadingProduct}
             filename="Products Table"
             sheet="Product"
+            text='sản phẩm'
             onRow={(record, rowIndex) => {
               return {
                 onClick: () => {
@@ -708,32 +713,33 @@ const AdminProduct = () => {
           </Modal>
         </div>
         <div>
-          {/* <DrawerComponent
-              title="Chi tiết sản phẩm"
-              isOpen={isOpenDrawer}
-              onClose={() => {
-                setIsOpenDrawer(false);
-                setTypeSelect("");
-              }}
-            > */}
-          <Modal
+          <DrawerComponent
+            title="Chỉnh sửa sản phẩm"
+            isOpen={isOpenDrawer}
+            onClose={() => {
+              setIsOpenDrawer(false);
+              setTypeSelect("");
+              setPlaceholder("");
+            }}
+          >
+            {/* <Modal
             show={isOpenDrawer}
             onHide={() => {
               setIsOpenDrawer(false);
               setTypeSelect("");
-              setPlaceholder('')
+              setPlaceholder("");
             }}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
-          >
-            <Modal.Header closeButton>
+          > */}
+            {/* <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
                 Chỉnh sửa sản phẩm
               </Modal.Title>
-            </Modal.Header>
-            <LoadingComponents isLoading={isLoadingUpdate}>
-              {!isLoadingUpdate && (
+            </Modal.Header> */}
+            <LoadingUpdateComponent isLoading={true}>
+              {/* {!isLoadingUpdate && ( */}
                 <ModelBodyComponent
                   stateProduct={stateProductDetails}
                   form={formUpdate}
@@ -747,10 +753,10 @@ const AdminProduct = () => {
                   isLoading={isLoadingUpdated}
                   title="Update"
                 />
-              )}
-            </LoadingComponents>
-          </Modal>
-          {/* </DrawerComponent> */}
+              {/* )} */}
+            </LoadingUpdateComponent>
+            {/* </Modal> */}
+          </DrawerComponent>
         </div>
         <div>
           <ModelComponent

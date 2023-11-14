@@ -18,6 +18,15 @@ export const getAllProduct = async (search, limit) => {
   return res.data;
 };
 
+export const getTypeProduct = async (type, page, limit) => {
+  if (type) {
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_URL}/product/get-all?filter=type&filter=${type}&limit=${limit}&page=${page}`
+    );
+    return res.data;
+  }
+};
+
 export const getAllProductPropose = async (gender, age, size, limit) => {
   console.log("kqqq", gender, age, size, limit);
   const res = await axios.get(

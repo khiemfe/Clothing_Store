@@ -26,7 +26,7 @@ body {
 .header {
   padding: 5px 40px 5px 50px;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   background-color: #fff;
   top: 0;
   width: 100%;
@@ -143,10 +143,12 @@ body {
     display: flex;
     margin: 20px 0; }
     .home .content ._navbar {
-      padding-left: 0; }
+      padding-left: 0;
+      width: 220px; }
       .home .content ._navbar .nav {
         border-right: 1px solid #ddd;
-        padding: 10px 20px; }
+        padding: 15px 20px;
+        box-shadow: #cccccc 1px 1px 2px; }
         .home .content ._navbar .nav .nav-link {
           font-size: 1.8rem;
           font-weight: bold;
@@ -369,6 +371,31 @@ body {
 
 .ant-upload-list.ant-upload-list-text {
   display: none; }
+
+:where(.css-dev-only-do-not-override-1vr7spz).ant-menu-light
+.ant-menu-item-selected {
+  color: #fff;
+  background-color: #444; }
+
+.ant-pagination-item.ant-pagination-item-active {
+  border-color: #000; }
+  .ant-pagination-item.ant-pagination-item-active:hover {
+    border-color: #000; }
+
+.ant-table-placeholder {
+  display: none; }
+
+.ant-drawer-body {
+  padding: 24px 30px 24px 40px !important; }
+
+.ant-col.ant-col-8.ant-form-item-label.css-dev-only-do-not-override-1vr7spz {
+  text-align: left; }
+
+.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.css-dev-only-do-not-override-1vr7spz {
+  box-shadow: #cccccc 1px 1px 2px; }
+
+.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.css-dev-only-do-not-override-1vr7spz {
+  box-shadow: #cccccc 1px 1px 0px; }
 
 .adminProduct .body-product {
   margin-top: 20px; }

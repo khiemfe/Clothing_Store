@@ -38,8 +38,8 @@ const NotFoundPage = () => {
     console.log('keySelected', keySelected)
 
     return (
-        <div>
-            <HeaderComponents />
+        <>
+            {/* <HeaderComponents /> */}
             <div style={{ display: 'flex',overflowX: 'hidden' }}>
                 <Menu
                     mode="inline"
@@ -55,7 +55,7 @@ const NotFoundPage = () => {
                     {renderPage(keySelected)}
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

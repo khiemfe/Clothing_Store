@@ -35,11 +35,7 @@ const HomePage = () => {
   };
 
   let lengthProducts = limit;
-
-  console.log("lengthProducts", lengthProducts);
-
   const arrayProducts = [];
-
   for (let i = 1; i <= lengthProducts; i++) {
     arrayProducts.push(i);
   }

@@ -15,6 +15,7 @@ import ModelBodyUserComponent from "./ModelBodyUserComponent";
 import { useSelector } from "react-redux";
 import ModelComponent from "./ModelComponent";
 import { Form, Input, Space } from "antd";
+import LoadingUpdateComponent from "./LoadingUpdateComponent";
 
 // import { getAllUser } from '../services/userServices'
 
@@ -150,6 +151,7 @@ const AdminUser = () => {
   const { data: dataUser, isLoading: isLoadingUser } = queryUser;
 
   const fetchGetDetailsUser = async (rowSelected) => {
+    setIsLoadingUpdate(true)
     const res = await userServices.getDetailsUser(rowSelected);
     if (res?.data) {
       setStateUserDetails({
@@ -406,6 +408,7 @@ const AdminUser = () => {
             isLoading={isLoadingUser}
             filename="User Table"
             sheet="User"
+            text='người dùng'
             onRow={(record, rowIndex) => {
               return {
                 onClick: () => {
@@ -421,7 +424,7 @@ const AdminUser = () => {
             isOpen={isOpenDrawer}
             onClose={() => setIsOpenDrawer(false)}
           >
-            <LoadingComponents isLoading={isLoadingUpdate}>
+            <LoadingUpdateComponent isLoading={isLoadingUpdate}>
               <ModelBodyUserComponent
                 stateUser={stateUserDetails}
                 form={formUpdate}
@@ -431,7 +434,7 @@ const AdminUser = () => {
                 isLoading={isLoadingUpdated}
                 title="Update"
               />
-            </LoadingComponents>
+            </LoadingUpdateComponent>
           </DrawerComponent>
         </div>
         <div>

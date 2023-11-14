@@ -20,7 +20,7 @@ body {
 .header {
   padding: 5px 40px 5px 50px;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   background-color: #fff;
   top: 0;
   width: 100%;
@@ -213,10 +213,12 @@ body {
 
     ._navbar {
       padding-left: 0;
+      width: 220px;
 
       .nav {
         border-right: 1px solid #ddd;
-        padding: 10px 20px;
+        padding: 15px 20px;
+        box-shadow: rgb(204, 204, 204) 1px 1px 2px;
 
         .nav-link {
           font-size: 1.8rem;
@@ -705,6 +707,42 @@ body {
 //avatar
 .ant-upload-list.ant-upload-list-text {
   display: none;
+}
+
+//admin page
+:where(.css-dev-only-do-not-override-1vr7spz).ant-menu-light
+  .ant-menu-item-selected {
+  color: #fff;
+  background-color: #444;
+}
+
+.ant-pagination-item.ant-pagination-item-active {
+  border-color: #000;
+
+  &:hover {
+    border-color: #000;
+  }
+}
+
+// load sp
+.ant-table-placeholder {
+  display: none;
+}
+
+// update sp
+.ant-drawer-body {
+  padding: 24px 30px 24px 40px !important;
+}
+.ant-col.ant-col-8.ant-form-item-label.css-dev-only-do-not-override-1vr7spz {
+  text-align: left;
+}
+
+.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.css-dev-only-do-not-override-1vr7spz {
+  box-shadow: rgb(204, 204, 204) 1px 1px 2px;
+}
+
+.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.css-dev-only-do-not-override-1vr7spz {
+  box-shadow: #cccccc 1px 1px 0px;
 }
 
 //ADMIN product

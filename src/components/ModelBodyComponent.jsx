@@ -198,12 +198,6 @@ const ModelBodyComponent = ({
         <Form.Item
           label="Type"
           name="type"
-          // rules={[
-          //   {
-          //     required: true,
-          //     message: "Please input your type!",
-          //   },
-          // ]}
         >
           <div className="App">
             <Select

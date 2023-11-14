@@ -142,7 +142,7 @@ const HeaderComponents = () => {
                 />
               </div>
               <FiHeart className="icon heart" />
-              <Button className="btn-cart">
+              <Button className="btn-cart" onClick={() => navigate('/order')}>
                 <Badge bg="warning">9</Badge>
                 <BsCart2 className="icon cart" />
               </Button>

@@ -1,34 +1,84 @@
-import React from 'react'
-import NavbarComponents from '../components/NavbarComponents'
-import CardComponents from '../components/CardComponents'
-import Pagination from 'react-bootstrap/Pagination'
+import React, { useEffect, useState } from "react";
+import NavbarComponents from "../components/NavbarComponents";
+import CardComponents from "../components/CardComponents";
+import { Pagination } from "antd";
+import { useLocation } from "react-router-dom";
+import * as ProductServices from "../services/ProductServices";
+import LoadingCardComponent from "../components/LoadingCardComponent";
+import { Col, Row } from "react-bootstrap";
 
 const TypeProductPage = () => {
-    return (
-        <div>
-            <NavbarComponents />
-            <CardComponents />
-            <div>
-                <Pagination>
-                    <Pagination.First />
-                    <Pagination.Prev />
-                    <Pagination.Item>{1}</Pagination.Item>
-                    <Pagination.Ellipsis />
+  const { state } = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [panigate, setPanigate] = useState({
+    page: 0,
+    limit: 2,
+    total: 1,
+  });
 
-                    <Pagination.Item>{10}</Pagination.Item>
-                    <Pagination.Item>{11}</Pagination.Item>
-                    <Pagination.Item active>{12}</Pagination.Item>
-                    <Pagination.Item>{13}</Pagination.Item>
-                    <Pagination.Item disabled>{14}</Pagination.Item>
+  const fetchTypeProduct = async (type, page, limit) => {
+    setIsLoading(true);
+    const res = await ProductServices.getTypeProduct(type, page, limit);
+    console.log("reees", res);
+    if (res?.status === "OK") {
+      setIsLoading(false);
+      setProducts(res?.data);
+      setPanigate({ ...panigate, total: res?.totalProduct });
+    } else {
+      setIsLoading(false);
+    }
+    // return res?.data
+  };
+  console.log("productss", products);
+  useEffect(() => {
+    if (state) {
+      fetchTypeProduct(state, panigate?.page, panigate?.limit);
+    }
+  }, [state, panigate?.page, panigate?.limit]);
 
-                    <Pagination.Ellipsis />
-                    <Pagination.Item>{20}</Pagination.Item>
-                    <Pagination.Next />
-                    <Pagination.Last />
-                </Pagination>
-            </div>
-        </div>
-    )
-}
+  const onChangePa = (current, pageSize) => {
+    console.log('current', current, pageSize)
+    setPanigate({...panigate, page: current - 1, limit: pageSize})
+  };
 
-export default TypeProductPage
+  let lengthProducts = panigate?.limit;
+  const arrayProducts = [];
+  for (let i = 1; i <= lengthProducts; i++) {
+    arrayProducts.push(i);
+  }
+  return (
+    <>
+      <LoadingCardComponent isLoading={isLoading} arrayProducts={arrayProducts}>
+        <Row>
+          {products?.map((product) => {
+            console.log("productmap", product);
+            return (
+              <Col xxl={3} xl={3} key={product._id}>
+                <CardComponents
+                  id={product._id}
+                  image={product.image}
+                  name={product.name}
+                  price={product.price}
+                  gender={product.gender}
+                  age={product.age}
+                  size={product.size}
+                />
+              </Col>
+            );
+          })}
+          <Pagination
+            onChange={onChangePa}
+            defaultCurrent={panigate?.page + 1}
+            defaultPageSize={panigate?.limit}
+            total={panigate?.total}
+            pageSizeOptions={[2,4,6]}
+          />
+          ;
+        </Row>
+      </LoadingCardComponent>
+    </>
+  );
+};
+
+export default TypeProductPage;
