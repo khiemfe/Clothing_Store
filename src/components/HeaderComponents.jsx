@@ -23,6 +23,7 @@ import { searchProduct } from "../redux/slices/productSlice";
 
 const HeaderComponents = () => {
   const item = ["nam", "nữ", "new", "best", "sale đồng giá"];
+  const order = useSelector((state) => state.order);
 
   const navigate = useNavigate();
   const handleNavigateLogin = () => {
@@ -80,8 +81,8 @@ const HeaderComponents = () => {
   const searchStorage = localStorage.getItem("search");
 
   const BtnSearchProduct = () => {
-    dispatch(searchProduct(search));
     if (search.trim()) {
+      dispatch(searchProduct(search));
       if (search.trim() !== searchStorage.trim()) {
         navigate("/product-search");
         localStorage.setItem("search", search);
@@ -95,6 +96,7 @@ const HeaderComponents = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
+      e.preventDefault();
       BtnSearchProduct();
     }
   };
@@ -142,8 +144,8 @@ const HeaderComponents = () => {
                 />
               </div>
               <FiHeart className="icon heart" />
-              <Button className="btn-cart" onClick={() => navigate('/order')}>
-                <Badge bg="warning">9</Badge>
+              <Button className="btn-cart" onClick={() => navigate("/order")}>
+                <Badge bg="warning">{order?.orderItems?.length}</Badge>
                 <BsCart2 className="icon cart" />
               </Button>
               <div className="info-user">

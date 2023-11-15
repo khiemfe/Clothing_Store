@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import * as ProducttServcie from "../services/ProductServices";
 import { useQuery } from "@tanstack/react-query";
 import LoadingComponents from "./LoadingComponents";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FiHeart } from "react-icons/fi";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { addOrderProduct } from "../redux/slices/orderSlice";
 
 const ProductDetailsComponents = ({ idProduct }) => {
   const user = useSelector((state) => state.user);
@@ -81,7 +83,7 @@ const ProductDetailsComponents = ({ idProduct }) => {
   const classNameSize = "size-item";
   const classNameSizeActive = "size-item active";
 
-  const [size, setSize] = useState('S')
+  const [size, setSize] = useState("S");
 
   const [classNameSize1, setClassNameSize1] = useState(classNameSizeActive);
   const [classNameSize2, setClassNameSize2] = useState(classNameSize);
@@ -100,32 +102,59 @@ const ProductDetailsComponents = ({ idProduct }) => {
   const handleSize1 = () => {
     setClassNameSize();
     setClassNameSize1(classNameSizeActive);
-    setSize('S')
+    setSize("S");
   };
 
   const handleSize2 = () => {
     setClassNameSize();
     setClassNameSize2(classNameSizeActive);
-    setSize('M')
+    setSize("M");
   };
 
   const handleSize3 = () => {
     setClassNameSize();
     setClassNameSize3(classNameSizeActive);
-    setSize('L')
+    setSize("L");
   };
 
   const handleSize4 = () => {
     setClassNameSize();
     setClassNameSize4(classNameSizeActive);
-    setSize('XL')
+    setSize("XL");
   };
 
   const handleSize5 = () => {
     setClassNameSize();
     setClassNameSize5(classNameSizeActive);
-    setSize('XXL')
+    setSize("XXL");
   };
+
+  // ----
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const hanleAddOrder = () => {
+    if (!user?.id && false) {
+      navigate("/sign-in", { state: location?.pathname }); // login xong trở về lại trang lúc nảy
+    } else {
+      dispatch(
+        addOrderProduct({
+          orderItem: {
+            name: productDetails?.name,
+            amount: amount,
+            image: productDetails?.image,
+            price: productDetails?.price,
+            product: productDetails?._id,
+          },
+        })
+      )
+    }
+  };
+
+  console.log("test sản phẩm", productDetails);
+  console.log("test người dùng", user);
 
   return (
     <>
@@ -218,7 +247,10 @@ const ProductDetailsComponents = ({ idProduct }) => {
                 +
               </button>
             </div>
-            <button className="bg-violet-800 text-white font-semibold py-3 px-16 rounded-xl h-full add">
+            <button
+              onClick={hanleAddOrder}
+              className="bg-violet-800 text-white font-semibold py-3 px-16 rounded-xl h-full add"
+            >
               Mua ngay
             </button>
             <FiHeart className="iconHeart" />

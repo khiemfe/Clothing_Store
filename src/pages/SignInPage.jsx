@@ -13,7 +13,7 @@ import {
 import * as UserServcie from "../services/userServices";
 import { useMutationHook } from "../hooks/useMutationHook";
 import LoadingComponents from "../components/LoadingComponents";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/slices/userSlice";
@@ -22,7 +22,8 @@ import { Button } from "react-bootstrap";
 const SignInPage = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [disabled, setDisabled] = useState(false)
+  const [disabled, setDisabled] = useState(false);
+  const location = useLocation();
 
   const dispatch = useDispatch();
 
@@ -79,17 +80,21 @@ const SignInPage = () => {
     });
     console.log("sign-in", email, password);
     localStorage.setItem("email", JSON.stringify(true));
-    setDisabled(true)
+    setDisabled(true);
   };
 
   const navigate = useNavigate();
   const handleNavigateHome = () => {
-    navigate("/");
+    if (location?.state) {
+      navigate(location?.state); // nếu trang sử dụng loaction nào có thì nó sẽ trả về trang cũ
+    } else {
+      navigate("/");
+    }
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      handleSignIn()
+      handleSignIn();
     }
   };
 

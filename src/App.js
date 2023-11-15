@@ -1,4 +1,3 @@
-// import { Button } from 'antd'
 import React, { Fragment, useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { routes } from "./routes";
@@ -12,6 +11,7 @@ import * as UserService from "./services/userServices";
 import { useDispatch, useSelector } from "react-redux";
 import { resetUser, updateUser } from "./redux/slices/userSlice";
 import LoadingComponents from "./components/LoadingComponents";
+import FooterComponent from "./components/FooterComponent";
 
 function App() {
   // useEffect(() => {
@@ -90,7 +90,7 @@ function App() {
   );
 
   const handleGetDetailsUser = async (id, token) => {
-    console.log('id update', id)
+    console.log("id update", id);
     let storageRefreshToken = localStorage.getItem("refresh_token");
     const refreshToken = JSON.parse(storageRefreshToken);
     console.log("refreshToken", refreshToken);
@@ -117,14 +117,20 @@ function App() {
               const Page = route.page;
               // const isCheckAuth = !route.isPrivate || user.isAdmin //nếu isPrivate flase thì hiển thị bth, còn true thì hiển thị user.isAdmin
               const Layout = route.isShowHeader ? DefaultComponents : Fragment;
+              const LayoutFooter = route.isShowFooter
+                ? FooterComponent
+                : Fragment;
               return (
                 <Route
                   key={index}
                   path={route.path}
                   element={
-                    <Layout>
-                      <Page />
-                    </Layout>
+                    <>
+                      <Layout>
+                        <Page />
+                        <LayoutFooter />
+                      </Layout>
+                    </>
                   }
                 />
               );

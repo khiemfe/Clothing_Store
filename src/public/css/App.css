@@ -136,26 +136,27 @@ body {
       .header .right .form .info-user .dropdown-item {
         line-height: 24px; }
 
+.content {
+  display: flex;
+  margin: 20px 0; }
+  .content ._navbar {
+    padding-left: 0; }
+    .content ._navbar .nav {
+      width: 200px;
+      min-height: 180px;
+      box-shadow: #cccccc 1px 1px 2px;
+      padding: 15px 20px; }
+      .content ._navbar .nav .nav-link {
+        font-size: 1.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #333; }
+        .content ._navbar .nav .nav-link:hover {
+          text-decoration: underline; }
+
 .home {
   padding: 0 52px;
   margin-bottom: 30px; }
-  .home .content {
-    display: flex;
-    margin: 20px 0; }
-    .home .content ._navbar {
-      padding-left: 0;
-      width: 220px; }
-      .home .content ._navbar .nav {
-        border-right: 1px solid #ddd;
-        padding: 15px 20px;
-        box-shadow: #cccccc 1px 1px 2px; }
-        .home .content ._navbar .nav .nav-link {
-          font-size: 1.8rem;
-          font-weight: bold;
-          text-transform: uppercase;
-          color: #333; }
-          .home .content ._navbar .nav .nav-link:hover {
-            text-decoration: underline; }
   .home .slide {
     width: 800px;
     overflow: hidden;
@@ -397,6 +398,27 @@ body {
 .ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.css-dev-only-do-not-override-1vr7spz {
   box-shadow: #cccccc 1px 1px 0px; }
 
+.ant-btn.css-dev-only-do-not-override-1vr7spz.ant-btn-default:hover {
+  color: #000;
+  border-color: #000; }
+
+.ant-btn.css-dev-only-do-not-override-1vr7spz.ant-btn-default:active {
+  color: #000;
+  border-color: #000; }
+
+.ant-btn.css-dev-only-do-not-override-1vr7spz.ant-btn-default:focus-visible {
+  outline-color: #555; }
+
+.ant-btn.css-dev-only-do-not-override-1vr7spz.ant-btn-primary {
+  background-color: #000; }
+  .ant-btn.css-dev-only-do-not-override-1vr7spz.ant-btn-primary:hover {
+    background-color: #000;
+    opacity: 0.8; }
+  .ant-btn.css-dev-only-do-not-override-1vr7spz.ant-btn-primary:active {
+    background-color: #000; }
+  .ant-btn.css-dev-only-do-not-override-1vr7spz.ant-btn-primary:focus-visible {
+    outline-color: #555; }
+
 .adminProduct .body-product {
   margin-top: 20px; }
   .adminProduct .body-product .loading {
@@ -573,3 +595,7 @@ body {
     border-radius: 10px; }
     .formProfile .submit:hover {
       opacity: 0.8; }
+
+.footer .bg-light.text-center.text-lg-start.text-muted {
+  background-color: transparent !important;
+  z-index: 2 !important; }

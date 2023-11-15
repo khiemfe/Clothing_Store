@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as ProductServices from "../services/ProductServices";
 import { useDebounce } from "../hooks/useDebounce";
 import { useSelector, useDispatch } from "react-redux";
@@ -33,7 +33,7 @@ const ProductSearchPage = () => {
 
   const searchProductRedux =
     useSelector((state) => state.product?.search) || searchStorage || undefined;
-  console.log("productSearch", searchProductRedux);
+  console.log("productSearchh", searchProductRedux);
 
   const searchDebounce = useDebounce(searchProductRedux, 1000);
 
@@ -68,9 +68,11 @@ const ProductSearchPage = () => {
     setSearch(searchStorage);
   }, []);
 
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      if (search.trim()) {
+      if (search.trim() && search.trim() !== searchStorage) {
+        setIsLoadingSearch(true);
         console.log("validate", search);
         dispatch(searchProduct(search));
         localStorage.setItem("search", search);
@@ -78,6 +80,12 @@ const ProductSearchPage = () => {
       }
     }
   };
+
+  useEffect(() => {
+    // ra được product mới thì sẽ dùng
+    setIsLoadingSearch(false);
+  }, [products?.NameSearch]);
+  console.log("isLoadingSearch", isLoadingSearch);
 
   const arrayProducts = [];
   for (let i = 1; i <= 10; i++) {
@@ -98,7 +106,7 @@ const ProductSearchPage = () => {
       {products?.noProduct && <h2>{products?.noProduct}</h2>}
       <div className="product">
         <LoadingCardComponent5SP
-          isLoading={isLoading}
+          isLoading={isLoading || isLoadingSearch}
           arrayProducts={arrayProducts}
           //   width={}
         >

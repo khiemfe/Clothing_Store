@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import { useNavigate } from "react-router-dom";
+import * as ProductServices from "../services/ProductServices";
 
 const NavbarComponents = (arrType) => {
-  console.log("arrType", arrType?.arrType);
-
   const navigate = useNavigate();
   const handleNavigateType = (type) => {
     navigate(

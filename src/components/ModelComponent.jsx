@@ -1,12 +1,17 @@
-import React from 'react'
-import { Modal } from 'antd'
+import React from "react";
+import { Modal } from "antd";
 
-const ModelComponent = ({title = 'model', isModalOpen = false, children, ...rest}) => {
-    return (
-        <Modal title={title} open={isModalOpen} {...rest}>
-            {children}
-      </Modal>
-    )
-}
+const ModelComponent = ({
+  title = "model",
+  isModalOpen = false,
+  children,
+  ...rest
+}) => {
+  return (
+    <Modal style={{position: 'relative'}} title={title} open={isModalOpen} {...rest}>
+      {children}
+    </Modal>
+  );
+};
 
-export default ModelComponent
+export default ModelComponent;

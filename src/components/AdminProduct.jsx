@@ -283,7 +283,7 @@ const AdminProduct = () => {
   const { data: dataProduct, isLoading: isLoadingProduct } = queryProduct;
 
   const fetchGetDetailsProduct = async (rowSelected) => {
-    setIsLoadingUpdate(true)
+    setIsLoadingUpdate(true);
     const res = await ProducttServcie.getDetailsProduct(rowSelected);
     if (res?.data) {
       setStateProductDetails({
@@ -669,7 +669,7 @@ const AdminProduct = () => {
             isLoading={isLoadingProduct}
             filename="Products Table"
             sheet="Product"
-            text='sản phẩm'
+            text="sản phẩm"
             onRow={(record, rowIndex) => {
               return {
                 onClick: () => {
@@ -740,19 +740,19 @@ const AdminProduct = () => {
             </Modal.Header> */}
             <LoadingUpdateComponent isLoading={true}>
               {/* {!isLoadingUpdate && ( */}
-                <ModelBodyComponent
-                  stateProduct={stateProductDetails}
-                  form={formUpdate}
-                  handleOnchange={handleOnchangeDetails}
-                  handleChangeSelect={handleChangeSelect}
-                  options={options}
-                  typeSelect={typeSelect}
-                  placeholder={placeholder}
-                  handleOnchangeAvatar={handleOnchangeAvatarDetails}
-                  onFinish={onUpdateProduct}
-                  isLoading={isLoadingUpdated}
-                  title="Update"
-                />
+              <ModelBodyComponent
+                stateProduct={stateProductDetails}
+                form={formUpdate}
+                handleOnchange={handleOnchangeDetails}
+                handleChangeSelect={handleChangeSelect}
+                options={options}
+                typeSelect={typeSelect}
+                placeholder={placeholder}
+                handleOnchangeAvatar={handleOnchangeAvatarDetails}
+                onFinish={onUpdateProduct}
+                isLoading={isLoadingUpdated}
+                title="Update"
+              />
               {/* )} */}
             </LoadingUpdateComponent>
             {/* </Modal> */}
@@ -765,9 +765,12 @@ const AdminProduct = () => {
             onCancel={handleCanelDelete}
             onOk={handleDeleteProduct}
           >
-            <LoadingComponents isLoading={isLoadingDeleted}>
-              <div>Bạn có chắc muốn xoá sản phẩm này không?</div>
-            </LoadingComponents>
+            <div>Bạn có chắc muốn xoá sản phẩm này không?</div>
+            <span
+              style={{ position: "absolute", right: "35%", bottom: "15px" }}
+            >
+              <LoadingComponents isLoading={isLoadingDeleted} />
+            </span>
           </ModelComponent>
         </div>
       </div>

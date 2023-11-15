@@ -38,9 +38,21 @@ const TypeProductPage = () => {
   }, [state, panigate?.page, panigate?.limit]);
 
   const onChangePa = (current, pageSize) => {
-    console.log('current', current, pageSize)
-    setPanigate({...panigate, page: current - 1, limit: pageSize})
+    console.log("current", current, pageSize);
+    setPanigate({ ...panigate, page: current - 1, limit: pageSize });
   };
+
+  const [arrType, setArrType] = useState([]);
+  const fetchAllType = async () => {
+    const res = await ProductServices.getAllType();
+    if (res?.status === "OK") {
+      setArrType(res?.data);
+    }
+  };
+  useEffect(() => {
+    fetchAllType();
+  }, []);
+  //   console.log("arrTypee", arrType);
 
   let lengthProducts = panigate?.limit;
   const arrayProducts = [];
@@ -48,36 +60,49 @@ const TypeProductPage = () => {
     arrayProducts.push(i);
   }
   return (
-    <>
-      <LoadingCardComponent isLoading={isLoading} arrayProducts={arrayProducts}>
-        <Row>
-          {products?.map((product) => {
-            console.log("productmap", product);
-            return (
-              <Col xxl={3} xl={3} key={product._id}>
-                <CardComponents
-                  id={product._id}
-                  image={product.image}
-                  name={product.name}
-                  price={product.price}
-                  gender={product.gender}
-                  age={product.age}
-                  size={product.size}
-                />
-              </Col>
-            );
-          })}
-          <Pagination
-            onChange={onChangePa}
-            defaultCurrent={panigate?.page + 1}
-            defaultPageSize={panigate?.limit}
-            total={panigate?.total}
-            pageSizeOptions={[2,4,6]}
-          />
-          ;
-        </Row>
-      </LoadingCardComponent>
-    </>
+    <div style={{ padding: "0 52px" }}>
+      <Row className="content">
+        <Col xxl={2} xl={2} className="_navbar">
+          <div style={{ position: "fixed" }}>
+            <NavbarComponents arrType={arrType} />
+          </div>
+        </Col>
+        <Col xxl={10} xl={10}>
+          <LoadingCardComponent
+            isLoading={isLoading}
+            arrayProducts={arrayProducts}
+          >
+            <Row>
+              {products?.map((product) => {
+                console.log("productmap", product);
+                return (
+                  <Col xxl={3} xl={3} key={product._id}>
+                    <CardComponents
+                      id={product._id}
+                      image={product.image}
+                      name={product.name}
+                      price={product.price}
+                      gender={product.gender}
+                      age={product.age}
+                      size={product.size}
+                    />
+                  </Col>
+                );
+              })}
+              <Pagination
+                style={{ textAlign: "center", marginTop: '10px'}}
+                onChange={onChangePa}
+                defaultCurrent={panigate?.page + 1}
+                defaultPageSize={panigate?.limit}
+                total={panigate?.total}
+                pageSizeOptions={[2, 4, 6]}
+              />
+              ;
+            </Row>
+          </LoadingCardComponent>
+        </Col>
+      </Row>
+    </div>
   );
 };
 
