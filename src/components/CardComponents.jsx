@@ -2,6 +2,7 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import { FiHeart } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { convertPrice } from "../utils";
 
 const CardComponents = (props) => {
   const {
@@ -46,7 +47,7 @@ const CardComponents = (props) => {
         </div>
         <div className="price">
           {/* toLocaleString (đơn vị tiền) */}
-          <h3>{price}.000đ</h3>
+          <h3>{convertPrice(price)}</h3>
         </div>
       </Card.Body>
     </Card>

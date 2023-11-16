@@ -18,7 +18,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ['product'] // không lưu vào storage product
+  blacklist: ["product", "user"], // không lưu vào storage product
 };
 
 const rootReducer = combineReducers({
@@ -39,7 +39,7 @@ export const store = configureStore({
     }),
 });
 
-export let persistor = persistStore(store)
+export let persistor = persistStore(store);
 
 // export type RootState = ReturnType<typeof store.getState>
 // export type AppDispatch = typeof store.dispatch

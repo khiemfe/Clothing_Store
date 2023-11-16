@@ -43,3 +43,12 @@ export const renderOptions = (arr) => {
     })
     return results
 }
+
+export const convertPrice = (price) => {
+    try {
+        const result = price?.toLocaleString()
+        return `${result}.000 đ`
+    } catch {
+        return null
+    }
+}

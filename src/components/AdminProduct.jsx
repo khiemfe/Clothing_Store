@@ -738,7 +738,7 @@ const AdminProduct = () => {
                 Chỉnh sửa sản phẩm
               </Modal.Title>
             </Modal.Header> */}
-            <LoadingUpdateComponent isLoading={true}>
+            <LoadingUpdateComponent isLoading={isLoadingUpdate}>
               {/* {!isLoadingUpdate && ( */}
               <ModelBodyComponent
                 stateProduct={stateProductDetails}
