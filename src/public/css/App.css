@@ -596,6 +596,83 @@ body {
     .formProfile .submit:hover {
       opacity: 0.8; }
 
+.cart-body {
+  padding: 0 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 50px; }
+  .cart-body .cart-shopping {
+    width: 60%;
+    padding: 0 30px;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px; }
+    .cart-body .cart-shopping .title {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      align-items: center; }
+    .cart-body .cart-shopping .checkbox {
+      margin-right: 20px; }
+    .cart-body .cart-shopping .item-product {
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      border-top: 1px solid #eee;
+      justify-content: space-between; }
+      .cart-body .cart-shopping .item-product .img-product {
+        width: 120px; }
+      .cart-body .cart-shopping .item-product .name-product {
+        width: 500px;
+        font-weight: 400;
+        text-overflow: ellipsis; }
+      .cart-body .cart-shopping .item-product .price-product {
+        padding: 5px 0; }
+      .cart-body .cart-shopping .item-product .amount-product {
+        font-size: 18px;
+        border: 1px solid #000;
+        display: flex;
+        align-items: center;
+        width: 70px;
+        justify-content: center; }
+        .cart-body .cart-shopping .item-product .amount-product button {
+          border: none;
+          background-color: #fff;
+          font-weight: bold; }
+      .cart-body .cart-shopping .item-product .text-product {
+        margin-left: 20px; }
+  .cart-body .pay {
+    width: 30%;
+    text-align: center; }
+    .cart-body .pay .pay-list {
+      list-style: none; }
+      .cart-body .pay .pay-list .pay-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; }
+        .cart-body .pay .pay-list .pay-item span {
+          font-size: 20px; }
+    .cart-body .pay .pay-btn {
+      padding: 15px 30px;
+      color: #fff;
+      background-color: #000;
+      border-radius: 10px;
+      text-transform: uppercase;
+      border: none;
+      font-size: 15px; }
+      .cart-body .pay .pay-btn:hover {
+        opacity: 0.8; }
+    .cart-body .pay .pay-btn.disbled {
+      cursor: unset;
+      opacity: 0.8; }
+
 .footer .bg-light.text-center.text-lg-start.text-muted {
   background-color: transparent !important;
   z-index: 2 !important; }
+
+.footer .networks {
+  padding: 0 20px; }
+  .footer .networks a {
+    font-size: 20px; }

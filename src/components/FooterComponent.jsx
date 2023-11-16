@@ -7,6 +7,14 @@ import {
   MDBIcon,
   MDBBtn,
 } from "mdb-react-ui-kit";
+import {
+  FaFacebook,
+  FaTwitter,
+  FaGoogle,
+  FaInstagram,
+  FaLinkedin,
+  FaGithub,
+} from "react-icons/fa";
 
 const FooterComponent = () => {
   return (
@@ -15,86 +23,41 @@ const FooterComponent = () => {
         bgColor="light"
         className="text-center text-lg-start text-muted"
       >
-        <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-          <div className="me-5 d-none d-lg-block">
-            <span>Get connected with us on social networks:</span>
+        {/* <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"> */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "end",
+              textAlign: 'right',
+              width: "100%"
+            }}
+          >
+            <div className="me-5 d-none d-lg-block">
+              <span>Get connected with us on social networks:</span>
+            </div>
+            <div className="networks">
+              <a href="" className="me-4 text-reset">
+                <FaFacebook />
+              </a>
+              <a href="" className="me-4 text-reset">
+                <FaTwitter />
+              </a>
+              <a href="" className="me-4 text-reset">
+                <FaGoogle />
+              </a>
+              <a href="" className="me-4 text-reset">
+                <FaInstagram />
+              </a>
+              <a href="" className="me-4 text-reset">
+                <FaLinkedin />
+              </a>
+              <a href="" className="me-4 text-reset">
+                <FaGithub />
+              </a>
+            </div>
           </div>
-          <div>
-            <a href="" className="me-4 text-reset">
-              <MDBIcon color="secondary" fab icon="facebook-f" />
-            </a>
-            <a href="" className="me-4 text-reset">
-              <MDBIcon color="secondary" fab icon="twitter" />
-            </a>
-            <a href="" className="me-4 text-reset">
-              <MDBIcon color="secondary" fab icon="google" />
-            </a>
-            <a href="" className="me-4 text-reset">
-              <MDBIcon color="secondary" fab icon="instagram" />
-            </a>
-            <a href="" className="me-4 text-reset">
-              <MDBIcon color="secondary" fab icon="linkedin" />
-            </a>
-            <a href="" className="me-4 text-reset">
-              <MDBIcon color="secondary" fab icon="github" />
-            </a>
-          </div>
-
-          <MDBBtn
-            outline
-            color="light"
-            floating
-            className="m-1"
-            href="#!"
-            role="button"
-          >
-            <MDBIcon fab icon="twitter" />
-          </MDBBtn>
-
-          <MDBBtn
-            outline
-            color="light"
-            floating
-            className="m-1"
-            href="#!"
-            role="button"
-          >
-            <MDBIcon fab icon="google" />
-          </MDBBtn>
-
-          <MDBBtn
-            outline
-            color="light"
-            floating
-            className="m-1"
-            href="#!"
-            role="button"
-          >
-            <MDBIcon fab icon="instagram" />
-          </MDBBtn>
-
-          <MDBBtn
-            outline
-            color="light"
-            floating
-            className="m-1"
-            href="#!"
-            role="button"
-          >
-            <MDBIcon fab icon="linkedin-in" />
-          </MDBBtn>
-
-          <MDBBtn
-            outline
-            color="light"
-            floating
-            className="m-1"
-            href="#!"
-            role="button"
-          >
-            <MDBIcon fab icon="github" />
-          </MDBBtn>
-        </section>
+        {/* </section> */}
 
         <section className="">
           <MDBContainer className="text-center text-md-start mt-5">
@@ -115,22 +78,17 @@ const FooterComponent = () => {
                 <h6 className="text-uppercase fw-bold mb-4">Products</h6>
                 <p>
                   <a href="#!" className="text-reset">
-                    Angular
+                    NodeJS
                   </a>
                 </p>
                 <p>
                   <a href="#!" className="text-reset">
-                    React
+                    ReactJS
                   </a>
                 </p>
                 <p>
                   <a href="#!" className="text-reset">
-                    Vue
-                  </a>
-                </p>
-                <p>
-                  <a href="#!" className="text-reset">
-                    Laravel
+                    MONGODB
                   </a>
                 </p>
               </MDBCol>
@@ -163,17 +121,14 @@ const FooterComponent = () => {
                 <h6 className="text-uppercase fw-bold mb-4">Contact</h6>
                 <p>
                   <MDBIcon icon="home" className="me-2" />
-                  New York, NY 10012, US
+                  Da Nang
                 </p>
                 <p>
                   <MDBIcon icon="envelope" className="me-3" />
-                  info@example.com
+                  khiemtrinh255@gmail.com
                 </p>
                 <p>
-                  <MDBIcon icon="phone" className="me-3" /> + 01 234 567 88
-                </p>
-                <p>
-                  <MDBIcon icon="print" className="me-3" /> + 01 234 567 89
+                  <MDBIcon icon="phone" className="me-3" /> + 0353454***
                 </p>
               </MDBCol>
             </MDBRow>

@@ -18,7 +18,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ['product', 'user'] // không lưu vào storage product và user
+  blacklist: ['product'] // không lưu vào storage product
 };
 
 const rootReducer = combineReducers({
