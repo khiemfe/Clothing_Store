@@ -7,16 +7,27 @@ import {
   removeAllOrderProduct,
   selectedOrder,
 } from "../redux/slices/orderSlice";
-
+import Modal from "react-bootstrap/Modal";
 import { Form } from "antd";
 import { convertPrice } from "../utils";
+import LoadingUpdateComponent from "../components/LoadingUpdateComponent";
+import ModelUpdateUserComponent from "../components/ModelUpdateUserComponent";
+import { useMutationHook } from "../hooks/useMutationHook";
+import { success, error, warning } from "../components/Message";
+import { updateUser } from "../redux/slices/userSlice";
+import * as UserServcie from "../services/userServices";
+import { useNavigate } from "react-router-dom";
 
 const OrderPage = () => {
   const order = useSelector((state) => state.order);
   console.log("order", order?.orderItems);
   const user = useSelector((state) => state.user);
+  console.log("userrr", user);
   const [listChecked, setListChecked] = useState([]);
-  const [form] = Form.useForm();
+  const [isOpenModalUpdate, setIsOpenModalUpdate] = useState(false);
+  const [formUpdate] = Form.useForm();
+  const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
+  const navigate = useNavigate()
 
   const dispatch = useDispatch();
   const handleOnchangeCount = (type, idProduct) => {
@@ -87,11 +98,102 @@ const OrderPage = () => {
     return Number(priceMemo) + Number(diliveryPriceMemo);
   }, [priceMemo, diliveryPriceMemo]);
 
+  // -------
+
+  const [stateUserDetailsUpdate, setStateUserDetailsUpdate] = useState({
+    name: "",
+    phone: "",
+    address: "",
+  });
+
+  const mutationUpdate = useMutationHook((data) => {
+    console.log("dataUpdate: ", data);
+    const { id, access_token, ...rest } = data;
+    const res = UserServcie.updateUser(id, rest, access_token);
+    console.log("resssss", res);
+    return res;
+  });
+
+  const { data, isLoading, isSuccess, isError, variables } = mutationUpdate;
+  console.log("mutationUpdate", mutationUpdate);
+
+  useEffect(() => {
+    if (isSuccess && data?.status === "OK") {
+      success();
+      setIsOpenModalUpdate(false);
+      handleGetDetailsUser(user?.id, user?.access_token);
+    } else if (isError) {
+      error();
+    }
+  }, [isSuccess, isError]);
+
+  const handleOnchangeDetailsUpdate = (e) => {
+    setStateUserDetailsUpdate({
+      ...stateUserDetailsUpdate,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  console.log("stateUserDetailsUpdate", stateUserDetailsUpdate);
+
   const handleBuy = () => {
     if (user?.phone && user?.address && user?.name) {
+      navigate('/payment')
     } else {
+      setIsOpenModalUpdate(true);
     }
   };
+
+  useEffect(() => {
+    formUpdate.setFieldsValue(stateUserDetailsUpdate);
+  }, [formUpdate, stateUserDetailsUpdate]);
+
+  const handleGetDetailsUser = async (id, token) => {
+    setIsLoadingUpdate(true);
+    const storage = localStorage.getItem("refresh_token");
+    const refreshToken = JSON.parse(storage);
+    const res = await UserServcie.getDetailsUser(id, token);
+    console.log("res?.data", res);
+    setIsLoadingUpdate(false);
+    dispatch(
+      updateUser({
+        ...res?.data,
+        name: stateUserDetailsUpdate?.name,
+        phone: stateUserDetailsUpdate?.phone,
+        address: stateUserDetailsUpdate?.address,
+        access_token: token,
+        refreshToken,
+      })
+    );
+  };
+
+  useEffect(() => {
+    setStateUserDetailsUpdate({
+      name: user?.name,
+      phone: user?.phone,
+      address: user?.address,
+    });
+  }, [user]);
+
+  const handleUpdate = () => {
+    mutationUpdate.mutate({
+      id: user?.id,
+      name: stateUserDetailsUpdate?.name,
+      phone: stateUserDetailsUpdate?.phone,
+      address: stateUserDetailsUpdate?.address,
+      access_token: user?.access_token,
+    });
+  };
+
+  // const onCloseModal = () => {
+  //   setIsOpenModalUpdate(false);
+  //   setStateUserDetailsUpdate({
+  //     name: "",
+  //     phone: "",
+  //     address: "",
+  //   });
+  //   formUpdate.resetFields();
+  // };
 
   return (
     <>
@@ -169,63 +271,54 @@ const OrderPage = () => {
         <div className="pay">
           <ul className="pay-list">
             <li className="pay-item">
-              <h3>Tạm tính</h3>
+              <h3>Tạm tính:</h3>
               <span>{convertPrice(priceMemo)}</span>
             </li>
             <li className="pay-item">
-              <h3>Giảm giá</h3>
-              <span>0</span>
-            </li>
-            <li className="pay-item">
-              <h3>Thuế</h3>
-              <span>0</span>
-            </li>
-            <li className="pay-item">
-              <h3>Phí giao hàng</h3>
+              <h3>Phí giao hàng:</h3>
               <span>{convertPrice(diliveryPriceMemo)}</span>
             </li>
             <li className="pay-item">
-              <h3>Tổng tiền</h3>
-              <span>{convertPrice(totalPriceMemo)}</span>
+              <h3>Tổng tiền:</h3>
+              <span style={{ fontWeight: "bold" }}>
+                {convertPrice(totalPriceMemo)}
+              </span>
             </li>
           </ul>
-          {listChecked.length >= 0 ? (
+          {listChecked.length > 0 ? (
             <button className="pay-btn" onClick={handleBuy}>
-              Mua ngay
+              Mua ngay({listChecked?.length})
             </button>
           ) : (
             <button className="pay-btn disbled">Mua ngay</button>
           )}
         </div>
       </div>
-      {/* <Modal
-        show={isOpenDrawer}
+      <Modal
+        show={isOpenModalUpdate}
         onHide={() => {
-          setIsOpenDrawer(false);
-          setTypeSelect("");
-          setPlaceholder("");
+          setIsOpenModalUpdate(false);
         }}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
-        centered
+        centeredxw
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             Chỉnh sửa người dùng
           </Modal.Title>
         </Modal.Header>
-        <LoadingUpdateComponent isLoading={isLoadingUpdate}>
-          <ModelBodyUserComponent
-            stateUser={stateUserDetails}
+        <LoadingUpdateComponent isLoading={false}>
+          <ModelUpdateUserComponent
+            stateUser={stateUserDetailsUpdate}
             form={formUpdate}
-            handleOnchange={handleOnchangeDetails}
-            handleOnchangeAvatar={handleOnchangeAvatarDetails}
-            onFinish={onUpdateUser}
-            isLoading={isLoadingUpdated}
+            handleOnchange={handleOnchangeDetailsUpdate}
+            onFinish={handleUpdate}
+            isLoading={isLoading}
             title="Update"
           />
         </LoadingUpdateComponent>
-      </Modal> */}
+      </Modal>
     </>
   );
 };

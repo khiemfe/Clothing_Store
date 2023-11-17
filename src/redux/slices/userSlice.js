@@ -9,8 +9,6 @@ const initialState = {
   id: "",
   access_token: "",
   isAdmin: false,
-  // exp: '',
-  // isLoading: false
 };
 
 export const userSlice = createSlice({

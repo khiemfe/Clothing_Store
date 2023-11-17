@@ -1,5 +1,5 @@
 import { Drawer } from 'antd'
-import React, { Children } from 'react'
+import React from 'react'
 
 const DrawerComponent = ({title = 'Drawer', placement = 'right', isOpen = false, children, ...rest}) => {
     return (

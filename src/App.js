@@ -46,18 +46,17 @@ function App() {
     let storageData = localStorage.getItem("access_token");
     console.log("storageData", storageData);
     let decoded = {};
-    // console.log('isJsonString(storageData)', isJsonString(storageData))
-    if (storageData && isJsonString(storageData) && !user?.access_token) {
+    if (storageData && isJsonString(storageData) && user?.access_token) {
       storageData = JSON.parse(storageData);
       decoded = jwt_decode(storageData);
     }
-    // console.log(',,,,,', storageData)
     return { decoded, storageData };
   };
 
   UserService.axiosJWT.interceptors.request.use(
     async (config) => {
-      //Chạy vào đây trước khi getDetails, mình sẽ check nếu token hết hạn, thì sẽ gọi đến refreshToken và lấy thằng access token mới đập vào thằng config, và getDetails sẽ có access token mới
+      //Chạy vào đây trước khi getDetails, mình sẽ check nếu token hết hạn (decoded?.exp < currentTime.getTime() / 1000), 
+      //thì sẽ gọi đến refreshToken và lấy thằng access token mới đập vào thằng config, và getDetails sẽ có access token mới
       //decoded?.exp là thời gian token hết hạn
       const currentTime = new Date(); //thời gian hiện tại
       const { decoded } = handleDecoded();
@@ -65,17 +64,12 @@ function App() {
       let storageRefreshToken = localStorage.getItem("refresh_token");
       const refreshToken = JSON.parse(storageRefreshToken);
       const decodedRefreshToken = jwt_decode(refreshToken);
-      console.log("exp", decoded?.exp > currentTime.getTime() / 1000);
-      console.log(
-        "expR",
-        decodedRefreshToken?.exp > currentTime.getTime() / 1000
-      );
+
       if (decoded?.exp < currentTime.getTime() / 1000) {
         if (decodedRefreshToken?.exp > currentTime.getTime() / 1000) {
           console.log("config", config);
           const data = await UserService.refreshToken();
           config.headers["token"] = `Bearer ${data?.access_token}`;
-          // return config
         }
       } else {
         // dispatch(resetUser());

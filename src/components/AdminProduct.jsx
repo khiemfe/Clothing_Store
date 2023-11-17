@@ -311,6 +311,7 @@ const AdminProduct = () => {
   }, [rowSelected, isOpenDrawer]);
 
   // hiển thị value trong thẻ input khi bấm vào sửa
+  console.log('formUpdate.__INTERNAL__.name', formUpdate.__INTERNAL__.name)
   useEffect(() => {
     // setIsLoadingUpdate(true)
     if (formUpdate.__INTERNAL__.name) {

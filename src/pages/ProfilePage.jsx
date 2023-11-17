@@ -30,15 +30,17 @@ const ProfilePage = () => {
   const mutation = useMutationHook((data) => {
     const { id, access_token, ...rest } = data;
     console.log("rest", rest);
-    UserServcie.updateUser(id, rest, access_token);
+    const res = UserServcie.updateUser(id, rest, access_token);
+    return res
   });
   const { data, isLoading, isSuccess, isError, variables } = mutation;
-  console.log("dataup", isSuccess);
+  console.log("dataup", mutation);
 
   console.log('check', check)
   useEffect(() => {
     if (isSuccess && data?.status !== "ERR") {
       success();
+      console.log('okchay')
       handleGetDetailsUser(user?.id, user?.access_token);
     } else if (isError) {
       error();
@@ -108,7 +110,7 @@ const ProfilePage = () => {
       avatar,
       access_token: user?.access_token,
     });
-    console.log("update", user?.id, name, email, phone, address, avatar);
+    console.log("updatee", user?.id, name, email, phone, address, avatar);
   };
 
   const [validated, setValidated] = useState(false);

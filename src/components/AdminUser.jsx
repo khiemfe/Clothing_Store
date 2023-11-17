@@ -116,7 +116,7 @@ const AdminUser = () => {
   useEffect(() => {
     if (isSuccessDeletedMany && dataDeletedMany?.status === "OK") {
       success();
-      // onClose()
+      // onClose();
     } else if (isErrorDeletedMany) {
       error();
     }
@@ -151,7 +151,7 @@ const AdminUser = () => {
   const { data: dataUser, isLoading: isLoadingUser } = queryUser;
 
   const fetchGetDetailsUser = async (rowSelected) => {
-    setIsLoadingUpdate(true)
+    setIsLoadingUpdate(true);
     const res = await userServices.getDetailsUser(rowSelected);
     if (res?.data) {
       setStateUserDetails({
@@ -176,11 +176,12 @@ const AdminUser = () => {
   }, [rowSelected, isOpenDrawer]);
 
   // hiển thị value trong thẻ input khi bấm vào sửa
+  console.log("formUpdate", formUpdate);
   useEffect(() => {
     // setIsLoadingUpdate(true)
-    if (formUpdate.__INTERNAL__.name) {
-      formUpdate.setFieldsValue(stateUserDetails);
-    }
+    // if (formUpdate.__INTERNAL__.name) {
+    formUpdate.setFieldsValue(stateUserDetails);
+    // }
   }, [formUpdate, stateUserDetails]);
 
   const handleDetailsUser = () => {
@@ -408,7 +409,7 @@ const AdminUser = () => {
             isLoading={isLoadingUser}
             filename="User Table"
             sheet="User"
-            text='người dùng'
+            text="người dùng"
             onRow={(record, rowIndex) => {
               return {
                 onClick: () => {
