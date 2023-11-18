@@ -11,6 +11,8 @@ import { Form } from "antd";
 import LoadingUpdateComponent from "../components/LoadingUpdateComponent";
 import ModelUpdateUserComponent from "../components/ModelUpdateUserComponent";
 import { success, error, warning } from "../components/Message";
+import { useNavigate } from "react-router-dom";
+import { removeAllOrderProduct } from "../redux/slices/orderSlice";
 
 const PaymentPage = () => {
   const order = useSelector((state) => state.order);
@@ -18,7 +20,9 @@ const PaymentPage = () => {
   const dispatch = useDispatch();
   const [isOpenModalUpdate, setIsOpenModalUpdate] = useState(false);
   const [formUpdate] = Form.useForm();
-  const [payment, setPayment] = useState("later_money");
+  const [valueRadioGH, setValueRadioGH] = useState("GHTK");
+  const [valueRadioTT, setValueRadioTT] = useState("later_money");
+  const navigate = useNavigate();
 
   const priceMemo = useMemo(() => {
     const result = order?.orderItemsSelected.reduce((total, cur) => {
@@ -28,7 +32,7 @@ const PaymentPage = () => {
   }, [order]);
 
   const diliveryPriceMemo = useMemo(() => {
-    if (priceMemo > 100) {
+    if (priceMemo > 300) {
       return 10;
     } else if (priceMemo === 0) {
       return 0;
@@ -37,16 +41,30 @@ const PaymentPage = () => {
     }
   }, [priceMemo]);
 
+  const [shippingPrice, setShipingPrice] = useState(diliveryPriceMemo);
+  useEffect(() => {
+    if (valueRadioGH === "GHN") {
+      setShipingPrice((prev) => prev + 5);
+    } else {
+      setShipingPrice(diliveryPriceMemo);
+    }
+  }, [valueRadioGH]);
+  console.log("shippingPricee", shippingPrice);
+
   const totalPriceMemo = useMemo(() => {
-    return Number(priceMemo) + Number(diliveryPriceMemo);
-  }, [priceMemo, diliveryPriceMemo]);
+    return Number(priceMemo) + Number(shippingPrice);
+  }, [priceMemo, shippingPrice]);
 
   const handleBuy = () => {};
 
-  const [valueRadio, setValueRadio] = useState(1);
-  const onChange = (e) => {
+  const onChangeGH = (e) => {
     console.log("radio checked", e.target.value);
-    setValueRadio(e.target.value);
+    setValueRadioGH(e.target.value);
+  };
+
+  const onChangeTT = (e) => {
+    console.log("radio checked", e.target.value);
+    setValueRadioTT(e.target.value);
   };
 
   const mutationAddOrder = useMutationHook((data) => {
@@ -67,6 +85,21 @@ const PaymentPage = () => {
   useEffect(() => {
     if (isSuccessAddOrder && dataAddOrder?.status === "OK") {
       success();
+      const arrayOrdered = []; //lấy id của các sản phẩm mua để remove khỏi giỏ hàng
+      order?.orderItemsSelected?.forEach((e) => {
+        arrayOrdered.push(e.product);
+      });
+      console.log("arrayOrdered", arrayOrdered);
+      dispatch(removeAllOrderProduct({ listChecked: arrayOrdered }));
+      navigate("/orderSuccess", {
+        state: {
+          // chuyển dữ liệu khi create success qua
+          order: order?.orderItems,
+          shippingPrice,
+          valueRadioGH,
+          valueRadioTT,
+        },
+      });
     } else if (isErrorAddOrder) {
       error();
     }
@@ -105,6 +138,10 @@ const PaymentPage = () => {
       error();
     }
   }, [isSuccessUpdate, isErrorUpdate]);
+
+  const openModalUpdata = () => {
+    setIsOpenModalUpdate(true);
+  };
 
   const handleOnchangeDetailsUpdate = (e) => {
     setStateUserDetailsUpdate({
@@ -168,9 +205,9 @@ const PaymentPage = () => {
         fullName: user?.name,
         phone: user?.phone,
         address: user?.address,
-        paymentMethod: payment,
+        paymentMethod: valueRadioTT,
         itemsPrice: priceMemo,
-        shippingPrice: diliveryPriceMemo,
+        shippingPrice: shippingPrice,
         totalPrice: totalPriceMemo,
         user: user?.id,
       });
@@ -179,76 +216,98 @@ const PaymentPage = () => {
 
   return (
     <>
-      <h1>Thanh toán</h1>
-      <div>
-        <div>
-          <h3>Chọn phương thức giao hàng</h3>
-          <Radio.Group onChange={onChange} value={valueRadio}>
-            <div>
-              <Radio value={"GHTK"}>A</Radio>
-              <h4>GHTK</h4>
-            </div>
-            <div>
-              <Radio value={"GHN"}>B</Radio>
-              <h4>GHN</h4>
-            </div>
-          </Radio.Group>
-        </div>
-        <div>
-          <h3>Chọn phương thức thanh toán</h3>
-          <div>
-            <input type="radio" />
-            <h4>Thanh toán khi nhận hàng</h4>
+      <h1 style={{ textAlign: "center", marginTop: "50px" }}>Thanh toán</h1>
+      <div className="page-payment">
+        <div className="payment">
+          <div className="method-pay">
+            <h3>Chọn phương thức giao hàng</h3>
+            <Radio.Group onChange={onChangeGH} value={valueRadioGH}>
+              <div className="radio-text">
+                <Radio value={"GHTK"}></Radio>
+                <h4>GHTK</h4>
+              </div>
+              <div className="radio-text">
+                <Radio value={"GHN"}></Radio>
+                <h4>GHN</h4>
+              </div>
+            </Radio.Group>
+          </div>
+          <div className="method-pay">
+            <h3>Chọn phương thức thanh toán</h3>
+            <Radio.Group onChange={onChangeTT} value={valueRadioTT}>
+              <div className="radio-text">
+                <Radio value={"later_money"}></Radio>
+                <h4>Thanh toán khi nhận hàng</h4>
+              </div>
+            </Radio.Group>
           </div>
         </div>
+        <div className="pay">
+          <div>
+            <h3>Thông tin khách hàng: </h3>
+            <div>
+              <h4>{user?.name}</h4>
+              <h4>{user?.phone}</h4>
+              <h4>{user?.address}</h4>
+              <p
+                onClick={openModalUpdata}
+                style={{
+                  textDecoration: "underline",
+                  color: "blue",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                }}
+              >
+                Thay đổi
+              </p>
+            </div>
+          </div>
+          <ul className="pay-list">
+            <li className="pay-item">
+              <h3>Tạm tính:</h3>
+              <span>{convertPrice(priceMemo)}</span>
+            </li>
+            <li className="pay-item">
+              <h3>Phí giao hàng:</h3>
+              <span>{convertPrice(shippingPrice)}</span>
+            </li>
+            <li className="pay-item">
+              <h3>Tổng tiền:</h3>
+              <span style={{ fontWeight: "bold" }}>
+                {convertPrice(totalPriceMemo)}
+              </span>
+            </li>
+          </ul>
+          <button className="pay-btn" onClick={handleAddOrder}>
+            Đặt hàng
+          </button>
+        </div>
+        <Modal
+          show={isOpenModalUpdate}
+          onHide={() => {
+            setIsOpenModalUpdate(false);
+          }}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centeredxw
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Chỉnh sửa người dùng
+            </Modal.Title>
+          </Modal.Header>
+          <LoadingUpdateComponent isLoading={false}>
+            <ModelUpdateUserComponent
+              stateUser={stateUserDetailsUpdate}
+              form={formUpdate}
+              handleOnchange={handleOnchangeDetailsUpdate}
+              onFinish={handleUpdate}
+              isLoading={isLoadingUpdate}
+              title="Update"
+            />
+          </LoadingUpdateComponent>
+        </Modal>
       </div>
-      <div className="pay">
-        <h5>Thay đổi địa chỉ giao hàng</h5>
-        <ul className="pay-list">
-          <li className="pay-item">
-            <h3>Tạm tính:</h3>
-            <span>{convertPrice(priceMemo)}</span>
-          </li>
-          <li className="pay-item">
-            <h3>Phí giao hàng:</h3>
-            <span>{convertPrice(diliveryPriceMemo)}</span>
-          </li>
-          <li className="pay-item">
-            <h3>Tổng tiền:</h3>
-            <span style={{ fontWeight: "bold" }}>
-              {convertPrice(totalPriceMemo)}
-            </span>
-          </li>
-        </ul>
-        <button className="pay-btn" onClick={handleAddOrder}>
-          Đặt hàng
-        </button>
-      </div>
-      <Modal
-        show={isOpenModalUpdate}
-        onHide={() => {
-          setIsOpenModalUpdate(false);
-        }}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centeredxw
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Chỉnh sửa người dùng
-          </Modal.Title>
-        </Modal.Header>
-        <LoadingUpdateComponent isLoading={false}>
-          <ModelUpdateUserComponent
-            stateUser={stateUserDetailsUpdate}
-            form={formUpdate}
-            handleOnchange={handleOnchangeDetailsUpdate}
-            onFinish={handleUpdate}
-            // isLoading={isLoading}
-            title="Update"
-          />
-        </LoadingUpdateComponent>
-      </Modal>
     </>
   );
 };

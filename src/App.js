@@ -55,12 +55,13 @@ function App() {
 
   UserService.axiosJWT.interceptors.request.use(
     async (config) => {
-      //Chạy vào đây trước khi getDetails, mình sẽ check nếu token hết hạn (decoded?.exp < currentTime.getTime() / 1000), 
+      //Chạy vào đây trước khi getDetails, mình sẽ check nếu token hết hạn (decoded?.exp < currentTime.getTime() / 1000),
       //thì sẽ gọi đến refreshToken và lấy thằng access token mới đập vào thằng config, và getDetails sẽ có access token mới
       //decoded?.exp là thời gian token hết hạn
       const currentTime = new Date(); //thời gian hiện tại
       const { decoded } = handleDecoded();
       console.log("decoded", decoded);
+      console.log("decoded", currentTime.getTime() / 1000);
       let storageRefreshToken = localStorage.getItem("refresh_token");
       const refreshToken = JSON.parse(storageRefreshToken);
       const decodedRefreshToken = jwt_decode(refreshToken);
@@ -73,8 +74,7 @@ function App() {
         }
       } else {
         // dispatch(resetUser());
-        console.log("ResetUser");
-        // return config;
+        config.headers["token"] = `Bearer ${user?.access_token}`;
       }
       return config;
     },

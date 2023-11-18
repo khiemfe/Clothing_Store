@@ -77,13 +77,15 @@ const HeaderComponents = () => {
     setSearch(e.target.value);
     setValue(e.target.value);
   };
+  console.log('searchh', search)
 
   const searchStorage = localStorage.getItem("search");
 
   const BtnSearchProduct = () => {
-    if (search.trim()) {
+    console.log('searchh', search)
+    if (search?.trim()) {
       dispatch(searchProduct(search));
-      if (search.trim() !== searchStorage.trim()) {
+      if (search?.trim() !== searchStorage?.trim()) {
         navigate("/product-search");
         localStorage.setItem("search", search);
         console.log("searchsearch", search);

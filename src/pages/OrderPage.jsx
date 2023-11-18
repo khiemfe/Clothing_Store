@@ -17,6 +17,8 @@ import { success, error, warning } from "../components/Message";
 import { updateUser } from "../redux/slices/userSlice";
 import * as UserServcie from "../services/userServices";
 import { useNavigate } from "react-router-dom";
+import { MdDeleteOutline } from "react-icons/md";
+import StepsComponent from "../components/StepsComponent";
 
 const OrderPage = () => {
   const order = useSelector((state) => state.order);
@@ -27,7 +29,7 @@ const OrderPage = () => {
   const [isOpenModalUpdate, setIsOpenModalUpdate] = useState(false);
   const [formUpdate] = Form.useForm();
   const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const handleOnchangeCount = (type, idProduct) => {
@@ -85,9 +87,9 @@ const OrderPage = () => {
   }, [order]);
 
   const diliveryPriceMemo = useMemo(() => {
-    if (priceMemo > 100) {
+    if (priceMemo >= 300) {
       return 10;
-    } else if (priceMemo === 0) {
+    } else if (priceMemo === 0 || priceMemo >= 500) {
       return 0;
     } else {
       return 20;
@@ -138,7 +140,7 @@ const OrderPage = () => {
 
   const handleBuy = () => {
     if (user?.phone && user?.address && user?.name) {
-      navigate('/payment')
+      navigate("/payment");
     } else {
       setIsOpenModalUpdate(true);
     }
@@ -195,11 +197,33 @@ const OrderPage = () => {
   //   formUpdate.resetFields();
   // };
 
+  const itemsSteps = [
+    {
+      title: "Mua",
+      description: "",
+    },
+    {
+      title: "FreeShip 50%",
+      description: "300k",
+      // subTitle: "Left 00:00:08",
+    },
+    {
+      title: "FreeShip",
+      description: "500k",
+    },
+  ];
+
   return (
     <>
-      <h1 style={{ margin: "20px 0", textAlign: "center" }}>Giỏ hàng</h1>
+      <h1 style={{ margin: "20px 0", textAlign: "center" }}>
+        Giỏ hàng ({order?.orderItems.length} sản phẩm)
+      </h1>
       <div className="cart-body">
         <div className="cart-shopping">
+          <StepsComponent
+            current={priceMemo >= 500 ? 3 : priceMemo >= 300 ? 2 : priceMemo > 0 ? 1 : 0 }
+            items={itemsSteps}
+          />
           <div className="title">
             <div style={{ display: "flex", alignItems: "center" }}>
               <input
@@ -211,7 +235,6 @@ const OrderPage = () => {
                 type="checkbox"
                 className="checkbox"
               />
-              <h4>{order?.orderItems.length} sản phẩm</h4>
             </div>
             {listChecked.length > 0 && (
               <h4 onClick={handleDeleteAll} style={{ cursor: "pointer" }}>
@@ -254,13 +277,17 @@ const OrderPage = () => {
                       </button>
                     </div>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ display: "flex", alignItems: "end" }}>
                     <h4>{convertPrice(item.price * item.amount)}</h4>
                     <h4
-                      style={{ cursor: "pointer" }}
+                      style={{
+                        cursor: "pointer",
+                        marginLeft: "10px",
+                        fontSize: "26px",
+                      }}
                       onClick={() => handleDeleteOrder(item.product)}
                     >
-                      Xoá
+                      <MdDeleteOutline />
                     </h4>
                   </div>
                 </div>

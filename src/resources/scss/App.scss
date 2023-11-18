@@ -1072,7 +1072,7 @@ body {
       }
 
       .name-product {
-        width: 500px;
+        width: 400px;
         font-weight: 400;
         text-overflow: ellipsis;
       }
@@ -1141,6 +1141,65 @@ body {
   }
 }
 
+// payment
+.page-payment {
+  display: flex;
+  padding: 0 50px;
+  margin-bottom: 50px;
+
+  .payment {
+    width: 60%;
+    margin: auto;
+    padding: 10px;
+
+    .radio-text {
+      display: flex;
+    }
+
+    .method-pay {
+      padding: 10px 0;
+    }
+  }
+
+  .pay {
+    width: 30%;
+    text-align: center;
+
+    .pay-list {
+      list-style: none;
+
+      .pay-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        span {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .pay-btn {
+      padding: 15px 30px;
+      color: #fff;
+      background-color: #000;
+      border-radius: 10px;
+      text-transform: uppercase;
+      border: none;
+      font-size: 15px;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .pay-btn.disbled {
+      cursor: unset;
+      opacity: 0.8;
+    }
+  }
+}
+
 // footer
 
 .footer {
@@ -1150,7 +1209,6 @@ body {
   }
 
   .networks {
-
     padding: 0 20px;
     a {
       font-size: 20px;

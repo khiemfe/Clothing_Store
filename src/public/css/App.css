@@ -625,7 +625,7 @@ body {
       .cart-body .cart-shopping .item-product .img-product {
         width: 120px; }
       .cart-body .cart-shopping .item-product .name-product {
-        width: 500px;
+        width: 400px;
         font-weight: 400;
         text-overflow: ellipsis; }
       .cart-body .cart-shopping .item-product .price-product {
@@ -665,6 +665,43 @@ body {
       .cart-body .pay .pay-btn:hover {
         opacity: 0.8; }
     .cart-body .pay .pay-btn.disbled {
+      cursor: unset;
+      opacity: 0.8; }
+
+.page-payment {
+  display: flex;
+  padding: 0 50px;
+  margin-bottom: 50px; }
+  .page-payment .payment {
+    width: 60%;
+    margin: auto;
+    padding: 10px; }
+    .page-payment .payment .radio-text {
+      display: flex; }
+    .page-payment .payment .method-pay {
+      padding: 10px 0; }
+  .page-payment .pay {
+    width: 30%;
+    text-align: center; }
+    .page-payment .pay .pay-list {
+      list-style: none; }
+      .page-payment .pay .pay-list .pay-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; }
+        .page-payment .pay .pay-list .pay-item span {
+          font-size: 20px; }
+    .page-payment .pay .pay-btn {
+      padding: 15px 30px;
+      color: #fff;
+      background-color: #000;
+      border-radius: 10px;
+      text-transform: uppercase;
+      border: none;
+      font-size: 15px; }
+      .page-payment .pay .pay-btn:hover {
+        opacity: 0.8; }
+    .page-payment .pay .pay-btn.disbled {
       cursor: unset;
       opacity: 0.8; }
 
