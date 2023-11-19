@@ -136,7 +136,7 @@ const ProductDetailsComponents = ({ idProduct }) => {
   const location = useLocation();
 
   const hanleAddOrder = () => {
-    if (!user?.id && false) {
+    if (!user?.id) {
       navigate("/sign-in", { state: location?.pathname }); // login xong trở về lại trang lúc nảy
     } else {
       dispatch(

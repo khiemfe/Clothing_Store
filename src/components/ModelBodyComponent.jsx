@@ -20,8 +20,79 @@ const ModelBodyComponent = ({
   isLoading,
   title,
 }) => {
-  console.log("stateProducttt", stateProduct.type);
-  console.log("typeSelect2", typeSelect);
+  console.log("stateProducttt", stateProduct);
+  console.log("handleOnchange", handleOnchange);
+
+  const [sizeS, setSizeS] = useState(stateProduct?.quantity?.sizeS || 0);
+  const [sizeM, setSizeM] = useState(stateProduct?.quantity?.sizeM || 0);
+  const [sizeL, setSizeL] = useState(stateProduct?.quantity?.sizeL || 0);
+  const [sizeXL, setSizeXL] = useState(stateProduct?.quantity?.sizeXL || 0);
+
+  const handleOnchageQuantityS = (e) => {
+    setSizeS(e.target.value);
+    stateProduct.quantity.sizeS = e.target.value;
+  };
+  const handleOnchageQuantityM = (e) => {
+    setSizeM(e.target.value);
+    stateProduct.quantity.sizeM = e.target.value;
+  };
+  const handleOnchageQuantityL = (e) => {
+    setSizeL(e.target.value);
+    stateProduct.quantity.sizeL = e.target.value;
+  };
+  const handleOnchageQuantityXL = (e) => {
+    setSizeXL(e.target.value);
+    stateProduct.quantity.sizeXL = e.target.value;
+  };
+
+  useEffect(() => {
+    if (sizeS && sizeS < 0) {
+      setSizeS(0);
+    } else if (sizeM && sizeM < 0) {
+      setSizeM(0);
+    } else if (sizeL && sizeL < 0) {
+      setSizeL(0);
+    } else if (sizeXL && sizeXL < 0) {
+      setSizeXL(0);
+    }
+  }, [sizeS, sizeM, sizeL, sizeXL]);
+
+  // const [requiredSizeS, setRequiredSizeS] = useState(true);
+  // const [requiredSizeM, setRequiredSizeM] = useState(true);
+  // const [requiredSizeL, setRequiredSizeL] = useState(true);
+  // const [requiredSizeXL, setRequiredSizeXL] = useState(true);
+
+  // useEffect(() => {
+  //   if (sizeS) {
+  //     setRequiredSizeS(false);
+  //   } else {
+  //     setRequiredSizeS(true);
+  //   }
+  // }, [sizeS]);
+
+  // useEffect(() => {
+  //   if (sizeM) {
+  //     setRequiredSizeM(false);
+  //   } else {
+  //     setRequiredSizeM(true);
+  //   }
+  // }, [sizeM]);
+
+  // useEffect(() => {
+  //   if (sizeL) {
+  //     setRequiredSizeL(false);
+  //   } else {
+  //     setRequiredSizeL(true);
+  //   }
+  // }, [sizeL]);
+
+  // useEffect(() => {
+  //   if (sizeXL) {
+  //     setRequiredSizeXL(false);
+  //   } else {
+  //     setRequiredSizeXL(true);
+  //   }
+  // }, [sizeXL]);
 
   return (
     <Modal.Body>
@@ -107,7 +178,6 @@ const ModelBodyComponent = ({
             </Upload>
           )}
         </Form.Item>
-
         <Form.Item
           label="Name"
           name="name"
@@ -126,14 +196,13 @@ const ModelBodyComponent = ({
           />
         </Form.Item>
         {/* name, image, type, price, countInStock, rating, description */}
-
         <Form.Item
           label="Gender"
           name="gender"
           rules={[
             {
               required: true,
-              message: "Please input your gender!",
+              message: "Please input your size gender!",
             },
           ]}
         >
@@ -143,7 +212,6 @@ const ModelBodyComponent = ({
             name="gender"
           />
         </Form.Item>
-
         <Form.Item
           label="Price"
           name="price"
@@ -160,7 +228,6 @@ const ModelBodyComponent = ({
             name="price"
           />
         </Form.Item>
-
         <Form.Item
           label="Age"
           name="age"
@@ -176,6 +243,52 @@ const ModelBodyComponent = ({
             onChange={handleOnchange}
             name="age"
           />
+        </Form.Item>
+        <Form.Item label="Quantity">
+          <div style={{ display: "flex" }}>
+            <Form.Item
+              label="S: "
+            >
+              <Input
+                value={sizeS}
+                onChange={handleOnchageQuantityS}
+                name="sizeS"
+                type="number"
+                min="0"
+              />
+            </Form.Item>
+            <Form.Item label="M: ">
+              <Input
+                value={sizeM}
+                onChange={handleOnchageQuantityM}
+                // name="sizeM"
+                type="number"
+                min="0"
+              />
+            </Form.Item>
+            <Form.Item
+              label="L: "
+            >
+              <Input
+                value={sizeL}
+                onChange={handleOnchageQuantityL}
+                // name="sizeL"
+                type="number"
+                min="0"
+              />
+            </Form.Item>
+            <Form.Item
+              label="XL: "
+            >
+              <Input
+                value={sizeXL}
+                onChange={handleOnchageQuantityXL}
+                // name="sizeXL"
+                type="number"
+                min="0"
+              />
+            </Form.Item>
+          </div>
         </Form.Item>
 
         <Form.Item
@@ -194,15 +307,11 @@ const ModelBodyComponent = ({
             name="size"
           />
         </Form.Item>
-
-        <Form.Item
-          label="Type"
-          name="type"
-        >
+        <Form.Item label="Type" name="type">
           <div className="App">
             <Select
               name="type"
-              placeholder={placeholder || ''}
+              placeholder={placeholder || ""}
               // defaultValue={stateProduct.type}
               onChange={handleChangeSelect}
               options={options}
@@ -217,7 +326,6 @@ const ModelBodyComponent = ({
             )}
           </div>
         </Form.Item>
-
         <Form.Item
           wrapperCol={{
             offset: 8,

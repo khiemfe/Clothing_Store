@@ -13,6 +13,8 @@ import ModelUpdateUserComponent from "../components/ModelUpdateUserComponent";
 import { success, error, warning } from "../components/Message";
 import { useLocation } from "react-router-dom";
 import { orderContant } from "../contant";
+import { div } from "@tensorflow/tfjs";
+import { selectedOrder } from "../redux/slices/orderSlice";
 
 const OrderSuccessPage = () => {
   const order = useSelector((state) => state.order);
@@ -20,6 +22,9 @@ const OrderSuccessPage = () => {
   const location = useLocation(); //nhận dữ liệu trong state gửi bằng navigate
   const { state } = location;
   console.log("state", state);
+
+  const dispatch = useDispatch();
+  // dispatch(selectedOrder());
 
   return (
     <>
@@ -29,13 +34,36 @@ const OrderSuccessPage = () => {
       <div className="page-payment">
         <div className="payment">
           <div className="method-pay">
-            <h3>Phương thức giao hàng</h3>
-            <span>{orderContant.valueRadioGH[state?.valueRadioGH]}</span>
+            <p style={{ fontSize: "20px" }}>
+              Phương thức giao hàng:{" "}
+              <span>{orderContant.valueRadioGH[state?.valueRadioGH]}</span>{" "}
+            </p>
           </div>
           <div className="method-pay">
-            <h3>Phương thức thanh toán</h3>
-            <span>{orderContant.valueRadioTT[state?.valueRadioTT]}</span>
+            <p style={{ fontSize: "20px" }}>
+              Phương thức thanh toán:{" "}
+              <span>{orderContant.valueRadioTT[state?.valueRadioTT]}</span>
+            </p>
           </div>
+          {state?.order?.map((item, index) => {
+            return (
+              <div
+                key={index}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginTop: "10px",
+                }}
+              >
+                <img style={{ width: "100px" }} src={item?.image} alt="" />
+                <div style={{ marginLeft: "10px" }}>
+                  <h3>{item?.name}</h3>
+                  <h3>{convertPrice(item?.price)}</h3>
+                  <p style={{ fontSize: "14px" }}>SL: {item?.amount}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
         <div className="pay">
           <div>
@@ -48,15 +76,15 @@ const OrderSuccessPage = () => {
           </div>
           <ul className="pay-list">
             <li className="pay-item">
-              <h3>Tạm tính:</h3>
+              <h3>Tạm tính: {convertPrice(state?.priceMemo)}</h3>
               <span></span>
             </li>
             <li className="pay-item">
-              <h3>Phí giao hàng:</h3>
+              <h3>Phí giao hàng: {convertPrice(state?.shippingPrice)}</h3>
               <span></span>
             </li>
             <li className="pay-item">
-              <h3>Tổng tiền:</h3>
+              <h3>Tổng tiền: {convertPrice(state?.totalPriceMemo)}</h3>
               <span style={{ fontWeight: "bold" }}></span>
             </li>
           </ul>

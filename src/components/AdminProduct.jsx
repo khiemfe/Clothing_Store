@@ -41,6 +41,12 @@ const AdminProduct = () => {
     age: "",
     size: "",
     type: "",
+    quantity: {
+      sizeS: "",
+      sizeM: "",
+      sizeL: "",
+      sizeXL: "",
+    },
   });
 
   const [stateProductDetails, setStateProductDetails] = useState({
@@ -51,11 +57,26 @@ const AdminProduct = () => {
     age: "",
     size: "",
     type: "",
+    quantity: {
+      sizeS: "",
+      sizeM: "",
+      sizeL: "",
+      sizeXL: "",
+    },
   });
 
   const mutation = useMutationHook((data) => {
     console.log("dateCreate", data);
-    const { name, image, gender, price, age, size, type } = data;
+    const {
+      name,
+      image,
+      gender,
+      price,
+      age,
+      size,
+      type,
+      quantity: { sizeS, sizeM, sizeL, sizeXL },
+    } = data;
 
     const res = ProducttServcie.createProduct(data?.token, {
       name,
@@ -65,6 +86,12 @@ const AdminProduct = () => {
       age,
       size,
       type,
+      quantity: {
+        sizeS,
+        sizeM,
+        sizeL,
+        sizeXL,
+      },
     });
     return res;
   });
@@ -244,6 +271,7 @@ const AdminProduct = () => {
       stateProduct.price !== "" &&
       stateProduct.age !== "" &&
       stateProduct.size !== "" &&
+      stateProduct.quantity !== "" &&
       stateProduct.type !== ""
     ) {
       console.log("Success:", stateProduct);
@@ -264,6 +292,13 @@ const AdminProduct = () => {
   const onClose = () => {
     // setIsModalOpen(false)
     setStateProduct({
+      ...stateProductDetails,
+      quantity: {
+        sizeS: "",
+        sizeM: "",
+        sizeL: "",
+        sizeXL: "",
+      },
       image: "", //xóa image
     });
     form.resetFields(); //xóa các label
@@ -294,6 +329,12 @@ const AdminProduct = () => {
         age: res?.data?.age,
         size: res?.data?.size,
         type: res?.data?.type,
+        quantity: {
+          sizeS: res?.data?.quantity?.sizeS,
+          sizeM: res?.data?.quantity?.sizeM,
+          sizeL: res?.data?.quantity?.sizeL,
+          sizeXL: res?.data?.quantity?.sizeXL,
+        },
       });
     }
     setIsLoadingUpdate(false);
@@ -311,7 +352,7 @@ const AdminProduct = () => {
   }, [rowSelected, isOpenDrawer]);
 
   // hiển thị value trong thẻ input khi bấm vào sửa
-  console.log('formUpdate.__INTERNAL__.name', formUpdate.__INTERNAL__.name)
+  console.log("formUpdate.__INTERNAL__.name", formUpdate.__INTERNAL__.name);
   useEffect(() => {
     // setIsLoadingUpdate(true)
     if (formUpdate.__INTERNAL__.name) {
@@ -353,6 +394,12 @@ const AdminProduct = () => {
       age: "",
       size: "",
       type: "",
+      quantity: {
+        sizeS: "",
+        sizeM: "",
+        sizeL: "",
+        sizeXL: "",
+      },
     });
     formUpdate.resetFields();
   };
@@ -577,6 +624,10 @@ const AdminProduct = () => {
       sorter: (a, b) => a.ageTu - b.ageTu,
     },
     {
+      title: "Quantity",
+      dataIndex: "quantity",
+    },
+    {
       title: "Size",
       dataIndex: "size",
       filters: [
@@ -630,12 +681,19 @@ const AdminProduct = () => {
     dataProduct?.data?.map((product) => {
       return {
         ...product,
+        quantity: `S(${product?.quantity?.sizeS || 0}), M(${
+          product?.quantity?.sizeM || 0
+        }), L(${product?.quantity?.sizeL || 0}), XL(${
+          product?.quantity?.sizeXL || 0
+        })`,
         priceRender: product?.price + ".000đ",
         ageTu: product?.age.split("-")[0],
         ageDen: product?.age.split("-")[1],
         key: product?._id,
       };
     });
+
+  console.log("dataTable", dataTable);
   // }
   return (
     <>

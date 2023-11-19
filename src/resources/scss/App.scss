@@ -731,6 +731,10 @@ body {
 }
 
 // update sp
+
+.ant-drawer-content-wrapper {
+  width: 40% !important;
+}
 .ant-drawer-body {
   padding: 24px 30px 24px 40px !important;
 }

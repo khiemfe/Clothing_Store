@@ -95,7 +95,9 @@ const PaymentPage = () => {
         state: {
           // chuyển dữ liệu khi create success qua
           order: order?.orderItems,
+          priceMemo,
           shippingPrice,
+          totalPriceMemo,
           valueRadioGH,
           valueRadioTT,
         },
