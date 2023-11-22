@@ -70,6 +70,7 @@ const PaymentPage = () => {
   const mutationAddOrder = useMutationHook((data) => {
     console.log("dataUpdate: ", data);
     const { access_token, ...rest } = data;
+    console.log('rest', rest)
     const res = OrderServcie.createOrder(access_token, { ...rest }); //rest or {...rest}
     console.log("resssss", res);
     return res;
@@ -189,7 +190,7 @@ const PaymentPage = () => {
     });
   };
 
-  console.log("order", order);
+  console.log("orderedd", order);
 
   const handleAddOrder = () => {
     if (

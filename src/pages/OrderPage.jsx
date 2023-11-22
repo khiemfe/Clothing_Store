@@ -213,15 +213,23 @@ const OrderPage = () => {
     },
   ];
 
+  console.log("orderItemm", order?.orderItems);
+
   return (
     <>
-      <h1 style={{ margin: "20px 0", textAlign: "center" }}>
-        Giỏ hàng ({order?.orderItems.length} sản phẩm)
-      </h1>
+      <h1 style={{ margin: "20px 0", textAlign: "center" }}>Giỏ hàng</h1>
       <div className="cart-body">
         <div className="cart-shopping">
           <StepsComponent
-            current={priceMemo >= 500 ? 3 : priceMemo >= 300 ? 2 : priceMemo > 0 ? 1 : 0 }
+            current={
+              priceMemo >= 500
+                ? 3
+                : priceMemo >= 300
+                ? 2
+                : priceMemo > 0
+                ? 1
+                : 0
+            }
             items={itemsSteps}
           />
           <div className="title">
@@ -235,6 +243,9 @@ const OrderPage = () => {
                 type="checkbox"
                 className="checkbox"
               />
+              <p style={{ fontSize: "15px" }}>
+                Chọn tất cả ({order?.orderItems.length} sản phẩm)
+              </p>
             </div>
             {listChecked.length > 0 && (
               <h4 onClick={handleDeleteAll} style={{ cursor: "pointer" }}>

@@ -1,5 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 import { routes } from "./routes";
 import DefaultComponents from "./components/DefaultComponents";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -12,6 +17,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetUser, updateUser } from "./redux/slices/userSlice";
 import LoadingComponents from "./components/LoadingComponents";
 import FooterComponent from "./components/FooterComponent";
+import ModelSingIn from "./components/ModelSingIn";
+import * as UserServcie from "./services/userServices";
 
 function App() {
   // useEffect(() => {
@@ -34,10 +41,9 @@ function App() {
     setIsLoading(true);
     const { storageData, decoded } = handleDecoded();
     console.log("decoded?.id", decoded?.id);
-    if (decoded?.id) {
-      handleGetDetailsUser(decoded?.id, storageData);
-    }
-    console.log("decoded-id", decoded?.id);
+    // if (decoded?.id) {
+    //   handleGetDetailsUser(decoded?.id, storageData);
+    // }
     console.log("storageData", storageData);
     setIsLoading(false);
   }, []);
@@ -53,6 +59,8 @@ function App() {
     return { decoded, storageData };
   };
 
+  const [openModel, setOpenModel] = useState(false);
+
   UserService.axiosJWT.interceptors.request.use(
     async (config) => {
       //Chạy vào đây trước khi getDetails, mình sẽ check nếu token hết hạn (decoded?.exp < currentTime.getTime() / 1000),
@@ -65,16 +73,31 @@ function App() {
       let storageRefreshToken = localStorage.getItem("refresh_token");
       const refreshToken = JSON.parse(storageRefreshToken);
       const decodedRefreshToken = jwt_decode(refreshToken);
+      console.log("config", config);
 
-      if (decoded?.exp < currentTime.getTime() / 1000) {
-        if (decodedRefreshToken?.exp > currentTime.getTime() / 1000) {
-          console.log("config", config);
+      console.log("???", decoded?.exp < currentTime.getTime() / 1000);
+
+      if (decodedRefreshToken?.exp > currentTime.getTime() / 1000) {
+        if (decoded?.exp < currentTime.getTime() / 1000) {
           const data = await UserService.refreshToken();
           config.headers["token"] = `Bearer ${data?.access_token}`;
+        } else {
+          // if (user?.access_token) {
+          console.log("lay cai cu");
+          const storageData = localStorage.getItem("access_token");
+          config.headers["token"] = `Bearer ${storageData.slice(1,-1)}`;
+          // }
         }
       } else {
+        console.log("voni");
+        setOpenModel(true);
+        const res = await UserServcie.logoutUser();
+        if (res.status === "OK") {
+          dispatch(resetUser());
+        }
+        localStorage.setItem("email", JSON.stringify(false));
+
         // dispatch(resetUser());
-        config.headers["token"] = `Bearer ${user?.access_token}`;
       }
       return config;
     },
@@ -83,23 +106,24 @@ function App() {
     }
   );
 
-  const handleGetDetailsUser = async (id, token) => {
-    console.log("id update", id);
-    let storageRefreshToken = localStorage.getItem("refresh_token");
-    const refreshToken = JSON.parse(storageRefreshToken);
-    console.log("refreshToken", refreshToken);
-    console.log("token", token);
-    const res = await UserService.getDetailsUser(id, token);
-    console.log("chayyyyyyyy");
-    dispatch(
-      updateUser({
-        ...res?.data,
-        access_token: token,
-        refreshToken: refreshToken,
-      })
-    );
-    setIsLoading(false);
-  };
+  //Dùng lưu trong storage ở redux thì ko cần dùng ở đây
+  // const handleGetDetailsUser = async (id, token) => {
+  //   console.log("id update", id);
+  //   let storageRefreshToken = localStorage.getItem("refresh_token");
+  //   const refreshToken = JSON.parse(storageRefreshToken);
+  //   console.log("refreshToken", refreshToken);
+  //   console.log("token", token);
+  //   const res = await UserService.getDetailsUser(id, token);
+  //   console.log("chayyyyyyyy");
+  //   dispatch(
+  //     updateUser({
+  //       ...res?.data,
+  //       access_token: token,
+  //       refreshToken: refreshToken,
+  //     })
+  //   );
+  //   setIsLoading(false);
+  // };
 
   return (
     <div>
@@ -122,6 +146,7 @@ function App() {
                     <>
                       <Layout>
                         <Page />
+                        {openModel && <ModelSingIn />}
                         <LayoutFooter />
                       </Layout>
                     </>

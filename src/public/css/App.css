@@ -484,35 +484,39 @@ body {
     letter-spacing: 1px; }
     .produc-details .notify .gia span {
       text-decoration: underline; }
-  .produc-details .notify .size {
-    margin-top: 50px; }
-    .produc-details .notify .size .size-text {
-      font-size: 18px; }
-      .produc-details .notify .size .size-text span {
-        font-weight: bold;
-        margin-left: 5px; }
-    .produc-details .notify .size .size-list {
-      list-style: none;
-      display: flex;
-      align-items: center;
-      padding: 0;
-      margin-top: 20px; }
-      .produc-details .notify .size .size-list .size-item {
-        padding: 12px 0;
-        width: 50px;
-        border: 1.5px solid #ccc;
-        margin: 0 10px;
-        font-size: 16px;
-        text-align: center;
-        cursor: pointer; }
-        .produc-details .notify .size .size-list .size-item:first-child {
-          margin-left: 0; }
-        .produc-details .notify .size .size-list .size-item:hover {
-          border-color: #888; }
-      .produc-details .notify .size .size-list .size-item.active {
-        color: #fff;
-        background-color: #000;
-        border: none; }
+  .produc-details .notify .size .size-text {
+    font-size: 18px; }
+    .produc-details .notify .size .size-text span {
+      font-weight: bold;
+      margin-left: 5px; }
+  .produc-details .notify .size .size-list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin-top: 20px; }
+    .produc-details .notify .size .size-list .size-item {
+      padding: 12px 0;
+      width: 50px;
+      border: 1.5px solid #ccc;
+      margin: 0 10px;
+      font-size: 16px;
+      text-align: center;
+      cursor: pointer; }
+      .produc-details .notify .size .size-list .size-item:first-child {
+        margin-left: 0; }
+      .produc-details .notify .size .size-list .size-item:hover {
+        border-color: #888; }
+    .produc-details .notify .size .size-list .size-item.active {
+      color: #fff;
+      background-color: #000;
+      border: none; }
+    .produc-details .notify .size .size-list .size-item.disbled {
+      color: #ddd;
+      border-color: #ddd; }
+      .produc-details .notify .size .size-list .size-item.disbled:hover {
+        border-color: #ddd;
+        cursor: no-drop; }
   .produc-details .notify .choose {
     display: flex;
     align-items: center;

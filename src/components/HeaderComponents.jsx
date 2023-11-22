@@ -20,6 +20,7 @@ import { resetUser } from "../redux/slices/userSlice";
 import LoadingComponents from "./LoadingComponents";
 import LoadingCardInfoComponent from "./LoadingCardInfoComponent";
 import { searchProduct } from "../redux/slices/productSlice";
+import { useQuery } from "@tanstack/react-query";
 
 const HeaderComponents = () => {
   const item = ["nam", "nữ", "new", "best", "sale đồng giá"];
@@ -38,12 +39,12 @@ const HeaderComponents = () => {
     localStorage.setItem("email", JSON.stringify(dataEmail));
   }
 
-  console.log("user", user);
+  console.log("userrr", user);
   useEffect(() => {
     if (user?.access_token && user?.id === undefined) {
       localStorage.setItem("email", JSON.stringify(false));
     }
-  });
+  }, []);
   let storageEmail = localStorage.getItem("email");
   console.log("storageEmail", storageEmail);
 
@@ -51,8 +52,11 @@ const HeaderComponents = () => {
   const [loading, setLoading] = useState(false);
   const handleLogout = async () => {
     setLoading(true);
-    await UserServcie.logoutUser();
-    dispatch(resetUser());
+    const res = await UserServcie.logoutUser();
+    console.log("reslog", res);
+    if (res.status === "OK") {
+      dispatch(resetUser());
+    }
     localStorage.setItem("email", JSON.stringify(false));
     // localStorage.setItem("access_token", JSON.stringify(false));
     setLoading(false);
@@ -77,12 +81,12 @@ const HeaderComponents = () => {
     setSearch(e.target.value);
     setValue(e.target.value);
   };
-  console.log('searchh', search)
+  console.log("searchh", search);
 
   const searchStorage = localStorage.getItem("search");
 
   const BtnSearchProduct = () => {
-    console.log('searchh', search)
+    console.log("searchh", search);
     if (search?.trim()) {
       dispatch(searchProduct(search));
       if (search?.trim() !== searchStorage?.trim()) {
@@ -101,6 +105,15 @@ const HeaderComponents = () => {
       e.preventDefault();
       BtnSearchProduct();
     }
+  };
+
+  const handleClickNavigate = (type) => {
+    navigate("/my-order", {
+      state: {
+        id: user?.id,
+        token: user?.access_token,
+      },
+    });
   };
 
   return (
@@ -185,6 +198,9 @@ const HeaderComponents = () => {
                       <Dropdown.Item href="/profile-user">
                         Thông tin người dùng
                       </Dropdown.Item>
+                      <Dropdown.Item href="" onClick={handleClickNavigate}>
+                        Đơn hàng của tôi
+                      </Dropdown.Item>
                       <Dropdown.Divider />
                       <LoadingComponents isLoading={loading}>
                         <Dropdown.Item onClick={handleLogout} href="#">
@@ -197,9 +213,7 @@ const HeaderComponents = () => {
                   <>
                     {storageEmail && storageEmail !== "false" ? (
                       <div>
-                        <LoadingCardInfoComponent
-                        // isLoading={true}
-                        ></LoadingCardInfoComponent>
+                        <LoadingCardInfoComponent></LoadingCardInfoComponent>
                       </div>
                     ) : (
                       <Button

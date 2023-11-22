@@ -42,6 +42,8 @@ const SignInPage = () => {
         "refresh_token",
         JSON.stringify(data?.refresh_token)
       );
+      localStorage.setItem("email", JSON.stringify(true));
+
       if (data?.access_token) {
         const decoded = jwt_decode(data?.access_token);
         console.log("decoded", decoded);
@@ -49,17 +51,16 @@ const SignInPage = () => {
           handleGetDetailsUser(decoded?.id, data?.access_token);
         }
       }
-      localStorage.setItem("email", JSON.stringify(true));
       // localStorage.setItem('log-out', JSON.stringify(false))
     }
   }, [isSuccess, isError]);
 
   const handleGetDetailsUser = async (id, token) => {
+    localStorage.setItem("email", JSON.stringify(true));
     const storage = localStorage.getItem("refresh_token");
     const refreshToken = JSON.parse(storage);
     const res = await UserServcie.getDetailsUser(id, token);
     dispatch(updateUser({ ...res?.data, access_token: token, refreshToken }));
-    console.log("lllllll", token);
     console.log("res", res);
   };
 
@@ -79,7 +80,6 @@ const SignInPage = () => {
       password,
     });
     console.log("sign-in", email, password);
-    localStorage.setItem("email", JSON.stringify(true));
     setDisabled(true);
   };
 
