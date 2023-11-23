@@ -22,7 +22,7 @@ import StepsComponent from "../components/StepsComponent";
 
 const OrderPage = () => {
   const order = useSelector((state) => state.order);
-  console.log("order", order?.orderItems);
+  console.log("order", order);
   const user = useSelector((state) => state.user);
   console.log("userrr", user);
   const [listChecked, setListChecked] = useState([]);
@@ -46,28 +46,48 @@ const OrderPage = () => {
   };
 
   const onChange = (e) => {
+    console.log("e.target.value", e.target.value);
     if (listChecked.includes(e.target.value)) {
       const newListChecked = listChecked.filter(
         (item) => item !== e.target.value
       );
+      console.log("newListChecked", newListChecked);
       setListChecked(newListChecked);
     } else {
       setListChecked([...listChecked, e.target.value]);
     }
   };
 
+  const [lengthItem, setLengthItem] = useState([]);
+
   const onChangeAll = (e) => {
     if (e.target.checked) {
       const newListChecked = [];
       order?.orderItems?.forEach((item) => {
-        newListChecked.push(item?.product);
+        console.log("item?.userId", item?.userId === user?.id);
+        if (item?.userId === user?.id) {
+          newListChecked.push(item?.product + `size${item?.size}`);
+        }
       });
+      // setLengthItem(newListChecked);
       setListChecked(newListChecked);
     } else {
       setListChecked([]);
     }
   };
+
+  useEffect(() => {
+    const newListChecked = [];
+    order?.orderItems?.forEach((item) => {
+      console.log("item?.userId", item?.userId === user?.id);
+      if (item?.userId === user?.id) {
+        newListChecked.push(item?.product + `size${item?.size}`);
+      }
+    });
+    setLengthItem(newListChecked);
+  }, []);
   console.log("listChecked", listChecked);
+  console.log("listChecked2", lengthItem);
 
   const handleDeleteAll = () => {
     if (listChecked.length > 0) {
@@ -87,10 +107,11 @@ const OrderPage = () => {
   }, [order]);
 
   const diliveryPriceMemo = useMemo(() => {
-    if (priceMemo >= 300) {
-      return 10;
-    } else if (priceMemo === 0 || priceMemo >= 500) {
+    if (priceMemo === 0 || priceMemo >= 800) {
       return 0;
+    }
+    if (priceMemo >= 500) {
+      return 10;
     } else {
       return 20;
     }
@@ -204,12 +225,12 @@ const OrderPage = () => {
     },
     {
       title: "FreeShip 50%",
-      description: "300k",
+      description: "500k",
       // subTitle: "Left 00:00:08",
     },
     {
       title: "FreeShip",
-      description: "500k",
+      description: "800k",
     },
   ];
 
@@ -222,9 +243,9 @@ const OrderPage = () => {
         <div className="cart-shopping">
           <StepsComponent
             current={
-              priceMemo >= 500
+              priceMemo >= 800
                 ? 3
-                : priceMemo >= 300
+                : priceMemo >= 500
                 ? 2
                 : priceMemo > 0
                 ? 1
@@ -238,7 +259,7 @@ const OrderPage = () => {
                 onChange={onChangeAll}
                 checked={
                   listChecked.length > 0 &&
-                  listChecked?.length === order?.orderItems.length
+                  listChecked?.length === lengthItem?.length
                 }
                 type="checkbox"
                 className="checkbox"
@@ -255,54 +276,62 @@ const OrderPage = () => {
           </div>
           {order?.orderItems?.map((item, index) => {
             return (
-              <span key={index}>
-                <div style={{ display: "flex" }} className="item-product">
-                  <input
-                    onChange={onChange}
-                    value={item.product}
-                    checked={listChecked.includes(item.product)}
-                    type="checkbox"
-                    className="checkbox"
-                  />
-                  <img src={item.image} alt="" className="img-product" />
-                  <div className="text-product">
-                    <h3 className="name-product">{item?.name}</h3>
-                    <h3 className="price-product">
-                      {convertPrice(item?.price)}
-                    </h3>
-                    <div className="amount-product">
-                      <button
-                        onClick={() =>
-                          handleOnchangeCount("decrease", item.product)
-                        }
-                      >
-                        -
-                      </button>
-                      <span style={{ padding: "0 5px" }}>{item?.amount}</span>
-                      <button
-                        onClick={() =>
-                          handleOnchangeCount("increase", item.product)
-                        }
-                      >
-                        +
-                      </button>
+              <>
+                {item.userId === user?.id && (
+                  <span key={index}>
+                    <div style={{ display: "flex" }} className="item-product">
+                      <input
+                        onChange={onChange}
+                        value={item.product + `size${item.size}`}
+                        checked={listChecked.includes(
+                          item.product + `size${item.size}`
+                        )}
+                        type="checkbox"
+                        className="checkbox"
+                      />
+                      <img src={item.image} alt="" className="img-product" />
+                      <div className="text-product">
+                        <h3 className="name-product">{item?.name}</h3>
+                        <h3 className="price-product">
+                          {convertPrice(item?.price)}
+                        </h3>
+                        <div className="amount-product">
+                          <button
+                            onClick={() =>
+                              handleOnchangeCount("decrease", item.product)
+                            }
+                          >
+                            -
+                          </button>
+                          <span style={{ padding: "0 5px" }}>
+                            {item?.amount}
+                          </span>
+                          <button
+                            onClick={() =>
+                              handleOnchangeCount("increase", item.product)
+                            }
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "end" }}>
+                        <h4>{convertPrice(item.price * item.amount)}</h4>
+                        <h4
+                          style={{
+                            cursor: "pointer",
+                            marginLeft: "10px",
+                            fontSize: "26px",
+                          }}
+                          onClick={() => handleDeleteOrder(item.product)}
+                        >
+                          <MdDeleteOutline />
+                        </h4>
+                      </div>
                     </div>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "end" }}>
-                    <h4>{convertPrice(item.price * item.amount)}</h4>
-                    <h4
-                      style={{
-                        cursor: "pointer",
-                        marginLeft: "10px",
-                        fontSize: "26px",
-                      }}
-                      onClick={() => handleDeleteOrder(item.product)}
-                    >
-                      <MdDeleteOutline />
-                    </h4>
-                  </div>
-                </div>
-              </span>
+                  </span>
+                )}
+              </>
             );
           })}
         </div>

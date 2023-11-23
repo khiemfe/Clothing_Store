@@ -904,7 +904,6 @@ body {
 
           &:hover {
             border-color: #888;
-            
           }
         }
 
@@ -917,7 +916,7 @@ body {
         .size-item.disbled {
           color: #ddd;
           border-color: #ddd;
-          
+
           &:hover {
             border-color: #ddd;
             cursor: no-drop;
@@ -1212,6 +1211,14 @@ body {
       cursor: unset;
       opacity: 0.8;
     }
+  }
+}
+
+//my order
+.my-order {
+  padding: 0 100px;
+  .body {
+    
   }
 }
 

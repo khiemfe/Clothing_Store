@@ -81,11 +81,13 @@ function App() {
         if (decoded?.exp < currentTime.getTime() / 1000) {
           const data = await UserService.refreshToken();
           config.headers["token"] = `Bearer ${data?.access_token}`;
+          // if(user?.id) config.params["id"] = user?.id;
         } else {
           // if (user?.access_token) {
           console.log("lay cai cu");
           const storageData = localStorage.getItem("access_token");
           config.headers["token"] = `Bearer ${storageData.slice(1,-1)}`;
+          // if(user?.id) config.params["id"] = user?.id;
           // }
         }
       } else {

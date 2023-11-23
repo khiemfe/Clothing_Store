@@ -24,7 +24,7 @@ const ModelSingIn = () => {
       >
         <p>
           Để đảm bảo an toàn cho tài khoản của bạn, tài khoản của bạn đã đăng
-          xuất sau khi đã hết thời gian.
+          xuất sau khi đã hết thời gian (30 ngày).
         </p>
         <p>Bạn có muốn đăng nhập lại không?</p>
       </Modal>

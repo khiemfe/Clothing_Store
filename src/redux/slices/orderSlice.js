@@ -23,11 +23,17 @@ export const orderSlice = createSlice({
     addOrderProduct: (state, action) => {
       console.log("state", { state, action });
       const { orderItem } = action.payload;
+      // state?.orderItems là tất cả orderItems trong order redux
       const itemOrder = state?.orderItems?.find(
-        (item) => item?.product === orderItem?.product
+        (item) =>
+          item?.product === orderItem?.product &&
+          item?.userId === orderItem?.userId &&
+          item?.size === orderItem?.size
       );
+      console.log("orderItem", orderItem);
+
       if (itemOrder) {
-        //nếu đã tồn tại trong giỏ hàng
+        //nếu đã tồn tại trong giỏ hàng và cùng người dùng thì tăng số lượng trong giỏ
         itemOrder.amount += orderItem?.amount;
       } else {
         state?.orderItems.push(orderItem);
@@ -42,7 +48,7 @@ export const orderSlice = createSlice({
         (item) => item?.product === idProduct
       );
       itemOrder.amount++;
-      if(itemOrderSelected) {
+      if (itemOrderSelected) {
         itemOrderSelected.amount++;
       }
     },
@@ -55,7 +61,7 @@ export const orderSlice = createSlice({
         (item) => item?.product === idProduct
       );
       itemOrder.amount--;
-      if(itemOrderSelected) {
+      if (itemOrderSelected) {
         itemOrderSelected.amount--;
       }
     },
@@ -85,7 +91,7 @@ export const orderSlice = createSlice({
       const { listChecked } = action.payload;
       const orderSelected = [];
       state.orderItems.forEach((order) => {
-        if (listChecked.includes(order.product)) {
+        if (listChecked.includes(order.product + `size${order.size}`)) {
           orderSelected.push(order);
         }
       });

@@ -13,6 +13,7 @@ import AdminPage from "../pages/AdminPage";
 import ProductSearchPage from "../pages/ProductSearchPage";
 import PaymentPage from "../pages/PaymentPage";
 import OrderSuccessPage from "../pages/OrderSuccessPage";
+import DetailsOrderPage from "../pages/DetailsOrderPage";
 
 export const routes = [
   {
@@ -30,6 +31,12 @@ export const routes = [
   {
     path: "/my-order",
     page: MyOrderPage,
+    isShowHeader: true,
+    isShowFooter: true,
+  },
+  {
+    path: "/details-order/:id",
+    page: DetailsOrderPage,
     isShowHeader: true,
     isShowFooter: true,
   },

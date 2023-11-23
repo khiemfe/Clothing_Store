@@ -1,20 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { convertPrice } from "../utils";
 import { useDispatch, useSelector } from "react-redux";
-import { Radio } from "antd";
-import * as OrderServcie from "../services/OrderServices";
-import { useMutationHook } from "../hooks/useMutationHook";
-import * as UserServcie from "../services/userServices";
-import { updateUser } from "../redux/slices/userSlice";
-import Modal from "react-bootstrap/Modal";
-import { Form } from "antd";
-import LoadingUpdateComponent from "../components/LoadingUpdateComponent";
-import ModelUpdateUserComponent from "../components/ModelUpdateUserComponent";
-import { success, error, warning } from "../components/Message";
 import { useLocation } from "react-router-dom";
 import { orderContant } from "../contant";
-import { div } from "@tensorflow/tfjs";
-import { selectedOrder } from "../redux/slices/orderSlice";
 
 const OrderSuccessPage = () => {
   const order = useSelector((state) => state.order);

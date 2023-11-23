@@ -32,10 +32,11 @@ const PaymentPage = () => {
   }, [order]);
 
   const diliveryPriceMemo = useMemo(() => {
-    if (priceMemo > 300) {
-      return 10;
-    } else if (priceMemo === 0) {
+    if (priceMemo === 0 || priceMemo >= 800) {
       return 0;
+    }
+    if (priceMemo >= 500) {
+      return 10;
     } else {
       return 20;
     }
@@ -69,9 +70,10 @@ const PaymentPage = () => {
 
   const mutationAddOrder = useMutationHook((data) => {
     console.log("dataUpdate: ", data);
-    const { access_token, ...rest } = data;
-    console.log('rest', rest)
-    const res = OrderServcie.createOrder(access_token, { ...rest }); //rest or {...rest}
+    const { user: userId, token, ...rest } = data;
+    console.log('token', token)
+    console.log("rest", rest);
+    const res = OrderServcie.createOrder(userId, token, { ...rest }); //rest or {...rest}
     console.log("resssss", res);
     return res;
   });

@@ -5,7 +5,7 @@ import TabelComponents from "./TabelComponents";
 import Modal from "react-bootstrap/Modal";
 import { Form, Input, Space } from "antd";
 import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
-import { getBase64, renderOptions } from "../utils";
+import { convertPrice, getBase64, renderOptions } from "../utils";
 import * as ProducttServcie from "../services/ProductServices";
 import { useMutationHook } from "../hooks/useMutationHook";
 import LoadingComponents from "../components/LoadingComponents";
@@ -686,7 +686,7 @@ const AdminProduct = () => {
         }), L(${product?.quantity?.sizeL || 0}), XL(${
           product?.quantity?.sizeXL || 0
         })`,
-        priceRender: product?.price + ".000đ",
+        priceRender:  convertPrice(product?.price),
         ageTu: product?.age.split("-")[0],
         ageDen: product?.age.split("-")[1],
         key: product?._id,

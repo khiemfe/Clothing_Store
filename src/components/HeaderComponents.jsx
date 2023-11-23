@@ -116,6 +116,13 @@ const HeaderComponents = () => {
     });
   };
 
+  let amountCart = 0;
+  order?.orderItems?.map((item) => {
+    if (item.userId === user?.id) {
+      amountCart++;
+    }
+  });
+
   return (
     <Navbar className=" justify-content-between header ">
       <Toaster />
@@ -160,7 +167,7 @@ const HeaderComponents = () => {
               </div>
               <FiHeart className="icon heart" />
               <Button className="btn-cart" onClick={() => navigate("/order")}>
-                <Badge bg="warning">{order?.orderItems?.length}</Badge>
+                <Badge bg="warning">{amountCart}</Badge>
                 <BsCart2 className="icon cart" />
               </Button>
               <div className="info-user">
