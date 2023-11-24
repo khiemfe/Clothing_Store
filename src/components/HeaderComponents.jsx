@@ -107,6 +107,15 @@ const HeaderComponents = () => {
     }
   };
 
+  const handleOrderCart = (type) => {
+    navigate("/order", {
+      state: {
+        id: user?.id,
+        token: user?.access_token,
+      },
+    });
+  };
+
   const handleClickNavigate = (type) => {
     navigate("/my-order", {
       state: {
@@ -166,7 +175,7 @@ const HeaderComponents = () => {
                 />
               </div>
               <FiHeart className="icon heart" />
-              <Button className="btn-cart" onClick={() => navigate("/order")}>
+              <Button className="btn-cart" onClick={handleOrderCart}>
                 <Badge bg="warning">{amountCart}</Badge>
                 <BsCart2 className="icon cart" />
               </Button>

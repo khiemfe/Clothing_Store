@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   increaseAmount,
   decreaseAmount,
-  removeOrderProduct,
-  removeAllOrderProduct,
+  // removeOrderProduct,
+  // removeAllOrderProduct,
   selectedOrder,
+  updateOrderProduct,
 } from "../redux/slices/orderSlice";
 import Modal from "react-bootstrap/Modal";
 import { Form } from "antd";
@@ -16,9 +17,11 @@ import { useMutationHook } from "../hooks/useMutationHook";
 import { success, error, warning } from "../components/Message";
 import { updateUser } from "../redux/slices/userSlice";
 import * as UserServcie from "../services/userServices";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MdDeleteOutline } from "react-icons/md";
 import StepsComponent from "../components/StepsComponent";
+import * as CartServices from "../services/CartServices";
+import { useQuery } from "@tanstack/react-query";
 
 const OrderPage = () => {
   const order = useSelector((state) => state.order);
@@ -30,8 +33,38 @@ const OrderPage = () => {
   const [formUpdate] = Form.useForm();
   const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
+
+  const location = useLocation();
+  const { state } = location;
+
+  const fetchOrderCart = async () => {
+    const res = await CartServices.getCartByUserId(state?.id, state?.token);
+    return res?.data;
+  };
+
+  const [enabled, setEnabled] = useState(false);
+  useEffect(() => {
+    if (state?.id && state?.token) {
+      setEnabled(true);
+    } else {
+      setEnabled(false);
+    }
+  }, [state]);
+
+  const queryCart = useQuery(["cart"], fetchOrderCart, {
+    enabled: enabled,
+  });
+
+  const { data: dataCart, isLoading: isLoadingCart } = queryCart;
+  console.log("dataCart", dataCart);
+
+  useEffect(() => {
+    if (dataCart?.length > 0) {
+      dispatch(updateOrderProduct({ dataCart }));
+    }
+  }, [dataCart]);
+
   const handleOnchangeCount = (type, idProduct) => {
     if (type === "increase") {
       dispatch(increaseAmount({ idProduct }));
@@ -40,10 +73,40 @@ const OrderPage = () => {
     }
   };
 
+  const mutationDelete = useMutationHook((data) => {
+    const { id, token } = data;
+    const res = CartServices.deleteCart(id, token);
+    return res;
+  });
+
+  const {
+    data: dataDeleted,
+    isLoading: isLoadingDeleted,
+    isSuccess: isSuccessDeleted,
+    isError: isErrorDeleted,
+  } = mutationDelete;
+
   const handleDeleteOrder = (idProduct) => {
     console.log("idProduct", idProduct);
-    dispatch(removeOrderProduct({ idProduct }));
+    // dispatch(removeOrderProduct({ idProduct }));
+    mutationDelete.mutate(
+      { id: idProduct, token: user?.access_token },
+      {
+        //onSettled & queryProduct.refetch() nó mới cập nhật lại không cần load lại trang
+        onSettled: () => {
+          queryCart.refetch();
+        },
+      }
+    );
   };
+
+  useEffect(() => {
+    if (isSuccessDeleted && dataDeleted?.status === "OK") {
+      success();
+    } else if (isErrorDeleted) {
+      error();
+    }
+  }, [isSuccessDeleted]);
 
   const onChange = (e) => {
     console.log("e.target.value", e.target.value);
@@ -65,9 +128,7 @@ const OrderPage = () => {
       const newListChecked = [];
       order?.orderItems?.forEach((item) => {
         console.log("item?.userId", item?.userId === user?.id);
-        if (item?.userId === user?.id) {
-          newListChecked.push(item?.product + `size${item?.size}`);
-        }
+        newListChecked.push(item?._id + `size${item?.size}`);
       });
       // setLengthItem(newListChecked);
       setListChecked(newListChecked);
@@ -81,7 +142,7 @@ const OrderPage = () => {
     order?.orderItems?.forEach((item) => {
       console.log("item?.userId", item?.userId === user?.id);
       if (item?.userId === user?.id) {
-        newListChecked.push(item?.product + `size${item?.size}`);
+        newListChecked.push(item?._id + `size${item?.size}`);
       }
     });
     setLengthItem(newListChecked);
@@ -89,11 +150,44 @@ const OrderPage = () => {
   console.log("listChecked", listChecked);
   console.log("listChecked2", lengthItem);
 
+  const mutationDeleteMany = useMutationHook((data) => {
+    const { token, ...ids } = data;
+    const res = CartServices.deleteManyCart(ids, token);
+    return res;
+  });
+
+  const {
+    data: dataDeletedMany,
+    isLoading: isLoadingDeletedMany,
+    isSuccess: isSuccessDeletedMany,
+    isError: isErrorDeletedMany,
+  } = mutationDeleteMany;
+
   const handleDeleteAll = () => {
-    if (listChecked.length > 0) {
-      dispatch(removeAllOrderProduct({ listChecked }));
+    if (listChecked?.length > 0) {
+      // dispatch(removeAllOrderProduct({ listChecked }));
+      const arrId = [];
+      for (let i = 0; i < listChecked.length; i++) {
+        arrId.push(listChecked[i].split("size")[0]);
+      }
+      mutationDeleteMany.mutate(
+        { ids: arrId, token: user?.access_token },
+        {
+          onSettled: () => {
+            queryCart.refetch();
+          },
+        }
+      );
     }
   };
+
+  useEffect(() => {
+    if (isSuccessDeletedMany && dataDeletedMany?.status === "OK") {
+      success();
+    } else if (isErrorDeletedMany) {
+      error();
+    }
+  }, [isSuccessDeletedMany]);
 
   useEffect(() => {
     dispatch(selectedOrder({ listChecked }));
@@ -208,16 +302,6 @@ const OrderPage = () => {
     });
   };
 
-  // const onCloseModal = () => {
-  //   setIsOpenModalUpdate(false);
-  //   setStateUserDetailsUpdate({
-  //     name: "",
-  //     phone: "",
-  //     address: "",
-  //   });
-  //   formUpdate.resetFields();
-  // };
-
   const itemsSteps = [
     {
       title: "Mua",
@@ -258,17 +342,17 @@ const OrderPage = () => {
               <input
                 onChange={onChangeAll}
                 checked={
-                  listChecked.length > 0 &&
+                  listChecked?.length > 0 &&
                   listChecked?.length === lengthItem?.length
                 }
                 type="checkbox"
                 className="checkbox"
               />
               <p style={{ fontSize: "15px" }}>
-                Chọn tất cả ({order?.orderItems.length} sản phẩm)
+                Chọn tất cả ({order?.orderItems?.length} sản phẩm)
               </p>
             </div>
-            {listChecked.length > 0 && (
+            {listChecked?.length > 0 && (
               <h4 onClick={handleDeleteAll} style={{ cursor: "pointer" }}>
                 Xoá tất cả
               </h4>
@@ -282,9 +366,9 @@ const OrderPage = () => {
                     <div style={{ display: "flex" }} className="item-product">
                       <input
                         onChange={onChange}
-                        value={item.product + `size${item.size}`}
+                        value={item._id + `size${item.size}`}
                         checked={listChecked.includes(
-                          item.product + `size${item.size}`
+                          item._id + `size${item.size}`
                         )}
                         type="checkbox"
                         className="checkbox"
@@ -298,7 +382,7 @@ const OrderPage = () => {
                         <div className="amount-product">
                           <button
                             onClick={() =>
-                              handleOnchangeCount("decrease", item.product)
+                              handleOnchangeCount("decrease", item._id)
                             }
                           >
                             -
@@ -308,7 +392,7 @@ const OrderPage = () => {
                           </span>
                           <button
                             onClick={() =>
-                              handleOnchangeCount("increase", item.product)
+                              handleOnchangeCount("increase", item._id)
                             }
                           >
                             +
@@ -323,7 +407,7 @@ const OrderPage = () => {
                             marginLeft: "10px",
                             fontSize: "26px",
                           }}
-                          onClick={() => handleDeleteOrder(item.product)}
+                          onClick={() => handleDeleteOrder(item._id)}
                         >
                           <MdDeleteOutline />
                         </h4>
@@ -352,7 +436,7 @@ const OrderPage = () => {
               </span>
             </li>
           </ul>
-          {listChecked.length > 0 ? (
+          {listChecked?.length > 0 ? (
             <button className="pay-btn" onClick={handleBuy}>
               Mua ngay({listChecked?.length})
             </button>

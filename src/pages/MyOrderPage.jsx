@@ -5,15 +5,14 @@ import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMutationHook } from "../hooks/useMutationHook";
 import { success, error, warning } from "../components/Message";
-import { div } from "@tensorflow/tfjs";
 import { convertPrice } from "../utils";
 import { Button } from "antd";
 import { Modal } from "antd";
 
 const MyOrderPage = () => {
   const location = useLocation();
-  const user = useSelector((state) => state.user);
   const { state } = location;
+  const user = useSelector((state) => state.user);
   console.log("state", state);
   const fetchMyOrder = async () => {
     const res = await OrderServcie.getOrderByUserId(state?.id, state?.token);
@@ -93,14 +92,14 @@ const MyOrderPage = () => {
       <div className="my-order">
         <h1 style={{ textAlign: "center" }}>Đơn hàng của bạn</h1>
         <div className="body">
-          {dataOrder?.map((item, key) => {
+          {dataOrder?.map((item, index) => {
             return (
-              <>
+              <div key={index}>
                 {item?.orderItems.length && (
                   <div style={{ border: "1px solid #ccc" }}>
                     {item?.orderItems?.map((order, index) => {
                       return (
-                        <>
+                        <div key={index}>
                           <img
                             style={{ width: "100px" }}
                             src={order?.image}
@@ -111,7 +110,7 @@ const MyOrderPage = () => {
                             <h3>{convertPrice(order?.price)}</h3>
                           </div>
                           <div></div>
-                        </>
+                        </div>
                       );
                     })}
                     <h3>{convertPrice(item?.totalPrice)}</h3>
@@ -129,14 +128,14 @@ const MyOrderPage = () => {
                         Huỷ
                       </h3> */}
                       <Button type="primary" onClick={showModal}>
-                       Huỷ
+                        Huỷ
                       </Button>
                       <Modal
                         title="Basic Modal"
                         open={isModalOpen}
                         onOk={() => {
                           setIsModalOpen(false);
-                          handleCancelOrder(item)
+                          handleCancelOrder(item);
                         }}
                         onCancel={() => setIsModalOpen(false)}
                       >
@@ -145,7 +144,7 @@ const MyOrderPage = () => {
                     </div>
                   </div>
                 )}
-              </>
+              </div>
             );
           })}
         </div>

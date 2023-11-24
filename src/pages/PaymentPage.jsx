@@ -12,7 +12,7 @@ import LoadingUpdateComponent from "../components/LoadingUpdateComponent";
 import ModelUpdateUserComponent from "../components/ModelUpdateUserComponent";
 import { success, error, warning } from "../components/Message";
 import { useNavigate } from "react-router-dom";
-import { removeAllOrderProduct } from "../redux/slices/orderSlice";
+import * as CartServices from "../services/CartServices";
 
 const PaymentPage = () => {
   const order = useSelector((state) => state.order);
@@ -85,15 +85,36 @@ const PaymentPage = () => {
     isError: isErrorAddOrder,
   } = mutationAddOrder;
 
+  const mutationDeleteMany = useMutationHook((data) => {
+    const { token, ...ids } = data;
+    const res = CartServices.deleteManyCart(ids, token);
+    return res;
+  });
+
+  const {
+    data: dataDeletedMany,
+    isLoading: isLoadingDeletedMany,
+    isSuccess: isSuccessDeletedMany,
+    isError: isErrorDeletedMany,
+  } = mutationDeleteMany;
+
   useEffect(() => {
     if (isSuccessAddOrder && dataAddOrder?.status === "OK") {
       success();
       const arrayOrdered = []; //lấy id của các sản phẩm mua để remove khỏi giỏ hàng
       order?.orderItemsSelected?.forEach((e) => {
-        arrayOrdered.push(e.product);
+        arrayOrdered.push(e._id);
       });
       console.log("arrayOrdered", arrayOrdered);
-      dispatch(removeAllOrderProduct({ listChecked: arrayOrdered }));
+      mutationDeleteMany.mutate(
+        { ids: arrayOrdered, token: user?.access_token },
+        // {
+        //   onSettled: () => {
+        //     queryCart.refetch();
+        //   },
+        // }
+      );
+      // dispatch(removeAllOrderProduct({ listChecked: arrayOrdered }));
       navigate("/orderSuccess", {
         state: {
           // chuyển dữ liệu khi create success qua

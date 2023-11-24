@@ -686,7 +686,7 @@ const AdminProduct = () => {
         }), L(${product?.quantity?.sizeL || 0}), XL(${
           product?.quantity?.sizeXL || 0
         })`,
-        priceRender:  convertPrice(product?.price),
+        priceRender:  convertPrice(),
         ageTu: product?.age.split("-")[0],
         ageDen: product?.age.split("-")[1],
         key: product?._id,

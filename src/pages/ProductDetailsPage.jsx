@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductDetailsComponents from "../components/ProductDetailsComponents";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import * as ProducttServcie from "../services/ProductServices";
 import { useLocation, useNavigate } from "react-router-dom";
-import { addOrderProduct } from "../redux/slices/orderSlice";
+// import { addOrderProduct } from "../redux/slices/orderSlice";
 import LoadingComponents from "../components/LoadingComponents";
 import { FiHeart } from "react-icons/fi";
 import { convertPrice } from "../utils";
+import { useMutationHook } from "../hooks/useMutationHook";
+import * as CartServices from "../services/CartServices";
+import { success, error, warning } from "../components/Message";
 
 const ProductDetailsPage = () => {
   const { id: idProduct } = useParams();
@@ -150,23 +153,61 @@ const ProductDetailsPage = () => {
   const location = useLocation();
   console.log("size", size);
 
+  const mutationAddCart = useMutationHook((data) => {
+    const { userId, token, ...rest } = data;
+    const res = CartServices.createCart(userId, token, { ...rest }); //rest or {...rest}
+    return res;
+  });
+
+  const {
+    isLoading: isLoadingAddCart,
+    data: dataAddCart,
+    isSuccess: isSuccessAddCart,
+    isError: isErrorAddCart,
+  } = mutationAddCart;
+
+  useEffect(() => {
+    if (isSuccessAddCart && dataAddCart?.status === "OK") {
+      success();
+      // dispatch(
+      //   addOrderProduct({
+      //     orderItem: {
+      //       name: productDetails?.name,
+      //       amount: amount,
+      //       size: size,
+      //       image: productDetails?.image,
+      //       price: productDetails?.price,
+      //       product: productDetails?._id,
+      //       userId: user?.id,
+      //     },
+      //   })
+      // );
+    } else if (isErrorAddCart) {
+      error();
+    }
+  }, [isSuccessAddCart, isErrorAddCart]);
+
   const hanleAddOrder = () => {
     if (!user?.id) {
       navigate("/sign-in", { state: location?.pathname }); // login xong trở về lại trang lúc nảy
     } else {
-      dispatch(
-        addOrderProduct({
-          orderItem: {
-            name: productDetails?.name,
-            amount: amount,
-            size: size,
-            image: productDetails?.image,
-            price: productDetails?.price,
-            product: productDetails?._id,
-            userId: user?.id,
-          },
-        })
-      );
+      if (
+        productDetails?.name &&
+        amount &&
+        size &&
+        productDetails?.image &&
+        productDetails?.price &&
+        user?.id
+      ) {
+        mutationAddCart.mutate({
+          name: productDetails?.name,
+          amount: amount,
+          size: size,
+          image: productDetails?.image,
+          price: productDetails?.price,
+          userId: user?.id,
+        });
+      }
     }
   };
 
