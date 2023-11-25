@@ -8,6 +8,7 @@ const TabelComponents = (props) => {
   const {
     selectionType = "checkbox",
     dataTable = [],
+    dataTableQuan = [],
     columns = [],
     products = [],
     isLoading = false,
@@ -35,10 +36,20 @@ const TabelComponents = (props) => {
   };
 
   const tableRef = useRef(null);
-  const tableRefAll = useRef(null);
+  // const tableRefAll = useRef(null);
 
   console.log("tableRef.current", tableRef.current);
   console.log("dataTable", dataTable);
+  console.log("dataTableQuan", dataTableQuan);
+
+  const dataTableMain = [];
+  for (let i = 0; i < dataTable.length; i++) {
+    if (dataTable[i].name.split(" ")[0] !== "Quần") {
+      dataTableMain.push(dataTable[i]);
+    } else {
+      dataTableMain.push(dataTableQuan[i]);
+    }
+  }
 
   // const newColumns = columns.pop()
 
@@ -75,10 +86,10 @@ const TabelComponents = (props) => {
           ...rowSelection,
         }}
         columns={columns}
-        dataSource={dataTable}
+        dataSource={dataTableMain}
         {...props}
       />
-      {!isLoading && dataTable.length === 0 && (
+      {!isLoading && dataTableMain.length === 0 && (
         <h3
           style={{
             textAlign: "center",

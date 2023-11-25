@@ -255,7 +255,12 @@ const OrderPage = () => {
 
   const handleBuy = () => {
     if (user?.phone && user?.address && user?.name) {
-      navigate("/payment");
+      navigate("/payment", {
+        state: {
+          id: user?.id,
+          token: user?.access_token
+        }
+      });
     } else {
       setIsOpenModalUpdate(true);
     }

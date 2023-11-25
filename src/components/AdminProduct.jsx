@@ -46,6 +46,16 @@ const AdminProduct = () => {
       sizeM: "",
       sizeL: "",
       sizeXL: "",
+      sizeXXL: "",
+      size28: "",
+      size29: "",
+      size30: "",
+      size31: "",
+      size32: "",
+      size33: "",
+      size34: "",
+      size35: "",
+      size36: "",
     },
   });
 
@@ -62,6 +72,16 @@ const AdminProduct = () => {
       sizeM: "",
       sizeL: "",
       sizeXL: "",
+      sizeXXL: "",
+      size28: "",
+      size29: "",
+      size30: "",
+      size31: "",
+      size32: "",
+      size33: "",
+      size34: "",
+      size35: "",
+      size36: "",
     },
   });
 
@@ -75,24 +95,67 @@ const AdminProduct = () => {
       age,
       size,
       type,
-      quantity: { sizeS, sizeM, sizeL, sizeXL },
-    } = data;
-
-    const res = ProducttServcie.createProduct(data?.token, {
-      name,
-      image,
-      gender,
-      price,
-      age,
-      size,
-      type,
       quantity: {
         sizeS,
         sizeM,
         sizeL,
         sizeXL,
+        sizeXXL,
+        size28,
+        size29,
+        size30,
+        size31,
+        size32,
+        size33,
+        size34,
+        size35,
+        size36,
       },
-    });
+    } = data;
+
+    let res;
+    if (
+      name.toLowerCase().includes("quần") &&
+      !name.toLowerCase().includes("áo")
+    ) {
+      res = ProducttServcie.createProduct(data?.token, {
+        name,
+        image,
+        gender,
+        price,
+        age,
+        size,
+        type,
+        quantity: {
+          size28,
+          size29,
+          size30,
+          size31,
+          size32,
+          size33,
+          size34,
+          size35,
+          size36,
+        },
+      });
+    } else {
+      res = ProducttServcie.createProduct(data?.token, {
+        name,
+        image,
+        gender,
+        price,
+        age,
+        size,
+        type,
+        quantity: {
+          sizeS,
+          sizeM,
+          sizeL,
+          sizeXL,
+          sizeXXL,
+        },
+      });
+    }
     return res;
   });
 
@@ -270,9 +333,9 @@ const AdminProduct = () => {
       stateProduct.gender !== "" &&
       stateProduct.price !== "" &&
       stateProduct.age !== "" &&
-      stateProduct.size !== "" &&
-      stateProduct.quantity !== "" &&
-      stateProduct.type !== ""
+      stateProduct.size !== ""
+      // stateProduct.quantity !== "" &&
+      // stateProduct.type !== ""
     ) {
       console.log("Success:", stateProduct);
     } else {
@@ -298,6 +361,16 @@ const AdminProduct = () => {
         sizeM: "",
         sizeL: "",
         sizeXL: "",
+        sizeXXL: "",
+        size28: "",
+        size29: "",
+        size30: "",
+        size31: "",
+        size32: "",
+        size33: "",
+        size34: "",
+        size35: "",
+        size36: "",
       },
       image: "", //xóa image
     });
@@ -334,6 +407,16 @@ const AdminProduct = () => {
           sizeM: res?.data?.quantity?.sizeM,
           sizeL: res?.data?.quantity?.sizeL,
           sizeXL: res?.data?.quantity?.sizeXL,
+          sizeXXL: res?.data?.quantity?.sizeXXL,
+          size28: res?.data?.quantity?.size28,
+          size29: res?.data?.quantity?.size29,
+          size30: res?.data?.quantity?.size30,
+          size31: res?.data?.quantity?.size31,
+          size32: res?.data?.quantity?.size32,
+          size33: res?.data?.quantity?.size33,
+          size34: res?.data?.quantity?.size34,
+          size35: res?.data?.quantity?.size35,
+          size36: res?.data?.quantity?.size36,
         },
       });
     }
@@ -399,6 +482,16 @@ const AdminProduct = () => {
         sizeM: "",
         sizeL: "",
         sizeXL: "",
+        sizeXXL: "",
+        size28: "",
+        size29: "",
+        size30: "",
+        size31: "",
+        size32: "",
+        size33: "",
+        size34: "",
+        size35: "",
+        size36: "",
       },
     });
     formUpdate.resetFields();
@@ -685,8 +778,29 @@ const AdminProduct = () => {
           product?.quantity?.sizeM || 0
         }), L(${product?.quantity?.sizeL || 0}), XL(${
           product?.quantity?.sizeXL || 0
-        })`,
-        priceRender:  convertPrice(),
+        }), XXL(${product?.quantity?.sizeXXL || 0})`,
+        priceRender: convertPrice(product?.price),
+        ageTu: product?.age.split("-")[0],
+        ageDen: product?.age.split("-")[1],
+        key: product?._id,
+      };
+    });
+
+  const dataTableQuan =
+    dataProduct?.data?.length &&
+    dataProduct?.data?.map((product) => {
+      return {
+        ...product,
+        quantity: `28(${product?.quantity?.size28 || 0}), 29(${
+          product?.quantity?.size29 || 0
+        }), 30(${product?.quantity?.size30 || 0}), 31(${
+          product?.quantity?.size31 || 0
+        }), 32(${product?.quantity?.size32 || 0}), 33(${
+          product?.quantity?.size33 || 0
+        }), 34(${product?.quantity?.size34 || 0}), 35(${
+          product?.quantity?.size35 || 0
+        }), 36(${product?.quantity?.size36 || 0})`,
+        priceRender: convertPrice(product?.price),
         ageTu: product?.age.split("-")[0],
         ageDen: product?.age.split("-")[1],
         key: product?._id,
@@ -724,6 +838,7 @@ const AdminProduct = () => {
             handleDeleteManyProduct={handleDeleteManyProduct}
             columns={columns}
             dataTable={dataTable}
+            dataTableQuan={dataTableQuan}
             products={dataProduct?.data}
             isLoading={isLoadingProduct}
             filename="Products Table"

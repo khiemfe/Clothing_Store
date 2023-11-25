@@ -197,7 +197,8 @@ const ProductDetailsPage = () => {
         size &&
         productDetails?.image &&
         productDetails?.price &&
-        user?.id
+        user?.id &&
+        idProduct
       ) {
         mutationAddCart.mutate({
           name: productDetails?.name,
@@ -206,6 +207,7 @@ const ProductDetailsPage = () => {
           image: productDetails?.image,
           price: productDetails?.price,
           userId: user?.id,
+          productId: idProduct,
         });
       }
     }

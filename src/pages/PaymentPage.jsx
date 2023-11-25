@@ -11,8 +11,9 @@ import { Form } from "antd";
 import LoadingUpdateComponent from "../components/LoadingUpdateComponent";
 import ModelUpdateUserComponent from "../components/ModelUpdateUserComponent";
 import { success, error, warning } from "../components/Message";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as CartServices from "../services/CartServices";
+import { useQuery } from "@tanstack/react-query";
 
 const PaymentPage = () => {
   const order = useSelector((state) => state.order);
@@ -71,7 +72,7 @@ const PaymentPage = () => {
   const mutationAddOrder = useMutationHook((data) => {
     console.log("dataUpdate: ", data);
     const { user: userId, token, ...rest } = data;
-    console.log('token', token)
+    console.log("token", token);
     console.log("rest", rest);
     const res = OrderServcie.createOrder(userId, token, { ...rest }); //rest or {...rest}
     console.log("resssss", res);
@@ -98,6 +99,16 @@ const PaymentPage = () => {
     isError: isErrorDeletedMany,
   } = mutationDeleteMany;
 
+  // const location = useLocation();
+  // const { state } = location;
+  // console.log('state', state)
+
+  // const fetchOrderCart = async () => {
+  //   const res = await CartServices.getCartByUserId(state?.id, state?.token);
+  //   return res?.data;
+  // };
+  // const queryCart = useQuery(["cart"], fetchOrderCart);
+
   useEffect(() => {
     if (isSuccessAddOrder && dataAddOrder?.status === "OK") {
       success();
@@ -118,7 +129,7 @@ const PaymentPage = () => {
       navigate("/orderSuccess", {
         state: {
           // chuyển dữ liệu khi create success qua
-          order: order?.orderItems,
+          order: order?.orderItemsSelected,
           priceMemo,
           shippingPrice,
           totalPriceMemo,
@@ -222,7 +233,7 @@ const PaymentPage = () => {
       user?.name &&
       user?.address &&
       user?.phone &&
-      priceMemo && //
+      priceMemo &&
       user?.id
     ) {
       mutationAddOrder.mutate({

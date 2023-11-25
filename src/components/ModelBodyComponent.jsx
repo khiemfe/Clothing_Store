@@ -23,10 +23,11 @@ const ModelBodyComponent = ({
   console.log("stateProducttt", stateProduct);
   console.log("handleOnchange", handleOnchange);
 
-  const [sizeS, setSizeS] = useState(stateProduct?.quantity?.sizeS || 0);
-  const [sizeM, setSizeM] = useState(stateProduct?.quantity?.sizeM || 0);
-  const [sizeL, setSizeL] = useState(stateProduct?.quantity?.sizeL || 0);
-  const [sizeXL, setSizeXL] = useState(stateProduct?.quantity?.sizeXL || 0);
+  const [sizeS, setSizeS] = useState(stateProduct?.quantity?.sizeS);
+  const [sizeM, setSizeM] = useState(stateProduct?.quantity?.sizeM);
+  const [sizeL, setSizeL] = useState(stateProduct?.quantity?.sizeL);
+  const [sizeXL, setSizeXL] = useState(stateProduct?.quantity?.sizeXL);
+  const [sizeXXL, setSizeXXL] = useState(stateProduct?.quantity?.sizeXXL);
 
   const handleOnchageQuantityS = (e) => {
     setSizeS(e.target.value);
@@ -44,6 +45,10 @@ const ModelBodyComponent = ({
     setSizeXL(e.target.value);
     stateProduct.quantity.sizeXL = e.target.value;
   };
+  const handleOnchageQuantityXXL = (e) => {
+    setSizeXXL(e.target.value);
+    stateProduct.quantity.sizeXXL = e.target.value;
+  };
 
   useEffect(() => {
     if (sizeS && sizeS < 0) {
@@ -54,8 +59,81 @@ const ModelBodyComponent = ({
       setSizeL(0);
     } else if (sizeXL && sizeXL < 0) {
       setSizeXL(0);
+    } else if (sizeXXL && sizeXXL < 0) {
+      setSizeXXL(0);
     }
-  }, [sizeS, sizeM, sizeL, sizeXL]);
+  }, [sizeS, sizeM, sizeL, sizeXL, sizeXXL]);
+
+  // ------------
+
+  const [size28, setSize28] = useState(stateProduct?.quantity?.size28);
+  const [size29, setSize29] = useState(stateProduct?.quantity?.size29);
+  const [size30, setSize30] = useState(stateProduct?.quantity?.size30);
+  const [size31, setSize31] = useState(stateProduct?.quantity?.size31);
+  const [size32, setSize32] = useState(stateProduct?.quantity?.size32);
+  const [size33, setSize33] = useState(stateProduct?.quantity?.size33);
+  const [size34, setSize34] = useState(stateProduct?.quantity?.size34);
+  const [size35, setSize35] = useState(stateProduct?.quantity?.size35);
+  const [size36, setSize36] = useState(stateProduct?.quantity?.size36);
+
+  const handleOnchageQuantity28 = (e) => {
+    setSize28(e.target.value);
+    stateProduct.quantity.size28 = e.target.value;
+  };
+  const handleOnchageQuantity29 = (e) => {
+    setSize29(e.target.value);
+    stateProduct.quantity.size29 = e.target.value;
+  };
+  const handleOnchageQuantity30 = (e) => {
+    setSize30(e.target.value);
+    stateProduct.quantity.size30 = e.target.value;
+  };
+  const handleOnchageQuantity31 = (e) => {
+    setSize31(e.target.value);
+    stateProduct.quantity.size31 = e.target.value;
+  };
+  const handleOnchageQuantity32 = (e) => {
+    setSize32(e.target.value);
+    stateProduct.quantity.size32 = e.target.value;
+  };
+  const handleOnchageQuantity33 = (e) => {
+    setSize33(e.target.value);
+    stateProduct.quantity.size33 = e.target.value;
+  };
+  const handleOnchageQuantity34 = (e) => {
+    setSize34(e.target.value);
+    stateProduct.quantity.size34 = e.target.value;
+  };
+  const handleOnchageQuantity35 = (e) => {
+    setSize35(e.target.value);
+    stateProduct.quantity.size35 = e.target.value;
+  };
+  const handleOnchageQuantity36 = (e) => {
+    setSize36(e.target.value);
+    stateProduct.quantity.size36 = e.target.value;
+  };
+
+  useEffect(() => {
+    if (size28 && size28 < 0) {
+      setSize28(0);
+    } else if (size29 && size29 < 0) {
+      setSize29(0);
+    } else if (size30 && size30 < 0) {
+      setSize30(0);
+    } else if (size31 && size31 < 0) {
+      setSize31(0);
+    } else if (size32 && size32 < 0) {
+      setSize32(0);
+    } else if (size33 && size33 < 0) {
+      setSize33(0);
+    } else if (size34 && size34 < 0) {
+      setSize34(0);
+    } else if (size35 && size35 < 0) {
+      setSize35(0);
+    } else if (size36 && size36 < 0) {
+      setSize36(0);
+    }
+  }, [size28, size29, size30, size31, size32, size33, size34, size35, size36]);
 
   // const [requiredSizeS, setRequiredSizeS] = useState(true);
   // const [requiredSizeM, setRequiredSizeM] = useState(true);
@@ -244,52 +322,136 @@ const ModelBodyComponent = ({
             name="age"
           />
         </Form.Item>
-        <Form.Item label="Quantity">
-          <div style={{ display: "flex" }}>
-            <Form.Item
-              label="S: "
-            >
-              <Input
-                value={sizeS}
-                onChange={handleOnchageQuantityS}
-                name="sizeS"
-                type="number"
-                min="0"
-              />
-            </Form.Item>
-            <Form.Item label="M: ">
-              <Input
-                value={sizeM}
-                onChange={handleOnchageQuantityM}
-                // name="sizeM"
-                type="number"
-                min="0"
-              />
-            </Form.Item>
-            <Form.Item
-              label="L: "
-            >
-              <Input
-                value={sizeL}
-                onChange={handleOnchageQuantityL}
-                // name="sizeL"
-                type="number"
-                min="0"
-              />
-            </Form.Item>
-            <Form.Item
-              label="XL: "
-            >
-              <Input
-                value={sizeXL}
-                onChange={handleOnchageQuantityXL}
-                // name="sizeXL"
-                type="number"
-                min="0"
-              />
-            </Form.Item>
-          </div>
-        </Form.Item>
+        {stateProduct.name.toLowerCase().includes("quần") &&
+        !stateProduct.name.toLowerCase().includes("áo") ? (
+          <Form.Item label="Quantity">
+            <div style={{ display: "flex" }}>
+              <Form.Item label="28: ">
+                <Input
+                  value={setSize28}
+                  onChange={handleOnchageQuantity28}
+                  // name="size28"
+                  type="number"
+                  min="0"
+                />
+              </Form.Item>
+              <Form.Item label="29: ">
+                <Input
+                  value={size29}
+                  onChange={handleOnchageQuantity29}
+                  type="number"
+                  min="0"
+                />
+              </Form.Item>
+              <Form.Item label="30: ">
+                <Input
+                  value={size30}
+                  onChange={handleOnchageQuantity30}
+                  type="number"
+                  min="0"
+                />
+              </Form.Item>
+              <Form.Item label="31: ">
+                <Input
+                  value={size31}
+                  onChange={handleOnchageQuantity31}
+                  type="number"
+                  min="0"
+                />
+              </Form.Item>
+              <Form.Item label="32: ">
+                <Input
+                  value={size32}
+                  onChange={handleOnchageQuantity32}
+                  type="number"
+                  min="0"
+                />
+              </Form.Item>
+              <Form.Item label="33: ">
+                <Input
+                  value={size33}
+                  onChange={handleOnchageQuantity33}
+                  type="number"
+                  min="0"
+                />
+              </Form.Item>
+              <Form.Item label="34: ">
+                <Input
+                  value={size34}
+                  onChange={handleOnchageQuantity34}
+                  type="number"
+                  min="0"
+                />
+              </Form.Item>
+              <Form.Item label="35: ">
+                <Input
+                  value={size35}
+                  onChange={handleOnchageQuantity35}
+                  type="number"
+                  min="0"
+                />
+              </Form.Item>
+              <Form.Item label="36: ">
+                <Input
+                  value={size36}
+                  onChange={handleOnchageQuantity36}
+                  type="number"
+                  min="0"
+                />
+              </Form.Item>
+            </div>
+          </Form.Item>
+        ) : (
+          <Form.Item label="Quantity">
+            <div style={{ display: "flex" }}>
+              <Form.Item label="S: ">
+                <Input
+                  value={sizeS}
+                  onChange={handleOnchageQuantityS}
+                  name="sizeS"
+                  type="number"
+                  min="0"
+                />
+              </Form.Item>
+              <Form.Item label="M: ">
+                <Input
+                  value={sizeM}
+                  onChange={handleOnchageQuantityM}
+                  // name="sizeM"
+                  type="number"
+                  min="0"
+                />
+              </Form.Item>
+              <Form.Item label="L: ">
+                <Input
+                  value={sizeL}
+                  onChange={handleOnchageQuantityL}
+                  // name="sizeL"
+                  type="number"
+                  min="0"
+                />
+              </Form.Item>
+              <Form.Item label="XL: ">
+                <Input
+                  value={sizeXL}
+                  onChange={handleOnchageQuantityXL}
+                  // name="sizeXL"
+                  type="number"
+                  min="0"
+                />
+              </Form.Item>
+              <Form.Item label="XXL: ">
+                <Input
+                  value={sizeXXL}
+                  onChange={handleOnchageQuantityXXL}
+                  // name="sizeXL"
+                  type="number"
+                  min="0"
+                />
+              </Form.Item>
+            </div>
+          </Form.Item>
+        )}
 
         <Form.Item
           label="Size"

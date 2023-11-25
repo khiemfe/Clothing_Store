@@ -51,7 +51,7 @@ const MyOrderPage = () => {
   });
 
   const handleCancelOrder = (order) => {
-    console.log("ordercan", order);
+    console.log("ordercan", order._id);
     mutation.mutate(
       {
         id: order._id,
@@ -82,10 +82,17 @@ const MyOrderPage = () => {
     }
   });
 
+  const [okHuy, setOkHuy] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
+  const showModal = (item) => {
+    console.log('itemm', item)
     setIsModalOpen(true);
+    
+    // if(okHuy) {
+      handleCancelOrder(item);
+    // }
   };
+
 
   return (
     <>
@@ -121,26 +128,26 @@ const MyOrderPage = () => {
                       >
                         Xem chi tiết
                       </h3>
-                      {/* <h3
+                      <h3
                         style={{ cursor: "pointer" }}
                         onClick={() => handleCancelOrder(item)}
-                      >
-                        Huỷ
-                      </h3> */}
-                      <Button type="primary" onClick={showModal}>
+                        >
+                        Huỷy
+                      </h3>
+                      {/* <Button type="primary" onClick={() => showModal(item)}>
                         Huỷ
                       </Button>
                       <Modal
                         title="Basic Modal"
                         open={isModalOpen}
                         onOk={() => {
+                          setOkHuy(true)
                           setIsModalOpen(false);
-                          handleCancelOrder(item);
                         }}
                         onCancel={() => setIsModalOpen(false)}
                       >
                         <p>Some contents...</p>
-                      </Modal>
+                      </Modal> */}
                     </div>
                   </div>
                 )}
