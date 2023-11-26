@@ -240,7 +240,7 @@ const ProductDetailsPage = () => {
   console.log("size", size);
 
   const mutationAddCart = useMutationHook((data) => {
-    console.log('loading cart true')
+    console.log("loading cart true");
     const { userId, token, ...rest } = data;
     const res = CartServices.createCart(userId, token, { ...rest }); //rest or {...rest}
     return res;
@@ -261,10 +261,10 @@ const ProductDetailsPage = () => {
       user?.access_token
     );
     setAmountCart(res?.data?.length);
-    console.log('loading cart false')
+    console.log("loading cart false");
   };
 
-  console.log('amountCart', amountCart)
+  console.log("amountCart", amountCart);
 
   useEffect(() => {
     if (isSuccessAddCart && dataAddCart?.status === "OK") {
@@ -531,6 +531,12 @@ const ProductDetailsPage = () => {
 
             <p style={{ fontSize: "16px" }}>Đã bán: {productDetails?.selled}</p>
 
+            <div
+              class="fb-comments"
+              data-href="https://developers.facebook.com/docs/plugins/comments#configurator"
+              data-width=""
+              data-numposts="5"
+            ></div>
             <div className="flex flex-row items-center gap-12 choose">
               <div className="flex flex-row items-center cangiua">
                 {amount === 1 ? (

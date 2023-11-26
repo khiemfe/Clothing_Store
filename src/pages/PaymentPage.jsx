@@ -250,6 +250,7 @@ const PaymentPage = () => {
         shippingPrice: shippingPrice,
         totalPrice: totalPriceMemo,
         user: user?.id,
+        email: user?.email,
       });
     }
   };
@@ -382,7 +383,7 @@ const PaymentPage = () => {
           {valueRadioTT === "paypal" && sdkReady ? (
             <>
               <PayPalButton
-                amount={20}
+                amount={20.2} // 20.22 là ko đc (nó không vào onError nhưng cũng không onSuccess, mà vẫn bị trừ tiền)
                 // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
                 onSuccess={onSuccessPaypal}
                 onError={() => {
