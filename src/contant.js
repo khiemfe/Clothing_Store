@@ -5,5 +5,6 @@ export const orderContant = {
   },
   valueRadioTT: {
     later_money: "Thanh toán khi nhận hàng",
+    paypal: "Thanh toán bằng Paypal"
   },
 };

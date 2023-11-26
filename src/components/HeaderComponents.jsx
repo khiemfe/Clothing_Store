@@ -11,7 +11,7 @@ import Badge from "react-bootstrap/Badge";
 import { FiSearch, FiHeart } from "react-icons/fi";
 import { BsCart2 } from "react-icons/bs";
 import CameraComponents from "./CameraComponents";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -21,8 +21,9 @@ import LoadingComponents from "./LoadingComponents";
 import LoadingCardInfoComponent from "./LoadingCardInfoComponent";
 import { searchProduct } from "../redux/slices/productSlice";
 import { useQuery } from "@tanstack/react-query";
+import * as CartServices from "../services/CartServices";
 
-const HeaderComponents = () => {
+const HeaderComponents = (props) => {
   const item = ["nam", "nữ", "new", "best", "sale đồng giá"];
   const order = useSelector((state) => state.order);
 
@@ -125,13 +126,26 @@ const HeaderComponents = () => {
     });
   };
 
-  let amountCart = 0;
-  order?.orderItems?.map((item) => {
-    if (item.userId === user?.id) {
-      amountCart++;
-    }
-  });
+  const location = useLocation();
+  const { state } = location;
+  console.log('state', state)
 
+  const [amountCart, setAmountCart] = useState(0);
+  const fetchOrderCart = async () => {
+    const res = await CartServices.getCartByUserId(user?.id, user?.access_token);
+    return res?.data;
+  };
+
+  const queryCart = useQuery(["cart"], fetchOrderCart);
+  const { data: dataCart, isLoading: isLoadingCart } = queryCart;
+  console.log('dataCart', dataCart)
+
+  useEffect(() => {
+    setAmountCart(dataCart?.length)
+  }, [dataCart])
+
+  console.log('props', props)
+  
   return (
     <Navbar className=" justify-content-between header ">
       <Toaster />
@@ -176,7 +190,7 @@ const HeaderComponents = () => {
               </div>
               <FiHeart className="icon heart" />
               <Button className="btn-cart" onClick={handleOrderCart}>
-                <Badge bg="warning">{amountCart}</Badge>
+                <Badge bg="warning">{props?.amount || amountCart}</Badge>
                 <BsCart2 className="icon cart" />
               </Button>
               <div className="info-user">

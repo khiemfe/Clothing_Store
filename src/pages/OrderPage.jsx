@@ -60,9 +60,7 @@ const OrderPage = () => {
   console.log("dataCart", dataCart);
 
   useEffect(() => {
-    if (dataCart?.length > 0) {
-      dispatch(updateOrderProduct({ dataCart }));
-    }
+    dispatch(updateOrderProduct({ dataCart }));
   }, [dataCart]);
 
   const handleOnchangeCount = (type, idProduct) => {
@@ -73,9 +71,9 @@ const OrderPage = () => {
     }
   };
 
-  const mutationDelete = useMutationHook((data) => {
-    const { id, token } = data;
-    const res = CartServices.deleteCart(id, token);
+  const mutationDeleteCart = useMutationHook((data) => {
+    const { userId, cartId, token } = data;
+    const res = CartServices.deleteCartDetails(userId, cartId, token);
     return res;
   });
 
@@ -84,13 +82,13 @@ const OrderPage = () => {
     isLoading: isLoadingDeleted,
     isSuccess: isSuccessDeleted,
     isError: isErrorDeleted,
-  } = mutationDelete;
+  } = mutationDeleteCart;
 
   const handleDeleteOrder = (idProduct) => {
     console.log("idProduct", idProduct);
     // dispatch(removeOrderProduct({ idProduct }));
-    mutationDelete.mutate(
-      { id: idProduct, token: user?.access_token },
+    mutationDeleteCart.mutate(
+      { userId: user?.id, cartId: idProduct, token: user?.access_token },
       {
         //onSettled & queryProduct.refetch() nó mới cập nhật lại không cần load lại trang
         onSettled: () => {
@@ -151,8 +149,8 @@ const OrderPage = () => {
   console.log("listChecked2", lengthItem);
 
   const mutationDeleteMany = useMutationHook((data) => {
-    const { token, ...ids } = data;
-    const res = CartServices.deleteManyCart(ids, token);
+    const { userId, token, ...ids } = data;
+    const res = CartServices.deleteManyCart(userId, ids, token);
     return res;
   });
 
@@ -171,7 +169,7 @@ const OrderPage = () => {
         arrId.push(listChecked[i].split("size")[0]);
       }
       mutationDeleteMany.mutate(
-        { ids: arrId, token: user?.access_token },
+        { userId: user?.id, ids: arrId, token: user?.access_token },
         {
           onSettled: () => {
             queryCart.refetch();
@@ -258,8 +256,8 @@ const OrderPage = () => {
       navigate("/payment", {
         state: {
           id: user?.id,
-          token: user?.access_token
-        }
+          token: user?.access_token,
+        },
       });
     } else {
       setIsOpenModalUpdate(true);

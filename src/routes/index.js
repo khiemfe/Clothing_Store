@@ -43,7 +43,7 @@ export const routes = [
   {
     path: "/orderSuccess",
     page: OrderSuccessPage,
-    isShowHeader: true,
+    isShowHeader: false,
     isShowFooter: true,
   },
   {
@@ -79,7 +79,7 @@ export const routes = [
   {
     path: "/product-details/:id",
     page: ProductDetailsPage,
-    isShowHeader: true,
+    isShowHeader: false,
     isShowFooter: true,
   },
   {

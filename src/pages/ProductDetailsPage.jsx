@@ -12,6 +12,7 @@ import { convertPrice } from "../utils";
 import { useMutationHook } from "../hooks/useMutationHook";
 import * as CartServices from "../services/CartServices";
 import { success, error, warning } from "../components/Message";
+import HeaderComponents from "../components/HeaderComponents";
 
 const ProductDetailsPage = () => {
   const { id: idProduct } = useParams();
@@ -95,56 +96,141 @@ const ProductDetailsPage = () => {
   const classNameSizeDisbled = "size-item disbled";
   const classNameSizeActive = "size-item active";
 
-  const [size, setSize] = useState("S");
+  const [size, setSize] = useState();
 
-  const [classNameSize1, setClassNameSize1] = useState(classNameSize);
-  const [classNameSize2, setClassNameSize2] = useState(classNameSize);
-  const [classNameSize3, setClassNameSize3] = useState(classNameSize);
-  const [classNameSize4, setClassNameSize4] = useState(classNameSize);
-  const [classNameSize5, setClassNameSize5] = useState(classNameSize);
+  const [classNameSizeS, setClassNameSizeS] = useState(classNameSize);
+  const [classNameSizeM, setClassNameSizeM] = useState(classNameSize);
+  const [classNameSizeL, setClassNameSizeL] = useState(classNameSize);
+  const [classNameSizeXL, setClassNameSizeXL] = useState(classNameSize);
+  const [classNameSizeXXL, setClassNameSizeXXL] = useState(classNameSize);
+
+  const [classNameSize28, setClassNameSize28] = useState(classNameSize);
+  const [classNameSize29, setClassNameSize29] = useState(classNameSize);
+  const [classNameSize30, setClassNameSize30] = useState(classNameSize);
+  const [classNameSize31, setClassNameSize31] = useState(classNameSize);
+  const [classNameSize32, setClassNameSize32] = useState(classNameSize);
+  const [classNameSize33, setClassNameSize33] = useState(classNameSize);
+  const [classNameSize34, setClassNameSize34] = useState(classNameSize);
+  const [classNameSize35, setClassNameSize35] = useState(classNameSize);
+  const [classNameSize36, setClassNameSize36] = useState(classNameSize);
 
   const setClassNameSize = () => {
-    setClassNameSize1(classNameSize);
-    setClassNameSize2(classNameSize);
-    setClassNameSize3(classNameSize);
-    setClassNameSize4(classNameSize);
-    setClassNameSize5(classNameSize);
+    setClassNameSizeS(classNameSize);
+    setClassNameSizeM(classNameSize);
+    setClassNameSizeL(classNameSize);
+    setClassNameSizeXL(classNameSize);
+    setClassNameSizeXXL(classNameSize);
+
+    setClassNameSize28(classNameSize);
+    setClassNameSize29(classNameSize);
+    setClassNameSize30(classNameSize);
+    setClassNameSize31(classNameSize);
+    setClassNameSize32(classNameSize);
+    setClassNameSize33(classNameSize);
+    setClassNameSize34(classNameSize);
+    setClassNameSize35(classNameSize);
+    setClassNameSize36(classNameSize);
   };
 
-  const handleSize1 = () => {
+  const handleSizeS = () => {
     setClassNameSize();
-    setClassNameSize1(classNameSizeActive);
+    setClassNameSizeS(classNameSizeActive);
     setSize("S");
     setQuantity(productDetails?.quantity?.sizeS);
   };
 
-  const handleSize2 = () => {
+  const handleSizeM = () => {
     setClassNameSize();
-    setClassNameSize2(classNameSizeActive);
+    setClassNameSizeM(classNameSizeActive);
     setSize("M");
     setQuantity(productDetails?.quantity?.sizeM);
   };
 
-  const handleSize3 = () => {
+  const handleSizeL = () => {
     setClassNameSize();
-    setClassNameSize3(classNameSizeActive);
+    setClassNameSizeL(classNameSizeActive);
     setSize("L");
     setQuantity(productDetails?.quantity?.sizeL);
   };
 
-  const handleSize4 = () => {
+  const handleSizeXL = () => {
     setClassNameSize();
-    setClassNameSize4(classNameSizeActive);
+    setClassNameSizeXL(classNameSizeActive);
     setSize("XL");
     setQuantity(productDetails?.quantity?.sizeXL);
   };
 
-  const handleSize5 = () => {
+  const handleSizeXXL = () => {
     setClassNameSize();
-    setClassNameSize5(classNameSizeActive);
+    setClassNameSizeXXL(classNameSizeActive);
     setSize("XXL");
     setQuantity(productDetails?.quantity?.sizeXXL);
   };
+
+  const handleSize28 = () => {
+    setClassNameSize();
+    setClassNameSize28(classNameSizeActive);
+    setSize("28");
+    setQuantity(productDetails?.quantity?.size28);
+  };
+
+  const handleSize29 = () => {
+    setClassNameSize();
+    setClassNameSize29(classNameSizeActive);
+    setSize("29");
+    setQuantity(productDetails?.quantity?.size29);
+  };
+
+  const handleSize30 = () => {
+    setClassNameSize();
+    setClassNameSize30(classNameSizeActive);
+    setSize("30");
+    setQuantity(productDetails?.quantity?.size30);
+  };
+
+  const handleSize31 = () => {
+    setClassNameSize();
+    setClassNameSize31(classNameSizeActive);
+    setSize("31");
+    setQuantity(productDetails?.quantity?.size31);
+  };
+
+  const handleSize32 = () => {
+    setClassNameSize();
+    setClassNameSize32(classNameSizeActive);
+    setSize("32");
+    setQuantity(productDetails?.quantity?.size32);
+  };
+
+  const handleSize33 = () => {
+    setClassNameSize();
+    setClassNameSize33(classNameSizeActive);
+    setSize("33");
+    setQuantity(productDetails?.quantity?.size33);
+  };
+
+  const handleSize34 = () => {
+    setClassNameSize();
+    setClassNameSize34(classNameSizeActive);
+    setSize("34");
+    setQuantity(productDetails?.quantity?.size34);
+  };
+
+  const handleSize35 = () => {
+    setClassNameSize();
+    setClassNameSize35(classNameSizeActive);
+    setSize("35");
+    setQuantity(productDetails?.quantity?.size35);
+  };
+
+  const handleSize36 = () => {
+    setClassNameSize();
+    setClassNameSize36(classNameSizeActive);
+    setSize("36");
+    setQuantity(productDetails?.quantity?.size36);
+  };
+
+  // --
 
   // ----
 
@@ -154,6 +240,7 @@ const ProductDetailsPage = () => {
   console.log("size", size);
 
   const mutationAddCart = useMutationHook((data) => {
+    console.log('loading cart true')
     const { userId, token, ...rest } = data;
     const res = CartServices.createCart(userId, token, { ...rest }); //rest or {...rest}
     return res;
@@ -166,9 +253,24 @@ const ProductDetailsPage = () => {
     isError: isErrorAddCart,
   } = mutationAddCart;
 
+  const [amountCart, setAmountCart] = useState(0);
+  const fetchOrderCart = async () => {
+    // console.log('loading cart true')
+    const res = await CartServices.getCartByUserId(
+      user?.id,
+      user?.access_token
+    );
+    setAmountCart(res?.data?.length);
+    console.log('loading cart false')
+  };
+
+  console.log('amountCart', amountCart)
+
   useEffect(() => {
     if (isSuccessAddCart && dataAddCart?.status === "OK") {
       success();
+      fetchOrderCart();
+
       // dispatch(
       //   addOrderProduct({
       //     orderItem: {
@@ -218,6 +320,7 @@ const ProductDetailsPage = () => {
 
   return (
     <>
+      <HeaderComponents amount={amountCart} />
       <div className="produc-details">
         {/* <ProductDetailsComponents idProduct={id} /> */}
         <LoadingComponents isLoading={isLoading} />
@@ -274,43 +377,154 @@ const ProductDetailsPage = () => {
                   Chọn size: <span>{size}</span>
                 </p>
               </div>
-              <ul className="size-list">
-                {productDetails?.quantity?.sizeS ? (
-                  <li onClick={() => handleSize1()} className={classNameSize1}>
-                    S
-                  </li>
-                ) : (
-                  <li className={classNameSizeDisbled}>S</li>
-                )}
-                {productDetails?.quantity?.sizeM ? (
-                  <li onClick={() => handleSize2()} className={classNameSize2}>
-                    M
-                  </li>
-                ) : (
-                  <li className={classNameSizeDisbled}>M</li>
-                )}
-                {productDetails?.quantity?.sizeL ? (
-                  <li onClick={() => handleSize3()} className={classNameSize3}>
-                    L
-                  </li>
-                ) : (
-                  <li className={classNameSizeDisbled}>L</li>
-                )}
-                {productDetails?.quantity?.sizeXL ? (
-                  <li onClick={() => handleSize4()} className={classNameSize4}>
-                    XL
-                  </li>
-                ) : (
-                  <li className={classNameSizeDisbled}>XL</li>
-                )}
-                {productDetails?.quantity?.sizeXXL ? (
-                  <li onClick={() => handleSize5()} className={classNameSize5}>
-                    XXL
-                  </li>
-                ) : (
-                  <li className={classNameSizeDisbled}>XXL</li>
-                )}
-              </ul>
+              {productDetails?.name.toLowerCase().includes("quần") &&
+              !productDetails?.name.toLowerCase().includes("áo") ? (
+                <ul className="size-list">
+                  {productDetails?.quantity?.size28 ? (
+                    <li
+                      onClick={() => handleSize28()}
+                      className={classNameSize28}
+                    >
+                      28
+                    </li>
+                  ) : (
+                    <li className={classNameSizeDisbled}>28</li>
+                  )}
+                  {productDetails?.quantity?.size29 ? (
+                    <li
+                      onClick={() => handleSize29()}
+                      className={classNameSize29}
+                    >
+                      29
+                    </li>
+                  ) : (
+                    <li className={classNameSizeDisbled}>29</li>
+                  )}
+                  {productDetails?.quantity?.size30 ? (
+                    <li
+                      onClick={() => handleSize30()}
+                      className={classNameSize30}
+                    >
+                      30
+                    </li>
+                  ) : (
+                    <li className={classNameSizeDisbled}>30</li>
+                  )}
+                  {productDetails?.quantity?.size31 ? (
+                    <li
+                      onClick={() => handleSize31()}
+                      className={classNameSize31}
+                    >
+                      31
+                    </li>
+                  ) : (
+                    <li className={classNameSizeDisbled}>31</li>
+                  )}
+                  {productDetails?.quantity?.size32 ? (
+                    <li
+                      onClick={() => handleSize32()}
+                      className={classNameSize32}
+                    >
+                      32
+                    </li>
+                  ) : (
+                    <li className={classNameSizeDisbled}>32</li>
+                  )}
+                  {productDetails?.quantity?.size33 ? (
+                    <li
+                      onClick={() => handleSize33()}
+                      className={classNameSize33}
+                    >
+                      33
+                    </li>
+                  ) : (
+                    <li className={classNameSizeDisbled}>33</li>
+                  )}
+                  {productDetails?.quantity?.size34 ? (
+                    <li
+                      onClick={() => handleSize34()}
+                      className={classNameSize34}
+                    >
+                      34
+                    </li>
+                  ) : (
+                    <li className={classNameSizeDisbled}>34</li>
+                  )}
+                  {productDetails?.quantity?.size35 ? (
+                    <li
+                      onClick={() => handleSize35()}
+                      className={classNameSize35}
+                    >
+                      35
+                    </li>
+                  ) : (
+                    <li className={classNameSizeDisbled}>35</li>
+                  )}
+                  {productDetails?.quantity?.size36 ? (
+                    <li
+                      onClick={() => handleSize36()}
+                      className={classNameSize36}
+                    >
+                      36
+                    </li>
+                  ) : (
+                    <li className={classNameSizeDisbled}>36</li>
+                  )}
+                </ul>
+              ) : (
+                <ul className="size-list">
+                  {productDetails?.quantity?.sizeS ? (
+                    <li
+                      onClick={() => handleSizeS()}
+                      className={classNameSizeS}
+                    >
+                      S
+                    </li>
+                  ) : (
+                    <li className={classNameSizeDisbled}>S</li>
+                  )}
+                  {productDetails?.quantity?.sizeM ? (
+                    <li
+                      onClick={() => handleSizeM()}
+                      className={classNameSizeM}
+                    >
+                      M
+                    </li>
+                  ) : (
+                    <li className={classNameSizeDisbled}>M</li>
+                  )}
+                  {productDetails?.quantity?.sizeL ? (
+                    <li
+                      onClick={() => handleSizeL()}
+                      className={classNameSizeL}
+                    >
+                      L
+                    </li>
+                  ) : (
+                    <li className={classNameSizeDisbled}>L</li>
+                  )}
+                  {productDetails?.quantity?.sizeXL ? (
+                    <li
+                      onClick={() => handleSizeXL()}
+                      className={classNameSizeXL}
+                    >
+                      XL
+                    </li>
+                  ) : (
+                    <li className={classNameSizeDisbled}>XL</li>
+                  )}
+                  {productDetails?.quantity?.sizeXXL ? (
+                    <li
+                      onClick={() => handleSizeXXL()}
+                      className={classNameSizeXXL}
+                    >
+                      XXL
+                    </li>
+                  ) : (
+                    <li className={classNameSizeDisbled}>XXL</li>
+                  )}
+                </ul>
+              )}
             </div>
 
             <p style={{ fontSize: "18px" }}>Số lượng: {quantity}</p>

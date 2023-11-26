@@ -13,7 +13,10 @@ import ModelUpdateUserComponent from "../components/ModelUpdateUserComponent";
 import { success, error, warning } from "../components/Message";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as CartServices from "../services/CartServices";
+import * as PaymentServices from "../services/PaymentServices";
 import { useQuery } from "@tanstack/react-query";
+import { PayPalButton } from "react-paypal-button-v2";
+import HeaderComponents from "../components/HeaderComponents";
 
 const PaymentPage = () => {
   const order = useSelector((state) => state.order);
@@ -87,8 +90,8 @@ const PaymentPage = () => {
   } = mutationAddOrder;
 
   const mutationDeleteMany = useMutationHook((data) => {
-    const { token, ...ids } = data;
-    const res = CartServices.deleteManyCart(ids, token);
+    const { userId, token, ...ids } = data;
+    const res = CartServices.deleteManyCart(userId, ids, token);
     return res;
   });
 
@@ -118,7 +121,7 @@ const PaymentPage = () => {
       });
       console.log("arrayOrdered", arrayOrdered);
       mutationDeleteMany.mutate(
-        { ids: arrayOrdered, token: user?.access_token },
+        { userId: user?.id, ids: arrayOrdered, token: user?.access_token }
         // {
         //   onSettled: () => {
         //     queryCart.refetch();
@@ -251,6 +254,62 @@ const PaymentPage = () => {
     }
   };
 
+  const [sdkReady, setSdkReady] = useState(false); //set xem nó đã có hay chưa
+  const addPaypalScript = async () => {
+    const { data } = await PaymentServices.getConfig();
+    const script = document.createElement("script");
+    script.type = "text/javascript"; //đặt type là js
+    script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
+    script.async = true; // tránh bất đồng bộ
+    script.onload = () => {
+      //đang load
+      setSdkReady(true);
+    };
+    document.body.appendChild(script);
+    console.log("datapaypal", data);
+  };
+
+  useEffect(() => {
+    if (!window.paypal) {
+      //nếu chưa có giao diện paypal
+      addPaypalScript();
+    } else {
+      setSdkReady(true);
+    }
+  }, []);
+
+  const onSuccessPaypal = (details, data) => {
+    mutationAddOrder.mutate({
+      token: user?.access_token,
+      orderItems: order?.orderItemsSelected,
+      fullName: user?.name,
+      phone: user?.phone,
+      address: user?.address,
+      paymentMethod: valueRadioTT,
+      itemsPrice: priceMemo,
+      shippingPrice: shippingPrice,
+      totalPrice: totalPriceMemo,
+      user: user?.id,
+      isPaid: true,
+      paidAt: details.update_time,
+    });
+    console.log("details", details, data);
+
+    const arrayOrdered = []; //lấy id của các sản phẩm mua để remove khỏi giỏ hàng
+    order?.orderItemsSelected?.forEach((e) => {
+      arrayOrdered.push(e._id);
+    });
+    console.log("arrayOrdered", arrayOrdered);
+    mutationDeleteMany.mutate(
+      { ids: arrayOrdered, token: user?.access_token }
+      // {
+      //   onSettled: () => {
+      //     queryCart.refetch();
+      //   },
+      // }
+    );
+  };
+
   return (
     <>
       <h1 style={{ textAlign: "center", marginTop: "50px" }}>Thanh toán</h1>
@@ -275,6 +334,10 @@ const PaymentPage = () => {
               <div className="radio-text">
                 <Radio value={"later_money"}></Radio>
                 <h4>Thanh toán khi nhận hàng</h4>
+              </div>
+              <div className="radio-text">
+                <Radio value={"paypal"}></Radio>
+                <h4>Thanh toán bằng Paypal</h4>
               </div>
             </Radio.Group>
           </div>
@@ -315,9 +378,23 @@ const PaymentPage = () => {
               </span>
             </li>
           </ul>
-          <button className="pay-btn" onClick={handleAddOrder}>
-            Đặt hàng
-          </button>
+
+          {valueRadioTT === "paypal" && sdkReady ? (
+            <>
+              <PayPalButton
+                amount={20}
+                // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+                onSuccess={onSuccessPaypal}
+                onError={() => {
+                  alert("Lỗi Paypal");
+                }}
+              />
+            </>
+          ) : (
+            <button className="pay-btn" onClick={handleAddOrder}>
+              Đặt hàng
+            </button>
+          )}
         </div>
         <Modal
           show={isOpenModalUpdate}

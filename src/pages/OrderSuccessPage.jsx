@@ -3,6 +3,8 @@ import { convertPrice } from "../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { orderContant } from "../contant";
+import HeaderComponents from "../components/HeaderComponents";
+import * as CartServices from "../services/CartServices";
 
 const OrderSuccessPage = () => {
   const order = useSelector((state) => state.order);
@@ -14,8 +16,17 @@ const OrderSuccessPage = () => {
   const dispatch = useDispatch();
   // dispatch(selectedOrder());
 
+  const fetchOrderCart = async () => {
+    const res = await CartServices.getCartByUserId(
+      user?.id,
+      user?.access_token
+    );
+  };
+  fetchOrderCart();
+
   return (
     <>
+      <HeaderComponents />
       <h1 style={{ textAlign: "center", marginTop: "50px" }}>
         Đơn hàng đã đặt thành công
       </h1>

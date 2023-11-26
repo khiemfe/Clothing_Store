@@ -41,7 +41,7 @@ export const orderSlice = createSlice({
     // },
     updateOrderProduct: (state, action) => {
       // console.log("stateUpdate", action.payload);
-      state.orderItems = action.payload?.dataCart;
+      state.orderItems = action.payload?.dataCart || [];
     },
     increaseAmount: (state, action) => {
       const { idProduct } = action.payload;

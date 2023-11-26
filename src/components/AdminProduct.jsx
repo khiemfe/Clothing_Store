@@ -20,6 +20,7 @@ import ModelComponent from "./ModelComponent";
 import { Select } from "antd";
 import LoadingCardInfoComponent from "./LoadingCardInfoComponent";
 import LoadingUpdateComponent from "./LoadingUpdateComponent";
+import * as CartServices from "../services/CartServices";
 
 const AdminProduct = () => {
   const [form] = Form.useForm();
@@ -177,6 +178,12 @@ const AdminProduct = () => {
   } = mutationUpdate;
   console.log("mutationUpdate", mutationUpdate);
 
+  const mutationUpdateCart = useMutationHook((data) => {
+    const { id, token, ...rest } = data;
+    const res = CartServices.updateCart(id, token, rest);
+    return res;
+  });
+
   const mutationDelete = useMutationHook((data) => {
     const { id, token } = data;
     const res = ProducttServcie.deleteProduct(id, token);
@@ -214,7 +221,14 @@ const AdminProduct = () => {
         },
       }
     );
+    mutationDeleteUpdateCart.mutate({ ids: ids, token: user?.access_token });
   };
+
+  const mutationDeleteUpdateCart = useMutationHook((data) => {
+    const { token, ...ids } = data;
+    const res = CartServices.deleteUpdateCart(ids, token);
+    return res;
+  });
 
   useEffect(() => {
     if (isSuccess && data?.status === "OK") {
@@ -229,6 +243,14 @@ const AdminProduct = () => {
     if (isSuccessUpdated && dataUpdated?.status === "OK") {
       success();
       onCloseDrawer();
+      const data = {
+        id: rowSelected,
+        token: user?.access_token,
+        name: stateProductDetails?.name,
+        price: stateProductDetails?.price,
+        image: stateProductDetails?.image,
+      };
+      mutationUpdateCart.mutate(data);
     } else if (isErrorUpdated) {
       error();
     }
@@ -511,6 +533,9 @@ const AdminProduct = () => {
         },
       }
     );
+    const ids = [];
+    ids.push(rowSelected);
+    mutationDeleteUpdateCart.mutate({ ids: ids, token: user?.access_token });
   };
 
   const renderAction = () => {
