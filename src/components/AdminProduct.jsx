@@ -355,23 +355,23 @@ const AdminProduct = () => {
       stateProduct.gender !== "" &&
       stateProduct.price !== "" &&
       stateProduct.age !== "" &&
-      stateProduct.size !== ""
+      stateProduct.size !== "" &&
       // stateProduct.quantity !== "" &&
-      // stateProduct.type !== ""
+      stateProduct.type
     ) {
       console.log("Success:", stateProduct);
+      mutation.mutate(
+        { token: user?.access_token, ...stateProduct },
+        {
+          //onSettled & queryProduct.refetch() nó mới cập nhật lại không cần load lại trang
+          onSettled: () => {
+            queryProduct.refetch();
+          },
+        }
+      );
     } else {
       console.log("err stateProduct");
     }
-    mutation.mutate(
-      { token: user?.access_token, ...stateProduct },
-      {
-        //onSettled & queryProduct.refetch() nó mới cập nhật lại không cần load lại trang
-        onSettled: () => {
-          queryProduct.refetch();
-        },
-      }
-    );
   };
 
   const onClose = () => {
@@ -395,6 +395,7 @@ const AdminProduct = () => {
         size36: "",
       },
       image: "", //xóa image
+      type: "",
     });
     form.resetFields(); //xóa các label
     // props.onHide() //đóng form
@@ -476,15 +477,27 @@ const AdminProduct = () => {
 
   const onUpdateProduct = () => {
     //...stateProductDetails nó mới cập nhật lại thành công
-    mutationUpdate.mutate(
-      { id: rowSelected, token: user?.access_token, ...stateProductDetails },
-      {
-        //onSettled & queryProduct.refetch() nó mới cập nhật lại không cần load lại trang
-        onSettled: () => {
-          queryProduct.refetch();
-        },
-      }
-    );
+    console.log('stateProductDetails', stateProductDetails)
+    if (
+      stateProductDetails.name !== "" &&
+      stateProductDetails.image !== "" &&
+      stateProductDetails.gender !== "" &&
+      stateProductDetails.price !== "" &&
+      stateProductDetails.age !== "" &&
+      stateProductDetails.size !== "" &&
+      // stateProductDetails.quantity !== "" &&
+      stateProductDetails.type
+    ) {
+      mutationUpdate.mutate(
+        { id: rowSelected, token: user?.access_token, ...stateProductDetails },
+        {
+          //onSettled & queryProduct.refetch() nó mới cập nhật lại không cần load lại trang
+          onSettled: () => {
+            queryProduct.refetch();
+          },
+        }
+      );
+    }
     setTypeSelect("");
     console.log("stateProductDetailss", stateProductDetails);
   };
@@ -783,6 +796,10 @@ const AdminProduct = () => {
         {
           text: "Đồ thể thao",
           value: "Đồ thể thao",
+        },
+        {
+          text: "Khác",
+          value: "Khác",
         },
       ],
       onFilter: (value, record) => record.type?.includes(value),

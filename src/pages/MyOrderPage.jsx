@@ -99,7 +99,7 @@ const MyOrderPage = () => {
       <div className="my-order">
         <h1 style={{ textAlign: "center" }}>Đơn hàng của bạn</h1>
         <div className="body">
-          {dataOrder?.map((item, index) => {
+          {dataOrder?.length > 0 && dataOrder?.map((item, index) => {
             return (
               <div key={index}>
                 {item?.orderItems.length && (

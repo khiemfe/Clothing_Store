@@ -42,21 +42,27 @@ const TabelComponents = (props) => {
   console.log("dataTable", dataTable);
   console.log("dataTableQuan", dataTableQuan);
 
-  const dataTableMain = [];
-  for (let i = 0; i < dataTable.length; i++) {
-    if (dataTable[i].name.split(" ")[0] !== "Quần") {
-      dataTableMain.push(dataTable[i]);
-    } else {
-      dataTableMain.push(dataTableQuan[i]);
+  let dataTableMain = [];
+  if (filename === "Products Table") {
+    for (let i = 0; i < dataTable.length; i++) {
+      if (dataTable[i].name?.split(" ")[0] !== "Quần") {
+        dataTableMain.push(dataTable[i]);
+      } else {
+        dataTableMain.push(dataTableQuan[i]);
+      }
     }
+  } else {
+    dataTableMain = dataTable
   }
+
+  console.log('dataTableMain', dataTableMain)
 
   // const newColumns = columns.pop()
 
   return (
     <>
       {/* <Divider /> */}
-      {rowSelectedKeys.length > 0 && (
+      {rowSelectedKeys?.length > 0 && (
         <div style={{ cursor: "pointer" }} onClick={hanleDeleteAll}>
           Xoá tất cả
         </div>
@@ -69,7 +75,6 @@ const TabelComponents = (props) => {
       >
         <button> Export Excel 1 </button>
       </DownloadTableExcel>
-
       <DownloadTableExcel
         filename={filename}
         sheet={sheet}

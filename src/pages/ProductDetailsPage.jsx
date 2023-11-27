@@ -299,6 +299,7 @@ const ProductDetailsPage = () => {
         size &&
         productDetails?.image &&
         productDetails?.price &&
+        productDetails?.type &&
         user?.id &&
         idProduct
       ) {
@@ -308,6 +309,7 @@ const ProductDetailsPage = () => {
           size: size,
           image: productDetails?.image,
           price: productDetails?.price,
+          type: productDetails?.type,
           userId: user?.id,
           productId: idProduct,
         });

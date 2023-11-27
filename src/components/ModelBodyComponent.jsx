@@ -21,7 +21,6 @@ const ModelBodyComponent = ({
   title,
 }) => {
   console.log("stateProducttt", stateProduct);
-  console.log("handleOnchange", handleOnchange);
 
   const [sizeS, setSizeS] = useState(stateProduct?.quantity?.sizeS);
   const [sizeM, setSizeM] = useState(stateProduct?.quantity?.sizeM);
@@ -469,7 +468,16 @@ const ModelBodyComponent = ({
             name="size"
           />
         </Form.Item>
-        <Form.Item label="Type" name="type">
+        <Form.Item
+          label="Type"
+          name="type"
+          rules={[
+            {
+              required: true,
+              message: stateProduct?.type ? "" : "Please input your type!",
+            },
+          ]}
+        >
           <div className="App">
             <Select
               name="type"

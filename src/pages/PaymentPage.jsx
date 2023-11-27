@@ -28,6 +28,8 @@ const PaymentPage = () => {
   const [valueRadioTT, setValueRadioTT] = useState("later_money");
   const navigate = useNavigate();
 
+  console.log('orderr', order)
+
   const priceMemo = useMemo(() => {
     const result = order?.orderItemsSelected.reduce((total, cur) => {
       return total + cur?.price * cur?.amount;
@@ -237,7 +239,8 @@ const PaymentPage = () => {
       user?.address &&
       user?.phone &&
       priceMemo &&
-      user?.id
+      user?.id &&
+      user?.email
     ) {
       mutationAddOrder.mutate({
         token: user?.access_token,
@@ -293,6 +296,7 @@ const PaymentPage = () => {
       user: user?.id,
       isPaid: true,
       paidAt: details.update_time,
+      email: user?.email,
     });
     console.log("details", details, data);
 
