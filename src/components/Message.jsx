@@ -1,15 +1,15 @@
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 
-const success = () => {
-    toast.success('Successfully toasted!')
-}
+const success = (message) => {
+  toast.success(message || "Successfully toasted!");
+};
 
-const error = () => { 
-    toast.error('Err')
-}
+const error = (message) => {
+  toast.error(message || "Err");
+};
 
 const warning = () => {
-    toast.warning('War')
-}
+  toast.warning("War");
+};
 
-export {success, error, warning}
+export { success, error, warning };

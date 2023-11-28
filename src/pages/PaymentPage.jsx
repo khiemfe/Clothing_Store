@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { convertPrice } from "../utils";
 import { useDispatch, useSelector } from "react-redux";
-import { Radio } from "antd";
+import { Button, Radio } from "antd";
 import * as OrderServcie from "../services/OrderServices";
 import { useMutationHook } from "../hooks/useMutationHook";
 import * as UserServcie from "../services/userServices";
@@ -17,6 +17,7 @@ import * as PaymentServices from "../services/PaymentServices";
 import { useQuery } from "@tanstack/react-query";
 import { PayPalButton } from "react-paypal-button-v2";
 import HeaderComponents from "../components/HeaderComponents";
+import LoadingComponents from "../components/LoadingComponents";
 
 const PaymentPage = () => {
   const order = useSelector((state) => state.order);
@@ -28,7 +29,7 @@ const PaymentPage = () => {
   const [valueRadioTT, setValueRadioTT] = useState("later_money");
   const navigate = useNavigate();
 
-  console.log('orderr', order)
+  console.log("orderr", order);
 
   const priceMemo = useMemo(() => {
     const result = order?.orderItemsSelected.reduce((total, cur) => {
@@ -114,9 +115,10 @@ const PaymentPage = () => {
   // };
   // const queryCart = useQuery(["cart"], fetchOrderCart);
 
+  // const [successModel, setSuccessModel] = useState(false);
   useEffect(() => {
     if (isSuccessAddOrder && dataAddOrder?.status === "OK") {
-      success();
+      success("Bạn đã đặt hàng thành công");
       const arrayOrdered = []; //lấy id của các sản phẩm mua để remove khỏi giỏ hàng
       order?.orderItemsSelected?.forEach((e) => {
         arrayOrdered.push(e._id);
@@ -130,20 +132,30 @@ const PaymentPage = () => {
         //   },
         // }
       );
-      // dispatch(removeAllOrderProduct({ listChecked: arrayOrdered }));
-      navigate("/orderSuccess", {
+      navigate("/my-order", {
         state: {
-          // chuyển dữ liệu khi create success qua
-          order: order?.orderItemsSelected,
-          priceMemo,
-          shippingPrice,
-          totalPriceMemo,
-          valueRadioGH,
-          valueRadioTT,
+          id: user?.id,
+          token: user?.access_token,
         },
       });
+      // setSuccessModel(true);
+
+      // dispatch(removeAllOrderProduct({ listChecked: arrayOrdered }));
+      // navigate("/orderSuccess", {
+      //   state: {
+      //     // chuyển dữ liệu khi create success qua
+      //     order: order?.orderItemsSelected,
+      //     priceMemo,
+      //     shippingPrice,
+      //     totalPriceMemo,
+      //     valueRadioGH,
+      //     valueRadioTT,
+      //   },
+      // });
     } else if (isErrorAddOrder) {
-      error();
+      error("Bạn đã đặt hàng thất bại");
+
+      console.log("loiii");
     }
   }, [isSuccessAddOrder, isErrorAddOrder]);
 
@@ -173,11 +185,11 @@ const PaymentPage = () => {
 
   useEffect(() => {
     if (isSuccessUpdate && dataUpdate?.status === "OK") {
-      success();
+      success("Bạn đã cập nhật thông tin thành công");
       setIsOpenModalUpdate(false);
       handleGetDetailsUser(user?.id, user?.access_token);
     } else if (isErrorUpdate) {
-      error();
+      error("Bạn đã cập nhật thông tin thất bại");
     }
   }, [isSuccessUpdate, isErrorUpdate]);
 
@@ -315,91 +327,154 @@ const PaymentPage = () => {
     );
   };
 
+  const pricePaypal = totalPriceMemo / 23;
+
   return (
     <>
-      <h1 style={{ textAlign: "center", marginTop: "50px" }}>Thanh toán</h1>
+      <h1
+        style={{
+          textAlign: "center",
+          marginTop: "20px",
+          textTransform: "uppercase",
+        }}
+      >
+        Thanh toán
+      </h1>
       <div className="page-payment">
         <div className="payment">
-          <div className="method-pay">
-            <h3>Chọn phương thức giao hàng</h3>
-            <Radio.Group onChange={onChangeGH} value={valueRadioGH}>
-              <div className="radio-text">
-                <Radio value={"GHTK"}></Radio>
-                <h4>GHTK</h4>
-              </div>
-              <div className="radio-text">
-                <Radio value={"GHN"}></Radio>
-                <h4>GHN</h4>
-              </div>
-            </Radio.Group>
+          <div className="pay-radio">
+            <div className="method-pay">
+              <h3>Chọn phương thức giao hàng:</h3>
+              <Radio.Group onChange={onChangeGH} value={valueRadioGH}>
+                <div className="radio-text">
+                  <Radio value={"GHTK"}></Radio>
+                  <h4>Giao hàng tiết kiệm</h4>
+                </div>
+                <div className="radio-text">
+                  <Radio value={"GHN"}></Radio>
+                  <h4>Giao hàng nhanh</h4>
+                </div>
+              </Radio.Group>
+            </div>
+            <div className="method-pay">
+              <h3>Chọn phương thức thanh toán:</h3>
+              <Radio.Group onChange={onChangeTT} value={valueRadioTT}>
+                <div className="radio-text">
+                  <Radio value={"later_money"}></Radio>
+                  <h4>Thanh toán khi nhận hàng</h4>
+                </div>
+                <div className="radio-text">
+                  <Radio value={"paypal"}></Radio>
+                  <h4>Thanh toán bằng Paypal</h4>
+                </div>
+              </Radio.Group>
+            </div>
           </div>
-          <div className="method-pay">
-            <h3>Chọn phương thức thanh toán</h3>
-            <Radio.Group onChange={onChangeTT} value={valueRadioTT}>
-              <div className="radio-text">
-                <Radio value={"later_money"}></Radio>
-                <h4>Thanh toán khi nhận hàng</h4>
+          <div className="pay-address">
+            <h3>Địa chỉ giao hàng: </h3>
+            <p
+              onClick={openModalUpdata}
+              style={{
+                textDecoration: "underline",
+                color: "blue",
+                cursor: "pointer",
+                fontSize: "14px",
+              }}
+            >
+              Thay đổi
+            </p>
+            <div className="pay-list">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: 10,
+                }}
+              >
+                <div className="pay-item">
+                  <p>Name: </p>
+                  <span>{user?.name}</span>
+                </div>
+                <div className="pay-item">
+                  <p>Phone: </p>
+                  <span>{user?.phone}</span>
+                </div>
               </div>
-              <div className="radio-text">
-                <Radio value={"paypal"}></Radio>
-                <h4>Thanh toán bằng Paypal</h4>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <div className="pay-item">
+                  <p>Address: </p>
+                  <span>{user?.address}</span>
+                </div>
               </div>
-            </Radio.Group>
+            </div>
           </div>
         </div>
         <div className="pay">
-          <div>
-            <h3>Thông tin khách hàng: </h3>
-            <div>
-              <h4>{user?.name}</h4>
-              <h4>{user?.phone}</h4>
-              <h4>{user?.address}</h4>
-              <p
-                onClick={openModalUpdata}
-                style={{
-                  textDecoration: "underline",
-                  color: "blue",
-                  cursor: "pointer",
-                  fontSize: "14px",
-                }}
-              >
-                Thay đổi
-              </p>
+          <div className="pay-product">
+            <h3>Sản phẩm: </h3>
+            {order?.orderItemsSelected?.map((item, index) => {
+              return (
+                <div className="product-item">
+                  <img
+                    style={{ width: 100, height: 100 }}
+                    src={item.image}
+                    alt=""
+                  />
+                  <div style={{ marginLeft: 20 }}>
+                    <p className="item-text">{item?.name}</p>
+                    <p className="item-text">{convertPrice(item?.price)}</p>
+                    <p className="item-text">SL: {item?.amount}</p>
+                    <p className="item-text">Size: {item?.size}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div style={{ width: "50%" }}>
+            <p style={{ color: "red", fontSize: 14 }}>
+              {mutationAddOrder?.error?.response?.data?.message}
+            </p>
+            <div className="ok-pay">
+              <ul className="pay-list">
+                <li className="pay-item">
+                  <h3>Sản phẩm:</h3>
+                  <span>{convertPrice(priceMemo)}</span>
+                </li>
+                <li className="pay-item">
+                  <h3>Phí giao hàng:</h3>
+                  <span>{convertPrice(shippingPrice)}</span>
+                </li>
+                <li className="pay-item">
+                  <h3>Tổng tiền:</h3>
+                  <span style={{ fontWeight: "bold" }}>
+                    {convertPrice(totalPriceMemo)}
+                  </span>
+                </li>
+              </ul>
+
+              {valueRadioTT === "paypal" && sdkReady ? (
+                <div className="paypal">
+                  <PayPalButton
+                    amount={Number(pricePaypal.toFixed(1))} // 20.22 là ko đc (nó không vào onError nhưng cũng không onSuccess, mà vẫn bị trừ tiền)
+                    // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+                    onSuccess={onSuccessPaypal}
+                    onError={() => {
+                      alert("Lỗi Paypal");
+                    }}
+                  />
+                </div>
+              ) : (
+                <div>
+                  <div>
+                    <LoadingComponents isLoading={isLoadingAddOrder} />
+                  </div>
+                  <button className="pay-btn" onClick={handleAddOrder}>
+                    Đặt hàng
+                  </button>
+                </div>
+              )}
             </div>
           </div>
-          <ul className="pay-list">
-            <li className="pay-item">
-              <h3>Tạm tính:</h3>
-              <span>{convertPrice(priceMemo)}</span>
-            </li>
-            <li className="pay-item">
-              <h3>Phí giao hàng:</h3>
-              <span>{convertPrice(shippingPrice)}</span>
-            </li>
-            <li className="pay-item">
-              <h3>Tổng tiền:</h3>
-              <span style={{ fontWeight: "bold" }}>
-                {convertPrice(totalPriceMemo)}
-              </span>
-            </li>
-          </ul>
-
-          {valueRadioTT === "paypal" && sdkReady ? (
-            <>
-              <PayPalButton
-                amount={20.2} // 20.22 là ko đc (nó không vào onError nhưng cũng không onSuccess, mà vẫn bị trừ tiền)
-                // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-                onSuccess={onSuccessPaypal}
-                onError={() => {
-                  alert("Lỗi Paypal");
-                }}
-              />
-            </>
-          ) : (
-            <button className="pay-btn" onClick={handleAddOrder}>
-              Đặt hàng
-            </button>
-          )}
         </div>
         <Modal
           show={isOpenModalUpdate}
@@ -409,23 +484,52 @@ const PaymentPage = () => {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centeredxw
+          style={{ marginTop: 100 }}
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Chỉnh sửa người dùng
+              Chỉnh sửa thông tin giao hàng
             </Modal.Title>
           </Modal.Header>
-          <LoadingUpdateComponent isLoading={false}>
-            <ModelUpdateUserComponent
-              stateUser={stateUserDetailsUpdate}
-              form={formUpdate}
-              handleOnchange={handleOnchangeDetailsUpdate}
-              onFinish={handleUpdate}
-              isLoading={isLoadingUpdate}
-              title="Update"
-            />
-          </LoadingUpdateComponent>
+          <ModelUpdateUserComponent
+            stateUser={stateUserDetailsUpdate}
+            form={formUpdate}
+            handleOnchange={handleOnchangeDetailsUpdate}
+            onFinish={handleUpdate}
+            isLoading={isLoadingUpdate}
+            title="Update"
+          />
         </Modal>
+        {/* <Modal
+          show={true}
+          onHide={() => {
+            setIsOpenModalUpdate(false);
+          }}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centeredxw
+          style={{ marginTop: 200 }}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              <h3>Bạn đã đặt hàng thành công</h3>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body style={{ padding: 20 }}>
+            <p style={{ fontSize: 16 }}>Bạn muốn di chuyển đến đâu?</p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                
+              }}
+            >
+              <Button>Trang chủ</Button>
+              <Button>Giỏ hàng</Button>
+              <Button>Đơn hàng của bạn</Button>
+            </div>
+          </Modal.Body>
+        </Modal> */}
       </div>
     </>
   );

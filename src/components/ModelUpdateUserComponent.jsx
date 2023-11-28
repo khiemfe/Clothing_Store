@@ -49,12 +49,12 @@ const ModelUpdateUserComponent = ({
         <Form.Item
           label="Phone"
           name="phone"
-          // rules={[
-          //   {
-          //     required: true,
-          //     message: "Please input your phone!",
-          //   },
-          // ]}
+          rules={[
+            {
+              required: true,
+              message: "Please input your phone!",
+            },
+          ]}
         >
           <Input
             value={stateUser?.phone}
@@ -65,12 +65,12 @@ const ModelUpdateUserComponent = ({
         <Form.Item
           label="Address"
           name="address"
-          // rules={[
-          //   {
-          //     required: true,
-          //     message: "Please input your address!",
-          //   },
-          // ]}
+          rules={[
+            {
+              required: true,
+              message: "Please input your address!",
+            },
+          ]}
         >
           <Input
             value={stateUser?.address}

@@ -24,7 +24,6 @@ import { useQuery } from "@tanstack/react-query";
 import * as CartServices from "../services/CartServices";
 
 const HeaderComponents = (props) => {
-  const item = ["nam", "nữ", "new", "best", "sale đồng giá"];
   const order = useSelector((state) => state.order);
 
   const navigate = useNavigate();
@@ -128,24 +127,27 @@ const HeaderComponents = (props) => {
 
   const location = useLocation();
   const { state } = location;
-  console.log('state', state)
+  console.log("state", state);
 
   const [amountCart, setAmountCart] = useState(0);
   const fetchOrderCart = async () => {
-    const res = await CartServices.getCartByUserId(user?.id, user?.access_token);
+    const res = await CartServices.getCartByUserId(
+      user?.id,
+      user?.access_token
+    );
     return res?.data;
   };
 
   const queryCart = useQuery(["cart"], fetchOrderCart);
   const { data: dataCart, isLoading: isLoadingCart } = queryCart;
-  console.log('dataCart', dataCart)
+  console.log("dataCart", dataCart);
 
   useEffect(() => {
-    setAmountCart(dataCart?.length)
-  }, [dataCart])
+    setAmountCart(dataCart?.length);
+  }, [dataCart]);
 
-  console.log('props', props)
-  
+  console.log("props", props);
+
   return (
     <Navbar className=" justify-content-between header ">
       <Toaster />
@@ -158,13 +160,12 @@ const HeaderComponents = (props) => {
           </Col>
           <Col xxl={5} xl={5} className="center align-items_center">
             <Nav className="me-auto">
-              {item.map((i, index) => {
-                return (
-                  <Nav.Link key={index} className="item" href="/nam">
-                    {i}
-                  </Nav.Link>
-                );
-              })}
+              <Nav.Link className="item" href="#Nam">
+                Nam
+              </Nav.Link>
+              <Nav.Link className="item" href="#Nữ">
+                Nữ
+              </Nav.Link>
             </Nav>
           </Col>
           <Col xxl={6} xl={6} className="right ">
@@ -190,7 +191,10 @@ const HeaderComponents = (props) => {
               </div>
               <FiHeart className="icon heart" />
               <Button className="btn-cart" onClick={handleOrderCart}>
-                <Badge bg="warning">{props?.amount || amountCart}</Badge>
+                {props?.amount ||
+                  (amountCart && (
+                    <Badge bg="warning">{props?.amount || amountCart}</Badge>
+                  ))}
                 <BsCart2 className="icon cart" />
               </Button>
               <div className="info-user">

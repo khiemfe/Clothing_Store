@@ -18,71 +18,55 @@ import LoadingComponents from "../components/LoadingComponents";
 
 const HomePage = () => {
   const refSearch = useRef();
-  const [limit, setLimit] = useState(8);
+  const limitState = 4;
+  const [limitNam, setLimitNam] = useState(limitState);
+  const [limitNu, setLimitNu] = useState(limitState);
 
-  const fetchProductAll = async (context) => {
-    console.log("context", context);
-    // lengthProduct = con
-    const limit = context?.queryKey && context?.queryKey[1];
-    // const search = context?.queryKey && context?.queryKey[2];
-    const res = await ProductServices.getAllProduct("", limit);
-    // if (search?.length > 0 || refSearch.current) {
-    //   setStateProduct(res?.data);
-    //   return [];
-    // } else {
-    return res;
-    // }
-  };
-
-  let lengthProducts = limit;
+  let lengthProducts = limitState;
   const arrayProducts = [];
   for (let i = 1; i <= lengthProducts; i++) {
     arrayProducts.push(i);
   }
 
-  const searchProduct = useSelector((state) => state.product?.search);
-  console.log("productSearch", searchProduct);
-
-  const searchDebounce = useDebounce(searchProduct, 1000);
-
-  //   const [loading, setLoading] = useState(false);
-  //   useEffect(() => {
-  //     //lần đầu tiên nó không chạy
-  //     if (refSearch.current && searchProduct) {
-  //       //   setLoading(true);
-  //       fetchProductAll(searchDebounce);
-  //     }
-  //     refSearch.current = true;
-  //     // setLoading(false);
-  //   }, [searchDebounce]);
+  const fetchProductAllNam = async (context) => {
+    console.log("context", context);
+    const gender = context?.queryKey && context?.queryKey[0];
+    const limit = context?.queryKey && context?.queryKey[1];
+    const res = await ProductServices.getGenderProduct(gender, limit);
+    return res;
+  };
 
   const {
-    isLoading,
-    data: products,
-    isPreviousData,
-  } = useQuery(["products", limit, searchDebounce], fetchProductAll, {
+    isLoading: isLoadingNam,
+    data: productsNam,
+    isPreviousData: isPreviousDataNam,
+  } = useQuery(["nam", limitNam], fetchProductAllNam, {
     retry: 3,
     retryDelay: 1000,
     keepPreviousData: true,
   });
-  console.log("data", products);
   //   keepPreviousData: giữ lại product cũ, load những cái mới thôi
-  console.log("isPreviousData", isPreviousData); //loading
+  console.log("isPreviousDataNam", isPreviousDataNam); //loading
 
-  //   const [stateProduct, setStateProduct] = useState([]);
-  //   useEffect(() => {
-  //     if (products?.data?.length > 0) {
-  //       setStateProduct(products?.data);
-  //     }
-  //   }, [products]);
+  const fetchProductAllNu = async (context) => {
+    console.log("context", context);
+    const gender = context?.queryKey && context?.queryKey[0];
+    const limit = context?.queryKey && context?.queryKey[1];
+    const res = await ProductServices.getGenderProduct(gender, limit);
+    return res;
+  };
 
-  let soluongProducts = products?.data.length;
-  if (products?.data.length === 0) {
-    soluongProducts = products?.totalProduct;
-  }
-
-  const soluongPage = Math.ceil(products?.totalProduct / soluongProducts);
-  console.log("soluongPage", soluongPage);
+  const {
+    isLoading: isLoadingNu,
+    data: productsNu,
+    isPreviousData: isPreviousDataNu,
+  } = useQuery(["nữ", limitNu], fetchProductAllNu, {
+    retry: 3,
+    retryDelay: 1000,
+    keepPreviousData: true,
+  });
+  //   keepPreviousData: giữ lại product cũ, load những cái mới thôi
+  console.log("isPreviousDataNu", isPreviousDataNu); //loading
 
   const [arrType, setArrType] = useState([]);
   const fetchAllType = async () => {
@@ -94,6 +78,8 @@ const HomePage = () => {
   useEffect(() => {
     fetchAllType();
   }, []);
+
+  console.log("arrType", arrType);
 
   return (
     <div className="home">
@@ -108,13 +94,15 @@ const HomePage = () => {
             <div className="slide">
               <SlideComponents arrImages={[slide1, slide2, slide3, slide4]} />
             </div>
-            <div className="product">
+
+            <div id="Nam" className="product">
+              <h1>Nam</h1>
               <LoadingCardComponent
-                isLoading={isLoading}
+                isLoading={isLoadingNam}
                 arrayProducts={arrayProducts}
               >
                 <Row>
-                  {products?.data?.map((product) => {
+                  {productsNam?.data?.map((product) => {
                     console.log("productmap", product);
                     return (
                       <Col xxl={3} xl={3} key={product._id}>
@@ -140,6 +128,8 @@ const HomePage = () => {
                 </Row>
               </LoadingCardComponent>
             </div>
+            {/* ---- */}
+
             <div
               style={{
                 display: "flex",
@@ -147,20 +137,86 @@ const HomePage = () => {
                 marginTop: "15px",
               }}
             >
-              <LoadingComponents isLoading={isPreviousData} />
+              <LoadingComponents isLoading={isPreviousDataNam} />
             </div>
             <div>
-              {products?.totalPage !== 1 &&
-                soluongPage !== 1 &&
-                !isLoading &&
-                !isPreviousData && (
+              {productsNam?.totalPage !== 1 &&
+                // soluongPage !== 1 &&
+                !isLoadingNam &&
+                !isPreviousDataNam && (
                   <div className="see-more">
                     <Button
                       // disabled={
-                      //   isPreviousData ||
+                      //   isPreviousDataNam ||
                       //   products?.totalProduct === products?.data.length
                       // }
-                      onClick={() => setLimit((prev) => prev + 8)}
+                      onClick={() => setLimitNam((prev) => prev + 8)}
+                      variant="outline-primary"
+                    >
+                      Xem thêm
+                    </Button>{" "}
+                  </div>
+                )}
+            </div>
+
+            {/* ---- */}
+
+            <div id="Nữ" className="product">
+              <h1>Nữ</h1>
+              <LoadingCardComponent
+                isLoading={isLoadingNam}
+                arrayProducts={arrayProducts}
+              >
+                <Row>
+                  {productsNu?.data?.map((product) => {
+                    console.log("productmap", product);
+                    return (
+                      <Col xxl={3} xl={3} key={product._id}>
+                        {/* <a href="/product-details"> */}
+                        <CardComponents
+                          id={product._id}
+                          countInstock={product.countInstock}
+                          description={product.description}
+                          image={product.image}
+                          name={product.name}
+                          price={product.price}
+                          rating={product.rating}
+                          gender={product.gender}
+                          discount={product.discount}
+                          selled={product.selled}
+                          age={product.age}
+                          size={product.size}
+                        />
+                        {/* </a> */}
+                      </Col>
+                    );
+                  })}
+                </Row>
+              </LoadingCardComponent>
+            </div>
+            {/* ---- */}
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "15px",
+              }}
+            >
+              <LoadingComponents isLoading={isPreviousDataNu} />
+            </div>
+            <div>
+              {productsNu?.totalPage !== 1 &&
+                // soluongPage !== 1 &&
+                !isLoadingNu &&
+                !isPreviousDataNu && (
+                  <div className="see-more">
+                    <Button
+                      // disabled={
+                      //   isPreviousDataNam ||
+                      //   products?.totalProduct === products?.data.length
+                      // }
+                      onClick={() => setLimitNu((prev) => prev + 8)}
                       variant="outline-primary"
                     >
                       Xem thêm

@@ -47,8 +47,6 @@ body {
       padding: 0 15px; }
       .header .center .item:hover {
         text-decoration: underline; }
-    .header .center .item:last-child {
-      color: red; }
   .header .right .form {
     justify-content: flex-end;
     position: relative; }
@@ -264,6 +262,31 @@ body {
 .modal-dialog .ok-pripose {
   font-size: 1.6rem !important; }
 
+.card-propose {
+  padding: 50px;
+  padding-bottom: 0;
+  position: relative;
+  margin-bottom: 50px; }
+  .card-propose .agenho,
+  .card-propose .agelon {
+    display: none; }
+    .card-propose .agenho:first-child,
+    .card-propose .agelon:first-child {
+      display: block; }
+  .card-propose h2 {
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2rem;
+    text-transform: uppercase; }
+  .card-propose .img-propose {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover; }
+
 .card {
   margin-top: 10px;
   width: 100% !important;
@@ -448,6 +471,13 @@ body {
   padding: 50px;
   padding-right: 100px; }
 
+.produc-details .row .imgload {
+  width: 540px !important;
+  margin-left: 146px; }
+
+.produc-details .row .textload {
+  flex: 1; }
+
 .produc-details .img-anhphu {
   display: flex;
   width: 500px;
@@ -478,7 +508,7 @@ body {
     font-size: 20px;
     text-transform: uppercase; }
   .produc-details .notify .gia {
-    margin-top: 50px;
+    margin-top: 30px;
     font-size: 22px;
     font-weight: bold;
     letter-spacing: 1px; }
@@ -496,8 +526,8 @@ body {
     padding: 0;
     margin-top: 20px; }
     .produc-details .notify .size .size-list .size-item {
-      padding: 12px 0;
-      width: 50px;
+      padding: 10px 0px;
+      width: 45px;
       border: 1.5px solid #ccc;
       margin: 0 10px;
       font-size: 16px;
@@ -608,13 +638,14 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: end;
-  margin-bottom: 50px; }
+  margin-bottom: 50px;
+  margin-top: 20px; }
   .cart-body .cart-shopping {
     width: 60%;
-    padding: 0 30px;
+    padding: 20px 30px;
     margin: auto;
-    border: 1px solid #ccc;
-    border-radius: 10px; }
+    border-radius: 10px;
+    background-color: #eee; }
     .cart-body .cart-shopping .title {
       display: flex;
       justify-content: space-between;
@@ -625,10 +656,10 @@ body {
     .cart-body .cart-shopping .item-product {
       align-items: center;
       margin-bottom: 20px;
-      padding: 10px 0;
-      border-bottom: 1px solid #eee;
+      padding: 10px;
       border-top: 1px solid #eee;
-      justify-content: space-between; }
+      justify-content: space-between;
+      background-color: #fff; }
       .cart-body .cart-shopping .item-product .img-product {
         width: 120px; }
       .cart-body .cart-shopping .item-product .name-product {
@@ -636,7 +667,8 @@ body {
         font-weight: 400;
         text-overflow: ellipsis; }
       .cart-body .cart-shopping .item-product .price-product {
-        padding: 5px 0; }
+        padding: 5px 0;
+        font-weight: 400; }
       .cart-body .cart-shopping .item-product .amount-product {
         font-size: 18px;
         border: 1px solid #000;
@@ -653,8 +685,13 @@ body {
   .cart-body .pay {
     width: 30%;
     text-align: center; }
+    .cart-body .pay .pay-body {
+      background-color: #eee;
+      padding: 20px;
+      border-radius: 10px; }
     .cart-body .pay .pay-list {
-      list-style: none; }
+      list-style: none;
+      padding: 0; }
       .cart-body .pay .pay-list .pay-item {
         display: flex;
         justify-content: space-between;
@@ -671,49 +708,230 @@ body {
       font-size: 15px; }
       .cart-body .pay .pay-btn:hover {
         opacity: 0.8; }
-    .cart-body .pay .pay-btn.disbled {
-      cursor: unset;
-      opacity: 0.8; }
 
 .page-payment {
-  display: flex;
-  padding: 0 50px;
-  margin-bottom: 50px; }
+  padding: 0 100px;
+  margin-bottom: 50px;
+  margin-top: 20px; }
   .page-payment .payment {
-    width: 60%;
     margin: auto;
-    padding: 10px; }
-    .page-payment .payment .radio-text {
-      display: flex; }
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    .page-payment .payment .pay-radio {
+      background-color: #eee;
+      height: 170px;
+      padding: 20px 30px;
+      width: 50%;
+      justify-content: space-between;
+      display: flex;
+      border-radius: 10px;
+      align-items: center;
+      margin-right: 20px; }
+      .page-payment .payment .pay-radio .radio-text {
+        display: flex;
+        margin-top: 10px;
+        align-items: center; }
+        .page-payment .payment .pay-radio .radio-text h4 {
+          margin: 0; }
+    .page-payment .payment .pay-address {
+      background-color: #eee;
+      padding: 20px 100px;
+      border-radius: 10px;
+      height: 170px;
+      width: 50%;
+      margin-left: 20px;
+      text-align: center; }
+      .page-payment .payment .pay-address .pay-list .pay-item {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        font-size: 16px; }
+        .page-payment .payment .pay-address .pay-list .pay-item p {
+          margin: 0;
+          font-style: italic; }
+        .page-payment .payment .pay-address .pay-list .pay-item span {
+          margin-left: 20px;
+          font-size: 16px;
+          font-weight: 500; }
     .page-payment .payment .method-pay {
       padding: 10px 0; }
   .page-payment .pay {
-    width: 30%;
-    text-align: center; }
-    .page-payment .pay .pay-list {
-      list-style: none; }
-      .page-payment .pay .pay-list .pay-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center; }
-        .page-payment .pay .pay-list .pay-item span {
-          font-size: 20px; }
-    .page-payment .pay .pay-btn {
-      padding: 15px 30px;
-      color: #fff;
-      background-color: #000;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: end; }
+    .page-payment .pay .pay-product {
+      flex: 1;
+      background-color: #eee;
+      margin-top: 20px;
       border-radius: 10px;
-      text-transform: uppercase;
-      border: none;
-      font-size: 15px; }
-      .page-payment .pay .pay-btn:hover {
-        opacity: 0.8; }
-    .page-payment .pay .pay-btn.disbled {
-      cursor: unset;
-      opacity: 0.8; }
+      padding: 10px 30px;
+      margin-right: 20px;
+      min-height: 200px; }
+      .page-payment .pay .pay-product .product-item {
+        display: flex;
+        align-items: center;
+        border-bottom: 4px solid #fff;
+        margin-top: 20px; }
+        .page-payment .pay .pay-product .product-item:last-child {
+          border: none; }
+        .page-payment .pay .pay-product .product-item .item-text {
+          font-size: 16px;
+          text-align: left;
+          margin: 0; }
+    .page-payment .pay .ok-pay {
+      background-color: #eee;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      margin-left: 20px;
+      min-height: 200px; }
+      .page-payment .pay .ok-pay .paypal {
+        margin: auto;
+        margin-top: 5px; }
+      .page-payment .pay .ok-pay .pay-list {
+        list-style: none;
+        padding: 0 20px; }
+        .page-payment .pay .ok-pay .pay-list .pay-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center; }
+          .page-payment .pay .ok-pay .pay-list .pay-item span {
+            font-size: 20px; }
+      .page-payment .pay .ok-pay .pay-btn {
+        padding: 15px 30px;
+        color: #fff;
+        background-color: #000;
+        border-radius: 10px;
+        text-transform: uppercase;
+        border: none;
+        font-size: 15px;
+        margin-top: 5px; }
+        .page-payment .pay .ok-pay .pay-btn:hover {
+          opacity: 0.8; }
 
-.my-order {
-  padding: 0 100px; }
+.my-order .body {
+  width: 60%;
+  margin: auto; }
+  .my-order .body .product {
+    background-color: #eee;
+    border-bottom: 4px solid #fff;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    .my-order .body .product .item {
+      display: flex;
+      align-items: center;
+      margin-top: 10px; }
+      .my-order .body .product .item:first-child {
+        margin-top: 0; }
+      .my-order .body .product .item img {
+        margin-right: 20px;
+        height: 120px;
+        width: 120px; }
+      .my-order .body .product .item .body-text p {
+        font-size: 15px; }
+    .my-order .body .product .right .price {
+      background-color: #fff;
+      padding: 10px;
+      text-align: center;
+      border-radius: 10px;
+      margin-bottom: 20px; }
+    .my-order .body .product .right .paided {
+      background-color: #fff;
+      padding: 10px;
+      text-align: center;
+      border-radius: 10px;
+      margin-bottom: 20px; }
+    .my-order .body .product .right .action {
+      background-color: #fff;
+      text-align: center;
+      padding: 10px;
+      border-radius: 10px; }
+
+.order-details {
+  width: 60%;
+  margin: auto;
+  margin-bottom: 50px; }
+  .order-details .body {
+    background-color: #eee;
+    padding: 20px 40px;
+    border-radius: 10px; }
+    .order-details .body .info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px; }
+      .order-details .body .info .receiver {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        height: 150px;
+        display: table-cell;
+        vertical-align: middle; }
+        .order-details .body .info .receiver h3 {
+          font-weight: 400; }
+        .order-details .body .info .receiver .text {
+          font-weight: 500; }
+      .order-details .body .info .time {
+        text-align: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        height: 150px;
+        display: table-cell;
+        vertical-align: middle; }
+        .order-details .body .info .time .text {
+          font-weight: 500; }
+        .order-details .body .info .time h3 {
+          font-weight: 400; }
+      .order-details .body .info .paided {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        height: 150px;
+        display: table-cell;
+        vertical-align: middle; }
+        .order-details .body .info .paided p {
+          font-size: 16px; }
+    .order-details .body .details {
+      display: flex;
+      justify-content: space-between;
+      align-items: end; }
+      .order-details .body .details .product {
+        width: 70%;
+        margin-right: 10px; }
+      .order-details .body .details .item {
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 10px; }
+        .order-details .body .details .item img {
+          width: 150px;
+          height: 150px; }
+        .order-details .body .details .item .text {
+          margin-left: 20px; }
+          .order-details .body .details .item .text h3 {
+            font-weight: 400;
+            padding: 5px 0; }
+      .order-details .body .details .price {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        width: 30%;
+        margin-left: 10px; }
+        .order-details .body .details .price h3 {
+          font-weight: 400; }
+        .order-details .body .details .price .total {
+          font-weight: 500; }
 
 .footer .bg-light.text-center.text-lg-start.text-muted {
   background-color: transparent !important;
