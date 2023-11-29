@@ -221,19 +221,6 @@ const ProfilePage = () => {
                 Please provide a valid state.
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
-              <div className="item">
-                <Form.Label>Name:</Form.Label>
-                <Form.Control
-                  // required
-                  value={name}
-                  type="text"
-                  onChange={handleOnchangeName}
-                  placeholder="Name?"
-                />
-              </div>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom02">
               <div className="item" style={{ marginBottom: 10 }}>
                 <Form.Label>
@@ -245,6 +232,7 @@ const ProfilePage = () => {
                   type="email"
                   onChange={handleOnchangeEmail}
                   placeholder="email@gmail.com"
+                  disabled
                 />
               </div>
             </Form.Group>
@@ -258,6 +246,20 @@ const ProfilePage = () => {
                 Sai định dạng email
               </p>
             )}
+            <Form.Group as={Col} md="4" controlId="validationCustom01">
+              <div className="item">
+                <Form.Label>Name:</Form.Label>
+                <Form.Control
+                  // required
+                  value={name}
+                  type="text"
+                  onChange={handleOnchangeName}
+                  placeholder="Name?"
+                />
+              </div>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            </Form.Group>
+
             <Form.Group as={Col} md="4" controlId="validationCustomUsername">
               <div className="item" style={{ marginBottom: 10 }}>
                 <Form.Label>Phone:</Form.Label>

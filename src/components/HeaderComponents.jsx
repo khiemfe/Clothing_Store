@@ -131,11 +131,13 @@ const HeaderComponents = (props) => {
 
   const [amountCart, setAmountCart] = useState(0);
   const fetchOrderCart = async () => {
-    const res = await CartServices.getCartByUserId(
-      user?.id,
-      user?.access_token
-    );
-    return res?.data;
+    if (user?.email) {
+      const res = await CartServices.getCartByUserId(
+        user?.id,
+        user?.access_token
+      );
+      return res?.data;
+    }
   };
 
   const queryCart = useQuery(["cart"], fetchOrderCart);

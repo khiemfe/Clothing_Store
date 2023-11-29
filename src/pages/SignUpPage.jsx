@@ -11,6 +11,7 @@ import {
   MDBInput,
 } from "mdb-react-ui-kit";
 import * as UserServcie from "../services/userServices";
+import * as OTPServices from "../services/OTPServices";
 import LoadingComponents from "../components/LoadingComponents";
 import { useMutationHook } from "../hooks/useMutationHook";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +21,7 @@ import { Toaster } from "react-hot-toast";
 
 const SignUpPage = () => {
   const [email, setEmail] = useState();
+  const [otp, setOtp] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [disabled, setDisabled] = useState(false);
@@ -33,7 +35,7 @@ const SignUpPage = () => {
       handleNavigateSignIn();
     } else if (isError) {
       error("Bạn đã đăng ký thất bại");
-      console.log("er");
+      console.log("err");
     }
   }, [isSuccess, isError]);
 
@@ -45,9 +47,36 @@ const SignUpPage = () => {
     }
   }, [isLoading]);
 
+  const mutationOTP = useMutationHook((email) => OTPServices.createrOTP(email));
+  const {
+    data: dataOTP,
+    isLoading: isLoadingOTP,
+    isSuccess: isSuccessOTP,
+    isError: isErrorOTP,
+  } = mutationOTP;
+
+  const mutationDeleteOTP = useMutationHook((email) => OTPServices.deleteOTP(email));
+
+  useEffect(() => {
+    if (isSuccessOTP && dataOTP?.status !== "ERR") {
+      success("Đã gửi mã OTP thành công cho email của bạn");
+
+      setTimeout(() => {
+        handleDeleteOTP()
+      }, 300000)
+    } else if (isErrorOTP) {
+      error("Đã gửi mã OTP thất bại cho email của bạn");
+    }
+  }, [isSuccessOTP, isErrorOTP]);
+
   const handleOnChangeEmail = (e) => {
     const value = e.target.value;
     setEmail(value);
+  };
+
+  const handleOnChangeOtp = (e) => {
+    const value = e.target.value;
+    setOtp(value);
   };
 
   const handleOnChangePassword = (e) => {
@@ -65,8 +94,21 @@ const SignUpPage = () => {
       email,
       password,
       confirmPassword,
+      otp
     });
     console.log("sign-up", email, password, confirmPassword);
+  };
+
+  const handleCreateOTP = () => {
+    mutationOTP.mutate({
+      email: email,
+    });
+  };
+
+  const handleDeleteOTP = () => {
+    mutationDeleteOTP.mutate({
+      email: email,
+    });
   };
 
   const navigate = useNavigate();
@@ -79,6 +121,10 @@ const SignUpPage = () => {
       handleSignUp();
     }
   };
+
+  const hanldeSignIn = () => {
+    navigate("/sign-in");
+  }
 
   return (
     <>
@@ -122,6 +168,31 @@ const SignUpPage = () => {
                     type="email"
                     size="lg"
                   />
+                </div>
+                <div className="input" style={{ position: "relative" }}>
+                  <h5 className="text">Mã OTP:</h5>
+                  <MDBInput
+                    className="input-nhap"
+                    wrapperClass="mb-4"
+                    onChange={handleOnChangeOtp}
+                    id="formControlLg"
+                    type="email"
+                    size="lg"
+                  />
+                  <button
+                    style={{
+                      position: "absolute",
+                      right: 0,
+                      height: "100%",
+                      width: 80,
+                      backgroundColor: "#000",
+                      color: "#fff",
+                      fontSize: 13,
+                    }}
+                    onClick={handleCreateOTP}
+                  >
+                    Gửi OTP
+                  </button>
                 </div>
                 <div className="input">
                   <h5 className="text">Password:</h5>
@@ -180,7 +251,7 @@ const SignUpPage = () => {
                   </div>
                 </div>
                 <div className="qmk-dk">
-                  <a href="/sign-in" style={{ color: "#393f81" }}>
+                  <a onClick={hanldeSignIn} style={{ color: "#393f81" }}>
                     Đăng nhập
                   </a>
                 </div>

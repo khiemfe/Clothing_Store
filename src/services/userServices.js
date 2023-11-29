@@ -38,6 +38,14 @@ export const updateUser = async (id, data, access_token) => {
   return res.data;
 };
 
+export const updatePassword = async (data) => {
+  const res = await axios.put(
+    `${process.env.REACT_APP_API_URL}/user/update-password`,
+    data
+  );
+  return res.data;
+};
+
 export const deleteUser = async (id, access_token) => {
   const res = await axiosJWT.delete(
     `${process.env.REACT_APP_API_URL}/user/delete-user/${id}`,
@@ -64,7 +72,7 @@ export const deleteManyUser = async (data, access_token) => {
 };
 
 export const getDetailsUser = async (id, access_token) => {
-  console.log('id details', id)
+  console.log("id details", id);
   console.log(access_token);
   const res = await axiosJWT.get(
     `${process.env.REACT_APP_API_URL}/user/get-details/${id}`,
@@ -74,7 +82,7 @@ export const getDetailsUser = async (id, access_token) => {
       },
     }
   );
-  console.log('res.data', res.data);
+  console.log("res.data", res.data);
   return res.data;
 };
 
