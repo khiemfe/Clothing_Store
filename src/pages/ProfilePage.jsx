@@ -15,8 +15,9 @@ import { getBase64 } from "../utils";
 import { Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { GrAdd } from "react-icons/gr";
+import { Toaster } from "react-hot-toast";
 
-let check = 0
+let check = 0;
 const ProfilePage = () => {
   const dispatch = useDispatch();
 
@@ -31,19 +32,20 @@ const ProfilePage = () => {
     const { id, access_token, ...rest } = data;
     console.log("rest", rest);
     const res = UserServcie.updateUser(id, rest, access_token);
-    return res
+    return res;
   });
   const { data, isLoading, isSuccess, isError, variables } = mutation;
   console.log("dataup", mutation);
 
-  console.log('check', check)
+  console.log("check", check);
   useEffect(() => {
     if (isSuccess && data?.status !== "ERR") {
-      success();
-      console.log('okchay')
+      success("Bạn đã cập nhật thông tin thành công");
+      console.log("okchay");
+      setIsPhoneNumber(true);
       handleGetDetailsUser(user?.id, user?.access_token);
     } else if (isError) {
-      error();
+      error("Bạn đã cập nhật thông tin thất bại");
     }
   }, [isSuccess, isError, check]);
 
@@ -61,7 +63,7 @@ const ProfilePage = () => {
         avatar: variables?.avatar,
         address: variables?.address,
         access_token: token,
-        refreshToken
+        refreshToken,
       })
     );
   };
@@ -84,6 +86,7 @@ const ProfilePage = () => {
 
   const handleOnchangePhone = (e) => {
     setPhone(e.target.value);
+    setIsPhoneNumber(true);
   };
 
   const handleOnchangeAddress = (e) => {
@@ -99,18 +102,22 @@ const ProfilePage = () => {
   };
   console.log(avatar);
 
+  const [isPhoneNumber, setIsPhoneNumber] = useState(true);
   const handleUpdate = () => {
-    check += 1
-    mutation.mutate({
-      id: user?.id,
-      name,
-      email,
-      phone,
-      address,
-      avatar,
-      access_token: user?.access_token,
-    });
-    console.log("updatee", user?.id, name, email, phone, address, avatar);
+    check += 1;
+    setIsPhoneNumber(phone.match(/^[0-9]{10}$/));
+    if (isPhoneNumber?.length === 1) {
+      mutation.mutate({
+        id: user?.id,
+        name,
+        email,
+        phone,
+        address,
+        avatar,
+        access_token: user?.access_token,
+      });
+      console.log("updatee", user?.id, name, email, phone, address, avatar);
+    }
   };
 
   const [validated, setValidated] = useState(false);
@@ -126,6 +133,7 @@ const ProfilePage = () => {
 
   return (
     <div>
+      <Toaster />
       <h1
         style={{
           textTransform: "uppercase",
@@ -227,20 +235,31 @@ const ProfilePage = () => {
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom02">
-              <div className="item">
-                <Form.Label>Email:</Form.Label>
+              <div className="item" style={{ marginBottom: 10 }}>
+                <Form.Label>
+                  Email: <span style={{ color: "red" }}>*</span>
+                </Form.Label>
                 <Form.Control
-                  // required
+                  required
                   value={email}
                   type="email"
                   onChange={handleOnchangeEmail}
                   placeholder="email@gmail.com"
                 />
               </div>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
+            {!email && (
+              <p style={{ color: "red", marginLeft: 120 }}>
+                Vui lòng nhập email
+              </p>
+            )}
+            {email && data?.message === "Wrong email format" && (
+              <p style={{ color: "red", marginLeft: 120 }}>
+                Sai định dạng email
+              </p>
+            )}
             <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-              <div className="item">
+              <div className="item" style={{ marginBottom: 10 }}>
                 <Form.Label>Phone:</Form.Label>
                 <InputGroup hasValidation>
                   <Form.Control
@@ -250,12 +269,18 @@ const ProfilePage = () => {
                     placeholder="Phone?"
                     // required
                   />
-                  <Form.Control.Feedback type="invalid">
+
+                  {/* <Form.Control.Feedback type="invalid">
                     Please choose a username.
-                  </Form.Control.Feedback>
+                  </Form.Control.Feedback> */}
                 </InputGroup>
               </div>
             </Form.Group>
+            {!isPhoneNumber && phone && (
+              <p style={{ color: "red", marginLeft: 120 }}>
+                Định dạng số điện thoại sai
+              </p>
+            )}
           </Row>
           <Row className="mb-3 rowProfile">
             <Form.Group as={Col} md="6" controlId="validationCustom03">

@@ -25,6 +25,7 @@ import { useQuery } from "@tanstack/react-query";
 import LoadingProductDetailsComponent from "../components/LoadingProductDetailsComponent";
 import LoadingOrderComponent from "../components/LoadingOrderComponent";
 import LoadingComponents from "../components/LoadingComponents";
+import { Toaster } from "react-hot-toast";
 
 const OrderPage = () => {
   const order = useSelector((state) => state.order);
@@ -238,11 +239,12 @@ const OrderPage = () => {
 
   useEffect(() => {
     if (isSuccess && data?.status === "OK") {
-      success();
+      success("Bạn đã cập nhật thông tin thành công");
       setIsOpenModalUpdate(false);
+      setIsPhoneNumber(true);
       handleGetDetailsUser(user?.id, user?.access_token);
     } else if (isError) {
-      error();
+      error("Bạn đã cập nhật thông tin thành công");
     }
   }, [isSuccess, isError]);
 
@@ -251,6 +253,9 @@ const OrderPage = () => {
       ...stateUserDetailsUpdate,
       [e.target.name]: e.target.value,
     });
+    if (e.target.name === "phone") {
+      setIsPhoneNumber(true);
+    }
   };
 
   console.log("stateUserDetailsUpdate", stateUserDetailsUpdate);
@@ -284,6 +289,7 @@ const OrderPage = () => {
     const res = await UserServcie.getDetailsUser(id, token);
     console.log("res?.data", res);
     setIsLoadingUpdate(false);
+
     dispatch(
       updateUser({
         ...res?.data,
@@ -304,14 +310,19 @@ const OrderPage = () => {
     });
   }, [user]);
 
+  const [isPhoneNumber, setIsPhoneNumber] = useState(true);
+  console.log("isPhoneNumber", isPhoneNumber?.length);
   const handleUpdate = () => {
-    mutationUpdate.mutate({
-      id: user?.id,
-      name: stateUserDetailsUpdate?.name,
-      phone: stateUserDetailsUpdate?.phone,
-      address: stateUserDetailsUpdate?.address,
-      access_token: user?.access_token,
-    });
+    setIsPhoneNumber(stateUserDetailsUpdate?.phone.match(/^[0-9]{10}$/));
+    if (isPhoneNumber?.length === 1) {
+      mutationUpdate.mutate({
+        id: user?.id,
+        name: stateUserDetailsUpdate?.name,
+        phone: stateUserDetailsUpdate?.phone,
+        address: stateUserDetailsUpdate?.address,
+        access_token: user?.access_token,
+      });
+    }
   };
 
   const itemsSteps = [
@@ -334,6 +345,7 @@ const OrderPage = () => {
 
   return (
     <>
+      <Toaster />
       <h1
         style={{
           margin: "20px 0",
@@ -484,6 +496,7 @@ const OrderPage = () => {
         show={isOpenModalUpdate}
         onHide={() => {
           setIsOpenModalUpdate(false);
+          setIsPhoneNumber(true);
         }}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
@@ -502,6 +515,7 @@ const OrderPage = () => {
             onFinish={handleUpdate}
             isLoading={isLoading}
             title="Update"
+            isPhoneNumber={isPhoneNumber}
           />
         </LoadingUpdateComponent>
       </Modal>

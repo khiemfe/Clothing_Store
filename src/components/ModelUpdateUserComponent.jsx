@@ -11,8 +11,9 @@ const ModelUpdateUserComponent = ({
   onFinish,
   isLoading,
   title,
+  isPhoneNumber,
 }) => {
-  console.log("stateUser", stateUser);
+  console.log("isPhoneNumber", isPhoneNumber);
   return (
     <Modal.Body>
       <Form
@@ -61,6 +62,9 @@ const ModelUpdateUserComponent = ({
             onChange={handleOnchange}
             name="phone"
           />
+          {!isPhoneNumber && isPhoneNumber === null && stateUser?.phone && (
+            <p style={{ color: "red" }}>Định dạng số điện thoại sai</p>
+          )}
         </Form.Item>
         <Form.Item
           label="Address"

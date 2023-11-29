@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import ModelComponent from "./ModelComponent";
 import { Form, Input, Space } from "antd";
 import LoadingUpdateComponent from "./LoadingUpdateComponent";
+import { Toaster } from "react-hot-toast";
 
 // import { getAllUser } from '../services/userServices'
 
@@ -97,28 +98,28 @@ const AdminUser = () => {
 
   useEffect(() => {
     if (isSuccessUpdated && dataUpdated?.status === "OK") {
-      success();
+      success("Bạn đã cập nhật thông tin người dùng thành công");
       onCloseDrawer();
     } else if (isErrorUpdated) {
-      error();
+      error("Bạn đã cập nhật thông tin người dùng thất bại");
     }
   }, [isSuccessUpdated]);
 
   useEffect(() => {
     if (isSuccessDeleted && dataDeleted?.status === "OK") {
-      success();
+      success("Bạn đã xoá người dùng thành công");
       handleCanelDelete();
     } else if (isErrorDeleted) {
-      error();
+      error("Bạn đã xoá người dùng thất bại");
     }
   }, [isSuccessDeleted]);
 
   useEffect(() => {
     if (isSuccessDeletedMany && dataDeletedMany?.status === "OK") {
-      success();
+      success("Bạn đã xoá người dùng thành công");
       // onClose();
     } else if (isErrorDeletedMany) {
-      error();
+      error("Bạn đã xoá người dùng thất bại");
     }
   }, [isSuccessDeletedMany]);
 
@@ -396,6 +397,7 @@ const AdminUser = () => {
     });
   return (
     <>
+      <Toaster />
       <h1 style={{ textTransform: "uppercase", margin: "10px 0 20px 0" }}>
         Quản lí người dùng
       </h1>

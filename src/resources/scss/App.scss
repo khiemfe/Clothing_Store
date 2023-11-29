@@ -949,6 +949,7 @@ body {
         gap: 10px;
         border: 1px solid #ccc;
         padding: 5px 0;
+        margin-right: 20px;
 
         .congtru {
           display: flex;
@@ -972,7 +973,7 @@ body {
       }
       .add {
         text-align: center;
-        margin: 0 40px;
+        margin: 0 20px;
         background-color: #000;
         border-radius: 10px;
         padding: 0px 100px;
@@ -1095,6 +1096,7 @@ body {
       border-top: 1px solid #eee;
       justify-content: space-between;
       background-color: #fff;
+      border-radius: 10px;
 
       .img-product {
         width: 120px;
@@ -1430,7 +1432,7 @@ body {
         text-align: center;
         height: 150px;
         display: table-cell;
-        vertical-align:middle;
+        vertical-align: middle;
 
         h3 {
           font-weight: 400;
@@ -1448,7 +1450,7 @@ body {
         border-radius: 10px;
         height: 150px;
         display: table-cell;
-        vertical-align:middle;
+        vertical-align: middle;
 
         .text {
           font-weight: 500;
@@ -1466,7 +1468,7 @@ body {
         text-align: center;
         height: 150px;
         display: table-cell;
-        vertical-align:middle;
+        vertical-align: middle;
 
         p {
           font-size: 16px;
@@ -1482,7 +1484,6 @@ body {
       .product {
         width: 70%;
         margin-right: 10px;
-
       }
 
       .item {
@@ -1492,7 +1493,7 @@ body {
         padding: 20px;
         border-radius: 10px;
         margin-top: 10px;
-        
+
         img {
           width: 150px;
           height: 150px;

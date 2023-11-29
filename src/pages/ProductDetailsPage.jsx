@@ -14,6 +14,7 @@ import * as CartServices from "../services/CartServices";
 import { success, error, warning } from "../components/Message";
 import HeaderComponents from "../components/HeaderComponents";
 import LoadingProductDetailsComponent from "../components/LoadingProductDetailsComponent";
+import { Toaster } from "react-hot-toast";
 
 const ProductDetailsPage = () => {
   const { id: idProduct } = useParams();
@@ -329,6 +330,7 @@ const ProductDetailsPage = () => {
   return (
     <>
       <HeaderComponents amount={amountCart} />
+      <Toaster />
       <div className="produc-details">
         {/* <ProductDetailsComponents idProduct={id} /> */}
         <LoadingProductDetailsComponent isLoading={isLoading} />
@@ -578,12 +580,15 @@ const ProductDetailsPage = () => {
                   </button>
                 </div>
                 {size ? (
-                  <button
-                    onClick={hanleAddOrder}
-                    className="bg-violet-800 text-white font-semibold py-3 px-16 rounded-xl h-full add"
-                  >
-                    Mua ngay
-                  </button>
+                  <>
+                    <LoadingComponents isLoading={isLoadingAddCart} />
+                    <button
+                      onClick={hanleAddOrder}
+                      className="bg-violet-800 text-white font-semibold py-3 px-16 rounded-xl h-full add"
+                    >
+                      Mua ngay
+                    </button>
+                  </>
                 ) : (
                   <button
                     onClick={hanleAddOrderNoSize}

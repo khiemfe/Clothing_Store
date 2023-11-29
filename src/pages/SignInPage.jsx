@@ -34,6 +34,14 @@ const SignInPage = () => {
   console.log(data, isLoading);
 
   useEffect(() => {
+    if (isLoading) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
     if (isSuccess && data?.status !== "ERR") {
       // success()
       handleNavigateHome();
@@ -80,7 +88,6 @@ const SignInPage = () => {
       password,
     });
     console.log("sign-in", email, password);
-    setDisabled(true);
   };
 
   const navigate = useNavigate();

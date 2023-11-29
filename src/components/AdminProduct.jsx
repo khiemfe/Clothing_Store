@@ -21,6 +21,7 @@ import { Select } from "antd";
 import LoadingCardInfoComponent from "./LoadingCardInfoComponent";
 import LoadingUpdateComponent from "./LoadingUpdateComponent";
 import * as CartServices from "../services/CartServices";
+import { Toaster } from "react-hot-toast";
 
 const AdminProduct = () => {
   const [form] = Form.useForm();
@@ -232,16 +233,16 @@ const AdminProduct = () => {
 
   useEffect(() => {
     if (isSuccess && data?.status === "OK") {
-      success();
+      success("Bạn đã thêm sản phẩm thành công");
       onClose();
     } else if (isError) {
-      error();
+      error("Bạn đã thêm sản phẩm thất bại");
     }
   }, [isSuccess]);
 
   useEffect(() => {
     if (isSuccessUpdated && dataUpdated?.status === "OK") {
-      success();
+      success("Bạn đã cập nhật sản phẩm thành công");
       onCloseDrawer();
       const data = {
         id: rowSelected,
@@ -252,25 +253,25 @@ const AdminProduct = () => {
       };
       mutationUpdateCart.mutate(data);
     } else if (isErrorUpdated) {
-      error();
+      error("Bạn đã cập nhật sản phẩm thất bại");
     }
   }, [isSuccessUpdated]);
 
   useEffect(() => {
     if (isSuccessDeleted && dataDeleted?.status === "OK") {
-      success();
+      success("Bạn đã xoá sản phẩm thành công");
       handleCanelDelete();
     } else if (isErrorDeleted) {
-      error();
+      error("Bạn đã xoá sản phẩm thất bại");
     }
   }, [isSuccessDeleted]);
 
   useEffect(() => {
     if (isSuccessDeletedMany && dataDeletedMany?.status === "OK") {
-      success();
+      success("Bạn đã xoá các sản phẩm thành công");
       // onClose()
     } else if (isErrorDeletedMany) {
-      error();
+      error("Bạn đã xoá các sản phẩm thất bại");
     }
   }, [isSuccessDeletedMany]);
 
@@ -477,7 +478,7 @@ const AdminProduct = () => {
 
   const onUpdateProduct = () => {
     //...stateProductDetails nó mới cập nhật lại thành công
-    console.log('stateProductDetails', stateProductDetails)
+    console.log("stateProductDetails", stateProductDetails);
     if (
       stateProductDetails.name !== "" &&
       stateProductDetails.image !== "" &&
@@ -853,6 +854,7 @@ const AdminProduct = () => {
   // }
   return (
     <>
+      <Toaster />
       <h1
         style={{ textTransform: "uppercase", margin: "10px 0 20px 0" }}
         className="text_QLSP"

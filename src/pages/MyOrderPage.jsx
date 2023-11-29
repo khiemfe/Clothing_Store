@@ -9,6 +9,7 @@ import { convertPrice } from "../utils";
 import { Button } from "antd";
 import { Modal } from "antd";
 import LoadingComponents from "../components/LoadingComponents";
+import { Toaster } from "react-hot-toast";
 
 const MyOrderPage = () => {
   const location = useLocation();
@@ -78,25 +79,29 @@ const MyOrderPage = () => {
 
   useEffect(() => {
     if (isSuccessCancel && dataCancel?.status === "OK") {
-      success();
+      success("Bạn đã huỷ đơn hàng thành công");
     } else if (isErrorCancel) {
-      error();
+      error("Bạn đã huỷ đơn hàng thành công");
     }
-  });
+  },[isSuccessCancel, isErrorCancel]);
 
-  // const [okHuy, setOkHuy] = useState(false);
+  const [okHuy, setOkHuy] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
+  const showModal = (item) => {
     setIsModalOpen(true);
+    setOkHuy(item);
+  };
 
-    // if(okHuy) {
-    // handleCancelOrder(item);
-    // }
+  const handleOkModel = () => {
+    handleCancelOrder(okHuy);
+    setIsModalOpen(false);
+    setOkHuy("");
   };
 
   return (
     <>
       <div className="my-order">
+        <Toaster />
         <h1
           style={{
             textAlign: "center",
@@ -120,10 +125,7 @@ const MyOrderPage = () => {
                         {item?.orderItems?.map((order, index) => {
                           return (
                             <div className="item" key={index}>
-                              <img
-                                src={order?.image}
-                                alt=""
-                              />
+                              <img src={order?.image} alt="" />
                               <div className="body-text">
                                 <h3>{order?.name}</h3>
                                 <p>{convertPrice(order?.price)}</p>
@@ -140,7 +142,7 @@ const MyOrderPage = () => {
                           <h3>Phí ship: {convertPrice(item?.shippingPrice)}</h3>
                           <h3>Tổng tiền: {convertPrice(item?.totalPrice)}</h3>
                         </div>
-                        
+
                         <div className="action">
                           <h3
                             style={{ cursor: "pointer", marginBottom: 10 }}
@@ -154,17 +156,16 @@ const MyOrderPage = () => {
                         >
                           Huỷy
                         </h3> */}
-                          <Button type="primary" onClick={() => showModal()}>
+                          <Button
+                            type="primary"
+                            onClick={() => showModal(item)}
+                          >
                             Huỷ
                           </Button>
                           <Modal
                             title="Thông báo"
                             open={isModalOpen}
-                            onOk={() => {
-                              handleCancelOrder(item);
-                              // setOkHuy(true);
-                              setIsModalOpen(false);
-                            }}
+                            onOk={handleOkModel}
                             onCancel={() => setIsModalOpen(false)}
                           >
                             <p>Bạn có muốn huỷ đơn hàng này?</p>

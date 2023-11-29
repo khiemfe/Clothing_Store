@@ -150,7 +150,7 @@ const HeaderComponents = (props) => {
 
   return (
     <Navbar className=" justify-content-between header ">
-      <Toaster />
+      {/* <Toaster /> */}
       <Container>
         <Row className="align-items_center">
           <Col xxl={1} xl={1}>
@@ -165,6 +165,9 @@ const HeaderComponents = (props) => {
               </Nav.Link>
               <Nav.Link className="item" href="#Nữ">
                 Nữ
+              </Nav.Link>
+              <Nav.Link className="item" href="#Best" style={{ color: "red" }}>
+                Best
               </Nav.Link>
             </Nav>
           </Col>
@@ -191,10 +194,7 @@ const HeaderComponents = (props) => {
               </div>
               <FiHeart className="icon heart" />
               <Button className="btn-cart" onClick={handleOrderCart}>
-                {props?.amount ||
-                  (amountCart && (
-                    <Badge bg="warning">{props?.amount || amountCart}</Badge>
-                  ))}
+                <Badge bg="warning">{props?.amount || amountCart}</Badge>
                 <BsCart2 className="icon cart" />
               </Button>
               <div className="info-user">

@@ -18,6 +18,7 @@ import { useQuery } from "@tanstack/react-query";
 import { PayPalButton } from "react-paypal-button-v2";
 import HeaderComponents from "../components/HeaderComponents";
 import LoadingComponents from "../components/LoadingComponents";
+import { Toaster } from "react-hot-toast";
 
 const PaymentPage = () => {
   const order = useSelector((state) => state.order);
@@ -132,12 +133,14 @@ const PaymentPage = () => {
         //   },
         // }
       );
-      navigate("/my-order", {
-        state: {
-          id: user?.id,
-          token: user?.access_token,
-        },
-      });
+      setTimeout(() => {
+        navigate("/my-order", {
+          state: {
+            id: user?.id,
+            token: user?.access_token,
+          },
+        });
+      }, 0);
       // setSuccessModel(true);
 
       // dispatch(removeAllOrderProduct({ listChecked: arrayOrdered }));
@@ -187,6 +190,7 @@ const PaymentPage = () => {
     if (isSuccessUpdate && dataUpdate?.status === "OK") {
       success("Bạn đã cập nhật thông tin thành công");
       setIsOpenModalUpdate(false);
+      setIsPhoneNumber(true);
       handleGetDetailsUser(user?.id, user?.access_token);
     } else if (isErrorUpdate) {
       error("Bạn đã cập nhật thông tin thất bại");
@@ -202,6 +206,9 @@ const PaymentPage = () => {
       ...stateUserDetailsUpdate,
       [e.target.name]: e.target.value,
     });
+    if (e.target.name === "phone") {
+      setIsPhoneNumber(true);
+    }
   };
 
   const handleGetDetailsUser = async (id, token) => {
@@ -231,14 +238,19 @@ const PaymentPage = () => {
     });
   }, [user]);
 
+  const [isPhoneNumber, setIsPhoneNumber] = useState(true);
+
   const handleUpdate = () => {
-    mutationUpdate.mutate({
-      id: user?.id,
-      name: stateUserDetailsUpdate?.name,
-      phone: stateUserDetailsUpdate?.phone,
-      address: stateUserDetailsUpdate?.address,
-      access_token: user?.access_token,
-    });
+    setIsPhoneNumber(stateUserDetailsUpdate?.phone.match(/^[0-9]{10}$/));
+    if (isPhoneNumber?.length === 1) {
+      mutationUpdate.mutate({
+        id: user?.id,
+        name: stateUserDetailsUpdate?.name,
+        phone: stateUserDetailsUpdate?.phone,
+        address: stateUserDetailsUpdate?.address,
+        access_token: user?.access_token,
+      });
+    }
   };
 
   console.log("orderedd", order);
@@ -331,6 +343,7 @@ const PaymentPage = () => {
 
   return (
     <>
+      <Toaster />
       <h1
         style={{
           textAlign: "center",
@@ -480,6 +493,7 @@ const PaymentPage = () => {
           show={isOpenModalUpdate}
           onHide={() => {
             setIsOpenModalUpdate(false);
+            setIsPhoneNumber(true);
           }}
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
@@ -498,6 +512,7 @@ const PaymentPage = () => {
             onFinish={handleUpdate}
             isLoading={isLoadingUpdate}
             title="Update"
+            isPhoneNumber={isPhoneNumber}
           />
         </Modal>
         {/* <Modal
