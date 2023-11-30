@@ -20,7 +20,7 @@ const ProposePage = () => {
   useEffect(() => {
     if (!isLoaded) {
       axios
-        .post("/save", {
+        .post("https://fiveman-store.vercel.app/save", {
           imageBase64,
         })
         .then((res) => {
