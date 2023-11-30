@@ -17,9 +17,9 @@ const ProposePage = () => {
   const [limit, setLimit] = useState(10);
   const [isLoadingPropose, setIsLoadingPropose] = useState(true);
 
-  useEffect(() => {
+  useEffect(async () => {
     if (!isLoaded) {
-      axios
+      await axios
         .post("https://clothing-server-btam.onrender.com/api/save/proposed", {
           imageBase64,
         })
