@@ -15,7 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import * as CartServices from "../services/CartServices";
 import * as PaymentServices from "../services/PaymentServices";
 import { useQuery } from "@tanstack/react-query";
-import { PayPalButton } from "react-paypal-button-v2";
+// import { PayPalButton } from "react-paypal-button-v2";
 import HeaderComponents from "../components/HeaderComponents";
 import LoadingComponents from "../components/LoadingComponents";
 import { Toaster } from "react-hot-toast";
@@ -466,16 +466,17 @@ const PaymentPage = () => {
               </ul>
 
               {valueRadioTT === "paypal" && sdkReady ? (
-                <div className="paypal">
-                  <PayPalButton
-                    amount={Number(pricePaypal.toFixed(1))} // 20.22 là ko đc (nó không vào onError nhưng cũng không onSuccess, mà vẫn bị trừ tiền)
-                    // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-                    onSuccess={onSuccessPaypal}
-                    onError={() => {
-                      alert("Lỗi Paypal");
-                    }}
-                  />
-                </div>
+                // <div className="paypal">
+                //   <PayPalButton
+                //     amount={Number(pricePaypal.toFixed(1))} // 20.22 là ko đc (nó không vào onError nhưng cũng không onSuccess, mà vẫn bị trừ tiền)
+                //     // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+                //     onSuccess={onSuccessPaypal}
+                //     onError={() => {
+                //       alert("Lỗi Paypal");
+                //     }}
+                //   />
+                // </div>
+                <></>
               ) : (
                 <div>
                   <div>
