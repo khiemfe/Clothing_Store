@@ -20,7 +20,7 @@ const ProposePage = () => {
   useEffect(() => {
     if (!isLoaded) {
       axios
-        .post("https://fiveman-store.vercel.app/save", {
+        .post("https://clothing-server-btam.onrender.com/save", {
           imageBase64,
         })
         .then((res) => {
