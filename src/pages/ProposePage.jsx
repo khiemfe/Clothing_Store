@@ -38,9 +38,9 @@ const ProposePage = () => {
   const [result_gender, set_result_gender] = useState("");
 
   useEffect(() => {
-    const result = fetch("/save").then((response) =>
-      response.json().then((data) => data)
-    );
+    const result = fetch(
+      `${process.env.REACT_APP_API_URL}/api/save/results`
+    ).then((response) => response.json().then((data) => data));
     const arrResult = async () => {
       const arr = await result;
       console.log("duLieu", arr);
