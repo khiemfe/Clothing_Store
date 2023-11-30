@@ -20,7 +20,7 @@ const ProposePage = () => {
   useEffect(() => {
     if (!isLoaded) {
       axios
-        .post("https://clothing-server-btam.onrender.com/save", {
+        .post("https://clothing-server-btam.onrender.com/api/save/proposed", {
           imageBase64,
         })
         .then((res) => {
