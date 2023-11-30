@@ -24,7 +24,7 @@ const ProposePage = () => {
           imageBase64,
         })
         .then((res) => {
-          console.log("OK", res);
+          console.log("Ok", res);
         })
         .catch((err) => {
           console.log("ERR", err);
