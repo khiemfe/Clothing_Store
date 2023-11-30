@@ -41,7 +41,6 @@ const ProfilePage = () => {
   useEffect(() => {
     if (isSuccess && data?.status !== "ERR") {
       success("Bạn đã cập nhật thông tin thành công");
-      console.log("okchay");
       setIsPhoneNumber(true);
       handleGetDetailsUser(user?.id, user?.access_token);
     } else if (isError) {
@@ -105,8 +104,8 @@ const ProfilePage = () => {
   const [isPhoneNumber, setIsPhoneNumber] = useState(true);
   const handleUpdate = () => {
     check += 1;
-    setIsPhoneNumber(phone.match(/^[0-9]{10}$/));
-    if (isPhoneNumber?.length === 1) {
+    setIsPhoneNumber(phone?.match(/^[0-9]{10}$/));
+    if ((isPhoneNumber && isPhoneNumber?.length === 1) || !phone) {
       mutation.mutate({
         id: user?.id,
         name,
@@ -143,25 +142,48 @@ const ProfilePage = () => {
       >
         Thông tin người dùng
       </h1>
-      <LoadingComponents isLoading={isLoading}>
-        <Form
-          noValidate
-          validated={validated}
-          onSubmit={handleSubmit}
-          className="formProfile"
-        >
-          <Row className="mb-3 rowProfile">
-            <Form.Group as={Col} md="3" controlId="validationCustom04">
-              <div
-                style={{ position: "relative", height: "100px" }}
-                className="item"
+
+      <Form
+        noValidate
+        validated={validated}
+        onSubmit={handleSubmit}
+        className="formProfile"
+      >
+        <Row className="mb-3 rowProfile">
+          <Form.Group as={Col} md="3" controlId="validationCustom04">
+            <div
+              style={{ position: "relative", height: "100px" }}
+              className="item"
+            >
+              <Form.Label>Avatar:</Form.Label>
+              <Upload
+                name="image"
+                onChange={handleOnchangeAvatar}
+                maxCount={1}
+                // style={{position:'relative', marginBottom:'20px'}}
               >
-                <Form.Label>Avatar:</Form.Label>
+                <Button
+                  icon={<UploadOutlined />}
+                  style={{
+                    margin: "0",
+                    backgroundColor: "transparent",
+                    borderColor: "#000",
+                    position: "absolute",
+                    top: "0px",
+                    left: "50%",
+                    width: "100px",
+                    height: "100px",
+                    borderRadius: "50%",
+                  }}
+                >
+                  <GrAdd />
+                </Button>
+              </Upload>
+              {avatar && (
                 <Upload
                   name="image"
                   onChange={handleOnchangeAvatar}
                   maxCount={1}
-                  // style={{position:'relative', marginBottom:'20px'}}
                 >
                   <Button
                     icon={<UploadOutlined />}
@@ -174,141 +196,118 @@ const ProfilePage = () => {
                       left: "50%",
                       width: "100px",
                       height: "100px",
+                      overflow: "hidden",
                       borderRadius: "50%",
                     }}
                   >
-                    <GrAdd />
-                  </Button>
-                </Upload>
-                {avatar && (
-                  <Upload
-                    name="image"
-                    onChange={handleOnchangeAvatar}
-                    maxCount={1}
-                  >
-                    <Button
-                      icon={<UploadOutlined />}
+                    <img
+                      src={avatar}
+                      alt="image"
                       style={{
-                        margin: "0",
-                        backgroundColor: "transparent",
-                        borderColor: "#000",
+                        objectFit: "cover",
                         position: "absolute",
                         top: "0px",
-                        left: "50%",
-                        width: "100px",
-                        height: "100px",
-                        overflow: "hidden",
-                        borderRadius: "50%",
+                        left: "0px",
+                        width: "100%",
+                        height: "100%",
                       }}
-                    >
-                      <img
-                        src={avatar}
-                        alt="image"
-                        style={{
-                          objectFit: "cover",
-                          position: "absolute",
-                          top: "0px",
-                          left: "0px",
-                          width: "100%",
-                          height: "100%",
-                        }}
-                      />
-                    </Button>
-                  </Upload>
-                )}
-              </div>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom02">
-              <div className="item" style={{ marginBottom: 10 }}>
-                <Form.Label>
-                  Email: <span style={{ color: "red" }}>*</span>
-                </Form.Label>
+                    />
+                  </Button>
+                </Upload>
+              )}
+            </div>
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid state.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group as={Col} md="4" controlId="validationCustom02">
+            <div className="item" style={{ marginBottom: 10 }}>
+              <Form.Label>
+                Email: <span style={{ color: "red" }}>*</span>
+              </Form.Label>
+              <Form.Control
+                required
+                value={email}
+                type="email"
+                onChange={handleOnchangeEmail}
+                placeholder="email@gmail.com"
+                disabled
+              />
+            </div>
+          </Form.Group>
+          {!email && (
+            <p style={{ color: "red", marginLeft: 120 }}>Vui lòng nhập email</p>
+          )}
+          {email && data?.message === "Wrong email format" && (
+            <p style={{ color: "red", marginLeft: 120 }}>Sai định dạng email</p>
+          )}
+          <Form.Group as={Col} md="4" controlId="validationCustom01">
+            <div className="item">
+              <Form.Label>Name:</Form.Label>
+              <Form.Control
+                // required
+                value={name}
+                type="text"
+                onChange={handleOnchangeName}
+                placeholder="Name?"
+              />
+            </div>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+            <div className="item" style={{ marginBottom: 10 }}>
+              <Form.Label>Phone:</Form.Label>
+              <InputGroup hasValidation>
                 <Form.Control
-                  required
-                  value={email}
-                  type="email"
-                  onChange={handleOnchangeEmail}
-                  placeholder="email@gmail.com"
-                  disabled
-                />
-              </div>
-            </Form.Group>
-            {!email && (
-              <p style={{ color: "red", marginLeft: 120 }}>
-                Vui lòng nhập email
-              </p>
-            )}
-            {email && data?.message === "Wrong email format" && (
-              <p style={{ color: "red", marginLeft: 120 }}>
-                Sai định dạng email
-              </p>
-            )}
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
-              <div className="item">
-                <Form.Label>Name:</Form.Label>
-                <Form.Control
+                  value={phone}
+                  type="number"
+                  onChange={handleOnchangePhone}
+                  placeholder="Phone?"
                   // required
-                  value={name}
-                  type="text"
-                  onChange={handleOnchangeName}
-                  placeholder="Name?"
                 />
-              </div>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
 
-            <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-              <div className="item" style={{ marginBottom: 10 }}>
-                <Form.Label>Phone:</Form.Label>
-                <InputGroup hasValidation>
-                  <Form.Control
-                    value={phone}
-                    type="number"
-                    onChange={handleOnchangePhone}
-                    placeholder="Phone?"
-                    // required
-                  />
-
-                  {/* <Form.Control.Feedback type="invalid">
+                {/* <Form.Control.Feedback type="invalid">
                     Please choose a username.
                   </Form.Control.Feedback> */}
-                </InputGroup>
-              </div>
-            </Form.Group>
-            {!isPhoneNumber && phone && (
-              <p style={{ color: "red", marginLeft: 120 }}>
-                Định dạng số điện thoại sai
-              </p>
-            )}
-          </Row>
-          <Row className="mb-3 rowProfile">
-            <Form.Group as={Col} md="6" controlId="validationCustom03">
-              <div className="item">
-                <Form.Label>Address:</Form.Label>
-                <Form.Control
-                  value={address}
-                  type="text"
-                  onChange={handleOnchangeAddress}
-                  placeholder="Address"
-                  // required
-                />
-              </div>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          {/* <Button type="submit">Submit form</Button> */}
-          <div style={{ width: "100%", textAlign: "center" }}>
-            <Button className="submit" onClick={handleUpdate}>
-              Update form
-            </Button>
+              </InputGroup>
+            </div>
+          </Form.Group>
+          {!isPhoneNumber && phone && (
+            <p style={{ color: "red", marginLeft: 120 }}>
+              Định dạng số điện thoại sai
+            </p>
+          )}
+        </Row>
+        <Row className="mb-3 rowProfile">
+          <Form.Group as={Col} md="6" controlId="validationCustom03">
+            <div className="item">
+              <Form.Label>Address:</Form.Label>
+              <Form.Control
+                value={address}
+                type="text"
+                onChange={handleOnchangeAddress}
+                placeholder="Address"
+                // required
+              />
+            </div>
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid city.
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Row>
+        {/* <Button type="submit">Submit form</Button> */}
+        <div
+          style={{ width: "100%", textAlign: "center", position: "relative" }}
+        >
+          <div style={{ position: "absolute", left: "30%", top: 5 }}>
+            <LoadingComponents isLoading={isLoading} />
           </div>
-        </Form>
-      </LoadingComponents>
+          <Button className="submit" onClick={handleUpdate}>
+            Update form
+          </Button>
+        </div>
+      </Form>
     </div>
   );
 };

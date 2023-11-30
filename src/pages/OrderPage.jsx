@@ -109,7 +109,7 @@ const OrderPage = () => {
     } else if (isErrorDeleted) {
       error("Bạn đã xoá sản phẩm khỏi giỏ hàng thất bại");
     }
-  }, [isSuccessDeleted]);
+  }, [isSuccessDeleted, isErrorDeleted]);
 
   const onChange = (e) => {
     console.log("e.target.value", e.target.value);
@@ -125,6 +125,7 @@ const OrderPage = () => {
   };
 
   const [lengthItem, setLengthItem] = useState([]);
+  console.log('lengthItem', lengthItem)
 
   const onChangeAll = (e) => {
     if (e.target.checked) {
@@ -142,14 +143,17 @@ const OrderPage = () => {
 
   useEffect(() => {
     const newListChecked = [];
-    order?.orderItems?.forEach((item) => {
-      console.log("item?.userId", item?.userId === user?.id);
+    console.log("orderItems", order?.orderItems);
+    console.log('orderItems user', user?.id)
+    
+    dataCart?.forEach((item) => {
+      console.log('item?.userId', item?.userId)
       if (item?.userId === user?.id) {
         newListChecked.push(item?._id + `size${item?.size}`);
       }
     });
     setLengthItem(newListChecked);
-  }, []);
+  }, [dataCart]);
   console.log("listChecked", listChecked);
   console.log("listChecked2", lengthItem);
 
@@ -190,7 +194,7 @@ const OrderPage = () => {
     } else if (isErrorDeletedMany) {
       error("Bạn đã xoá sản phẩm ra khỏi giỏ hàng thất bại");
     }
-  }, [isSuccessDeletedMany]);
+  }, [isSuccessDeletedMany, isErrorDeletedMany]);
 
   useEffect(() => {
     dispatch(selectedOrder({ listChecked }));
@@ -396,9 +400,9 @@ const OrderPage = () => {
             </div>
             {order?.orderItems?.map((item, index) => {
               return (
-                <>
+                <span key={index}>
                   {item.userId === user?.id && (
-                    <span key={index}>
+                    <span>
                       <div style={{ display: "flex" }} className="item-product">
                         <input
                           onChange={onChange}
@@ -452,7 +456,7 @@ const OrderPage = () => {
                       </div>
                     </span>
                   )}
-                </>
+                </span>
               );
             })}
           </div>

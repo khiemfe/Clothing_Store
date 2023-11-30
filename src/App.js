@@ -79,7 +79,7 @@ function App() {
 
       if (decodedRefreshToken?.exp > currentTime.getTime() / 1000) {
         if (decoded?.exp < currentTime.getTime() / 1000) {
-          const data = await UserService.refreshToken();
+          const data = await UserService.refreshToken(refreshToken);
           config.headers["token"] = `Bearer ${data?.access_token}`;
         } else {
           console.log("lay cai cu");

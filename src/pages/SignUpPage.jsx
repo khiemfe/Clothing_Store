@@ -55,15 +55,17 @@ const SignUpPage = () => {
     isError: isErrorOTP,
   } = mutationOTP;
 
-  const mutationDeleteOTP = useMutationHook((email) => OTPServices.deleteOTP(email));
+  const mutationDeleteOTP = useMutationHook((email) =>
+    OTPServices.deleteOTP(email)
+  );
 
   useEffect(() => {
     if (isSuccessOTP && dataOTP?.status !== "ERR") {
       success("Đã gửi mã OTP thành công cho email của bạn");
 
       setTimeout(() => {
-        handleDeleteOTP()
-      }, 300000)
+        handleDeleteOTP();
+      }, 300000);
     } else if (isErrorOTP) {
       error("Đã gửi mã OTP thất bại cho email của bạn");
     }
@@ -94,7 +96,7 @@ const SignUpPage = () => {
       email,
       password,
       confirmPassword,
-      otp
+      otp,
     });
     console.log("sign-up", email, password, confirmPassword);
   };
@@ -124,7 +126,7 @@ const SignUpPage = () => {
 
   const hanldeSignIn = () => {
     navigate("/sign-in");
-  }
+  };
 
   return (
     <>
@@ -193,6 +195,9 @@ const SignUpPage = () => {
                   >
                     Gửi OTP
                   </button>
+                  <div style={{position:'absolute', right: -40}}>
+                    <LoadingComponents isLoading={isLoadingOTP} />
+                  </div>
                 </div>
                 <div className="input">
                   <h5 className="text">Password:</h5>

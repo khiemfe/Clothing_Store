@@ -339,7 +339,7 @@ body {
         box-shadow: none; }
 
 .sign {
-  width: 60%;
+  width: 65%;
   margin-top: 50px !important; }
   .sign .card {
     border: none;
@@ -352,7 +352,7 @@ body {
   .sign .title {
     font-size: 2.6rem !important; }
   .sign .card-body {
-    padding: 30px 30px; }
+    padding: 30px 40px; }
   .sign .input {
     display: flex;
     align-items: center;
