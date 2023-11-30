@@ -39,7 +39,7 @@ const ProposePage = () => {
 
   useEffect(() => {
     const result = fetch(
-      `${process.env.REACT_APP_API_URL}/api/save/results`
+      `${process.env.REACT_APP_API_URL}/save/results`
     ).then((response) => response.json().then((data) => data));
     const arrResult = async () => {
       const arr = await result;
