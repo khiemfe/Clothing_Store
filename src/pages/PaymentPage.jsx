@@ -376,10 +376,10 @@ const PaymentPage = () => {
                   <Radio value={"later_money"}></Radio>
                   <h4>Thanh toán khi nhận hàng</h4>
                 </div>
-                <div className="radio-text">
+                {/* <div className="radio-text">
                   <Radio value={"paypal"}></Radio>
                   <h4>Thanh toán bằng Paypal</h4>
-                </div>
+                </div> */}
               </Radio.Group>
             </div>
           </div>
