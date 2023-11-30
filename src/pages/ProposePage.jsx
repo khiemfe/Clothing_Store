@@ -17,9 +17,9 @@ const ProposePage = () => {
   const [limit, setLimit] = useState(10);
   const [isLoadingPropose, setIsLoadingPropose] = useState(true);
 
-  useEffect(async () => {
+  useEffect( () => {
     if (!isLoaded) {
-      await axios
+       axios
         .post(`${process.env.REACT_APP_API_URL}/save/proposed`, {
           imageBase64,
         })
