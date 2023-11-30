@@ -464,7 +464,7 @@ const PaymentPage = () => {
                 </li>
               </ul>
 
-              {valueRadioTT === "paypal" && sdkReady ? (
+              {valueRadioTT === "paypal" ? (
                
                 <></>
               ) : (
