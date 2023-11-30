@@ -15,7 +15,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import * as CartServices from "../services/CartServices";
 import * as PaymentServices from "../services/PaymentServices";
 import { useQuery } from "@tanstack/react-query";
-// import { PayPalButton } from "react-paypal-button-v2";
 import HeaderComponents from "../components/HeaderComponents";
 import LoadingComponents from "../components/LoadingComponents";
 import { Toaster } from "react-hot-toast";
@@ -282,64 +281,64 @@ const PaymentPage = () => {
     }
   };
 
-  const [sdkReady, setSdkReady] = useState(false); //set xem nó đã có hay chưa
-  const addPaypalScript = async () => {
-    const { data } = await PaymentServices.getConfig();
-    const script = document.createElement("script");
-    script.type = "text/javascript"; //đặt type là js
-    script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
-    script.async = true; // tránh bất đồng bộ
-    script.onload = () => {
-      //đang load
-      setSdkReady(true);
-    };
-    document.body.appendChild(script);
-    console.log("datapaypal", data);
-  };
+  // const [sdkReady, setSdkReady] = useState(false); //set xem nó đã có hay chưa
+  // const addPaypalScript = async () => {
+  //   const { data } = await PaymentServices.getConfig();
+  //   const script = document.createElement("script");
+  //   script.type = "text/javascript"; //đặt type là js
+  //   script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
+  //   script.async = true; // tránh bất đồng bộ
+  //   script.onload = () => {
+  //     //đang load
+  //     setSdkReady(true);
+  //   };
+  //   document.body.appendChild(script);
+  //   console.log("datapaypal", data);
+  // };
 
-  useEffect(() => {
-    if (!window.paypal) {
-      //nếu chưa có giao diện paypal
-      addPaypalScript();
-    } else {
-      setSdkReady(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!window.paypal) {
+  //     //nếu chưa có giao diện paypal
+  //     addPaypalScript();
+  //   } else {
+  //     setSdkReady(true);
+  //   }
+  // }, []);
 
-  const onSuccessPaypal = (details, data) => {
-    mutationAddOrder.mutate({
-      token: user?.access_token,
-      orderItems: order?.orderItemsSelected,
-      fullName: user?.name,
-      phone: user?.phone,
-      address: user?.address,
-      paymentMethod: valueRadioTT,
-      itemsPrice: priceMemo,
-      shippingPrice: shippingPrice,
-      totalPrice: totalPriceMemo,
-      user: user?.id,
-      isPaid: true,
-      paidAt: details.update_time,
-      email: user?.email,
-    });
-    console.log("details", details, data);
+  // const onSuccessPaypal = (details, data) => {
+  //   mutationAddOrder.mutate({
+  //     token: user?.access_token,
+  //     orderItems: order?.orderItemsSelected,
+  //     fullName: user?.name,
+  //     phone: user?.phone,
+  //     address: user?.address,
+  //     paymentMethod: valueRadioTT,
+  //     itemsPrice: priceMemo,
+  //     shippingPrice: shippingPrice,
+  //     totalPrice: totalPriceMemo,
+  //     user: user?.id,
+  //     isPaid: true,
+  //     paidAt: details.update_time,
+  //     email: user?.email,
+  //   });
+  //   console.log("details", details, data);
 
-    const arrayOrdered = []; //lấy id của các sản phẩm mua để remove khỏi giỏ hàng
-    order?.orderItemsSelected?.forEach((e) => {
-      arrayOrdered.push(e._id);
-    });
-    console.log("arrayOrdered", arrayOrdered);
-    mutationDeleteMany.mutate(
-      { ids: arrayOrdered, token: user?.access_token }
-      // {
-      //   onSettled: () => {
-      //     queryCart.refetch();
-      //   },
-      // }
-    );
-  };
+    // const arrayOrdered = []; //lấy id của các sản phẩm mua để remove khỏi giỏ hàng
+    // order?.orderItemsSelected?.forEach((e) => {
+    //   arrayOrdered.push(e._id);
+    // });
+  //   console.log("arrayOrdered", arrayOrdered);
+  //   mutationDeleteMany.mutate(
+  //     { ids: arrayOrdered, token: user?.access_token }
+  //     // {
+  //     //   onSettled: () => {
+  //     //     queryCart.refetch();
+  //     //   },
+  //     // }
+  //   );
+  // };
 
-  const pricePaypal = totalPriceMemo / 23;
+  // const pricePaypal = totalPriceMemo / 23;
 
   return (
     <>
@@ -466,16 +465,7 @@ const PaymentPage = () => {
               </ul>
 
               {valueRadioTT === "paypal" && sdkReady ? (
-                // <div className="paypal">
-                //   <PayPalButton
-                //     amount={Number(pricePaypal.toFixed(1))} // 20.22 là ko đc (nó không vào onError nhưng cũng không onSuccess, mà vẫn bị trừ tiền)
-                //     // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-                //     onSuccess={onSuccessPaypal}
-                //     onError={() => {
-                //       alert("Lỗi Paypal");
-                //     }}
-                //   />
-                // </div>
+               
                 <></>
               ) : (
                 <div>
