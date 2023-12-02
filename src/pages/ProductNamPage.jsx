@@ -52,7 +52,7 @@ const ProductNamPage = () => {
       </div>
       <h1
         style={{
-          margin: 30,
+          margin: 50,
           textAlign: "center",
           textTransform: "uppercase",
           fontWeight: 700,

@@ -12,30 +12,103 @@ const LoadingUpdate = (props) => {
         style={{ width: "18rem", height: "445px", border: "none" }}
         key={key}
       >
-        <Placeholder animation="wave">
-          <Placeholder
-            style={{
-              height: "330px",
-              backgroundColor: "#ccc",
-              borderRadius: "10px",
-            }}
-            xs={12}
-          />
-        </Placeholder>
         <Card.Body>
           <Placeholder as={Card.Text} animation="glow">
-            <Placeholder style={{ backgroundColor: "#999" }} xs={7} />{" "}
-            <Placeholder style={{ backgroundColor: "#999" }} xs={4} />{" "}
-            <Placeholder style={{ backgroundColor: "#999" }} xs={4} />{" "}
-            <Placeholder style={{ backgroundColor: "#999" }} xs={6} />{" "}
-            <Placeholder style={{ backgroundColor: "#999" }} xs={8} />
+            <Placeholder
+              style={{ backgroundColor: "#ddd", height: 20 }}
+              xs={1}
+            />{" "}
+            <Placeholder
+              style={{
+                backgroundColor: "#ddd",
+                width: 78,
+                height: 78,
+                marginLeft: 50,
+              }}
+              xs={4}
+            />{" "}
           </Placeholder>
           <Placeholder
-            style={{ lineHeight: "30px" }}
+            as={Card.Text}
+            animation="glow"
+            style={{ marginTop: 28 }}
+          >
+            <Placeholder
+              style={{ backgroundColor: "#ddd", height: 20 }}
+              xs={1}
+            />{" "}
+            <Placeholder
+              style={{ backgroundColor: "#ddd", marginLeft: 50, height: 30 }}
+              xs={9}
+            />{" "}
+          </Placeholder>
+
+          <Placeholder
+            as={Card.Text}
+            animation="glow"
+            style={{ marginTop: 28 }}
+          >
+            <Placeholder
+              style={{ backgroundColor: "#ddd", height: 20 }}
+              xs={1}
+            />{" "}
+            <Placeholder
+              style={{ backgroundColor: "#ddd", marginLeft: 50, height: 30 }}
+              xs={9}
+            />{" "}
+          </Placeholder>
+          <Placeholder
+            as={Card.Text}
+            animation="glow"
+            style={{ marginTop: 28 }}
+          >
+            <Placeholder
+              style={{ backgroundColor: "#ddd", height: 20 }}
+              xs={1}
+            />{" "}
+            <Placeholder
+              style={{ backgroundColor: "#ddd", marginLeft: 50, height: 30 }}
+              xs={9}
+            />{" "}
+          </Placeholder>
+          <Placeholder
+            as={Card.Text}
+            animation="glow"
+            style={{ marginTop: 28 }}
+          >
+            <Placeholder
+              style={{ backgroundColor: "#ddd", height: 20 }}
+              xs={1}
+            />{" "}
+            <Placeholder
+              style={{ backgroundColor: "#ddd", marginLeft: 50, height: 30 }}
+              xs={9}
+            />{" "}
+          </Placeholder>
+          <Placeholder
+            as={Card.Text}
+            animation="glow"
+            style={{ marginTop: 28 }}
+          >
+            <Placeholder
+              style={{ backgroundColor: "#ddd", height: 20 }}
+              xs={1}
+            />{" "}
+            <Placeholder
+              style={{ backgroundColor: "#ddd", marginLeft: 50, height: 30 }}
+              xs={9}
+            />{" "}
+          </Placeholder>
+
+          <Placeholder
+            style={{ marginTop: 28, textAlign: "right", marginRight: 50 }}
             as={Card.Title}
             animation="glow"
           >
-            <Placeholder style={{ backgroundColor: "#999" }} xs={6} />
+            <Placeholder
+              style={{ backgroundColor: "#ddd", height: 50 }}
+              xs={2}
+            />
           </Placeholder>
         </Card.Body>
       </Card>
@@ -43,15 +116,12 @@ const LoadingUpdate = (props) => {
   );
 };
 
-const LoadingUpdateComponent = ({
-  children,
-  isLoading,
-}) => {
+const LoadingUpdateComponent = ({ children, isLoading }) => {
   return (
     <>
       {isLoading ? (
         <Row>
-          <Col xxl={3} xl={3}>
+          <Col>
             <LoadingUpdate />
           </Col>
         </Row>

@@ -10,6 +10,7 @@ import { Button } from "antd";
 import { Modal } from "antd";
 import LoadingComponents from "../components/LoadingComponents";
 import { Toaster } from "react-hot-toast";
+import ModelComponent from "../components/ModelComponent";
 
 const MyOrderPage = () => {
   const location = useLocation();
@@ -164,7 +165,7 @@ const MyOrderPage = () => {
                           </Button>
                           <Modal
                             title="Thông báo"
-                            open={isModalOpen}
+                            open={true}
                             onOk={handleOkModel}
                             onCancel={() => setIsModalOpen(false)}
                           >

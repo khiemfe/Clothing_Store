@@ -323,10 +323,10 @@ const PaymentPage = () => {
   //   });
   //   console.log("details", details, data);
 
-    // const arrayOrdered = []; //lấy id của các sản phẩm mua để remove khỏi giỏ hàng
-    // order?.orderItemsSelected?.forEach((e) => {
-    //   arrayOrdered.push(e._id);
-    // });
+  // const arrayOrdered = []; //lấy id của các sản phẩm mua để remove khỏi giỏ hàng
+  // order?.orderItemsSelected?.forEach((e) => {
+  //   arrayOrdered.push(e._id);
+  // });
   //   console.log("arrayOrdered", arrayOrdered);
   //   mutationDeleteMany.mutate(
   //     { ids: arrayOrdered, token: user?.access_token }
@@ -341,7 +341,7 @@ const PaymentPage = () => {
   // const pricePaypal = totalPriceMemo / 23;
 
   return (
-    <div style={{marginTop: 110}}>
+    <div style={{ marginTop: 110 }}>
       <Toaster />
       <h1
         style={{
@@ -391,7 +391,7 @@ const PaymentPage = () => {
                 color: "blue",
                 cursor: "pointer",
                 fontSize: "14px",
-                display: 'inline-block'
+                display: "inline-block",
               }}
             >
               Thay đổi
@@ -466,16 +466,15 @@ const PaymentPage = () => {
               </ul>
 
               {valueRadioTT === "paypal" ? (
-               
                 <></>
               ) : (
-                <div>
-                  <div>
-                    <LoadingComponents isLoading={isLoadingAddOrder} />
-                  </div>
+                <div style={{ position: "relative" }}>
                   <button className="pay-btn" onClick={handleAddOrder}>
                     Đặt hàng
                   </button>
+                  <div style={{ position: "absolute", left: "30%", top: 10 }}>
+                    <LoadingComponents isLoading={isLoadingAddOrder} />
+                  </div>
                 </div>
               )}
             </div>

@@ -585,13 +585,13 @@ const ProductDetailsPage = () => {
                 </div>
                 {size ? (
                   <>
-                    <LoadingComponents isLoading={isLoadingAddCart} />
                     <button
                       onClick={hanleAddOrder}
                       className="bg-violet-800 text-white font-semibold py-3 px-16 rounded-xl h-full add"
                     >
                       Mua ngay
                     </button>
+                    <LoadingComponents isLoading={isLoadingAddCart} />
                   </>
                 ) : (
                   <button
