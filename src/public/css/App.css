@@ -198,7 +198,7 @@ body {
       margin-top: 10px;
       width: 100% !important;
       cursor: pointer;
-      border: none;
+      border: none !important;
       overflow: hidden; }
       .home .product .card .card-body {
         padding: 10px 0; }
