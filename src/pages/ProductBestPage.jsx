@@ -38,10 +38,10 @@ const ProductBestPage = () => {
   //   keepPreviousData: giữ lại product cũ, load những cái mới thôi
   console.log("isPreviousDataNam", isPreviousData); //loading
 
-  console.log('products best', products)
+  console.log("products best", products);
 
   return (
-    <div style={{ marginTop: 110 }}>
+    <div style={{ marginTop: 110, marginBottom: 50, minHeight: "100%" }}>
       <div style={{ width: "100%" }}>
         <img
           src={banner}

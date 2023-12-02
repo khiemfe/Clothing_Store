@@ -362,162 +362,175 @@ const OrderPage = () => {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <LoadingComponents isLoading={isLoadingCart} />
       </div>
-      {!isLoadingCart && (
-        <div className="cart-body">
-          <div className="cart-shopping">
-            <StepsComponent
-              current={
-                priceMemo >= 800
-                  ? 3
-                  : priceMemo >= 500
-                  ? 2
-                  : priceMemo > 0
-                  ? 1
-                  : 0
-              }
-              items={itemsSteps}
-            />
-            <div className="title">
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <input
-                  onChange={onChangeAll}
-                  checked={
-                    listChecked?.length > 0 &&
-                    listChecked?.length === lengthItem?.length
-                  }
-                  type="checkbox"
-                  className="checkbox"
-                />
-                <p style={{ fontSize: "15px", margin: 0 }}>
-                  Chọn tất cả ({order?.orderItems?.length} sản phẩm)
-                </p>
+      {!isLoadingCart &&
+        (order?.orderItems.length > 0 ? (
+          <div className="cart-body">
+            <div className="cart-shopping">
+              <StepsComponent
+                current={
+                  priceMemo >= 800
+                    ? 3
+                    : priceMemo >= 500
+                    ? 2
+                    : priceMemo > 0
+                    ? 1
+                    : 0
+                }
+                items={itemsSteps}
+              />
+              <div className="title">
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <input
+                    onChange={onChangeAll}
+                    checked={
+                      listChecked?.length > 0 &&
+                      listChecked?.length === lengthItem?.length
+                    }
+                    type="checkbox"
+                    className="checkbox"
+                  />
+                  <p style={{ fontSize: "15px", margin: 0 }}>
+                    Chọn tất cả ({order?.orderItems?.length} sản phẩm)
+                  </p>
+                </div>
+                {dataCart.length > 0 &&
+                  listChecked?.length > 0 &&
+                  (!isLoadingDeletedMany ? (
+                    <h4 onClick={handleDeleteAll} style={{ cursor: "pointer" }}>
+                      Xoá tất cả
+                    </h4>
+                  ) : (
+                    <div>
+                      <LoadingComponents isLoading={isLoadingDeletedMany} />
+                    </div>
+                  ))}
               </div>
-              {dataCart.length > 0 && listChecked?.length > 0 &&
-                (!isLoadingDeletedMany ? (
-                  <h4 onClick={handleDeleteAll} style={{ cursor: "pointer" }}>
-                    Xoá tất cả
-                  </h4>
-                ) : (
-                  <div>
-                    <LoadingComponents isLoading={isLoadingDeletedMany} />
-                  </div>
-                ))}
-            </div>
-            {order?.orderItems?.map((item, index) => {
-              return (
-                <span key={index}>
-                  {item.userId === user?.id && (
-                    <span>
-                      <div style={{ display: "flex" }} className="item-product">
-                        <input
-                          onChange={onChange}
-                          value={item._id + `size${item.size}`}
-                          checked={listChecked.includes(
-                            item._id + `size${item.size}`
-                          )}
-                          type="checkbox"
-                          className="checkbox"
-                        />
-                        <img src={item.image} alt="" className="img-product" />
-                        <div className="text-product">
-                          <h3 className="name-product">{item?.name}</h3>
-                          <h3 className="price-product">
-                            {convertPrice(item?.price)}
-                          </h3>
-                          <p style={{ fontSize: 14 }}>Size: {item?.size}</p>
-                          <div className="amount-product">
-                            <button
-                              onClick={() =>
-                                handleOnchangeCount("decrease", item._id)
-                              }
+              {order?.orderItems?.map((item, index) => {
+                return (
+                  <span key={index}>
+                    {item.userId === user?.id && (
+                      <span>
+                        <div
+                          style={{ display: "flex" }}
+                          className="item-product"
+                        >
+                          <input
+                            onChange={onChange}
+                            value={item._id + `size${item.size}`}
+                            checked={listChecked.includes(
+                              item._id + `size${item.size}`
+                            )}
+                            type="checkbox"
+                            className="checkbox"
+                          />
+                          <img
+                            src={item.image}
+                            alt=""
+                            className="img-product"
+                          />
+                          <div className="text-product">
+                            <h3 className="name-product">{item?.name}</h3>
+                            <h3 className="price-product">
+                              {convertPrice(item?.price)}
+                            </h3>
+                            <p style={{ fontSize: 14 }}>Size: {item?.size}</p>
+                            <div className="amount-product">
+                              <button
+                                onClick={() =>
+                                  handleOnchangeCount("decrease", item._id)
+                                }
+                              >
+                                -
+                              </button>
+                              <span style={{ padding: "0 5px" }}>
+                                {item?.amount}
+                              </span>
+                              <button
+                                onClick={() =>
+                                  handleOnchangeCount("increase", item._id)
+                                }
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "end",
+                              position: "relative",
+                            }}
+                          >
+                            <h4>{convertPrice(item.price * item.amount)}</h4>
+                            <h4
+                              style={{
+                                cursor: "pointer",
+                                marginLeft: "10px",
+                                fontSize: "26px",
+                              }}
+                              onClick={() => handleDeleteOrder(item._id)}
                             >
-                              -
-                            </button>
-                            <span style={{ padding: "0 5px" }}>
-                              {item?.amount}
-                            </span>
-                            <button
-                              onClick={() =>
-                                handleOnchangeCount("increase", item._id)
-                              }
-                            >
-                              +
-                            </button>
+                              <MdDeleteOutline />
+                            </h4>
+                            {!isLoadingDeleted && (
+                              <div
+                                style={{
+                                  position: "absolute",
+                                  right: 0,
+                                  bottom: -30,
+                                }}
+                              >
+                                <LoadingComponents
+                                  isLoading={isLoadingDeleted}
+                                />
+                              </div>
+                            )}
                           </div>
                         </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "end",
-                            position: "relative",
-                          }}
-                        >
-                          <h4>{convertPrice(item.price * item.amount)}</h4>
-                          <h4
-                            style={{
-                              cursor: "pointer",
-                              marginLeft: "10px",
-                              fontSize: "26px",
-                            }}
-                            onClick={() => handleDeleteOrder(item._id)}
-                          >
-                            <MdDeleteOutline />
-                          </h4>
-                          {!isLoadingDeleted && (
-                            <div
-                              style={{
-                                position: "absolute",
-                                right: 0,
-                                bottom: -30,
-                              }}
-                            >
-                              <LoadingComponents isLoading={isLoadingDeleted} />
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </span>
-                  )}
-                </span>
-              );
-            })}
-          </div>
-          <div className="pay">
-            {noBuy && listChecked?.length === 0 && (
-              <p style={{ color: "red", fontSize: 14 }}>
-                Vui lòng chọn sản phẩm
-              </p>
-            )}
-            <div className="pay-body">
-              <ul className="pay-list">
-                <li className="pay-item">
-                  <h3>Sản phẩm:</h3>
-                  <span>{convertPrice(priceMemo)}</span>
-                </li>
-                <li className="pay-item">
-                  <h3>Phí giao hàng:</h3>
-                  <span>{convertPrice(diliveryPriceMemo)}</span>
-                </li>
-                <li className="pay-item">
-                  <h3>Tổng tiền:</h3>
-                  <span style={{ fontWeight: "bold" }}>
-                    {convertPrice(totalPriceMemo)}
+                      </span>
+                    )}
                   </span>
-                </li>
-              </ul>
-              {listChecked?.length > 0 ? (
-                <button className="pay-btn" onClick={handleBuy}>
-                  Mua ngay({listChecked?.length})
-                </button>
-              ) : (
-                <button onClick={handleNoBuy} className="pay-btn">
-                  Mua ngay (0)
-                </button>
+                );
+              })}
+            </div>
+            <div className="pay">
+              {noBuy && listChecked?.length === 0 && (
+                <p style={{ color: "red", fontSize: 14 }}>
+                  Vui lòng chọn sản phẩm
+                </p>
               )}
+              <div className="pay-body">
+                <ul className="pay-list">
+                  <li className="pay-item">
+                    <h3>Sản phẩm:</h3>
+                    <span>{convertPrice(priceMemo)}</span>
+                  </li>
+                  <li className="pay-item">
+                    <h3>Phí giao hàng:</h3>
+                    <span>{convertPrice(diliveryPriceMemo)}</span>
+                  </li>
+                  <li className="pay-item">
+                    <h3>Tổng tiền:</h3>
+                    <span style={{ fontWeight: "bold" }}>
+                      {convertPrice(totalPriceMemo)}
+                    </span>
+                  </li>
+                </ul>
+                {listChecked?.length > 0 ? (
+                  <button className="pay-btn" onClick={handleBuy}>
+                    Mua ngay({listChecked?.length})
+                  </button>
+                ) : (
+                  <button onClick={handleNoBuy} className="pay-btn">
+                    Mua ngay (0)
+                  </button>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        ) : (
+          <h2 style={{textAlign: 'center'}}>Bạn không có sản phẩm trong giỏ hàng của bạn</h2>
+        ))}
       <Modal
         show={isOpenModalUpdate}
         onHide={() => {
