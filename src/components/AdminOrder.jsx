@@ -227,26 +227,26 @@ const AdminOrder = () => {
 
   const columns = [
     {
-      title: "Receiver's Information",
+      title: "Thông tin người nhận",
       dataIndex: "recevierInfomation",
       ...getColumnSearchProps("recevierInfomation"),
     },
     {
-      title: "Product Information",
+      title: "Sản phẩm",
       dataIndex: "productInformation",
       ...getColumnSearchProps("productInformation"),
     },
     {
-      title: "Shipping Fee",
+      title: "Phí giao hàng",
       dataIndex: "shippingfee",
     },
     {
-      title: "Total Price",
+      title: "Tổng tiền",
       dataIndex: "RenderTotalprice",
       sorter: (a, b) => a.totalPrice - b.totalPrice,
     },
     {
-      title: "Delivery Status",
+      title: "Giao hàng",
       dataIndex: "deliverystatus",
       filters: [
         {
@@ -264,7 +264,7 @@ const AdminOrder = () => {
       ],
     },
     {
-      title: "Paided",
+      title: "Thanh toán",
       dataIndex: "paided",
       filters: [
         {

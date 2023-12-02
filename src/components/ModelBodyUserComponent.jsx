@@ -17,19 +17,25 @@ const ModelBodyUserComponent = ({
   title,
 }) => {
   console.log('stateUser.avatar', stateUser)
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onFinish();
+    }
+  };
   return (
-    <Modal.Body>
+    <Modal.Body onKeyDown={handleKeyDown}>
       <Form
         name="basic"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
-        style={{
-          maxWidth: 600,
-        }}
+        // labelCol={{
+        //   span: 8,
+        // }}
+        // wrapperCol={{
+        //   span: 16,
+        // }}
+        // style={{
+        //   maxWidth: 600,
+        // }}
         autoComplete="on"
         form={form}
       >

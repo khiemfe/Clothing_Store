@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ProposeComponents from "../components/ProposeComponents";
 import Button from "react-bootstrap/Button";
 import { useQuery } from "@tanstack/react-query";
 import * as ProductServices from "../services/ProductServices";

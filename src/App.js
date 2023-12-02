@@ -130,10 +130,8 @@ function App() {
     const deltaY = event.deltaY;
 
     if (deltaY > 0) {
-      console.log("xuong");
       setShowHeader("header translateY-100");
     } else {
-      console.log("len");
       setShowHeader("header translateY0");
     }
   };

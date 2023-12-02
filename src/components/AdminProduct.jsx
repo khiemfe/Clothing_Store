@@ -680,6 +680,7 @@ const AdminProduct = () => {
     {
       title: "Name",
       dataIndex: "name",
+      width: 250,
       sorter: (a, b) => a.name.length - b.name.length,
       ...getColumnSearchProps("name"),
     },
@@ -758,6 +759,7 @@ const AdminProduct = () => {
     {
       title: "Quantity",
       dataIndex: "quantity",
+      width: 250,
     },
     {
       title: "Size",
@@ -851,6 +853,12 @@ const AdminProduct = () => {
     });
 
   console.log("dataTable", dataTable);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleDeleteProduct();
+    }
+  };
   // }
   return (
     <>
@@ -976,7 +984,7 @@ const AdminProduct = () => {
             {/* </Modal> */}
           </DrawerComponent>
         </div>
-        <div>
+        <div onKeyDown={handleKeyDown}>
           <ModelComponent
             title="Xoá sản phẩm"
             isModalOpen={isModelOpenDelete}

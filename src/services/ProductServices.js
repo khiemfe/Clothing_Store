@@ -111,3 +111,10 @@ export const getAllType = async () => {
   );
   return res.data;
 };
+
+export const getBestProduct = async (limit) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_API_URL}/product/get-best-product?limit=${limit}`
+  );
+  return res.data;
+};

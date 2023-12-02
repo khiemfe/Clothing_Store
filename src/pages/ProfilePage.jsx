@@ -119,6 +119,12 @@ const ProfilePage = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleUpdate();
+    }
+  };
+
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
@@ -131,7 +137,10 @@ const ProfilePage = () => {
   };
 
   return (
-    <div style={{marginTop: 110}}>
+    <div
+      style={{ marginTop: 110, minHeight: "100vh" }}
+      onKeyDown={handleKeyDown}
+    >
       <Toaster />
       <h1
         style={{
@@ -235,12 +244,12 @@ const ProfilePage = () => {
               />
             </div>
           </Form.Group>
-          {!email && (
+          {/* {!email && (
             <p style={{ color: "red", marginLeft: 120 }}>Vui lòng nhập email</p>
           )}
           {email && data?.message === "Wrong email format" && (
             <p style={{ color: "red", marginLeft: 120 }}>Sai định dạng email</p>
-          )}
+          )} */}
           <Form.Group as={Col} md="4" controlId="validationCustom01">
             <div className="item">
               <Form.Label>Name:</Form.Label>
@@ -300,7 +309,7 @@ const ProfilePage = () => {
         <div
           style={{ width: "100%", textAlign: "center", position: "relative" }}
         >
-          <div style={{ position: "absolute", left: "30%", top: 5 }}>
+          <div style={{ position: "absolute", left: "30%", top: 0 }}>
             <LoadingComponents isLoading={isLoading} />
           </div>
           <Button className="submit" onClick={handleUpdate}>

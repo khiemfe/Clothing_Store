@@ -59,6 +59,8 @@ const SignUpPage = () => {
     OTPServices.deleteOTP(email)
   );
 
+  console.log("dataOTP", dataOTP);
+
   useEffect(() => {
     if (isSuccessOTP && dataOTP?.status !== "ERR") {
       success("Đã gửi mã OTP thành công cho email của bạn");
@@ -129,7 +131,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div style={{marginTop: 110}}>
+    <div style={{ marginTop: 110 }}>
       <Toaster />
       <MDBContainer className="my-5 sign" onKeyDown={handleKeyDown}>
         <MDBCard>
@@ -171,6 +173,11 @@ const SignUpPage = () => {
                     size="lg"
                   />
                 </div>
+                {dataOTP?.status === "ERR" && (
+                  <p style={{ color: "red", margin: 0, fontSize: 14 }}>
+                    {dataOTP?.message}
+                  </p>
+                )}
                 <div className="input" style={{ position: "relative" }}>
                   <h5 className="text">Mã OTP:</h5>
                   <MDBInput
@@ -195,7 +202,7 @@ const SignUpPage = () => {
                   >
                     Gửi OTP
                   </button>
-                  <div style={{position:'absolute', right: -40}}>
+                  <div style={{ position: "absolute", right: -40 }}>
                     <LoadingComponents isLoading={isLoadingOTP} />
                   </div>
                 </div>

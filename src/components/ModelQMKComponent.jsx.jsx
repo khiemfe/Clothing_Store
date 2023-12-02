@@ -14,10 +14,12 @@ const ModelQMKComponent = ({
   onFinish,
   isLoading,
   title,
-  dataUpdate
+  dataUpdate,
 }) => {
-  console.log('stateUser', stateUser)
-  const mutationOTP = useMutationHook((email) => OTPServices.createrOTP(email));
+  console.log("stateUser", stateUser);
+  const mutationOTP = useMutationHook((email) =>
+    OTPServices.createrOTPPassword(email)
+  );
   const {
     data: dataOTP,
     isLoading: isLoadingOTP,
@@ -28,12 +30,12 @@ const ModelQMKComponent = ({
     OTPServices.deleteOTP(email)
   );
   const handleCreateOTP = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     mutationOTP.mutate({
       email: stateUser?.email,
     });
   };
-  console.log('dataOTP', dataOTP)
+  console.log("dataOTP", dataOTP);
 
   const handleDeleteOTP = () => {
     mutationDeleteOTP.mutate({
@@ -50,8 +52,15 @@ const ModelQMKComponent = ({
       error("Đã gửi mã OTP thất bại cho email của bạn");
     }
   }, [isSuccessOTP, isErrorOTP]);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onFinish();
+    }
+  };
+
   return (
-    <Modal.Body>
+    <Modal.Body onKeyDown={handleKeyDown}>
       <Form
         name="basic"
         labelCol={{
@@ -66,22 +75,20 @@ const ModelQMKComponent = ({
         autoComplete="on"
         form={form}
       >
-        <Form.Item
-          label="Email"
-          name="email"
-          style={{ marginTop: "10px" }}
-        >
+        <Form.Item label="Email" style={{ marginTop: "10px" }}>
           <Input
             value={stateUser?.email}
             onChange={handleOnchange}
             name="email"
           />
+          {dataOTP?.status === "ERR" && (
+            <p style={{ color: "red", margin: "10px 0 0 0", fontSize: 14 }}>
+              {dataOTP?.message}
+            </p>
+          )}
         </Form.Item>
-       
-        <Form.Item
-          label="Mã OTP"
-          name="otp"
-        >
+
+        <Form.Item label="Mã OTP" style={{ position: "relative" }}>
           <Input value={stateUser?.otp} onChange={handleOnchange} name="otp" />
           <button
             style={{
@@ -95,12 +102,13 @@ const ModelQMKComponent = ({
           >
             Gửi OTP
           </button>
-          
+          {!isLoadingOTP && (
+            <div style={{ position: "absolute", right: -50, top: 0 }}>
+              <LoadingComponents isLoading={isLoadingOTP} />
+            </div>
+          )}
         </Form.Item>
-        <Form.Item
-          label="Password"
-          name="password"
-        >
+        <Form.Item label="Password">
           <Input
             value={stateUser?.password}
             onChange={handleOnchange}
@@ -108,10 +116,7 @@ const ModelQMKComponent = ({
             type="password"
           />
         </Form.Item>
-        <Form.Item
-          label="Confirm Password"
-          name="confirmPassword"
-        >
+        <Form.Item label="Confirm Password">
           <Input
             value={stateUser?.confirmPassword}
             onChange={handleOnchange}
@@ -140,15 +145,14 @@ const ModelQMKComponent = ({
           >
             {title}
           </Button>
-        </Form.Item>
-
-        {dataUpdate?.status === 'ERR' && (
-          <p style={{color: 'red'}}>{dataUpdate?.message}</p>
-        )}
-      </Form>
+          {dataUpdate?.status === "ERR" && (
+            <p style={{ color: "red" }}>{dataUpdate?.message}</p>
+          )}
       <div className="loading">
         <LoadingComponents isLoading={isLoading}></LoadingComponents>
       </div>
+        </Form.Item>
+      </Form>
     </Modal.Body>
   );
 };

@@ -40,7 +40,7 @@ const NotFoundPage = () => {
   return (
     <>
       {/* <HeaderComponents /> */}
-      <div style={{ display: "flex", overflowX: "hidden", marginTop: 110 }}>
+      <div style={{ display: "flex", overflowX: "hidden", marginTop: 110, marginBottom: 50 }}>
         <Menu
           mode="inline"
           style={{

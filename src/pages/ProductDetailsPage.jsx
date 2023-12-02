@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ProductDetailsComponents from "../components/ProductDetailsComponents";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
@@ -7,12 +6,10 @@ import * as ProducttServcie from "../services/ProductServices";
 import { useLocation, useNavigate } from "react-router-dom";
 // import { addOrderProduct } from "../redux/slices/orderSlice";
 import LoadingComponents from "../components/LoadingComponents";
-import { FiHeart } from "react-icons/fi";
 import { convertPrice } from "../utils";
 import { useMutationHook } from "../hooks/useMutationHook";
 import * as CartServices from "../services/CartServices";
 import { success, error, warning } from "../components/Message";
-import HeaderComponents from "../components/HeaderComponents";
 import LoadingProductDetailsComponent from "../components/LoadingProductDetailsComponent";
 import { Toaster } from "react-hot-toast";
 

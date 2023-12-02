@@ -395,6 +395,13 @@ const AdminUser = () => {
         key: user._id,
       };
     });
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      console.log("11212");
+      handleDeleteUser();
+    }
+  };
   return (
     <>
       <Toaster />
@@ -440,7 +447,7 @@ const AdminUser = () => {
             </LoadingUpdateComponent>
           </DrawerComponent>
         </div>
-        <div>
+        <div onKeyDown={handleKeyDown}>
           <ModelComponent
             title="Xoá người dùng"
             isModalOpen={isModelOpenDelete}

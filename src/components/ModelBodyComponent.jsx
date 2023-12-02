@@ -175,15 +175,15 @@ const ModelBodyComponent = ({
     <Modal.Body>
       <Form
         name="basic"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
-        style={{
-          maxWidth: 600,
-        }}
+        // labelCol={{
+        //   span: 8,
+        // }}
+        // wrapperCol={{
+        //   span: 16,
+        // }}
+        // style={{
+        //   maxWidth: 600,
+        // }}
         //   onFinish={onFinish}
         // //   onFinishFailed={onFinishFailed}
         autoComplete="on"
@@ -325,128 +325,194 @@ const ModelBodyComponent = ({
         !stateProduct.name.toLowerCase().includes("áo") ? (
           <Form.Item label="Quantity">
             <div style={{ display: "flex" }}>
-              <Form.Item label="28: ">
-                <Input
-                  value={setSize28}
-                  onChange={handleOnchageQuantity28}
-                  // name="size28"
-                  type="number"
-                  min="0"
-                />
+              <Form.Item>
+                <div className="setSize">
+                  <span>28:</span>
+                  <Input
+                    className="inputSize"
+                    value={size28}
+                    onChange={handleOnchageQuantity28}
+                    // name="size28"
+                    type="number"
+                    min="0"
+                  />
+                </div>
               </Form.Item>
-              <Form.Item label="29: ">
-                <Input
-                  value={size29}
-                  onChange={handleOnchageQuantity29}
-                  type="number"
-                  min="0"
-                />
+              <Form.Item>
+                <div className="setSize">
+                  <span>29:</span>
+                  <Input
+                    className="inputSize"
+                    value={size29}
+                    onChange={handleOnchageQuantity29}
+                    // name="size29"
+                    type="number"
+                    min="0"
+                  />
+                </div>
               </Form.Item>
-              <Form.Item label="30: ">
-                <Input
-                  value={size30}
-                  onChange={handleOnchageQuantity30}
-                  type="number"
-                  min="0"
-                />
+              <Form.Item>
+                <div className="setSize">
+                  <span>30:</span>
+                  <Input
+                    className="inputSize"
+                    value={size30}
+                    onChange={handleOnchageQuantity30}
+                    // name="size30"
+                    type="number"
+                    min="0"
+                  />
+                </div>
               </Form.Item>
-              <Form.Item label="31: ">
-                <Input
-                  value={size31}
-                  onChange={handleOnchageQuantity31}
-                  type="number"
-                  min="0"
-                />
+              <Form.Item>
+                <div className="setSize">
+                  <span>31:</span>
+                  <Input
+                    className="inputSize"
+                    value={size31}
+                    onChange={handleOnchageQuantity31}
+                    // name="size31"
+                    type="number"
+                    min="0"
+                  />
+                </div>
               </Form.Item>
-              <Form.Item label="32: ">
-                <Input
-                  value={size32}
-                  onChange={handleOnchageQuantity32}
-                  type="number"
-                  min="0"
-                />
+            </div>
+            <div style={{ display: "flex" }} className="sizeDuoi">
+              <Form.Item>
+                <div className="setSize">
+                  <span>32:</span>
+                  <Input
+                    className="inputSize"
+                    value={size32}
+                    onChange={handleOnchageQuantity32}
+                    // name="size32"
+                    type="number"
+                    min="0"
+                  />
+                </div>
               </Form.Item>
-              <Form.Item label="33: ">
-                <Input
-                  value={size33}
-                  onChange={handleOnchageQuantity33}
-                  type="number"
-                  min="0"
-                />
+              <Form.Item>
+                <div className="setSize">
+                  <span>33:</span>
+                  <Input
+                    className="inputSize"
+                    value={size33}
+                    onChange={handleOnchageQuantity33}
+                    // name="size33"
+                    type="number"
+                    min="0"
+                  />
+                </div>
               </Form.Item>
-              <Form.Item label="34: ">
-                <Input
-                  value={size34}
-                  onChange={handleOnchageQuantity34}
-                  type="number"
-                  min="0"
-                />
+              <Form.Item>
+                <div className="setSize">
+                  <span>34:</span>
+                  <Input
+                    className="inputSize"
+                    value={size34}
+                    onChange={handleOnchageQuantity34}
+                    // name="size34"
+                    type="number"
+                    min="0"
+                  />
+                </div>
               </Form.Item>
-              <Form.Item label="35: ">
-                <Input
-                  value={size35}
-                  onChange={handleOnchageQuantity35}
-                  type="number"
-                  min="0"
-                />
+              <Form.Item>
+                <div className="setSize">
+                  <span>35:</span>
+                  <Input
+                    className="inputSize"
+                    value={size35}
+                    onChange={handleOnchageQuantity35}
+                    // name="size35"
+                    type="number"
+                    min="0"
+                  />
+                </div>
               </Form.Item>
-              <Form.Item label="36: ">
-                <Input
-                  value={size36}
-                  onChange={handleOnchageQuantity36}
-                  type="number"
-                  min="0"
-                />
+              <Form.Item>
+                <div className="setSize">
+                  <span>36:</span>
+                  <Input
+                    className="inputSize"
+                    value={size36}
+                    onChange={handleOnchageQuantity36}
+                    // name="size36"
+                    type="number"
+                    min="0"
+                  />
+                </div>
               </Form.Item>
             </div>
           </Form.Item>
         ) : (
           <Form.Item label="Quantity">
-            <div style={{ display: "flex" }}>
-              <Form.Item label="S: ">
-                <Input
-                  value={sizeS}
-                  onChange={handleOnchageQuantityS}
-                  name="sizeS"
-                  type="number"
-                  min="0"
-                />
+            <div style={{ display: "flex" }} className="sizeDuoi">
+              <Form.Item>
+                <div className="setSize">
+                  <span>S:</span>
+                  <Input
+                    className="inputSize"
+                    value={sizeS}
+                    onChange={handleOnchageQuantityS}
+                    // name="sizeS"
+                    type="number"
+                    min="0"
+                  />
+                </div>
               </Form.Item>
-              <Form.Item label="M: ">
-                <Input
-                  value={sizeM}
-                  onChange={handleOnchageQuantityM}
-                  // name="sizeM"
-                  type="number"
-                  min="0"
-                />
+              <Form.Item>
+                <div className="setSize">
+                  <span>M:</span>
+                  <Input
+                    className="inputSize"
+                    value={sizeM}
+                    onChange={handleOnchageQuantityM}
+                    // name="sizeM"
+                    type="number"
+                    min="0"
+                  />
+                </div>
               </Form.Item>
-              <Form.Item label="L: ">
-                <Input
-                  value={sizeL}
-                  onChange={handleOnchageQuantityL}
-                  // name="sizeL"
-                  type="number"
-                  min="0"
-                />
+              <Form.Item>
+                <div className="setSize">
+                  <span>L:</span>
+                  <Input
+                    className="inputSize"
+                    value={sizeL}
+                    onChange={handleOnchageQuantityL}
+                    // name="sizeL"
+                    type="number"
+                    min="0"
+                  />
+                </div>
               </Form.Item>
-              <Form.Item label="XL: ">
-                <Input
-                  value={sizeXL}
-                  onChange={handleOnchageQuantityXL}
-                  // name="sizeXL"
-                  type="number"
-                  min="0"
-                />
+              <Form.Item>
+                <div className="setSize">
+                  <span>XL:</span>
+                  <Input
+                    className="inputSize"
+                    value={sizeXL}
+                    onChange={handleOnchageQuantityXL}
+                    // name="sizeXL"
+                    type="number"
+                    min="0"
+                  />
+                </div>
               </Form.Item>
-              <Form.Item label="XXL: ">
-                <Input
-                  value={sizeXXL}
-                  onChange={handleOnchageQuantityXXL}
-                  // name="sizeXL"
-                  type="number"
-                  min="0"
-                />
+              <Form.Item>
+                <div className="setSize">
+                  <span>XXL:</span>
+                  <Input
+                    className="inputSize"
+                    value={sizeXXL}
+                    onChange={handleOnchageQuantityXXL}
+                    // name="sizeXXL"
+                    type="number"
+                    min="0"
+                  />
+                </div>
               </Form.Item>
             </div>
           </Form.Item>

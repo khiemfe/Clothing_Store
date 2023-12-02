@@ -54,7 +54,8 @@ body {
     text-transform: uppercase;
     font-weight: bold; }
     .header .center .item {
-      padding: 0 15px !important; }
+      padding: 0 15px !important;
+      font-size: 18px; }
       .header .center .item:hover {
         text-decoration: underline; }
   .header .right .form {
@@ -335,7 +336,9 @@ body {
 
 .search-page {
   padding: 20px;
-  margin-top: 90px; }
+  margin-top: 90px;
+  margin-bottom: 50px;
+  min-height: 100vh; }
   .search-page .title {
     text-align: center;
     font-size: 2rem; }
@@ -424,7 +427,9 @@ body {
   display: none; }
 
 .ant-drawer-content-wrapper {
-  width: 40% !important; }
+  width: 45% !important; }
+  .ant-drawer-content-wrapper .modal-body {
+    padding: 30px 0; }
 
 .ant-drawer-body {
   padding: 24px 30px 24px 40px !important; }
@@ -469,16 +474,37 @@ body {
 .text_QLSP {
   margin-bottom: 20px; }
 
-.modal-body .ant-form-item:last-child {
+.modal-body {
+  padding: 30px 80px; }
+  .modal-body .sizeDuoi .ant-form-item {
+    margin-bottom: 0; }
+  .modal-body .setSize {
+    display: flex;
+    align-items: center; }
+    .modal-body .setSize span {
+      margin-right: 5px; }
+  .modal-body .ant-form {
+    width: 600px !important; }
+    .modal-body .ant-form .ant-row {
+      display: flex;
+      justify-content: start; }
+      .modal-body .ant-form .ant-row .ant-col {
+        width: 100px;
+        text-align: left; }
+  .modal-body .inputSize {
+    width: 65px;
+    margin-right: 10px; }
+
+.ant-form-item:last-child {
   margin-bottom: 0; }
 
-.modal-body .submit_btn:hover {
+.submit_btn:hover {
   background-color: #333 !important; }
 
-.modal-body .loading {
+.loading {
   display: flex !important;
   justify-content: center;
-  width: 100%; }
+  margin-top: 5px; }
 
 .produc-details .container {
   display: flex;
@@ -829,7 +855,9 @@ body {
           opacity: 0.8; }
 
 .my-order {
-  margin-top: 110px; }
+  margin-top: 110px;
+  min-height: 100vh;
+  margin-bottom: 50px; }
   .my-order .body {
     width: 60%;
     margin: auto; }
@@ -953,11 +981,19 @@ body {
         .order-details .body .details .price .total {
           font-weight: 500; }
 
-.footer .bg-light.text-center.text-lg-start.text-muted {
-  background-color: transparent !important;
-  z-index: 2 !important; }
-
-.footer .networks {
-  padding: 0 20px; }
-  .footer .networks a {
-    font-size: 20px; }
+.footer-web {
+  background-color: #f5f5f5;
+  padding-top: 10px;
+  font-size: 14px; }
+  .footer-web .item {
+    display: flex;
+    align-items: center; }
+    .footer-web .item span {
+      margin-left: 5px; }
+  .footer-web .bg-light.text-center.text-lg-start.text-muted {
+    background-color: transparent !important;
+    z-index: 2 !important; }
+  .footer-web .networks {
+    padding: 0 20px; }
+    .footer-web .networks a {
+      font-size: 20px; }

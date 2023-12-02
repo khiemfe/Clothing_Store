@@ -52,10 +52,10 @@ const TabelComponents = (props) => {
       }
     }
   } else {
-    dataTableMain = dataTable
+    dataTableMain = dataTable;
   }
 
-  console.log('dataTableMain', dataTableMain)
+  console.log("dataTableMain", dataTableMain);
 
   // const newColumns = columns.pop()
 
@@ -82,18 +82,28 @@ const TabelComponents = (props) => {
       >
         <button> Export Excel All </button>
       </DownloadTableExcel> */}
+      {filename === "Order Table" ? (
+        <Table
+          // style={{display: 'none'}}
+          ref={tableRef}
+          columns={columns}
+          dataSource={dataTableMain}
+          {...props}
+        />
+      ) : (
+        <Table
+          // style={{display: 'none'}}
+          ref={tableRef}
+          rowSelection={{
+            type: selectionType,
+            ...rowSelection,
+          }}
+          columns={columns}
+          dataSource={dataTableMain}
+          {...props}
+        />
+      )}
 
-      <Table
-        // style={{display: 'none'}}
-        ref={tableRef}
-        rowSelection={{
-          type: selectionType,
-          ...rowSelection,
-        }}
-        columns={columns}
-        dataSource={dataTableMain}
-        {...props}
-      />
       {!isLoading && dataTableMain.length === 0 && (
         <h3
           style={{

@@ -12,8 +12,10 @@ import ProfilePage from "../pages/ProfilePage";
 import AdminPage from "../pages/AdminPage";
 import ProductSearchPage from "../pages/ProductSearchPage";
 import PaymentPage from "../pages/PaymentPage";
-import OrderSuccessPage from "../pages/OrderSuccessPage";
 import DetailsOrderPage from "../pages/DetailsOrderPage";
+import ProductNamPage from "../pages/ProductNamPage";
+import ProductNuPage from "../pages/ProductNuPage";
+import ProductBestPage from "../pages/ProductBestPage";
 
 export const routes = [
   {
@@ -41,12 +43,6 @@ export const routes = [
     isShowFooter: true,
   },
   {
-    path: "/orderSuccess",
-    page: OrderSuccessPage,
-    isShowHeader: false,
-    isShowFooter: true,
-  },
-  {
     path: "/payment",
     page: PaymentPage,
     isShowHeader: true,
@@ -61,6 +57,24 @@ export const routes = [
   {
     path: "/product/:type",
     page: TypeProductPage,
+    isShowHeader: true,
+    isShowFooter: true,
+  },
+  {
+    path: "/product/Nam",
+    page: ProductNamPage,
+    isShowHeader: true,
+    isShowFooter: true,
+  },
+  {
+    path: "/product/Nu",
+    page: ProductNuPage,
+    isShowHeader: true,
+    isShowFooter: true,
+  },
+  {
+    path: "/product/Best",
+    page: ProductBestPage,
     isShowHeader: true,
     isShowFooter: true,
   },

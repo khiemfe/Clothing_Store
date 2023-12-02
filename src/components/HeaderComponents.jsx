@@ -50,8 +50,9 @@ const HeaderComponents = (props) => {
 
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [loadingLogOut, setLoadingLogOut] = useState(false);
   const handleLogout = async () => {
-    setLoading(true);
+    setLoadingLogOut(true);
     const res = await UserServcie.logoutUser();
     console.log("reslog", res);
     if (res.status === "OK") {
@@ -59,9 +60,10 @@ const HeaderComponents = (props) => {
     }
     localStorage.setItem("email", JSON.stringify(false));
     // localStorage.setItem("access_token", JSON.stringify(false));
-    setLoading(false);
+    setLoadingLogOut(false);
     setAmountCart(0);
   };
+  console.log("loadingLogOut", loadingLogOut);
 
   const [userName, setUserName] = useState("");
   const [userAvatar, setUserAvatar] = useState("");
@@ -140,10 +142,9 @@ const HeaderComponents = (props) => {
       return res?.data;
     }
   };
-
   const queryCart = useQuery(["cart"], fetchOrderCart);
   const { data: dataCart, isLoading: isLoadingCart } = queryCart;
-  console.log("dataCart", dataCart);
+  console.log("dataCart", dataCart?.length);
 
   useEffect(() => {
     setAmountCart(dataCart?.length);
@@ -151,8 +152,22 @@ const HeaderComponents = (props) => {
 
   console.log("props", props);
 
-  const classOnScroll = props?.class
+  const classOnScroll = props?.class;
 
+  const fetchAllCart = async () => {
+    if(user?.email) {
+      const res = await CartServices.getCartByUserId(
+        user?.id,
+        user?.access_token
+      );
+      if (res?.status === "OK") {
+        setAmountCart(res?.data?.length);
+      }
+    }
+  };
+  useEffect(() => {
+    fetchAllCart();
+  }, [user?.email]);
 
   return (
     <div className={classOnScroll}>
@@ -167,15 +182,15 @@ const HeaderComponents = (props) => {
             </Col>
             <Col xxl={5} xl={5} className="center align-items_center">
               <Nav className="me-auto">
-                <Nav.Link className="item" href="#Nam">
+                <Nav.Link className="item" href="/product/nam">
                   Nam
                 </Nav.Link>
-                <Nav.Link className="item" href="#Nữ">
+                <Nav.Link className="item" href="/product/nu">
                   Nữ
                 </Nav.Link>
                 <Nav.Link
                   className="item"
-                  href="#Best"
+                  href="/product/best"
                   style={{ color: "red" }}
                 >
                   Best
@@ -205,10 +220,9 @@ const HeaderComponents = (props) => {
                 </div>
                 {/* <FiHeart className="icon heart" /> */}
                 <Button className="btn-cart" onClick={handleOrderCart}>
-                  {props?.amount ||
-                    (amountCart && (
-                      <Badge bg="warning">{props?.amount || amountCart}</Badge>
-                    ))}
+                  {(props?.amount || amountCart) && (
+                    <Badge bg="warning">{props?.amount || amountCart}</Badge>
+                  )}
                   <BsCart2 className="icon cart" />
                 </Button>
                 <div className="info-user">

@@ -14,8 +14,15 @@ const ModelUpdateUserComponent = ({
   isPhoneNumber,
 }) => {
   console.log("isPhoneNumber", isPhoneNumber);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onFinish();
+    }
+  };
+
   return (
-    <Modal.Body>
+    <Modal.Body onKeyDown={handleKeyDown}>
       <Form
         name="basic"
         labelCol={{
@@ -32,7 +39,7 @@ const ModelUpdateUserComponent = ({
       >
         <Form.Item
           label="Name"
-          name="name"
+          // name="name"
           rules={[
             {
               required: true,
@@ -49,7 +56,7 @@ const ModelUpdateUserComponent = ({
         </Form.Item>
         <Form.Item
           label="Phone"
-          name="phone"
+          // name="phone"
           rules={[
             {
               required: true,
@@ -68,7 +75,7 @@ const ModelUpdateUserComponent = ({
         </Form.Item>
         <Form.Item
           label="Address"
-          name="address"
+          // name="address"
           rules={[
             {
               required: true,

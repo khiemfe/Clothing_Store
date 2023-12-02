@@ -12,16 +12,13 @@ import Col from "react-bootstrap/Col";
 import { useQuery } from "@tanstack/react-query";
 import * as ProductServices from "../services/ProductServices";
 import LoadingCardComponent from "../components/LoadingCardComponent";
-import { useSelector } from "react-redux";
-import { useDebounce } from "../hooks/useDebounce";
 import LoadingComponents from "../components/LoadingComponents";
 import LoadingTypeComponent from "../components/LoadingTypeComponent";
 
 const HomePage = () => {
   const refSearch = useRef();
-  const limitState = 4;
-  const [limitNam, setLimitNam] = useState(limitState);
-  const [limitNu, setLimitNu] = useState(limitState);
+  const limitState = 8;
+  const [limit, setLimit] = useState(limitState);
 
   let lengthProducts = limitState;
   const arrayProducts = [];
@@ -29,45 +26,25 @@ const HomePage = () => {
     arrayProducts.push(i);
   }
 
-  const fetchProductAllNam = async (context) => {
+  const fetchProductAll = async (context) => {
     console.log("context", context);
-    const gender = context?.queryKey && context?.queryKey[0];
+    // const gender = context?.queryKey && context?.queryKey[0];
     const limit = context?.queryKey && context?.queryKey[1];
-    const res = await ProductServices.getGenderProduct(gender, limit);
+    const res = await ProductServices.getAllProduct("", limit);
     return res;
   };
 
   const {
-    isLoading: isLoadingNam,
-    data: productsNam,
-    isPreviousData: isPreviousDataNam,
-  } = useQuery(["nam", limitNam], fetchProductAllNam, {
+    isLoading: isLoading,
+    data: products,
+    isPreviousData,
+  } = useQuery(["product", limit], fetchProductAll, {
     retry: 3,
     retryDelay: 1000,
     keepPreviousData: true,
   });
   //   keepPreviousData: giữ lại product cũ, load những cái mới thôi
-  console.log("isPreviousDataNam", isPreviousDataNam); //loading
-
-  const fetchProductAllNu = async (context) => {
-    console.log("context", context);
-    const gender = context?.queryKey && context?.queryKey[0];
-    const limit = context?.queryKey && context?.queryKey[1];
-    const res = await ProductServices.getGenderProduct(gender, limit);
-    return res;
-  };
-
-  const {
-    isLoading: isLoadingNu,
-    data: productsNu,
-    isPreviousData: isPreviousDataNu,
-  } = useQuery(["nữ", limitNu], fetchProductAllNu, {
-    retry: 3,
-    retryDelay: 1000,
-    keepPreviousData: true,
-  });
-  //   keepPreviousData: giữ lại product cũ, load những cái mới thôi
-  console.log("isPreviousDataNu", isPreviousDataNu); //loading
+  console.log("isPreviousDataNam", isPreviousData); //loading
 
   const [arrType, setArrType] = useState([]);
   const [loadingType, setLoadingType] = useState(true);
@@ -91,7 +68,7 @@ const HomePage = () => {
       <Row className="content">
         <Col xxl={2} xl={2} className="_navbar">
           <div style={{ position: "fixed" }}>
-            <LoadingTypeComponent isLoading={loadingType}/>
+            <LoadingTypeComponent isLoading={loadingType} />
             {!loadingType && <NavbarComponents arrType={arrType} />}
           </div>
         </Col>
@@ -101,14 +78,13 @@ const HomePage = () => {
               <SlideComponents arrImages={[slide1, slide2, slide3, slide4]} />
             </div>
 
-            <div id="Nam" className="product">
-              <h1>Nam</h1>
+            <div style={{marginTop: 50}}>
               <LoadingCardComponent
-                isLoading={isLoadingNam}
+                isLoading={isLoading}
                 arrayProducts={arrayProducts}
               >
                 <Row>
-                  {productsNam?.data?.map((product) => {
+                  {products?.data?.map((product) => {
                     console.log("productmap", product);
                     return (
                       <Col xxl={3} xl={3} key={product._id}>
@@ -133,102 +109,36 @@ const HomePage = () => {
                   })}
                 </Row>
               </LoadingCardComponent>
-            </div>
-            {/* ---- */}
+              {/* ---- */}
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "15px",
-              }}
-            >
-              <LoadingComponents isLoading={isPreviousDataNam} />
-            </div>
-            <div>
-              {productsNam?.totalPage !== 1 &&
-                // soluongPage !== 1 &&
-                !isLoadingNam &&
-                !isPreviousDataNam && (
-                  <div className="see-more">
-                    <Button
-                      // disabled={
-                      //   isPreviousDataNam ||
-                      //   products?.totalProduct === products?.data.length
-                      // }
-                      onClick={() => setLimitNam((prev) => prev + 8)}
-                      variant="outline-primary"
-                    >
-                      Xem thêm
-                    </Button>{" "}
-                  </div>
-                )}
-            </div>
-
-            {/* ---- */}
-
-            <div id="Nữ" className="product">
-              <h1>Nữ</h1>
-              <LoadingCardComponent
-                isLoading={isLoadingNam}
-                arrayProducts={arrayProducts}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "15px",
+                }}
               >
-                <Row>
-                  {productsNu?.data?.map((product) => {
-                    console.log("productmap", product);
-                    return (
-                      <Col xxl={3} xl={3} key={product._id}>
-                        {/* <a href="/product-details"> */}
-                        <CardComponents
-                          id={product._id}
-                          countInstock={product.countInstock}
-                          description={product.description}
-                          image={product.image}
-                          name={product.name}
-                          price={product.price}
-                          rating={product.rating}
-                          gender={product.gender}
-                          discount={product.discount}
-                          selled={product.selled}
-                          age={product.age}
-                          size={product.size}
-                        />
-                        {/* </a> */}
-                      </Col>
-                    );
-                  })}
-                </Row>
-              </LoadingCardComponent>
-            </div>
-            {/* ---- */}
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "15px",
-              }}
-            >
-              <LoadingComponents isLoading={isPreviousDataNu} />
-            </div>
-            <div>
-              {productsNu?.totalPage !== 1 &&
-                // soluongPage !== 1 &&
-                !isLoadingNu &&
-                !isPreviousDataNu && (
-                  <div className="see-more">
-                    <Button
-                      // disabled={
-                      //   isPreviousDataNam ||
-                      //   products?.totalProduct === products?.data.length
-                      // }
-                      onClick={() => setLimitNu((prev) => prev + 8)}
-                      variant="outline-primary"
-                    >
-                      Xem thêm
-                    </Button>{" "}
-                  </div>
-                )}
+                <LoadingComponents isLoading={isPreviousData} />
+              </div>
+              <div>
+                {products?.totalPage !== 1 &&
+                  // soluongPage !== 1 &&
+                  !isLoading &&
+                  !isPreviousData && (
+                    <div className="see-more">
+                      <Button
+                        // disabled={
+                        //   isPreviousDataNam ||
+                        //   products?.totalProduct === products?.data.length
+                        // }
+                        onClick={() => setLimit((prev) => prev + 8)}
+                        variant="outline-primary"
+                      >
+                        Xem thêm
+                      </Button>{" "}
+                    </div>
+                  )}
+              </div>
             </div>
           </div>
         </Col>

@@ -125,7 +125,7 @@ const OrderPage = () => {
   };
 
   const [lengthItem, setLengthItem] = useState([]);
-  console.log('lengthItem', lengthItem)
+  console.log("lengthItem", lengthItem);
 
   const onChangeAll = (e) => {
     if (e.target.checked) {
@@ -144,10 +144,10 @@ const OrderPage = () => {
   useEffect(() => {
     const newListChecked = [];
     console.log("orderItems", order?.orderItems);
-    console.log('orderItems user', user?.id)
-    
+    console.log("orderItems user", user?.id);
+
     dataCart?.forEach((item) => {
-      console.log('item?.userId', item?.userId)
+      console.log("item?.userId", item?.userId);
       if (item?.userId === user?.id) {
         newListChecked.push(item?._id + `size${item?.size}`);
       }
@@ -348,7 +348,7 @@ const OrderPage = () => {
   console.log("orderItemm", order?.orderItems);
 
   return (
-    <div style={{marginTop: 110}}>
+    <div style={{ marginTop: 110, minHeight: "100vh", marginBottom: 50 }}>
       <Toaster />
       <h1
         style={{
@@ -392,11 +392,16 @@ const OrderPage = () => {
                   Chọn tất cả ({order?.orderItems?.length} sản phẩm)
                 </p>
               </div>
-              {listChecked?.length > 0 && (
-                <h4 onClick={handleDeleteAll} style={{ cursor: "pointer" }}>
-                  Xoá tất cả
-                </h4>
-              )}
+              {dataCart.length > 0 && listChecked?.length > 0 &&
+                (!isLoadingDeletedMany ? (
+                  <h4 onClick={handleDeleteAll} style={{ cursor: "pointer" }}>
+                    Xoá tất cả
+                  </h4>
+                ) : (
+                  <div>
+                    <LoadingComponents isLoading={isLoadingDeletedMany} />
+                  </div>
+                ))}
             </div>
             {order?.orderItems?.map((item, index) => {
               return (
@@ -440,7 +445,13 @@ const OrderPage = () => {
                             </button>
                           </div>
                         </div>
-                        <div style={{ display: "flex", alignItems: "end" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "end",
+                            position: "relative",
+                          }}
+                        >
                           <h4>{convertPrice(item.price * item.amount)}</h4>
                           <h4
                             style={{
@@ -452,6 +463,17 @@ const OrderPage = () => {
                           >
                             <MdDeleteOutline />
                           </h4>
+                          {!isLoadingDeleted && (
+                            <div
+                              style={{
+                                position: "absolute",
+                                right: 0,
+                                bottom: -30,
+                              }}
+                            >
+                              <LoadingComponents isLoading={isLoadingDeleted} />
+                            </div>
+                          )}
                         </div>
                       </div>
                     </span>

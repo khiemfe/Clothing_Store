@@ -15,16 +15,19 @@ import {
   FaLinkedin,
   FaGithub,
 } from "react-icons/fa";
+import { IoHomeOutline } from "react-icons/io5";
+import { MdOutlineEmail } from "react-icons/md";
+import { FaSquarePhone } from "react-icons/fa6";
 
 const FooterComponent = () => {
   return (
-    <div className="footer">
+    <div className="footer-web">
       <MDBFooter
         bgColor="light"
         className="text-center text-lg-start text-muted"
       >
         {/* <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"> */}
-        <div
+        {/* <div
           style={{
             display: "flex",
             alignItems: "center",
@@ -34,7 +37,7 @@ const FooterComponent = () => {
           }}
         >
           <div className="me-5 d-none d-lg-block">
-            <span>Get connected with us on social networks:</span>
+            <span>Mạng xã hội:</span>
           </div>
           <div className="networks">
             <a
@@ -44,9 +47,9 @@ const FooterComponent = () => {
             >
               <FaFacebook />
             </a>
-            {/* <a href="" className="me-4 text-reset">
+            <a href="" className="me-4 text-reset">
               <FaTwitter />
-            </a> */}
+            </a>
             <a href="" className="me-4 text-reset">
               <FaGoogle />
             </a>
@@ -64,79 +67,62 @@ const FooterComponent = () => {
               <FaGithub />
             </a>
           </div>
-        </div>
+        </div> */}
         {/* </section> */}
 
         <section className="">
           <MDBContainer className="text-center text-md-start mt-5">
             <MDBRow className="mt-3">
               <MDBCol md="3" lg="4" xl="3" className="mx-auto mb-4">
-                <h6 className="text-uppercase fw-bold mb-4">
+                <h4 className="text-uppercase fw-bold mb-4">
                   <MDBIcon icon="gem" className="me-3" />
-                  Company name
-                </h6>
+                  FIVE MAN STORE
+                </h4>
                 <p>
-                  Here you can use rows and columns to organize your footer
-                  content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                  elit.
+                  Cảm ơn bạn đã ghé thăm website của chúng tôi. Chúng tôi hy
+                  vọng bạn sẽ có một trải nghiệm mua sắm thú vị và hài lòng.
                 </p>
               </MDBCol>
 
               <MDBCol md="2" lg="2" xl="2" className="mx-auto mb-4">
-                <h6 className="text-uppercase fw-bold mb-4">Products</h6>
-                <p>
-                  <a href="#!" className="text-reset">
-                    NodeJS
-                  </a>
-                </p>
-                <p>
-                  <a href="#!" className="text-reset">
-                    ReactJS
-                  </a>
-                </p>
-                <p>
-                  <a href="#!" className="text-reset">
-                    MONGODB
-                  </a>
-                </p>
-              </MDBCol>
-
-              <MDBCol md="3" lg="2" xl="2" className="mx-auto mb-4">
-                <h6 className="text-uppercase fw-bold mb-4">Useful links</h6>
-                <p>
-                  <a href="#!" className="text-reset">
-                    Pricing
-                  </a>
-                </p>
-                <p>
-                  <a href="#!" className="text-reset">
-                    Settings
-                  </a>
-                </p>
-                <p>
-                  <a href="#!" className="text-reset">
-                    Orders
-                  </a>
-                </p>
-                <p>
-                  <a href="#!" className="text-reset">
-                    Help
-                  </a>
-                </p>
+                <h4 className="text-uppercase fw-bold mb-4">Mạng xã hội</h4>
+                <a
+                  href="https://www.facebook.com/khiem.ngoc.142240/"
+                  target="_blank"
+                  className="text-reset"
+                >
+                  <p className="item">
+                    <FaFacebook />
+                    <span>Facebook</span>
+                  </p>
+                </a>
+                <a
+                  href="https://github.com/khiemfe"
+                  target="_blank"
+                  className="text-reset"
+                >
+                  <p className="item">
+                    {" "}
+                    <FaGithub />
+                    <span>Github</span>
+                  </p>
+                </a>
               </MDBCol>
 
               <MDBCol md="4" lg="3" xl="3" className="mx-auto mb-md-0 mb-4">
-                <h6 className="text-uppercase fw-bold mb-4">Contact</h6>
-                <p>
-                  <MDBIcon icon="home" className="me-2" />
-                  Da Nang
+                <h4 className="text-uppercase fw-bold mb-4">
+                  Kết nối với chúng tôi
+                </h4>
+                <p className="item">
+                  <IoHomeOutline />
+                  <span>Đà Nẵng</span>
                 </p>
-                <p>
-                  <MDBIcon icon="envelope" className="me-3" />
-                  khiemtrinh255@gmail.com
+                <p className="item">
+                  <MdOutlineEmail />
+                  <span>khiemdev24@gmail.com</span>
                 </p>
-                <p>
-                  <MDBIcon icon="phone" className="me-3" /> + 0353454***
+                <p className="item">
+                  <FaSquarePhone /> <span>0353454***</span>
                 </p>
               </MDBCol>
             </MDBRow>
@@ -151,7 +137,7 @@ const FooterComponent = () => {
           <a
             style={{ marginLeft: "5px" }}
             className="text-reset fw-bold"
-            href="http://localhost:3000/"
+            href="https://fiveman-store.vercel.app/"
           >
             Five Man Store
           </a>
