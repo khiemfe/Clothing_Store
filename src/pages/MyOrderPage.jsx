@@ -165,7 +165,7 @@ const MyOrderPage = () => {
                           </Button>
                           <Modal
                             title="Thông báo"
-                            open={true}
+                            open={isModalOpen}
                             onOk={handleOkModel}
                             onCancel={() => setIsModalOpen(false)}
                           >
