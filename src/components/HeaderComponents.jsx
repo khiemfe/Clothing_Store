@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import logo from "../public/img/logo2.jpg";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
@@ -60,6 +60,7 @@ const HeaderComponents = (props) => {
     localStorage.setItem("email", JSON.stringify(false));
     // localStorage.setItem("access_token", JSON.stringify(false));
     setLoading(false);
+    setAmountCart(0);
   };
 
   const [userName, setUserName] = useState("");
@@ -150,9 +151,12 @@ const HeaderComponents = (props) => {
 
   console.log("props", props);
 
+  const classOnScroll = props?.class
+
+
   return (
-    <div className="header">
-      <Navbar className=" justify-content-between  ">
+    <div className={classOnScroll}>
+      <Navbar className=" justify-content-between ">
         {/* <Toaster /> */}
         <Container>
           <Row className="align-items_center">
@@ -199,9 +203,12 @@ const HeaderComponents = (props) => {
                     onKeyDown={handleKeyDown}
                   />
                 </div>
-                <FiHeart className="icon heart" />
+                {/* <FiHeart className="icon heart" /> */}
                 <Button className="btn-cart" onClick={handleOrderCart}>
-                  <Badge bg="warning">{props?.amount || amountCart}</Badge>
+                  {props?.amount ||
+                    (amountCart && (
+                      <Badge bg="warning">{props?.amount || amountCart}</Badge>
+                    ))}
                   <BsCart2 className="icon cart" />
                 </Button>
                 <div className="info-user">
@@ -219,9 +226,9 @@ const HeaderComponents = (props) => {
                         ) : (
                           <img
                             className="avatar"
-                            src=""
+                            src="https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png"
                             alt=""
-                            style={{ width: "50px" }}
+                            style={{ width: "30px" }}
                           />
                           // undefined
                         )}

@@ -4,7 +4,7 @@ import HeaderComponents from './HeaderComponents'
 const DefaultComponents = ({children}) => {
     return (
         <div>
-            <HeaderComponents />
+            {/* <HeaderComponents /> */}
             {children}
         </div>
     )

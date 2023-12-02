@@ -60,7 +60,7 @@ const TypeProductPage = () => {
     arrayProducts.push(i);
   }
   return (
-    <div style={{ padding: "0 52px" }}>
+    <div style={{ padding: "0 52px", marginTop: 110 }}>
       <Row className="content">
         <Col xxl={2} xl={2} className="_navbar">
           <div style={{ position: "fixed" }}>

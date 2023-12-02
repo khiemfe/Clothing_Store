@@ -23,7 +23,7 @@ import StepsComponent from "../components/StepsComponent";
 import * as CartServices from "../services/CartServices";
 import { useQuery } from "@tanstack/react-query";
 import LoadingProductDetailsComponent from "../components/LoadingProductDetailsComponent";
-import LoadingOrderComponent from "../components/LoadingOrderComponent";
+import LoadingOrderComponent from "../components/LoadingTypeComponent";
 import LoadingComponents from "../components/LoadingComponents";
 import { Toaster } from "react-hot-toast";
 
@@ -348,7 +348,7 @@ const OrderPage = () => {
   console.log("orderItemm", order?.orderItems);
 
   return (
-    <>
+    <div style={{marginTop: 110}}>
       <Toaster />
       <h1
         style={{
@@ -523,7 +523,7 @@ const OrderPage = () => {
           />
         </LoadingUpdateComponent>
       </Modal>
-    </>
+    </div>
   );
 };
 

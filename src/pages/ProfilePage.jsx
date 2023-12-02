@@ -131,7 +131,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div>
+    <div style={{marginTop: 110}}>
       <Toaster />
       <h1
         style={{

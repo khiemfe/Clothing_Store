@@ -83,7 +83,7 @@ const MyOrderPage = () => {
     } else if (isErrorCancel) {
       error("Bạn đã huỷ đơn hàng thành công");
     }
-  },[isSuccessCancel, isErrorCancel]);
+  }, [isSuccessCancel, isErrorCancel]);
 
   const [okHuy, setOkHuy] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -157,7 +157,7 @@ const MyOrderPage = () => {
                           Huỷy
                         </h3> */}
                           <Button
-                            type="primary"
+                            // type="primary"
                             onClick={() => showModal(item)}
                           >
                             Huỷ

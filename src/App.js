@@ -19,6 +19,7 @@ import LoadingComponents from "./components/LoadingComponents";
 import FooterComponent from "./components/FooterComponent";
 import ModelSingIn from "./components/ModelSingIn";
 import * as UserServcie from "./services/userServices";
+import HeaderComponents from "./components/HeaderComponents";
 
 function App() {
   // useEffect(() => {
@@ -84,7 +85,7 @@ function App() {
         } else {
           console.log("lay cai cu");
           const storageData = localStorage.getItem("access_token");
-          config.headers["token"] = `Bearer ${storageData.slice(1,-1)}`;
+          config.headers["token"] = `Bearer ${storageData.slice(1, -1)}`;
         }
       } else {
         console.log("voni");
@@ -123,8 +124,22 @@ function App() {
   //   setIsLoading(false);
   // };
 
+  const [showHeader, setShowHeader] = useState("header");
+
+  const handleWheel = (event) => {
+    const deltaY = event.deltaY;
+
+    if (deltaY > 0) {
+      console.log("xuong");
+      setShowHeader("header translateY-100");
+    } else {
+      console.log("len");
+      setShowHeader("header translateY0");
+    }
+  };
+
   return (
-    <div>
+    <div onWheel={handleWheel}>
       {/* <HeaderComponents /> */}
       <LoadingComponents isLoading={isLoading}>
         <Router>
@@ -143,6 +158,9 @@ function App() {
                   element={
                     <>
                       <Layout>
+                        {route.isShowHeader && (
+                          <HeaderComponents class={showHeader} />
+                        )}
                         <Page />
                         {openModel && <ModelSingIn />}
                         <LayoutFooter />

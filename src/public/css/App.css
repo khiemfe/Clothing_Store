@@ -22,6 +22,17 @@ body {
 .css-1jqq78o-placeholder {
   color: #000 !important; }
 
+.translateY-100 {
+  transform: translateY(-100%);
+  transition: all 0.3s; }
+
+.translateY0 {
+  transform: translateY(0);
+  transition: all 0.3s; }
+
+.ReactQueryDevtools svg {
+  display: none; }
+
 .header {
   padding: 5px 40px 5px 50px;
   position: fixed;
@@ -29,7 +40,7 @@ body {
   background-color: #fff;
   top: 0;
   width: 100%;
-  box-shadow: rgba(17, 12, 46, 0.15) 0px 1px 10px 0px; }
+  height: 100px; }
   .header .container {
     max-width: none; }
   .header .logo {
@@ -43,7 +54,7 @@ body {
     text-transform: uppercase;
     font-weight: bold; }
     .header .center .item {
-      padding: 0 30px; }
+      padding: 0 15px !important; }
       .header .center .item:hover {
         text-decoration: underline; }
   .header .right .form {
@@ -70,7 +81,7 @@ body {
     .header .right .form .search {
       display: flex;
       width: 50%;
-      margin: 0 25px 0 15px;
+      margin: 0 15px;
       position: relative;
       border-bottom: 1px solid #999; }
       .header .right .form .search input {
@@ -89,13 +100,14 @@ body {
         border: none;
         background-color: transparent; }
     .header .right .form .btn-cart {
-      margin: 0 20px 0 12px;
+      margin: 0 30px 0 10px;
       background-color: transparent;
       border: none;
-      padding: 0; }
+      position: relative; }
       .header .right .form .btn-cart .badge.bg-warning {
-        right: -30px;
-        top: -8px;
+        position: absolute;
+        right: 2px;
+        top: 2px;
         font-size: 0.8rem; }
     .header .right .form .btn-sign {
       font-size: 1.4rem; }
@@ -154,7 +166,7 @@ body {
 .home {
   padding: 0 52px;
   margin-bottom: 30px;
-  margin-top: 20px; }
+  margin-top: 110px; }
   .home .slide {
     width: 800px;
     overflow: hidden;
@@ -266,7 +278,8 @@ body {
   padding: 50px;
   padding-bottom: 0;
   position: relative;
-  margin-bottom: 50px; }
+  margin-bottom: 50px;
+  margin-top: 80px; }
   .card-propose .agenho,
   .card-propose .agelon {
     display: none; }
@@ -321,7 +334,8 @@ body {
       margin-left: 10px; }
 
 .search-page {
-  padding: 20px; }
+  padding: 20px;
+  margin-top: 90px; }
   .search-page .title {
     text-align: center;
     font-size: 2rem; }
@@ -469,7 +483,8 @@ body {
 .produc-details .container {
   display: flex;
   padding: 50px;
-  padding-right: 100px; }
+  padding-right: 100px;
+  margin-top: 80px; }
 
 .produc-details .row .imgload {
   width: 540px !important;
@@ -723,12 +738,12 @@ body {
     .page-payment .payment .pay-radio {
       background-color: #eee;
       height: 170px;
-      padding: 20px 30px;
+      padding: 30px 30px;
       width: 50%;
       justify-content: space-between;
       display: flex;
       border-radius: 10px;
-      align-items: center;
+      align-items: start;
       margin-right: 20px; }
       .page-payment .payment .pay-radio .radio-text {
         display: flex;
@@ -813,51 +828,54 @@ body {
         .page-payment .pay .ok-pay .pay-btn:hover {
           opacity: 0.8; }
 
-.my-order .body {
-  width: 60%;
-  margin: auto; }
-  .my-order .body .product {
-    background-color: #eee;
-    border-bottom: 4px solid #fff;
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center; }
-    .my-order .body .product .item {
+.my-order {
+  margin-top: 110px; }
+  .my-order .body {
+    width: 60%;
+    margin: auto; }
+    .my-order .body .product {
+      background-color: #eee;
+      border-bottom: 4px solid #fff;
+      border-radius: 10px;
+      padding: 20px;
       display: flex;
-      align-items: center;
-      margin-top: 10px; }
-      .my-order .body .product .item:first-child {
-        margin-top: 0; }
-      .my-order .body .product .item img {
-        margin-right: 20px;
-        height: 120px;
-        width: 120px; }
-      .my-order .body .product .item .body-text p {
-        font-size: 15px; }
-    .my-order .body .product .right .price {
-      background-color: #fff;
-      padding: 10px;
-      text-align: center;
-      border-radius: 10px;
-      margin-bottom: 20px; }
-    .my-order .body .product .right .paided {
-      background-color: #fff;
-      padding: 10px;
-      text-align: center;
-      border-radius: 10px;
-      margin-bottom: 20px; }
-    .my-order .body .product .right .action {
-      background-color: #fff;
-      text-align: center;
-      padding: 10px;
-      border-radius: 10px; }
+      justify-content: space-between;
+      align-items: center; }
+      .my-order .body .product .item {
+        display: flex;
+        align-items: center;
+        margin-top: 10px; }
+        .my-order .body .product .item:first-child {
+          margin-top: 0; }
+        .my-order .body .product .item img {
+          margin-right: 20px;
+          height: 120px;
+          width: 120px; }
+        .my-order .body .product .item .body-text p {
+          font-size: 15px; }
+      .my-order .body .product .right .price {
+        background-color: #fff;
+        padding: 10px;
+        text-align: center;
+        border-radius: 10px;
+        margin-bottom: 20px; }
+      .my-order .body .product .right .paided {
+        background-color: #fff;
+        padding: 10px;
+        text-align: center;
+        border-radius: 10px;
+        margin-bottom: 20px; }
+      .my-order .body .product .right .action {
+        background-color: #fff;
+        text-align: center;
+        padding: 10px;
+        border-radius: 10px; }
 
 .order-details {
   width: 60%;
   margin: auto;
-  margin-bottom: 50px; }
+  margin-bottom: 50px;
+  margin-top: 110px; }
   .order-details .body {
     background-color: #eee;
     padding: 20px 40px;

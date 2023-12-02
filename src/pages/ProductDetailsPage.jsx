@@ -272,7 +272,14 @@ const ProductDetailsPage = () => {
     if (isSuccessAddCart && dataAddCart?.status === "OK") {
       success("Bạn đã thêm vào giỏ hàng thành công");
       fetchOrderCart();
-
+      setTimeout(() => {
+        navigate("/order", {
+          state: {
+            id: user?.id,
+            token: user?.access_token,
+          },
+        });
+      }, 0);
       // dispatch(
       //   addOrderProduct({
       //     orderItem: {
@@ -329,7 +336,7 @@ const ProductDetailsPage = () => {
 
   return (
     <>
-      <HeaderComponents amount={amountCart} />
+      {/* <HeaderComponents amount={amountCart} /> */}
       <Toaster />
       <div className="produc-details">
         {/* <ProductDetailsComponents idProduct={id} /> */}
@@ -597,7 +604,7 @@ const ProductDetailsPage = () => {
                     Mua ngay
                   </button>
                 )}
-                <FiHeart className="iconHeart" />
+                {/* <FiHeart className="iconHeart" /> */}
               </div>
             </div>
           </div>

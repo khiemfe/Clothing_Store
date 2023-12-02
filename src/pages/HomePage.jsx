@@ -15,6 +15,7 @@ import LoadingCardComponent from "../components/LoadingCardComponent";
 import { useSelector } from "react-redux";
 import { useDebounce } from "../hooks/useDebounce";
 import LoadingComponents from "../components/LoadingComponents";
+import LoadingTypeComponent from "../components/LoadingTypeComponent";
 
 const HomePage = () => {
   const refSearch = useRef();
@@ -69,15 +70,19 @@ const HomePage = () => {
   console.log("isPreviousDataNu", isPreviousDataNu); //loading
 
   const [arrType, setArrType] = useState([]);
+  const [loadingType, setLoadingType] = useState(true);
   const fetchAllType = async () => {
+    setLoadingType(true);
     const res = await ProductServices.getAllType();
     if (res?.status === "OK") {
       setArrType(res?.data);
+      setLoadingType(false);
     }
   };
   useEffect(() => {
     fetchAllType();
   }, []);
+  console.log("loadingType", loadingType);
 
   console.log("arrType", arrType);
 
@@ -86,7 +91,8 @@ const HomePage = () => {
       <Row className="content">
         <Col xxl={2} xl={2} className="_navbar">
           <div style={{ position: "fixed" }}>
-            <NavbarComponents arrType={arrType} />
+            <LoadingTypeComponent isLoading={loadingType}/>
+            {!loadingType && <NavbarComponents arrType={arrType} />}
           </div>
         </Col>
         <Col xxl={10} xl={10}>

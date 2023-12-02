@@ -129,7 +129,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <>
+    <div style={{marginTop: 110}}>
       <Toaster />
       <MDBContainer className="my-5 sign" onKeyDown={handleKeyDown}>
         <MDBCard>
@@ -265,7 +265,7 @@ const SignUpPage = () => {
           </MDBRow>
         </MDBCard>
       </MDBContainer>
-    </>
+    </div>
   );
 };
 

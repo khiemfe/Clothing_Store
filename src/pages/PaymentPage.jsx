@@ -341,7 +341,7 @@ const PaymentPage = () => {
   // const pricePaypal = totalPriceMemo / 23;
 
   return (
-    <>
+    <div style={{marginTop: 110}}>
       <Toaster />
       <h1
         style={{
@@ -375,7 +375,7 @@ const PaymentPage = () => {
                   <Radio value={"later_money"}></Radio>
                   <h4>Thanh toán khi nhận hàng</h4>
                 </div>
-                {/* <div className="radio-text">
+                {/* <div className="radio-text" >
                   <Radio value={"paypal"}></Radio>
                   <h4>Thanh toán bằng Paypal</h4>
                 </div> */}
@@ -391,6 +391,7 @@ const PaymentPage = () => {
                 color: "blue",
                 cursor: "pointer",
                 fontSize: "14px",
+                display: 'inline-block'
               }}
             >
               Thay đổi
@@ -537,7 +538,7 @@ const PaymentPage = () => {
           </Modal.Body>
         </Modal> */}
       </div>
-    </>
+    </div>
   );
 };
 
