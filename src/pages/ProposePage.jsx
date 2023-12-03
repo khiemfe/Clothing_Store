@@ -5,20 +5,20 @@ import * as ProductServices from "../services/ProductServices";
 import CardProposeComponents from "../components/CardProposeComponents";
 import { Col, Row } from "react-bootstrap";
 import axios from "axios";
-import { LoadingCardComponent5SP } from "../components/LoadingCardComponent";
 import LoadingComponents from "../components/LoadingComponents";
 import CardComponents from "../components/CardComponents";
+import LoadingCardComponent from "../components/LoadingCardComponent";
 
 const ProposePage = () => {
   const imgStorage = localStorage.getItem("img");
   const imageBase64 = JSON.parse(imgStorage);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(8);
   const [isLoadingPropose, setIsLoadingPropose] = useState(true);
 
-  useEffect( () => {
+  useEffect(() => {
     if (!isLoaded) {
-       axios
+      axios
         .post(`${process.env.REACT_APP_API_URL}/save/proposed`, {
           imageBase64,
         })
@@ -37,9 +37,9 @@ const ProposePage = () => {
   const [result_gender, set_result_gender] = useState("");
 
   useEffect(() => {
-    const result = fetch(
-      `${process.env.REACT_APP_API_URL}/save/results`
-    ).then((response) => response.json().then((data) => data));
+    const result = fetch(`${process.env.REACT_APP_API_URL}/save/results`).then(
+      (response) => response.json().then((data) => data)
+    );
     const arrResult = async () => {
       const arr = await result;
       console.log("duLieu", arr);
@@ -100,19 +100,14 @@ const ProposePage = () => {
 
         {/* <CardProposeComponents /> */}
         <div className="products">
-          <LoadingCardComponent5SP
+          <LoadingCardComponent
             isLoading={isLoadingPropose || isLoading}
             arrayProducts={arrayProducts}
           >
             <Row>
               {product?.data?.map((product, index) => {
                 return (
-                  <Col
-                    style={{ flex: "0 0 auto", width: "20%" }}
-                    //   xxl={3}
-                    //   xl={3}
-                    key={product._id}
-                  >
+                  <Col xxl={3} xl={3} lg={4} key={product._id}>
                     <CardComponents
                       id={product._id}
                       key={index}
@@ -136,7 +131,7 @@ const ProposePage = () => {
                 );
               })}
             </Row>
-          </LoadingCardComponent5SP>
+          </LoadingCardComponent>
         </div>
       </div>
       <div
@@ -155,7 +150,7 @@ const ProposePage = () => {
           !isLoadingPropose && (
             <div className="see-more">
               <Button
-                onClick={() => setLimit((prev) => prev + 10)}
+                onClick={() => setLimit((prev) => prev + 8)}
                 variant="outline-primary"
               >
                 Xem thêm

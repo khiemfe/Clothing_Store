@@ -341,7 +341,7 @@ const PaymentPage = () => {
   // const pricePaypal = totalPriceMemo / 23;
 
   return (
-    <div style={{ marginTop: 110 }}>
+    <div>
       <Toaster />
       <h1
         style={{

@@ -3,7 +3,7 @@ import * as ProductServices from "../services/ProductServices";
 import { useDebounce } from "../hooks/useDebounce";
 import { useSelector, useDispatch } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-import { LoadingCardComponent5SP } from "../components/LoadingCardComponent";
+import LoadingCardComponent from "../components/LoadingCardComponent";
 import { Col, Row } from "react-bootstrap";
 import CardComponents from "../components/CardComponents";
 import Button from "react-bootstrap/Button";
@@ -15,7 +15,7 @@ import Form from "react-bootstrap/Form";
 const ProductSearchPage = () => {
   const dispatch = useDispatch();
   const [textSearch, setTextSearch] = useState("");
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(8);
   const [search, setSearch] = useState();
   const searchStorage = localStorage.getItem("search");
   console.log("searchStorage", searchStorage);
@@ -88,7 +88,7 @@ const ProductSearchPage = () => {
   console.log("isLoadingSearch", isLoadingSearch);
 
   const arrayProducts = [];
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= limit; i++) {
     arrayProducts.push(i);
   }
 
@@ -105,7 +105,7 @@ const ProductSearchPage = () => {
       </p>
       {products?.noProduct && <h2>{products?.noProduct}</h2>}
       <div className="product">
-        <LoadingCardComponent5SP
+        <LoadingCardComponent
           isLoading={isLoading || isLoadingSearch}
           arrayProducts={arrayProducts}
           //   width={}
@@ -114,12 +114,7 @@ const ProductSearchPage = () => {
             {products?.data?.map((product) => {
               console.log("productmap", product);
               return (
-                <Col
-                  style={{ flex: "0 0 auto", width: "20%" }}
-                  //   xxl={3}
-                  //   xl={3}
-                  key={product._id}
-                >
+                <Col xxl={3} xl={3} lg={4} key={product._id}>
                   {/* <a href="/product-details"> */}
                   <CardComponents
                     id={product._id}
@@ -140,7 +135,7 @@ const ProductSearchPage = () => {
               );
             })}
           </Row>
-        </LoadingCardComponent5SP>
+        </LoadingCardComponent>
       </div>
       <div
         style={{
@@ -155,7 +150,7 @@ const ProductSearchPage = () => {
         {products?.totalPage > 1 && !isPreviousData && !isLoading && (
           <div className="see-more">
             <Button
-              onClick={() => setLimit((prev) => prev + 10)}
+              onClick={() => setLimit((prev) => prev + 8)}
               variant="outline-primary"
             >
               Xem thêm

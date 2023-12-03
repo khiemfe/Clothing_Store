@@ -116,7 +116,7 @@ const CardProposeComponents = (props) => {
         </h3>
       ) : undefined}
       {isMaleOrFemale && isGiaTriBMI && isGiaTriTuoi ? (
-        <Col style={{ flex: "0 0 auto", width: "20%" }}>
+        <Col xxl={3} xl={3} lg={4}>
           {/* <a href="/product-details" style={{ textDecoration: "none" }}> */}
           <Card
             key={id}

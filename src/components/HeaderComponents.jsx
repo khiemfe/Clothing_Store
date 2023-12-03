@@ -155,7 +155,7 @@ const HeaderComponents = (props) => {
   const classOnScroll = props?.class;
 
   const fetchAllCart = async () => {
-    if(user?.email) {
+    if (user?.email) {
       const res = await CartServices.getCartByUserId(
         user?.id,
         user?.access_token
@@ -170,132 +170,143 @@ const HeaderComponents = (props) => {
   }, [user?.email]);
 
   return (
-    <div className={classOnScroll}>
-      <Navbar className=" justify-content-between ">
-        {/* <Toaster /> */}
-        <Container>
-          <Row className="align-items_center">
-            <Col xxl={1} xl={1}>
-              <Navbar.Brand href="/">
-                <img src={logo} alt="logo" className="logo" />
-              </Navbar.Brand>
-            </Col>
-            <Col xxl={5} xl={5} className="center align-items_center">
-              <Nav className="me-auto">
-                <Nav.Link className="item" href="/product/nam">
-                  Nam
-                </Nav.Link>
-                <Nav.Link className="item" href="/product/nu">
-                  Nữ
-                </Nav.Link>
-                <Nav.Link
-                  className="item"
-                  href="/product/best"
-                  style={{ color: "red" }}
-                >
-                  Best
-                </Nav.Link>
-              </Nav>
-            </Col>
-            <Col xxl={6} xl={6} className="right ">
-              <Form className="d-flex form align-items_center">
-                <CameraComponents />
-                <div className="search">
-                  <Button
-                    variant="outline-success"
-                    className="align-items_center"
-                    onClick={BtnSearchProduct}
+    <>
+      <div className={classOnScroll}>
+        <Navbar className=" justify-content-between ">
+          {/* <Toaster /> */}
+          <Container>
+            <Row className="align-items_center">
+              <Col xxl={1} xl={1} lg={1}>
+                <Navbar.Brand href="/">
+                  <img src={logo} alt="logo" className="logo" />
+                </Navbar.Brand>
+              </Col>
+              <Col
+                xxl={5}
+                xl={5}
+                lg={5}
+                md={2}
+                className="center align-items_center"
+              >
+                <Nav className="me-auto">
+                  <Nav.Link className="item" href="/product/nam">
+                    Nam
+                  </Nav.Link>
+                  <Nav.Link className="item" href="/product/nu">
+                    Nữ
+                  </Nav.Link>
+                  <Nav.Link
+                    className="item"
+                    href="/product/best"
+                    style={{ color: "red" }}
                   >
-                    <FiSearch />
+                    Best
+                  </Nav.Link>
+                </Nav>
+              </Col>
+              <Col xxl={6} xl={6} lg={6} className="right ">
+                <Form className="d-flex form align-items_center">
+                  {/* <CameraComponents /> */}
+                  <div className="search">
+                    <Button
+                      variant="outline-success"
+                      className="align-items_center"
+                      onClick={BtnSearchProduct}
+                    >
+                      <FiSearch />
+                    </Button>
+                    <Form.Control
+                      // type="search"
+                      value={value}
+                      placeholder="Tìm kiếm"
+                      className="me-2"
+                      aria-label="Search"
+                      onChange={onSearch}
+                      onKeyDown={handleKeyDown}
+                    />
+                  </div>
+                  {/* <FiHeart className="icon heart" /> */}
+                  <Button className="btn-cart" onClick={handleOrderCart}>
+                    {(props?.amount || amountCart) && (
+                      <Badge bg="warning">{props?.amount || amountCart}</Badge>
+                    )}
+                    <BsCart2 className="icon cart" />
                   </Button>
-                  <Form.Control
-                    // type="search"
-                    value={value}
-                    placeholder="Tìm kiếm"
-                    className="me-2"
-                    aria-label="Search"
-                    onChange={onSearch}
-                    onKeyDown={handleKeyDown}
-                  />
-                </div>
-                {/* <FiHeart className="icon heart" /> */}
-                <Button className="btn-cart" onClick={handleOrderCart}>
-                  {(props?.amount || amountCart) && (
-                    <Badge bg="warning">{props?.amount || amountCart}</Badge>
-                  )}
-                  <BsCart2 className="icon cart" />
-                </Button>
-                <div className="info-user">
-                  {/* <LoadingComponents isLoading={loadingInfo}> */}
-                  {user?.email ? (
-                    <Dropdown style={{ width: "70px" }}>
-                      <Dropdown.Toggle variant="" id="dropdown-basic">
-                        {userAvatar ? (
-                          <img
-                            className="avatar"
-                            src={userAvatar}
-                            alt="avatar"
-                            style={{ width: "50px" }}
-                          />
-                        ) : (
-                          <img
-                            className="avatar"
-                            src="https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png"
-                            alt=""
-                            style={{ width: "30px" }}
-                          />
-                          // undefined
-                        )}
-                        <div className="textName">
-                          {/* {userName || user.email || "User"} */}
-                          {userName || user.email?.split("@")[0]}
-                        </div>
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu style={{ left: "-60%", fontSize: "13px" }}>
-                        {user?.isAdmin && (
-                          <Dropdown.Item href="/system/admin">
-                            Trang chủ ADMIN
-                          </Dropdown.Item>
-                        )}
-                        <Dropdown.Item href="/profile-user">
-                          Thông tin người dùng
-                        </Dropdown.Item>
-                        <Dropdown.Item href="" onClick={handleClickNavigate}>
-                          Đơn hàng của tôi
-                        </Dropdown.Item>
-                        <Dropdown.Divider />
-                        <LoadingComponents isLoading={loading}>
-                          <Dropdown.Item onClick={handleLogout} href="#">
-                            Đăng xuất
-                          </Dropdown.Item>
-                        </LoadingComponents>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  ) : (
-                    <>
-                      {storageEmail && storageEmail !== "false" ? (
-                        <div>
-                          <LoadingCardInfoComponent></LoadingCardInfoComponent>
-                        </div>
-                      ) : (
-                        <Button
-                          onClick={handleNavigateLogin}
-                          className="btn-sign"
-                          variant=""
+                  <div className="info-user">
+                    {/* <LoadingComponents isLoading={loadingInfo}> */}
+                    {user?.email ? (
+                      <Dropdown style={{ width: "70px" }}>
+                        <Dropdown.Toggle variant="" id="dropdown-basic">
+                          {userAvatar ? (
+                            <img
+                              className="avatar"
+                              src={userAvatar}
+                              alt="avatar"
+                              style={{ width: "50px" }}
+                            />
+                          ) : (
+                            <img
+                              className="avatar"
+                              src="https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png"
+                              alt=""
+                              style={{ width: "30px" }}
+                            />
+                            // undefined
+                          )}
+                          <div className="textName">
+                            {/* {userName || user.email || "User"} */}
+                            {userName || user.email?.split("@")[0]}
+                          </div>
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu
+                          style={{ left: "-60%", fontSize: "13px" }}
                         >
-                          Đăng nhập <br /> Đăng ký
-                        </Button>
-                      )}
-                    </>
-                  )}
-                  {/* </LoadingComponents> */}
-                </div>
-              </Form>
-            </Col>
-          </Row>
-        </Container>
-      </Navbar>
-    </div>
+                          {user?.isAdmin && (
+                            <Dropdown.Item href="/system/admin">
+                              Trang chủ ADMIN
+                            </Dropdown.Item>
+                          )}
+                          <Dropdown.Item href="/profile-user">
+                            Thông tin người dùng
+                          </Dropdown.Item>
+                          <Dropdown.Item href="" onClick={handleClickNavigate}>
+                            Đơn hàng của tôi
+                          </Dropdown.Item>
+                          <Dropdown.Divider />
+                          <LoadingComponents isLoading={loading}>
+                            <Dropdown.Item onClick={handleLogout} href="#">
+                              Đăng xuất
+                            </Dropdown.Item>
+                          </LoadingComponents>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    ) : (
+                      <>
+                        {storageEmail && storageEmail !== "false" ? (
+                          <div>
+                            <LoadingCardInfoComponent></LoadingCardInfoComponent>
+                          </div>
+                        ) : (
+                          <Button
+                            onClick={handleNavigateLogin}
+                            className="btn-sign"
+                            variant=""
+                          >
+                            Đăng nhập <br /> Đăng ký
+                          </Button>
+                        )}
+                      </>
+                    )}
+                    {/* </LoadingComponents> */}
+                  </div>
+                </Form>
+              </Col>
+            </Row>
+          </Container>
+        </Navbar>
+      </div>
+      <div style={{height:80}}></div>
+    </>
   );
 };
 

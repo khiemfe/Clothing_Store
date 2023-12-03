@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import * as ProductServices from "../services/ProductServices";
-import LoadingCardComponent, {
-  LoadingCardComponent5SP,
-} from "../components/LoadingCardComponent";
 import { useQuery } from "@tanstack/react-query";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,9 +7,10 @@ import CardComponents from "../components/CardComponents";
 import LoadingComponents from "../components/LoadingComponents";
 import Button from "react-bootstrap/Button";
 import banner from "../public/img/bannerNam.jpeg";
+import LoadingCardComponent from "../components/LoadingCardComponent";
 
 const ProductNamPage = () => {
-  const limitState = 10;
+  const limitState = 8;
   const [limit, setLimit] = useState(limitState);
 
   let lengthProducts = limitState;
@@ -42,7 +40,7 @@ const ProductNamPage = () => {
   console.log("isPreviousDataNam", isPreviousData); //loading
 
   return (
-    <div style={{ marginTop: 110, marginBottom:50, minHeight: "100%" }}>
+    <div style={{ marginBottom: 50, minHeight: "100%" }}>
       <div style={{ width: "100%" }}>
         <img
           src={banner}
@@ -62,7 +60,7 @@ const ProductNamPage = () => {
         Thời trang nam
       </h1>
       <div style={{ padding: "0 20px" }}>
-        <LoadingCardComponent5SP
+        <LoadingCardComponent
           isLoading={isLoading}
           arrayProducts={arrayProducts}
         >
@@ -70,10 +68,7 @@ const ProductNamPage = () => {
             {products?.data?.map((product) => {
               console.log("productmap", product);
               return (
-                <Col
-                  style={{ flex: "0 0 auto", width: "20%" }}
-                  key={product._id}
-                >
+                <Col xxl={3} xl={3} lg={4} key={product._id}>
                   {/* <a href="/product-details"> */}
                   <CardComponents
                     id={product._id}
@@ -94,7 +89,7 @@ const ProductNamPage = () => {
               );
             })}
           </Row>
-        </LoadingCardComponent5SP>
+        </LoadingCardComponent>
       </div>
       <div
         style={{
@@ -116,7 +111,7 @@ const ProductNamPage = () => {
                 //   isPreviousDataNam ||
                 //   products?.totalProduct === products?.data.length
                 // }
-                onClick={() => setLimit((prev) => prev + 10)}
+                onClick={() => setLimit((prev) => prev + 8)}
                 variant="outline-primary"
               >
                 Xem thêm

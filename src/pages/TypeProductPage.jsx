@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import * as ProductServices from "../services/ProductServices";
 import LoadingCardComponent from "../components/LoadingCardComponent";
 import { Col, Row } from "react-bootstrap";
+import SlideAnNavComponent from "../components/SlideAndNavComponent";
 
 const TypeProductPage = () => {
   const { state } = useLocation();
@@ -60,23 +61,30 @@ const TypeProductPage = () => {
     arrayProducts.push(i);
   }
   return (
-    <div style={{ padding: "0 52px", marginTop: 110 }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        marginBottom: 50,
+      }}
+    >
       <Row className="content">
-        <Col xxl={2} xl={2} className="_navbar">
+        {/* <Col xxl={2} xl={2} className="_navbar">
           <div style={{ position: "fixed" }}>
-            <NavbarComponents arrType={arrType} />
+          <NavbarComponents arrType={arrType} />
           </div>
-        </Col>
-        <Col xxl={10} xl={10}>
-          <LoadingCardComponent
-            isLoading={isLoading}
-            arrayProducts={arrayProducts}
-          >
+        </Col> */}
+        <Col xxl={12} xl={12} className="col-slide">
+          <SlideAnNavComponent arrType={arrType} />
+          <div className="product">
+            <LoadingCardComponent
+              isLoading={isLoading}
+              arrayProducts={arrayProducts}
+            />
             <Row>
               {products?.map((product) => {
                 console.log("productmap", product);
                 return (
-                  <Col xxl={3} xl={3} key={product._id}>
+                  <Col xxl={3} xl={3} lg={4} key={product._id}>
                     <CardComponents
                       id={product._id}
                       image={product.image}
@@ -90,7 +98,7 @@ const TypeProductPage = () => {
                 );
               })}
               <Pagination
-                style={{ textAlign: "center", marginTop: '10px'}}
+                style={{ textAlign: "center", marginTop: "10px" }}
                 onChange={onChangePa}
                 defaultCurrent={panigate?.page + 1}
                 defaultPageSize={panigate?.limit}
@@ -99,7 +107,7 @@ const TypeProductPage = () => {
               />
               ;
             </Row>
-          </LoadingCardComponent>
+          </div>
         </Col>
       </Row>
     </div>

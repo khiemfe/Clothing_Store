@@ -138,7 +138,7 @@ const ProfilePage = () => {
 
   return (
     <div
-      style={{ marginTop: 110, minHeight: "100vh" }}
+      style={{ minHeight: "100vh" }}
       onKeyDown={handleKeyDown}
     >
       <Toaster />

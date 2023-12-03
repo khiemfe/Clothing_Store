@@ -184,7 +184,7 @@ const SignInPage = () => {
   };
 
   return (
-    <div style={{marginTop: 110}}>
+    <div>
       <Toaster />
       <MDBContainer className="my-5 sign" onKeyDown={handleKeyDown}>
         <MDBCard>

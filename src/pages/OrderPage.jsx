@@ -348,11 +348,11 @@ const OrderPage = () => {
   console.log("orderItemm", order?.orderItems);
 
   return (
-    <div style={{ marginTop: 110, minHeight: "100vh", marginBottom: 50 }}>
+    <div style={{ minHeight: "100vh", marginBottom: 50 }}>
       <Toaster />
       <h1
         style={{
-          margin: "20px 0",
+          margin: "40px 0",
           textAlign: "center",
           textTransform: "uppercase",
         }}

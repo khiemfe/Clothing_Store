@@ -1,5 +1,4 @@
 @import "variables";
-@import "productdetails";
 
 body {
   // background-color: rgb(245, 245, 245);
@@ -34,22 +33,22 @@ body {
 }
 
 .header {
-  padding: 5px 40px 5px 50px;
+  padding: 0px 50px;
   position: fixed;
   z-index: 2;
   background-color: #fff;
   top: 0;
   width: 100%;
-  height: 100px;
-  // box-shadow: rgba(17, 12, 46, 0.15) 0px 1px 10px 0px;
+  height: 80px;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 1px 10px 0px;
 
   .container {
     max-width: none;
   }
 
   .logo {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     object-fit: cover;
   }
 
@@ -121,6 +120,7 @@ body {
           font-size: 1.6rem;
           border-radius: 0px;
           border: none;
+          background-color: transparent;
 
           &:focus {
             // box-shadow: 0 3px 5px 0.2rem rgba(32, 32, 33, 0.25);
@@ -201,8 +201,8 @@ body {
         }
 
         .avatar {
-          width: 40px !important;
-          height: 40px;
+          width: 30px !important;
+          height: 30px;
           object-fit: cover;
           border-radius: 50%;
         }
@@ -221,54 +221,43 @@ body {
   }
 }
 
+.home {
+  // padding: 0 52px;
+  margin-bottom: 30px;
+  // margin-top: 80px;
+}
 .content {
   display: flex;
-  margin: 20px 0;
+  // margin: 20px 0;
 
-  ._navbar {
-    padding-left: 0;
-    // width: 220px;
-
-    .nav {
-      width: 200px;
-      min-height: 180px;
-      box-shadow: rgb(204, 204, 204) 1px 1px 2px;
-      padding: 15px 20px;
-
-      .nav-link {
-        font-size: 1.8rem;
-        font-weight: bold;
-        text-transform: uppercase;
-        color: #333;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-  }
-}
-
-.home {
-  padding: 0 52px;
-  margin-bottom: 30px;
-  // margin-top: 110px;
-  margin-top: 110px;
-
-  .slide-product {
+  .product {
+    padding: 50px;
   }
 
+  .col-slide {
+    padding: 0;
+  }
   .slide {
-    width: 800px;
+    position: relative;
+    width: 100%;
     overflow: hidden;
-    height: 350px;
+    // height: 100%;
     margin: 0 auto;
     display: block;
     border-radius: 5px;
 
+    .slick-arrow.slick-prev {
+      display: none !important;
+    }
+
+    .slick-arrow.slick-next {
+      display: none !important;
+    }
+
     .item {
-      height: 350px;
       object-fit: cover;
+      height: 40vh;
+      width: 100%;
     }
 
     .slick-arrow {
@@ -279,6 +268,33 @@ body {
       }
       &.slick-next {
         right: 12px;
+      }
+    }
+    ._navbar {
+      padding-left: 0;
+      // width: 220px;
+      position: absolute;
+      left: 50px;
+      top: 50%;
+      transform: translateY(-50%);
+
+      .nav {
+        width: 200px;
+        min-height: 180px;
+        // box-shadow: rgb(204, 204, 204) 1px 1px 2px;
+        padding: 15px 20px;
+
+        .nav-link {
+          font-size: 1.8rem;
+          font-weight: bold;
+          text-transform: uppercase;
+          color: rgb(255, 255, 255);
+          text-shadow: -1px 2px 1px #000000;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
       }
     }
 
@@ -320,7 +336,7 @@ body {
 
         .card-img-top {
           width: 100%;
-          height: 330px !important;
+          height: 400px !important;
         }
       }
 
@@ -363,10 +379,10 @@ body {
 }
 
 .see-more {
-  display: flex;
-  justify-content: center;
   margin-top: 10px;
   margin-bottom: 20px;
+  width: 100%;
+  text-align: center;
 
   .btn {
     font-size: 1.6rem;
@@ -531,7 +547,7 @@ body {
 
     .card-img-top {
       width: 100%;
-      height: 330px !important;
+      height: 400px !important;
     }
   }
 
@@ -562,14 +578,14 @@ body {
 }
 
 .search-page {
-  padding: 20px;
-  margin-top: 90px;
+  padding: 40px 50px;
   margin-bottom: 50px;
   min-height: 100vh;
 
   .title {
     text-align: center;
     font-size: 2rem;
+    margin-bottom: 30px;
 
     span {
       font-weight: bold;
@@ -1132,7 +1148,6 @@ body {
   justify-content: space-between;
   align-items: end;
   margin-bottom: 50px;
-  margin-top: 20px;
 
   .cart-shopping {
     width: 60%;
@@ -1405,7 +1420,6 @@ body {
 
 //my order
 .my-order {
-  margin-top: 110px;
   min-height: 100vh;
   margin-bottom: 50px;
   // padding: 0 150px;
@@ -1478,7 +1492,6 @@ body {
   width: 60%;
   margin: auto;
   margin-bottom: 50px;
-  margin-top: 110px;
 
   .body {
     background-color: #eee;
@@ -1623,6 +1636,16 @@ body {
     padding: 0 20px;
     a {
       font-size: 20px;
+    }
+  }
+}
+
+// ------------ responsive ----------
+
+@media (max-width: 1239px) {
+  .header {
+    .center.align-items_center {
+      padding-left: 50px;
     }
   }
 }
