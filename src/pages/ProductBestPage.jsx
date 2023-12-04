@@ -49,17 +49,9 @@ const ProductBestPage = () => {
           style={{ width: "100%", height: "450px", objectFit: "cover" }}
         />
       </div>
-      <h1
-        style={{
-          margin: 50,
-          textAlign: "center",
-          textTransform: "uppercase",
-          fontWeight: 700,
-          fontSize: 30,
-        }}
-      >
-        Best seller
-      </h1>
+      <div style={{ textAlign: "center", width: "100%", marginTop: 60 }}>
+        <h1 className="genderPage-text">Best Seller</h1>
+      </div>
       <div style={{ padding: "0 20px" }}>
         <LoadingCardComponent
           isLoading={isLoading}

@@ -76,37 +76,42 @@ const TypeProductPage = () => {
         <Col xxl={12} xl={12} className="col-slide">
           <SlideAnNavComponent arrType={arrType} />
           <div className="product">
+            <div style={{textAlign:'center', width:'100%'}}>
+              <h1 className="text-type">{state}</h1>
+            </div>
             <LoadingCardComponent
               isLoading={isLoading}
               arrayProducts={arrayProducts}
             />
-            <Row>
-              {products?.map((product) => {
-                console.log("productmap", product);
-                return (
-                  <Col xxl={3} xl={3} lg={4} key={product._id}>
-                    <CardComponents
-                      id={product._id}
-                      image={product.image}
-                      name={product.name}
-                      price={product.price}
-                      gender={product.gender}
-                      age={product.age}
-                      size={product.size}
-                    />
-                  </Col>
-                );
-              })}
-              <Pagination
-                style={{ textAlign: "center", marginTop: "10px" }}
-                onChange={onChangePa}
-                defaultCurrent={panigate?.page + 1}
-                defaultPageSize={panigate?.limit}
-                total={panigate?.total}
-                pageSizeOptions={[2, 4, 6]}
-              />
-              ;
-            </Row>
+            {!isLoading && (
+              <Row>
+                {products?.map((product) => {
+                  console.log("productmap", product);
+                  return (
+                    <Col xxl={3} xl={3} lg={4} key={product._id}>
+                      <CardComponents
+                        id={product._id}
+                        image={product.image}
+                        name={product.name}
+                        price={product.price}
+                        gender={product.gender}
+                        age={product.age}
+                        size={product.size}
+                      />
+                    </Col>
+                  );
+                })}
+                <Pagination
+                  style={{ textAlign: "center", marginTop: "10px" }}
+                  onChange={onChangePa}
+                  defaultCurrent={panigate?.page + 1}
+                  defaultPageSize={panigate?.limit}
+                  total={panigate?.total}
+                  pageSizeOptions={[2, 4, 6]}
+                />
+                ;
+              </Row>
+            )}
           </div>
         </Col>
       </Row>

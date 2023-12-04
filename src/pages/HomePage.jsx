@@ -75,6 +75,9 @@ const HomePage = () => {
           <SlideAnNavComponent arrType={arrType} loadingType={loadingType} />
 
           <div className="product">
+            <div style={{ textAlign: "center", width: "100%" }}>
+              <h1 className="text-type">Sản phẩm mới</h1>
+            </div>
             <LoadingCardComponent
               isLoading={isLoading}
               arrayProducts={arrayProducts}
@@ -106,14 +109,18 @@ const HomePage = () => {
             </Row>
             {/* ---- */}
 
-            <div style={{ width: "100%", textAlign: "center" }}>
-              <div
-                style={{
-                  marginTop: "15px",
-                }}
-              >
-                <LoadingComponents isLoading={isPreviousData} />
-              </div>
+            <div
+              style={{
+                width: "100%",
+                textAlign: "center",
+                marginTop: 20,
+              }}
+            >
+              {isPreviousData && (
+                <div style={{ height: 50 }}>
+                  <LoadingComponents isLoading={isPreviousData} />
+                </div>
+              )}
               {products?.totalPage !== 1 &&
                 // soluongPage !== 1 &&
                 !isLoading &&

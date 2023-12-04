@@ -12,7 +12,7 @@ const SlideAnNavComponent = (props) => {
   return (
     <div className="slide">
       <SlideComponents arrImages={[slide7, slide8, slide9]} />
-      <Col xxl={2} xl={2} className="_navbar">
+      <Col xxl={12} xl={12} className="_navbar">
         <div>
           {!props?.loadingType && <NavbarComponents arrType={props?.arrType} />}
         </div>

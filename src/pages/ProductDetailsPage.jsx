@@ -541,19 +541,6 @@ const ProductDetailsPage = () => {
                   </ul>
                 )}
               </div>
-              <div style={{ height: "40px" }}>
-                {noSize && !size && (
-                  <p style={{ color: "red", fontSize: "14px" }}>
-                    Vui lòng chọn size
-                  </p>
-                )}
-              </div>
-
-              <p style={{ fontSize: "18px" }}>Số lượng: {quantity}</p>
-
-              <p style={{ fontSize: "16px", fontStyle: "italic" }}>
-                Đã bán: {productDetails?.selled}
-              </p>
 
               <div
                 class="fb-comments"
@@ -589,20 +576,51 @@ const ProductDetailsPage = () => {
                       onClick={hanleAddOrder}
                       className="bg-violet-800 text-white font-semibold py-3 px-16 rounded-xl h-full add"
                     >
-                      Mua ngay
+                      Thêm vào giỏ hàng
                     </button>
                     <LoadingComponents isLoading={isLoadingAddCart} />
                   </>
                 ) : (
-                  <button
-                    onClick={hanleAddOrderNoSize}
-                    className="bg-violet-800 text-white font-semibold py-3 px-16 rounded-xl h-full add"
-                  >
-                    Mua ngay
-                  </button>
+                  <div style={{ position: "relative" }}>
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: -30,
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                      }}
+                    >
+                      {noSize && !size && (
+                        <p style={{ color: "red", fontSize: "14px" }}>
+                          Vui lòng chọn size
+                        </p>
+                      )}
+                    </div>
+                    <button
+                      onClick={hanleAddOrderNoSize}
+                      className="bg-violet-800 text-white font-semibold py-3 px-16 rounded-xl h-full add"
+                    >
+                      Thêm vào giỏ hàng
+                    </button>
+                  </div>
                 )}
                 {/* <FiHeart className="iconHeart" /> */}
               </div>
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "#555",
+                  marginTop: 10,
+                  height: 15,
+                }}
+              >
+                {size && <span>Còn lại: {quantity} sản phẩm</span>}
+              </p>
+              <p
+                style={{ fontSize: "16px", fontStyle: "italic", marginTop: 20 }}
+              >
+                Đã bán: {productDetails?.selled} sản phẩm
+              </p>
             </div>
           </div>
         )}

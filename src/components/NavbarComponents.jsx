@@ -16,6 +16,8 @@ const NavbarComponents = (arrType) => {
   };
   return (
     <Nav defaultActiveKey="/home" className="flex-column">
+      <div className="navlink-list">
+
       {arrType?.arrType?.map((type, index) => {
         return (
           <>
@@ -28,6 +30,7 @@ const NavbarComponents = (arrType) => {
         );
       })}
       <Nav.Link onClick={() => handleNavigateType("Khác")}>{"Khác"}</Nav.Link>
+      </div>
     </Nav>
   );
 };

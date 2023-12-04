@@ -174,7 +174,7 @@ const OrderPage = () => {
     if (listChecked?.length > 0) {
       // dispatch(removeAllOrderProduct({ listChecked }));
       const arrId = [];
-      for (let i = 0; i < listChecked.length; i++) {
+      for (let i = 0; i < listChecked?.length; i++) {
         arrId.push(listChecked[i].split("size")[0]);
       }
       mutationDeleteMany.mutate(
@@ -363,7 +363,7 @@ const OrderPage = () => {
         <LoadingComponents isLoading={isLoadingCart} />
       </div>
       {!isLoadingCart &&
-        (order?.orderItems.length > 0 ? (
+        (order?.orderItems?.length > 0 ? (
           <div className="cart-body">
             <div className="cart-shopping">
               <StepsComponent
@@ -393,7 +393,7 @@ const OrderPage = () => {
                     Chọn tất cả ({order?.orderItems?.length} sản phẩm)
                   </p>
                 </div>
-                {dataCart.length > 0 &&
+                {dataCart?.length > 0 &&
                   listChecked?.length > 0 &&
                   (!isLoadingDeletedMany ? (
                     <h4 onClick={handleDeleteAll} style={{ cursor: "pointer" }}>
