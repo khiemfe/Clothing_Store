@@ -230,6 +230,8 @@ body {
 }
 .content {
   display: flex;
+  width: 100%;
+  margin: 0;
   // margin: 20px 0;
 
   .product {
@@ -369,7 +371,8 @@ body {
 
         .card-img-top {
           width: 100%;
-          height: 400px ;
+          height: 400px;
+          object-fit: cover;
         }
       }
 
@@ -927,12 +930,26 @@ body {
   margin-top: 5px;
 }
 
+.ant-modal.css-dev-only-do-not-override-1vr7spz {
+  .ant-modal-content {
+    width: 600px !important;
+  }
+
+  .ant-btn.css-dev-only-do-not-override-1vr7spz.ant-btn-default {
+    display: none;
+  }
+
+  .ant-btn.css-dev-only-do-not-override-1vr7spz.ant-btn-primary {
+    display: none;
+  }
+}
+
 .produc-details {
   min-height: 100vh;
   .container {
     display: flex;
-    padding: 50px;
-    padding-right: 100px;
+    padding: 50px 0;
+    // padding-right: 100px;
   }
 
   .row {
@@ -971,15 +988,14 @@ body {
   }
 
   .img-1 {
-    width: 500px;
+    width: 100%;
     height: 500px;
   }
 
   .notify {
     margin-top: 100px;
-    margin-left: 50px;
-    margin: 0 0 0 20px;
-    padding: 20px;
+    margin: 0 0 0 40px;
+    padding-top: 20px;
 
     .name {
       font-weight: 500;
@@ -1004,9 +1020,15 @@ body {
 
       .size-text {
         font-size: 17px;
+        display: flex;
 
         p {
           margin-bottom: 0;
+        }
+
+        .text-bangSize {
+          text-decoration: underline;
+          cursor: pointer;
         }
 
         span {
@@ -1023,17 +1045,13 @@ body {
         margin-top: 20px;
 
         .size-item {
-          padding: 10px 0px;
+          line-height: 45px;
           width: 45px;
           border: 1.5px solid #ccc;
-          margin: 0 10px;
+          margin: 0 20px 0 0;
           font-size: 16px;
           text-align: center;
           cursor: pointer;
-
-          &:first-child {
-            margin-left: 0;
-          }
 
           &:hover {
             border-color: #888;
@@ -1111,6 +1129,42 @@ body {
       .iconHeart {
         font-size: 40px;
         cursor: pointer;
+      }
+    }
+  }
+
+  .product-info-bottom {
+    background-color: #f5f5f5;
+    margin-top: 40px;
+
+    .product-info-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 30px;
+
+      .product-info-item {
+        width: 33.33333333%;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+
+        .text {
+          margin-left: 10px;
+
+          h4 {
+          }
+
+          p {
+            font-size: 12px;
+            color: #333;
+            margin: 0;
+          }
+          div {
+            font-size: 14px;
+            padding-bottom: 5px;
+          }
+        }
       }
     }
   }
@@ -1717,5 +1771,191 @@ body {
 
   .card-img-top {
     height: 350px !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .header {
+    padding: 0 20px;
+    .center.align-items_center {
+      padding-left: 50px;
+    }
+  }
+
+  .text-type {
+    font-size: 30px !important;
+  }
+
+  .genderPage-text {
+    font-size: 30px !important;
+  }
+
+  .nav-link {
+    font-size: 16px !important;
+  }
+
+  .col-12.placeholder {
+    height: 300px !important;
+  }
+
+  .name-heart {
+  }
+
+  .col-card {
+    height: 420px !important;
+  }
+
+  .produc-details {
+    .notify {
+      margin-left: 20px;
+      .size-list {
+        flex-wrap: wrap;
+        .size-item {
+          margin-top: 5px !important;
+        }
+      }
+    }
+    .img-anhphu {
+      width: 400px;
+    }
+
+    .img-1 {
+      width: 400px;
+      height: 500px;
+    }
+
+    .product-info-bottom {
+      .product-info-list {
+        padding: 15px;
+
+        .product-info-item {
+          .icon {
+            img {
+              width: 40px;
+            }
+          }
+
+          .text {
+            h4 {
+              font-size: 14px;
+            }
+
+            p {
+              font-size: 12px;
+            }
+            div {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .card-img-top {
+    height: 300px !important;
+  }
+  .produc-details {
+    .add {
+      font-size: 12px !important;
+      padding: 0 20px !important;
+    }
+
+    .bangSize {
+      margin-left: 150px !important;
+    }
+
+    .text-bangSize {
+      font-size: 14px;
+    }
+
+    .size-list {
+      .size-item {
+        margin: 0 5px !important;
+        margin-top: 5px !important;
+      }
+    }
+
+    .img-anhphu {
+      width: 350px;
+
+      img {
+        width: 80px;
+        height: 80px;
+      }
+    }
+
+    .img-1 {
+      width: 350px;
+      height: 400px;
+    }
+
+    .product-info-bottom {
+      .product-info-list {
+        padding: 5px;
+
+        .product-info-item {
+          .icon {
+            img {
+              width: 40px;
+            }
+          }
+
+          .text {
+            h4 {
+              font-size: 13px;
+              display: flex;
+              flex-wrap: wrap;
+            }
+
+            p {
+              font-size: 11px;
+            }
+            div {
+              font-size: 13px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 550px) {
+  .header {
+    padding: 0 5px !important;
+    position: relative;
+
+    .openMobile {
+      display: block !important;
+    }
+
+    .center {
+      display: none;
+    }
+
+    .search {
+      display: none !important;
+    }
+  }
+  .noneMoblie {
+    display: none !important;
+  }
+
+  .home {
+    .nav-link {
+      font-size: 10px !important;
+      padding: 5px 2px !important;
+    }
+
+    .product {
+      padding: 0 20px !important;
+
+      .card-img-top {
+        height: 250px !important;
+      }
+    }
   }
 }

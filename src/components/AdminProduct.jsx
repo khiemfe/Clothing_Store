@@ -38,6 +38,11 @@ const AdminProduct = () => {
   const [stateProduct, setStateProduct] = useState({
     name: "",
     image: "",
+    imageDetails: {
+      image1: "",
+      image2: "",
+      image3: "",
+    },
     gender: "",
     price: "",
     age: "",
@@ -64,6 +69,11 @@ const AdminProduct = () => {
   const [stateProductDetails, setStateProductDetails] = useState({
     name: "",
     image: "",
+    imageDetails: {
+      image1: "",
+      image2: "",
+      image3: "",
+    },
     gender: "",
     price: "",
     age: "",
@@ -92,6 +102,7 @@ const AdminProduct = () => {
     const {
       name,
       image,
+      imageDetails: { image1, image2, image3 },
       gender,
       price,
       age,
@@ -123,6 +134,11 @@ const AdminProduct = () => {
       res = ProducttServcie.createProduct(data?.token, {
         name,
         image,
+        imageDetails: {
+          image1,
+          image2,
+          image3,
+        },
         gender,
         price,
         age,
@@ -144,6 +160,11 @@ const AdminProduct = () => {
       res = ProducttServcie.createProduct(data?.token, {
         name,
         image,
+        imageDetails: {
+          image1,
+          image2,
+          image3,
+        },
         gender,
         price,
         age,
@@ -275,25 +296,182 @@ const AdminProduct = () => {
     }
   }, [isSuccessDeletedMany]);
 
-  const handleOnchangeAvatar = async ({ fileList }) => {
-    const file = fileList[0];
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
+  const handleOnchangeAvatarImg1 = async ({ fileList }) => {
+    const file1 = fileList[0];
+    const file2 = fileList?.length > 1 ? fileList[1] : "";
+    const file3 = fileList?.length > 2 ? fileList[2] : "";
+    const file4 = fileList?.length > 3 ? fileList[3] : "";
+    console.log("fileList", fileList);
+    if (!file1?.url && !file1?.preview) {
+      file1.preview = await getBase64(file1?.originFileObj);
+      if (file2 && !file2?.url && !file2?.preview) {
+        console.log("voo");
+        file2.preview = await getBase64(file2?.originFileObj);
+        if (file3 && !file3?.url && !file3?.preview) {
+          file3.preview = await getBase64(file3?.originFileObj);
+          if (file4 && !file4?.url && !file4?.preview) {
+            file4.preview = await getBase64(file4?.originFileObj);
+          }
+        }
+      }
     }
+
     setStateProduct({
       ...stateProduct,
-      image: file.preview,
+      image: file1?.preview,
+      imageDetails: {
+        image1: file2 && file2?.preview,
+        image2: file3 && file3?.preview,
+        image3: file4 && file4?.preview,
+      },
     });
   };
 
-  const handleOnchangeAvatarDetails = async ({ fileList }) => {
-    const file = fileList[0];
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
+  const handleOnchangeAvatarImg2 = async ({ fileList }) => {
+    const file2 = fileList[0];
+    const file3 = fileList?.length > 1 ? fileList[1] : "";
+    const file4 = fileList?.length > 2 ? fileList[3] : "";
+    console.log("fileList", fileList);
+    if (file2 && !file2?.url && !file2?.preview) {
+      file2.preview = await getBase64(file2?.originFileObj);
+      if (file3 && !file3?.url && !file3?.preview) {
+        file3.preview = await getBase64(file3?.originFileObj);
+        if (file4 && !file4?.url && !file4?.preview) {
+          file4.preview = await getBase64(file4?.originFileObj);
+        }
+      }
     }
+
+    setStateProduct({
+      ...stateProduct,
+      imageDetails: {
+        image1: file2 && file2?.preview,
+        image2: file3 ? file3?.preview : stateProduct?.imageDetails?.image2,
+        image3: file4 ? file4?.preview : stateProduct?.imageDetails?.image3,
+      },
+    });
+  };
+
+  const handleOnchangeAvatarImg3 = async ({ fileList }) => {
+    const file3 = fileList[0];
+    const file4 = fileList?.length > 1 ? fileList[1] : "";
+    console.log("fileList", fileList);
+    if (file3 && !file3?.url && !file3?.preview) {
+      file3.preview = await getBase64(file3?.originFileObj);
+      if (file4 && !file4?.url && !file4?.preview) {
+        file4.preview = await getBase64(file4?.originFileObj);
+      }
+    }
+
+    setStateProduct({
+      ...stateProduct,
+      imageDetails: {
+        image1: stateProduct?.imageDetails?.image1,
+        image2: file3?.preview,
+        image3: file4 ? file4?.preview : stateProduct?.imageDetails?.image3,
+      },
+    });
+  };
+
+  const handleOnchangeAvatarImg4 = async ({ fileList }) => {
+    const file4 = fileList[0];
+    console.log("fileList", fileList);
+    if (file4 && !file4?.url && !file4?.preview) {
+      file4.preview = await getBase64(file4?.originFileObj);
+    }
+
+    setStateProduct({
+      ...stateProduct,
+      imageDetails: {
+        image1: stateProduct?.imageDetails?.image1,
+        image2: stateProduct?.imageDetails?.image2,
+        image3: file4?.preview,
+      },
+    });
+  };
+
+  // const handleOnchangeAvatarDetails = async ({ fileList }) => {
+  //   const file = fileList[0];
+  //   if (!file.url && !file.preview) {
+  //     file.preview = await getBase64(file.originFileObj);
+  //   }
+  //   setStateProductDetails({
+  //     ...stateProductDetails,
+  //     image: file.preview,
+  //     imageDetails: {
+  //       image1: file.preview,
+  //       image2: file.preview,
+  //       image3: file.preview,
+  //     },
+  //   });
+  // };
+
+  const handleOnchangeAvatarDetailsImg1 = async ({ fileList }) => {
+    const file1 = fileList[0];
+    console.log("fileList", fileList);
+    if (!file1?.url && !file1?.preview) {
+      file1.preview = await getBase64(file1?.originFileObj);
+    }
+
     setStateProductDetails({
       ...stateProductDetails,
-      image: file.preview,
+      image: file1?.preview,
+      imageDetails: {
+        image1: stateProductDetails?.imageDetails?.image1,
+        image2: stateProductDetails?.imageDetails?.image2,
+        image3: stateProductDetails?.imageDetails?.image3,
+      },
+    });
+  };
+
+  const handleOnchangeAvatarDetailsImg2 = async ({ fileList }) => {
+    const file2 = fileList[0];
+    console.log("fileList", fileList);
+    if (file2 && !file2?.url && !file2?.preview) {
+      file2.preview = await getBase64(file2?.originFileObj);
+    }
+
+    setStateProductDetails({
+      ...stateProductDetails,
+      imageDetails: {
+        image1: file2?.preview,
+        image2: stateProductDetails?.imageDetails?.image2,
+        image3: stateProductDetails?.imageDetails?.image3,
+      },
+    });
+  };
+
+  const handleOnchangeAvatarDetailsImg3 = async ({ fileList }) => {
+    const file3 = fileList[0];
+    console.log("fileList", fileList);
+    if (file3 && !file3?.url && !file3?.preview) {
+      file3.preview = await getBase64(file3?.originFileObj);
+    }
+
+    setStateProductDetails({
+      ...stateProductDetails,
+      imageDetails: {
+        image1: stateProductDetails?.imageDetails?.image1,
+        image2: file3?.preview,
+        image3: stateProductDetails?.imageDetails?.image3,
+      },
+    });
+  };
+
+  const handleOnchangeAvatarDetailsImg4 = async ({ fileList }) => {
+    const file4 = fileList[0];
+    console.log("fileList", fileList);
+    if (file4 && !file4?.url && !file4?.preview) {
+      file4.preview = await getBase64(file4?.originFileObj);
+    }
+
+    setStateProductDetails({
+      ...stateProductDetails,
+      imageDetails: {
+        image1: stateProductDetails?.imageDetails?.image1,
+        image2: stateProductDetails?.imageDetails?.image2,
+        image3: file4?.preview,
+      },
     });
   };
 
@@ -313,6 +491,9 @@ const AdminProduct = () => {
 
   const options = renderOptions(typeProduct?.data);
   console.log("options", options);
+
+  const newOptions = options.filter((item) => item !== undefined);
+  console.log("newOptions", newOptions);
 
   const [typeSelect, setTypeSelect] = useState("");
   const [placeholder, setPlaceholder] = useState("");
@@ -353,6 +534,7 @@ const AdminProduct = () => {
     if (
       stateProduct.name !== "" &&
       stateProduct.image !== "" &&
+      // stateProduct.imageDetails !== "" &&
       stateProduct.gender !== "" &&
       stateProduct.price !== "" &&
       stateProduct.age !== "" &&
@@ -396,6 +578,11 @@ const AdminProduct = () => {
         size36: "",
       },
       image: "", //xóa image
+      imageDetails: {
+        image1: "",
+        image2: "",
+        image3: "",
+      },
       type: "",
     });
     form.resetFields(); //xóa các label
@@ -421,6 +608,11 @@ const AdminProduct = () => {
       setStateProductDetails({
         name: res?.data?.name,
         image: res?.data?.image,
+        imageDetails: {
+          image1: res?.data?.imageDetails?.image1,
+          image2: res?.data?.imageDetails?.image2,
+          image3: res?.data?.imageDetails?.image3,
+        },
         gender: res?.data?.gender,
         price: res?.data?.price,
         age: res?.data?.age,
@@ -482,6 +674,7 @@ const AdminProduct = () => {
     if (
       stateProductDetails.name !== "" &&
       stateProductDetails.image !== "" &&
+      // stateProductDetails.imageDetails !== "" &&
       stateProductDetails.gender !== "" &&
       stateProductDetails.price !== "" &&
       stateProductDetails.age !== "" &&
@@ -508,6 +701,11 @@ const AdminProduct = () => {
     setStateProductDetails({
       name: "",
       image: "",
+      imageDetails: {
+        image1: "",
+        image2: "",
+        image3: "",
+      },
       gender: "",
       price: "",
       age: "",
@@ -929,9 +1127,12 @@ const AdminProduct = () => {
               form={form}
               handleOnchange={handleOnchange}
               handleChangeSelect={handleChangeSelect}
-              options={options}
+              options={newOptions}
               typeSelect={typeSelect}
-              handleOnchangeAvatar={handleOnchangeAvatar}
+              handleOnchangeAvatarImg1={handleOnchangeAvatarImg1}
+              handleOnchangeAvatarImg2={handleOnchangeAvatarImg2}
+              handleOnchangeAvatarImg3={handleOnchangeAvatarImg3}
+              handleOnchangeAvatarImg4={handleOnchangeAvatarImg4}
               onFinish={onFinish}
               isLoading={isLoading}
               title="Add"
@@ -971,10 +1172,13 @@ const AdminProduct = () => {
                 form={formUpdate}
                 handleOnchange={handleOnchangeDetails}
                 handleChangeSelect={handleChangeSelect}
-                options={options}
+                options={newOptions}
                 typeSelect={typeSelect}
                 placeholder={placeholder}
-                handleOnchangeAvatar={handleOnchangeAvatarDetails}
+                handleOnchangeAvatarImg1={handleOnchangeAvatarDetailsImg1}
+                handleOnchangeAvatarImg2={handleOnchangeAvatarDetailsImg2}
+                handleOnchangeAvatarImg3={handleOnchangeAvatarDetailsImg3}
+                handleOnchangeAvatarImg4={handleOnchangeAvatarDetailsImg4}
                 onFinish={onUpdateProduct}
                 isLoading={isLoadingUpdated}
                 title="Update"

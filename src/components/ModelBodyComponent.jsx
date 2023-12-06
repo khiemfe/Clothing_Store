@@ -15,7 +15,10 @@ const ModelBodyComponent = ({
   options,
   typeSelect,
   placeholder,
-  handleOnchangeAvatar,
+  handleOnchangeAvatarImg1,
+  handleOnchangeAvatarImg2,
+  handleOnchangeAvatarImg3,
+  handleOnchangeAvatarImg4,
   onFinish,
   isLoading,
   title,
@@ -189,42 +192,26 @@ const ModelBodyComponent = ({
         autoComplete="on"
         form={form}
       >
-        <Form.Item
-          label="Image"
-          name="upload"
-          valuePropName="fileList"
-          rules={[
-            {
-              required: true,
-              message: stateProduct?.image ? "" : "Please input your image!",
-            },
-          ]}
-          style={{ lineHeight: "80px" }}
-        >
-          <Upload
-            name="image"
-            onChange={handleOnchangeAvatar}
-            maxCount={1}
-            // style={{position:'relative', marginBottom:'20px'}}
+        <div style={{ display: "flex", justifyContent: "start" }}>
+          <Form.Item
+            label="Image"
+            name="upload"
+            valuePropName="fileList"
+            rules={[
+              {
+                required: true,
+                message: stateProduct?.image ? "" : "Please input your image!",
+              },
+            ]}
+            style={{ lineHeight: "80px" }}
           >
-            <Button
-              icon={<UploadOutlined />}
-              style={{
-                margin: "0 10px",
-                backgroundColor: "transparent",
-                borderColor: "#000",
-                position: "absolute",
-                top: "0px",
-                left: "0px",
-                width: "80px",
-                height: "80px",
-              }}
+            <Upload
+              name="image"
+              onChange={handleOnchangeAvatarImg1}
+              maxCount={4}
+              multiple
+              // style={{position:'relative', marginBottom:'20px'}}
             >
-              <GrAdd />
-            </Button>
-          </Upload>
-          {stateProduct?.image && (
-            <Upload name="image" onChange={handleOnchangeAvatar} maxCount={1}>
               <Button
                 icon={<UploadOutlined />}
                 style={{
@@ -236,25 +223,245 @@ const ModelBodyComponent = ({
                   left: "0px",
                   width: "80px",
                   height: "80px",
-                  overflow: "hidden",
                 }}
               >
-                <img
-                  src={stateProduct?.image}
-                  alt="image"
+                <GrAdd />
+              </Button>
+            </Upload>
+            {stateProduct?.image && (
+              <Upload name="image" onChange={handleOnchangeAvatarImg1} maxCount={1}>
+                <Button
+                  icon={<UploadOutlined />}
                   style={{
-                    objectFit: "cover",
+                    margin: "0 10px",
+                    backgroundColor: "transparent",
+                    borderColor: "#000",
                     position: "absolute",
                     top: "0px",
                     left: "0px",
-                    width: "100%",
-                    height: "100%",
+                    width: "80px",
+                    height: "80px",
+                    overflow: "hidden",
                   }}
-                />
+                >
+                  <img
+                    src={stateProduct?.image}
+                    alt="image"
+                    style={{
+                      objectFit: "cover",
+                      position: "absolute",
+                      top: "0px",
+                      left: "0px",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
+                </Button>
+              </Upload>
+            )}
+          </Form.Item>
+          <Form.Item
+            // label="Image"
+            name="upload"
+            valuePropName="fileList"
+            rules={[
+              {
+                required: true,
+                message: stateProduct?.imageDetails?.image1 ? "" : "Please input your image details 1!",
+              },
+            ]}
+            style={{ lineHeight: "80px", width: "100px" }}
+          >
+            <Upload
+              name="image"
+              onChange={handleOnchangeAvatarImg2}
+              maxCount={4}
+              multiple
+              // style={{position:'relative', marginBottom:'20px'}}
+            >
+              <Button
+                icon={<UploadOutlined />}
+                style={{
+                  margin: "0 10px",
+                  backgroundColor: "transparent",
+                  borderColor: "#000",
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "80px",
+                  height: "80px",
+                }}
+              >
+                <GrAdd />
               </Button>
             </Upload>
-          )}
-        </Form.Item>
+            {stateProduct?.imageDetails?.image1 && (
+              <Upload name="image" onChange={handleOnchangeAvatarImg2} maxCount={1}>
+                <Button
+                  icon={<UploadOutlined />}
+                  style={{
+                    margin: "0 10px",
+                    backgroundColor: "transparent",
+                    borderColor: "#000",
+                    position: "absolute",
+                    top: "0px",
+                    left: "0px",
+                    width: "80px",
+                    height: "80px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    src={stateProduct?.imageDetails?.image1}
+                    alt="image"
+                    style={{
+                      objectFit: "cover",
+                      position: "absolute",
+                      top: "0px",
+                      left: "0px",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
+                </Button>
+              </Upload>
+            )}
+          </Form.Item>
+          <Form.Item
+            // label="Image"
+            name="upload"
+            valuePropName="fileList"
+            rules={[
+              {
+                required: true,
+                message: stateProduct?.imageDetails?.image2 ? "" : "Please input your image details 2!",
+              },
+            ]}
+            style={{ lineHeight: "80px", width: "100px" }}
+          >
+            <Upload
+              name="image"
+              onChange={handleOnchangeAvatarImg3}
+              maxCount={4}
+              multiple
+              // style={{position:'relative', marginBottom:'20px'}}
+            >
+              <Button
+                icon={<UploadOutlined />}
+                style={{
+                  margin: "0 10px",
+                  backgroundColor: "transparent",
+                  borderColor: "#000",
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "80px",
+                  height: "80px",
+                }}
+              >
+                <GrAdd />
+              </Button>
+            </Upload>
+            {stateProduct?.imageDetails?.image2 && (
+              <Upload name="image" onChange={handleOnchangeAvatarImg3} maxCount={1}>
+                <Button
+                  icon={<UploadOutlined />}
+                  style={{
+                    margin: "0 10px",
+                    backgroundColor: "transparent",
+                    borderColor: "#000",
+                    position: "absolute",
+                    top: "0px",
+                    left: "0px",
+                    width: "80px",
+                    height: "80px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    src={stateProduct?.imageDetails?.image2}
+                    alt="image"
+                    style={{
+                      objectFit: "cover",
+                      position: "absolute",
+                      top: "0px",
+                      left: "0px",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
+                </Button>
+              </Upload>
+            )}
+          </Form.Item>
+          <Form.Item
+            // label="Image"
+            name="upload"
+            valuePropName="fileList"
+            rules={[
+              {
+                required: true,
+                message: stateProduct?.imageDetails?.image3 ? "" : "Please input your image details 3!",
+              },
+            ]}
+            style={{ lineHeight: "80px", width: "100px" }}
+          >
+            <Upload
+              name="image"
+              onChange={handleOnchangeAvatarImg4}
+              maxCount={4}
+              multiple
+              // style={{position:'relative', marginBottom:'20px'}}
+            >
+              <Button
+                icon={<UploadOutlined />}
+                style={{
+                  margin: "0 10px",
+                  backgroundColor: "transparent",
+                  borderColor: "#000",
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "80px",
+                  height: "80px",
+                }}
+              >
+                <GrAdd />
+              </Button>
+            </Upload>
+            {stateProduct?.imageDetails?.image3 && (
+              <Upload name="image" onChange={handleOnchangeAvatarImg4} maxCount={1}>
+                <Button
+                  icon={<UploadOutlined />}
+                  style={{
+                    margin: "0 10px",
+                    backgroundColor: "transparent",
+                    borderColor: "#000",
+                    position: "absolute",
+                    top: "0px",
+                    left: "0px",
+                    width: "80px",
+                    height: "80px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    src={stateProduct?.imageDetails?.image3}
+                    alt="image"
+                    style={{
+                      objectFit: "cover",
+                      position: "absolute",
+                      top: "0px",
+                      left: "0px",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
+                </Button>
+              </Upload>
+            )}
+          </Form.Item>
+        </div>
         <Form.Item
           label="Name"
           name="name"
@@ -534,6 +741,7 @@ const ModelBodyComponent = ({
             name="size"
           />
         </Form.Item>
+        
         <Form.Item
           label="Type"
           name="type"

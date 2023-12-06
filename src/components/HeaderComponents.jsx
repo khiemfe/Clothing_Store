@@ -22,6 +22,8 @@ import LoadingCardInfoComponent from "./LoadingCardInfoComponent";
 import { searchProduct } from "../redux/slices/productSlice";
 import { useQuery } from "@tanstack/react-query";
 import * as CartServices from "../services/CartServices";
+import { Drawer } from "antd";
+import { RiMenu2Line } from "react-icons/ri";
 
 const HeaderComponents = (props) => {
   const order = useSelector((state) => state.order);
@@ -169,6 +171,14 @@ const HeaderComponents = (props) => {
     fetchAllCart();
   }, [user?.email]);
 
+  const [open, setOpen] = useState(false);
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <div className={classOnScroll}>
@@ -176,7 +186,43 @@ const HeaderComponents = (props) => {
           {/* <Toaster /> */}
           <Container>
             <Row className="align-items_center">
-              <Col xxl={1} xl={1} lg={1}>
+              <Col
+                sm={1}
+                xs={1}
+                style={{ display: "none" }}
+                className="openMobile"
+              >
+                <div
+                  type="primary"
+                  onClick={showDrawer}
+                  style={{ fontSize: 20 }}
+                >
+                  <RiMenu2Line />
+                </div>
+                <Drawer
+                  title="Menu"
+                  placement="left"
+                  onClose={onClose}
+                  open={open}
+                >
+                  <Nav className="me-auto">
+                    <Nav.Link className="item" href="/product/nam">
+                      Nam
+                    </Nav.Link>
+                    <Nav.Link className="item" href="/product/nu">
+                      Nữ
+                    </Nav.Link>
+                    <Nav.Link
+                      className="item"
+                      href="/product/best"
+                      style={{ color: "red" }}
+                    >
+                      Best
+                    </Nav.Link>
+                  </Nav>
+                </Drawer>
+              </Col>
+              <Col xxl={1} xl={1} lg={1} md={1} sm={1} xs={4}>
                 <Navbar.Brand href="/">
                   <img src={logo} alt="logo" className="logo" />
                 </Navbar.Brand>
@@ -185,7 +231,9 @@ const HeaderComponents = (props) => {
                 xxl={5}
                 xl={5}
                 lg={5}
-                md={2}
+                md={5}
+                sm={5}
+                xs={5}
                 className="center align-items_center"
               >
                 <Nav className="me-auto">
@@ -204,7 +252,15 @@ const HeaderComponents = (props) => {
                   </Nav.Link>
                 </Nav>
               </Col>
-              <Col xxl={6} xl={6} lg={6} className="right ">
+              <Col
+                xxl={6}
+                xl={6}
+                lg={6}
+                md={6}
+                sm={6}
+                xs={7}
+                className="right "
+              >
                 <Form className="d-flex form align-items_center">
                   {/* <CameraComponents /> */}
                   <div className="search">
@@ -305,7 +361,7 @@ const HeaderComponents = (props) => {
           </Container>
         </Navbar>
       </div>
-      <div style={{height:80}}></div>
+      <div className="noneMoblie" style={{ height: 80 }}></div>
     </>
   );
 };

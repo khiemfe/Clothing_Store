@@ -114,7 +114,7 @@ const ProductSearchPage = () => {
             {products?.data?.map((product) => {
               console.log("productmap", product);
               return (
-                <Col xxl={3} xl={3} lg={4} key={product._id}>
+                <Col xxl={3} xl={3} lg={4} md={4} key={product._id}>
                   {/* <a href="/product-details"> */}
                   <CardComponents
                     id={product._id}

@@ -26,7 +26,34 @@ const LoadingUpdate = (props) => {
                 marginLeft: 50,
               }}
               xs={4}
-            />{" "}
+            />
+            <Placeholder
+              style={{
+                backgroundColor: "#ddd",
+                width: 78,
+                height: 78,
+                marginLeft: 20,
+              }}
+              xs={4}
+            />
+            <Placeholder
+              style={{
+                backgroundColor: "#ddd",
+                width: 78,
+                height: 78,
+                marginLeft: 20,
+              }}
+              xs={4}
+            />
+            <Placeholder
+              style={{
+                backgroundColor: "#ddd",
+                width: 78,
+                height: 78,
+                marginLeft: 20,
+              }}
+              xs={4}
+            />
           </Placeholder>
           <Placeholder
             as={Card.Text}

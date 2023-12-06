@@ -12,6 +12,10 @@ import * as CartServices from "../services/CartServices";
 import { success, error, warning } from "../components/Message";
 import LoadingProductDetailsComponent from "../components/LoadingProductDetailsComponent";
 import { Toaster } from "react-hot-toast";
+import { Button, Modal } from "antd";
+import { TfiRulerAlt } from "react-icons/tfi";
+import BangSizeAo from "../public/img/BangSIzeAo.png";
+import BangSizeQuan from "../public/img/BangSizeQuan.png";
 
 const ProductDetailsPage = () => {
   const { id: idProduct } = useParams();
@@ -39,9 +43,9 @@ const ProductDetailsPage = () => {
 
   const images = {
     img1: productDetails?.image,
-    img2: "https://levents.asia/wp-content/uploads/2022/06/POPULAR-LOGO-TEE_W1-1-scaled.jpg",
-    img3: "https://levents.asia/wp-content/uploads/2022/06/BASIC-ID-TEE-D1-1-scaled.jpg",
-    img4: "https://levents.asia/wp-content/uploads/2022/06/BASIC-ID-TEE-D4-1-scaled.jpg",
+    img2: productDetails?.imageDetails?.image1,
+    img3: productDetails?.imageDetails?.image2,
+    img4: productDetails?.imageDetails?.image3,
   };
 
   const [quantity, setQuantity] = useState();
@@ -331,6 +335,20 @@ const ProductDetailsPage = () => {
   console.log("test sản phẩm", productDetails);
   console.log("test người dùng", user);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       {/* <HeaderComponents amount={amountCart} /> */}
@@ -388,9 +406,39 @@ const ProductDetailsPage = () => {
 
               <div className="size">
                 <div className="size-text">
-                  <p>
+                  <p style={{ width: 120 }}>
                     Chọn size: <span>{size}</span>
                   </p>
+                  <div style={{ marginLeft: 200 }} className="bangSize">
+                    <p
+                      className="text-bangSize"
+                      type="primary"
+                      onClick={showModal}
+                    >
+                      <TfiRulerAlt /> Bảng size
+                    </p>
+                    <Modal
+                      title="Bảng size"
+                      open={isModalOpen}
+                      // onOk={handleOk}
+                      onCancel={handleCancel}
+                    >
+                      {productDetails?.name.toLowerCase().includes("quần") &&
+                      !productDetails?.name.toLowerCase().includes("áo") ? (
+                        <img
+                          style={{ width: "100%" }}
+                          src={BangSizeQuan}
+                          alt=""
+                        />
+                      ) : (
+                        <img
+                          style={{ width: "100%" }}
+                          src={BangSizeAo}
+                          alt=""
+                        />
+                      )}
+                    </Modal>
+                  </div>
                 </div>
                 {productDetails?.name.toLowerCase().includes("quần") &&
                 !productDetails?.name.toLowerCase().includes("áo") ? (
@@ -621,6 +669,82 @@ const ProductDetailsPage = () => {
               >
                 Đã bán: {productDetails?.selled} sản phẩm
               </p>
+              <div className="product-info-bottom">
+                <ul className="product-info-list">
+                  <li className="product-info-item">
+                    <div className="icon">
+                      <img
+                        src="https://routine.vn/static/version1701421172/frontend/Magenest/routine/vi_VN/images/ghn.png"
+                        alt=""
+                      />{" "}
+                    </div>
+                    <div className="text">
+                      <h4>Giao hàng nhanh</h4>
+                      <p>Từ 3-5 ngày</p>
+                    </div>
+                  </li>
+                  <li className="product-info-item">
+                    <div className="icon">
+                      <img
+                        src="https://routine.vn/static/version1701421172/frontend/Magenest/routine/vi_VN/images/free.png"
+                        alt=""
+                      />{" "}
+                    </div>
+                    <div className="text">
+                      <h4>Miễn phí vận chuyển</h4>
+                      <p>Đơn hàng từ 800k</p>
+                    </div>
+                  </li>
+                  <li className="product-info-item">
+                    <div className="icon">
+                      <img
+                        src="https://routine.vn/static/version1701421172/frontend/Magenest/routine/vi_VN/images/order.png"
+                        alt=""
+                      />{" "}
+                    </div>
+                    <div className="text">
+                      <h4>Theo dõi đơn hàng một cách dễ dàng</h4>
+                    </div>
+                  </li>
+                  <li className="product-info-item">
+                    <div className="icon">
+                      <img
+                        src="https://routine.vn/static/version1701421172/frontend/Magenest/routine/vi_VN/images/returns.png"
+                        alt=""
+                      />{" "}
+                    </div>
+                    <div className="text">
+                      <h4>Đổi trả linh hoạt</h4>
+                      <p>Với sản phẩm không áp dụng khuyến mãi</p>
+                    </div>
+                  </li>
+                  <li className="product-info-item">
+                    <div className="icon">
+                      <img
+                        src="https://routine.vn/static/version1701421172/frontend/Magenest/routine/vi_VN/images/pay.png"
+                        alt=""
+                      />{" "}
+                    </div>
+                    <div className="text">
+                      <h4>Thanh toán dễ dàng nhiều hình thức</h4>
+                    </div>
+                  </li>
+                  <li className="product-info-item">
+                    <div className="icon">
+                      <img
+                        src="https://routine.vn/static/version1701421172/frontend/Magenest/routine/vi_VN/images/hotline.png"
+                        alt=""
+                      />{" "}
+                    </div>
+                    <div className="text">
+                      <div>Hotline hỗ trợ</div>
+                      <h4>
+                        <span>03534</span> <span>54***</span>
+                      </h4>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         )}
