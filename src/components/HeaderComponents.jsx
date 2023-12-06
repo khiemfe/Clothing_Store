@@ -24,6 +24,7 @@ import { useQuery } from "@tanstack/react-query";
 import * as CartServices from "../services/CartServices";
 import { Drawer } from "antd";
 import { RiMenu2Line } from "react-icons/ri";
+import { IoMdClose } from "react-icons/io";
 
 const HeaderComponents = (props) => {
   const order = useSelector((state) => state.order);
@@ -102,6 +103,7 @@ const HeaderComponents = (props) => {
       } else {
         navigate("/product-search");
       }
+      onCloseSearch();
     }
   };
 
@@ -109,6 +111,7 @@ const HeaderComponents = (props) => {
     if (e.key === "Enter") {
       e.preventDefault();
       BtnSearchProduct();
+      onCloseSearch();
     }
   };
 
@@ -179,16 +182,24 @@ const HeaderComponents = (props) => {
     setOpen(false);
   };
 
+  const [openSearch, setOpenSearch] = useState(false);
+  const showDrawerSearch = () => {
+    setOpenSearch(true);
+  };
+  const onCloseSearch = () => {
+    setOpenSearch(false);
+  };
+
   return (
     <>
       <div className={classOnScroll}>
-        <Navbar className=" justify-content-between ">
+        <Navbar className="justify-content-between">
           {/* <Toaster /> */}
           <Container>
             <Row className="align-items_center">
               <Col
-                sm={1}
-                xs={1}
+                sm={2}
+                xs={2}
                 style={{ display: "none" }}
                 className="openMobile"
               >
@@ -222,7 +233,15 @@ const HeaderComponents = (props) => {
                   </Nav>
                 </Drawer>
               </Col>
-              <Col xxl={1} xl={1} lg={1} md={1} sm={1} xs={4}>
+              <Col
+                xxl={1}
+                xl={1}
+                lg={1}
+                md={1}
+                sm={1}
+                xs={5}
+                className="logoMobile"
+              >
                 <Navbar.Brand href="/">
                   <img src={logo} alt="logo" className="logo" />
                 </Navbar.Brand>
@@ -257,8 +276,8 @@ const HeaderComponents = (props) => {
                 xl={6}
                 lg={6}
                 md={6}
-                sm={6}
-                xs={7}
+                sm={5}
+                xs={5}
                 className="right "
               >
                 <Form className="d-flex form align-items_center">
@@ -280,6 +299,60 @@ const HeaderComponents = (props) => {
                       onChange={onSearch}
                       onKeyDown={handleKeyDown}
                     />
+                  </div>
+                  <div className="searchMobile" style={{ display: "none" }}>
+                    {/* <Space> */}
+                    <div onClick={showDrawerSearch} style={{ fontSize: 20 }}>
+                      <FiSearch />
+                    </div>
+                    {/* </Space> */}
+                    <Drawer
+                      // title="Basic Drawer"
+                      placement="top"
+                      closable={false}
+                      onClose={onCloseSearch}
+                      open={openSearch}
+                      key="top"
+                      style={{ minWidth: "100vw" }}
+                    >
+                      <div className="modalSearchMobile">
+                        <a className="item" href="/product/nam">
+                          Nam
+                        </a>
+                        <span>|</span>
+                        <a className="item" href="/product/nu">
+                          Nữ
+                        </a>
+                        <span>|</span>
+                        <a
+                          className="item"
+                          href="/product/best"
+                          style={{ color: "red" }}
+                        >
+                          Best
+                        </a>
+                        <div className="closeSearchMobile">
+                          <IoMdClose onClick={onCloseSearch} />
+                        </div>
+                      </div>
+                      <div className="searchInput">
+                        <Button
+                          variant="outline-success"
+                          className="align-items_center"
+                          onClick={BtnSearchProduct}
+                        >
+                          <FiSearch />
+                        </Button>
+                        <Form.Control
+                          value={value}
+                          placeholder="Tìm kiếm"
+                          className="me-2"
+                          aria-label="Search"
+                          onChange={onSearch}
+                          onKeyDown={handleKeyDown}
+                        />
+                      </div>
+                    </Drawer>
                   </div>
                   {/* <FiHeart className="icon heart" /> */}
                   <Button className="btn-cart" onClick={handleOrderCart}>
@@ -343,13 +416,24 @@ const HeaderComponents = (props) => {
                             <LoadingCardInfoComponent></LoadingCardInfoComponent>
                           </div>
                         ) : (
-                          <Button
-                            onClick={handleNavigateLogin}
-                            className="btn-sign"
-                            variant=""
-                          >
-                            Đăng nhập <br /> Đăng ký
-                          </Button>
+                          <>
+                            <Button
+                              onClick={handleNavigateLogin}
+                              className="btn-sign"
+                              variant=""
+                            >
+                              Đăng nhập <br /> Đăng ký
+                            </Button>
+
+                            <Button
+                              onClick={handleNavigateLogin}
+                              style={{ display: "none" }}
+                              className="btn-signMobile"
+                              variant=""
+                            >
+                              Đăng nhập
+                            </Button>
+                          </>
                         )}
                       </>
                     )}

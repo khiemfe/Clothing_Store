@@ -82,31 +82,41 @@ const HomePage = () => {
               isLoading={isLoading}
               arrayProducts={arrayProducts}
             />
-            <Row>
-              {products?.data?.map((product) => {
-                console.log("productmap", product);
-                return (
-                  <Col xxl={3} xl={3} lg={4} md={4} sm={6} xs={6} key={product._id}>
-                    {/* <a href="/product-details"> */}
-                    <CardComponents
-                      id={product._id}
-                      countInstock={product.countInstock}
-                      description={product.description}
-                      image={product.image}
-                      name={product.name}
-                      price={product.price}
-                      rating={product.rating}
-                      gender={product.gender}
-                      discount={product.discount}
-                      selled={product.selled}
-                      age={product.age}
-                      size={product.size}
-                    />
-                    {/* </a> */}
-                  </Col>
-                );
-              })}
-            </Row>
+            {!isLoading && (
+              <Row>
+                {products?.data?.map((product) => {
+                  console.log("productmap", product);
+                  return (
+                    <Col
+                      xxl={3}
+                      xl={3}
+                      lg={4}
+                      md={4}
+                      sm={6}
+                      xs={6}
+                      key={product._id}
+                    >
+                      {/* <a href="/product-details"> */}
+                      <CardComponents
+                        id={product._id}
+                        countInstock={product.countInstock}
+                        description={product.description}
+                        image={product.image}
+                        name={product.name}
+                        price={product.price}
+                        rating={product.rating}
+                        gender={product.gender}
+                        discount={product.discount}
+                        selled={product.selled}
+                        age={product.age}
+                        size={product.size}
+                      />
+                      {/* </a> */}
+                    </Col>
+                  );
+                })}
+              </Row>
+            )}
             {/* ---- */}
 
             <div

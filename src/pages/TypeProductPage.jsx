@@ -76,7 +76,7 @@ const TypeProductPage = () => {
         <Col xxl={12} xl={12} className="col-slide">
           <SlideAnNavComponent arrType={arrType} />
           <div className="product">
-            <div style={{textAlign:'center', width:'100%'}}>
+            <div style={{ textAlign: "center", width: "100%" }}>
               <h1 className="text-type">{state}</h1>
             </div>
             <LoadingCardComponent
@@ -88,7 +88,7 @@ const TypeProductPage = () => {
                 {products?.map((product) => {
                   console.log("productmap", product);
                   return (
-                    <Col xxl={3} xl={3} lg={4} key={product._id}>
+                    <Col xxl={3} xl={3} lg={4} sm={6} xs={6} key={product._id}>
                       <CardComponents
                         id={product._id}
                         image={product.image}

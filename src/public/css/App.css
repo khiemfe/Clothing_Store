@@ -36,7 +36,7 @@ body {
 .header {
   padding: 0px 50px;
   position: fixed;
-  z-index: 2;
+  z-index: 10;
   background-color: #fff;
   top: 0;
   width: 100%;
@@ -49,7 +49,7 @@ body {
     height: 70px;
     object-fit: cover; }
   .header .row {
-    width: 100%;
+    width: 100vw;
     display: flex;
     justify-self: center; }
   .header .center {
@@ -156,7 +156,7 @@ body {
 .content {
   display: flex;
   width: 100%;
-  margin: 0; }
+  margin: 0 !important; }
   .content .product {
     padding: 50px; }
   .content .col-slide {
@@ -187,12 +187,14 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding-top: 5px; }
+        padding: 5px 10% 0 10%;
+        flex-wrap: wrap; }
       .content .slide ._navbar .nav .nav-link {
         font-size: 1.8rem;
         font-weight: 500;
         text-transform: uppercase;
-        color: #000; }
+        color: #000;
+        padding: 5px 10px; }
         .content .slide ._navbar .nav .nav-link:hover {
           text-decoration: underline; }
         .content .slide ._navbar .nav .nav-link:focus {
@@ -281,7 +283,8 @@ body {
 
 .img-đetails {
   width: 300px;
-  cursor: pointer; }
+  cursor: pointer;
+  object-fit: cover; }
 
 .modal-dialog .modal-content {
   padding-bottom: 12px; }
@@ -345,7 +348,8 @@ body {
     object-fit: cover; }
     .card .image .card-img-top {
       width: 100%;
-      height: 400px; }
+      height: 400px;
+      object-fit: cover; }
   .card .card-title {
     margin-top: 5px;
     font-size: 1.5rem;
@@ -1065,7 +1069,8 @@ body {
 .footer-web {
   background-color: #f5f5f5;
   padding-top: 10px;
-  font-size: 14px; }
+  font-size: 14px;
+  z-index: 10; }
   .footer-web .item {
     display: flex;
     align-items: center; }
@@ -1158,20 +1163,125 @@ body {
 
 @media (max-width: 550px) {
   .header {
-    padding: 0 5px !important;
+    padding: 0 !important;
     position: relative; }
+    .header .container {
+      padding: 0 !important;
+      width: 100% !important; }
+      .header .container .align-items_center.row {
+        margin: 0 !important; }
+    .header .logoMobile {
+      padding: 0; }
     .header .openMobile {
-      display: block !important; }
+      display: block !important;
+      text-align: center;
+      padding: 0; }
     .header .center {
       display: none; }
+    .header .right {
+      padding: 0 !important; }
+      .header .right .btn-cart {
+        flex: 1;
+        padding: 0 !important;
+        margin: 0 !important; }
+      .header .right .info-user {
+        flex: 1; }
+      .header .right .textName {
+        display: none; }
     .header .search {
       display: none !important; }
+    .header .searchMobile {
+      display: block !important;
+      flex: 1;
+      text-align: center; }
+      .header .searchMobile .nav-mobile {
+        display: flex !important; }
+    .header .btn-sign {
+      display: none !important; }
+    .header .btn-signMobile {
+      display: inline !important;
+      font-size: 12px; }
+  .ant-drawer-body {
+    padding: 30px !important;
+    position: relative; }
+    .ant-drawer-body .modalSearchMobile {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 60px;
+      font-size: 18px; }
+      .ant-drawer-body .modalSearchMobile .item {
+        color: #888 !important;
+        display: block;
+        text-decoration: none;
+        font-weight: 500;
+        text-transform: uppercase; }
+      .ant-drawer-body .modalSearchMobile span {
+        color: #888; }
+      .ant-drawer-body .modalSearchMobile .closeSearchMobile {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        font-size: 26px;
+        color: #555; }
+  .searchInput {
+    display: flex;
+    width: 100%;
+    margin-top: 20px;
+    position: relative;
+    border-bottom: 1px solid #999; }
+    .searchInput input {
+      padding: 0;
+      font-size: 1.6rem;
+      border-radius: 0px;
+      border: none;
+      background-color: transparent; }
+      .searchInput input:focus {
+        border-bottom: none;
+        box-shadow: none; }
+    .searchInput button {
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 1.8rem;
+      color: #333;
+      border: none;
+      background-color: transparent; }
   .noneMoblie {
     display: none !important; }
   .home .nav-link {
-    font-size: 10px !important;
-    padding: 5px 2px !important; }
-  .home .product {
-    padding: 0 20px !important; }
-    .home .product .card-img-top {
-      height: 250px !important; } }
+    font-size: 14px !important; }
+  .product {
+    padding: 20px !important; }
+    .product .text-type {
+      font-size: 26px !important; }
+  .card-img-top {
+    height: 250px !important; }
+  .card {
+    height: auto !important; }
+  .col-card {
+    height: 360px !important; }
+    .col-card .col-12.placeholder {
+      height: 250px !important; }
+  .footer-web .container .row .item {
+    justify-content: center; }
+  .bannerNav {
+    height: 300px !important; }
+  .genderPage {
+    margin-top: 40px !important; }
+    .genderPage .genderPage-text {
+      font-size: 26px !important; }
+  .search-page {
+    padding: 40px 0 0 0 !important; }
+  .produc-details .container {
+    display: block !important;
+    padding-top: 0 !important; }
+    .produc-details .container .img-đetails {
+      width: 100% !important; }
+    .produc-details .container .img-anhphu {
+      width: 100% !important; }
+  .produc-details .notify {
+    margin: 0 !important;
+    padding: 20px; }
+    .produc-details .notify .add {
+      font-size: 14px !important;
+      padding: 0 30px !important; } }

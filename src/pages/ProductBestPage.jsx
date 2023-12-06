@@ -44,12 +44,16 @@ const ProductBestPage = () => {
     <div style={{ marginBottom: 50, minHeight: "100%" }}>
       <div style={{ width: "100%" }}>
         <img
+          className="bannerNav"
           src={banner}
           alt=""
           style={{ width: "100%", height: "450px", objectFit: "cover" }}
         />
       </div>
-      <div style={{ textAlign: "center", width: "100%", marginTop: 60 }}>
+      <div
+        className="genderPage"
+        style={{ textAlign: "center", width: "100%", marginTop: 60 }}
+      >
         <h1 className="genderPage-text">Best Seller</h1>
       </div>
       <div style={{ padding: "0 20px" }}>
@@ -61,7 +65,15 @@ const ProductBestPage = () => {
             {products?.data?.map((product) => {
               console.log("productmap", product);
               return (
-                <Col xxl={3} xl={3} lg={4} md={4} key={product._id}>
+                <Col
+                  xxl={3}
+                  xl={3}
+                  lg={4}
+                  md={4}
+                  sm={6}
+                  xs={6}
+                  key={product._id}
+                >
                   {/* <a href="/product-details"> */}
                   <CardComponents
                     id={product._id}

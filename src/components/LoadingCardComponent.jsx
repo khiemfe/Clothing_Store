@@ -53,7 +53,7 @@ const LoadingCardComponent = ({
         <Row>
           {arrayProducts?.map((arrayProduct) => {
             return (
-              <Col xxl={3} xl={3} lg={4} md={4} key={arrayProduct} className="col-card">
+              <Col xxl={3} xl={3} lg={4} md={4} sm={6} xs={6} key={arrayProduct} className="col-card">
                 <LoadingCard />
               </Col>
             );
