@@ -7,7 +7,7 @@ import Placeholder from "react-bootstrap/Placeholder";
 const LoadingProductDetails = (props) => {
   const { key } = props;
   return (
-    <div style={{ display: "flex", width: "1400px", justifyContent: "start" }}>
+    <div style={{ display: "flex", width: "1400px", justifyContent: "start", marginTop:40 }}>
       <Card
         className="imgload"
         style={{ height: "auto", border: "none" }}
@@ -159,24 +159,9 @@ const LoadingProductDetails = (props) => {
               xs={1}
             />
           </Placeholder>
+          
           <Placeholder
-            style={{ marginTop: 50 }}
-            as={Card.Title}
-            animation="glow"
-          >
-            <Placeholder
-              style={{ backgroundColor: "#999", height: 20 }}
-              xs={2}
-            />
-          </Placeholder>
-          <Placeholder as={Card.Title} animation="glow">
-            <Placeholder
-              style={{ backgroundColor: "#999", height: 20 }}
-              xs={2}
-            />
-          </Placeholder>
-          <Placeholder
-            style={{ marginTop: 55 }}
+            style={{ marginTop: 40 }}
             as={Card.Title}
             animation="glow"
           >
@@ -193,6 +178,26 @@ const LoadingProductDetails = (props) => {
               xs={1}
             />
           </Placeholder>
+          <Placeholder
+            style={{ marginTop: 40 }}
+            as={Card.Title}
+            animation="glow"
+          >
+          </Placeholder>
+          <Placeholder as={Card.Title} animation="glow">
+            <Placeholder
+              style={{ backgroundColor: "#999", height: 20 }}
+              xs={2}
+            />
+          </Placeholder>
+
+          
+          <Placeholder as={Card.Title} animation="glow" style={{marginTop:20}}>
+            <Placeholder
+              style={{ backgroundColor: "#999", height: 200, width: '100%'}}
+              xs={2}
+            />
+          </Placeholder>
         </Card.Body>
       </Card>
     </div>
@@ -204,7 +209,7 @@ const LoadingProductDetailsComponent = ({ children, isLoading }) => {
     <>
       {isLoading ? (
         <Row>
-          <Col xxl={3} xl={3}>
+          <Col>
             <LoadingProductDetails />
           </Col>
         </Row>

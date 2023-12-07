@@ -348,11 +348,11 @@ const OrderPage = () => {
   console.log("orderItemm", order?.orderItems);
 
   return (
-    <div style={{ minHeight: "100vh", marginBottom: 50 }}>
+    <div style={{ minHeight: "100vh", marginBottom: 50 }} className="orderPage">
       <Toaster />
       <h1
         style={{
-          margin: "40px 0",
+          margin: "30px 0 30px 0",
           textAlign: "center",
           textTransform: "uppercase",
         }}
@@ -405,6 +405,7 @@ const OrderPage = () => {
                     </div>
                   ))}
               </div>
+              <div className="product-cart">
               {order?.orderItems?.map((item, index) => {
                 return (
                   <span key={index}>
@@ -492,6 +493,7 @@ const OrderPage = () => {
                   </span>
                 );
               })}
+              </div>
             </div>
             <div className="pay">
               {noBuy && listChecked?.length === 0 && (

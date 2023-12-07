@@ -81,8 +81,10 @@ const MyOrderPage = () => {
   useEffect(() => {
     if (isSuccessCancel && dataCancel?.status === "OK") {
       success("Bạn đã huỷ đơn hàng thành công");
+      setIsModalOpen(false);
     } else if (isErrorCancel) {
       error("Bạn đã huỷ đơn hàng thành công");
+      setIsModalOpen(false);
     }
   }, [isSuccessCancel, isErrorCancel]);
 
@@ -95,7 +97,6 @@ const MyOrderPage = () => {
 
   const handleOkModel = () => {
     handleCancelOrder(okHuy);
-    setIsModalOpen(false);
     setOkHuy("");
   };
 
@@ -169,7 +170,8 @@ const MyOrderPage = () => {
                             onOk={handleOkModel}
                             onCancel={() => setIsModalOpen(false)}
                           >
-                            <p>Bạn có muốn huỷ đơn hàng này?</p>
+                            <p className="huy">Bạn có muốn huỷ đơn hàng này?</p>
+                            <LoadingComponents isLoading={isLoadingCancel}/>
                           </Modal>
                         </div>
                       </div>
