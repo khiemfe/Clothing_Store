@@ -936,7 +936,7 @@ body {
 
 .ant-modal.css-dev-only-do-not-override-1vr7spz {
   .ant-modal-content {
-    width: 600px !important;
+    width: 100% !important;
   }
 
   .ant-btn.css-dev-only-do-not-override-1vr7spz.ant-btn-default {
@@ -1930,7 +1930,7 @@ body {
 
 @media (max-width: 550px) {
   .header {
-    padding: 0 !important;
+    padding: 0 10px !important;
     position: relative;
 
     .container {
@@ -1966,7 +1966,7 @@ body {
       }
 
       .info-user {
-        flex: 1
+        flex: 1;
       }
 
       .textName {
@@ -1989,7 +1989,7 @@ body {
     }
 
     .btn-sign {
-     display: none !important;
+      display: none !important;
     }
 
     .btn-signMobile {
@@ -2117,7 +2117,6 @@ body {
   }
 
   .produc-details {
-
     .container {
       display: block !important;
       padding-top: 0 !important;
@@ -2128,6 +2127,10 @@ body {
 
       .img-anhphu {
         width: 100% !important;
+
+        .img-đetails {
+          width: 25% !important;
+        }
       }
     }
 

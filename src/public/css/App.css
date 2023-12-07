@@ -541,7 +541,7 @@ body {
   margin-top: 5px; }
 
 .ant-modal.css-dev-only-do-not-override-1vr7spz .ant-modal-content {
-  width: 600px !important; }
+  width: 100% !important; }
 
 .ant-modal.css-dev-only-do-not-override-1vr7spz .ant-btn.css-dev-only-do-not-override-1vr7spz.ant-btn-default {
   display: none; }
@@ -1163,7 +1163,7 @@ body {
 
 @media (max-width: 550px) {
   .header {
-    padding: 0 !important;
+    padding: 0 10px !important;
     position: relative; }
     .header .container {
       padding: 0 !important;
@@ -1279,6 +1279,8 @@ body {
       width: 100% !important; }
     .produc-details .container .img-anhphu {
       width: 100% !important; }
+      .produc-details .container .img-anhphu .img-đetails {
+        width: 25% !important; }
   .produc-details .notify {
     margin: 0 !important;
     padding: 20px; }
