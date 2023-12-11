@@ -5,7 +5,6 @@ import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
 import { getBase64 } from "../utils";
 import * as userServices from "../services/userServices";
 import { useMutationHook } from "../hooks/useMutationHook";
-import LoadingComponents from "../components/LoadingComponents";
 import { success, error, warning } from "../components/Message";
 import { useQuery } from "@tanstack/react-query";
 import { MdDeleteOutline } from "react-icons/md";
@@ -17,6 +16,7 @@ import ModelComponent from "./ModelComponent";
 import { Form, Input, Space } from "antd";
 import LoadingUpdateComponent from "./LoadingUpdateComponent";
 import { Toaster } from "react-hot-toast";
+import LoadingFullComponents from "./LoadingFullComponents";
 
 // import { getAllUser } from '../services/userServices'
 
@@ -226,6 +226,7 @@ const AdminUser = () => {
   };
 
   const handleDeleteUser = () => {
+    handleCanelDelete()
     mutationDelete.mutate(
       { id: rowSelected, token: user?.access_token },
       {
@@ -404,6 +405,7 @@ const AdminUser = () => {
   };
   return (
     <>
+      <LoadingFullComponents isLoading={isLoadingDeleted || isLoadingUpdated} />
       <Toaster />
       <h1 style={{ textTransform: "uppercase", margin: "10px 0 20px 0" }}>
         Quản lí người dùng
@@ -441,7 +443,6 @@ const AdminUser = () => {
                 handleOnchange={handleOnchangeDetails}
                 handleOnchangeAvatar={handleOnchangeAvatarDetails}
                 onFinish={onUpdateUser}
-                isLoading={isLoadingUpdated}
                 title="Update"
               />
             </LoadingUpdateComponent>
@@ -454,9 +455,7 @@ const AdminUser = () => {
             onCancel={handleCanelDelete}
             onOk={handleDeleteUser}
           >
-            <LoadingComponents isLoading={isLoadingDeleted}>
-              <div>Bạn có chắc muốn xoá người dùng này không?</div>
-            </LoadingComponents>
+            <div>Bạn có chắc muốn xoá người dùng này không?</div>
           </ModelComponent>
         </div>
       </div>

@@ -1,5 +1,3 @@
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Placeholder from "react-bootstrap/Placeholder";

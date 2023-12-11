@@ -48,6 +48,19 @@ export const renderOptions = (arr) => {
   return results;
 };
 
+export const renderOptionsAddress = (arr) => {
+  let results = [];
+  if (arr) {
+    results = arr?.map((item) => {
+      return {
+        value: item?.name,
+        // label: item?.codename,
+      };
+    });
+  }
+  return results;
+};
+
 export const convertPrice = (price) => {
   try {
     const result = price?.toLocaleString();

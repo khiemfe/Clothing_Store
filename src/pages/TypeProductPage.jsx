@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import NavbarComponents from "../components/NavbarComponents";
 import CardComponents from "../components/CardComponents";
 import { Pagination } from "antd";
 import { useLocation } from "react-router-dom";
@@ -14,7 +13,7 @@ const TypeProductPage = () => {
   const [products, setProducts] = useState([]);
   const [panigate, setPanigate] = useState({
     page: 0,
-    limit: 2,
+    limit: 4,
     total: 1,
   });
 

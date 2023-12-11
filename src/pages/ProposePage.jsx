@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { useQuery } from "@tanstack/react-query";
 import * as ProductServices from "../services/ProductServices";
-import CardProposeComponents from "../components/CardProposeComponents";
 import { Col, Row } from "react-bootstrap";
 import axios from "axios";
 import LoadingComponents from "../components/LoadingComponents";

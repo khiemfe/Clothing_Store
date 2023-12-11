@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import { useNavigate } from "react-router-dom";
-import * as ProductServices from "../services/ProductServices";
 
 const NavbarComponents = (arrType) => {
   const navigate = useNavigate();

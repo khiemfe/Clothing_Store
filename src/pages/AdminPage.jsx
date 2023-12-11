@@ -40,18 +40,19 @@ const NotFoundPage = () => {
   return (
     <>
       {/* <HeaderComponents /> */}
-      <div style={{ display: "flex", overflowX: "hidden", marginBottom: 50 }}>
+      <div className="systemAdmin-mobile" style={{ display: "flex", overflowX: "hidden", marginBottom: 50 }}>
         <Menu
           mode="inline"
+          className="left-systemAdmin"
           style={{
-            width: 256,
+            width: 200,
             boxShadow: "1px 1px 2px #ccc",
             height: "100vh",
           }}
           items={items}
           onClick={handleOnClick}
         />
-        <div style={{ flex: 1, padding: "15px 0 15px 15px" }}>
+        <div style={{ flex: 1, padding: "15px"}}>
           {renderPage(keySelected)}
         </div>
       </div>

@@ -1,23 +1,22 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { convertPrice } from "../utils";
+import { convertPrice, renderOptionsAddress } from "../utils";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Radio } from "antd";
+import { Radio } from "antd";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import * as OrderServcie from "../services/OrderServices";
 import { useMutationHook } from "../hooks/useMutationHook";
 import * as UserServcie from "../services/userServices";
 import { updateUser } from "../redux/slices/userSlice";
 import Modal from "react-bootstrap/Modal";
 import { Form } from "antd";
-import LoadingUpdateComponent from "../components/LoadingUpdateComponent";
 import ModelUpdateUserComponent from "../components/ModelUpdateUserComponent";
 import { success, error, warning } from "../components/Message";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as CartServices from "../services/CartServices";
 import * as PaymentServices from "../services/PaymentServices";
-import { useQuery } from "@tanstack/react-query";
-import HeaderComponents from "../components/HeaderComponents";
-import LoadingComponents from "../components/LoadingComponents";
 import { Toaster } from "react-hot-toast";
+import LoadingFullComponents from "../components/LoadingFullComponents";
 
 const PaymentPage = () => {
   const order = useSelector((state) => state.order);
@@ -208,6 +207,7 @@ const PaymentPage = () => {
     if (e.target.name === "phone") {
       setIsPhoneNumber(true);
     }
+    setErrInput("");
   };
 
   const handleGetDetailsUser = async (id, token) => {
@@ -222,7 +222,7 @@ const PaymentPage = () => {
         ...res?.data,
         name: stateUserDetailsUpdate?.name,
         phone: stateUserDetailsUpdate?.phone,
-        address: stateUserDetailsUpdate?.address,
+        address: address,
         access_token: token,
         refreshToken,
       })
@@ -241,19 +241,33 @@ const PaymentPage = () => {
 
   const handleUpdate = () => {
     setIsPhoneNumber(stateUserDetailsUpdate?.phone.match(/^[0-9]{10}$/));
-    if (isPhoneNumber?.length === 1) {
-      mutationUpdate.mutate({
-        id: user?.id,
-        name: stateUserDetailsUpdate?.name,
-        phone: stateUserDetailsUpdate?.phone,
-        address: stateUserDetailsUpdate?.address,
-        access_token: user?.access_token,
-      });
+    if (
+      stateUserDetailsUpdate?.name &&
+      stateUserDetailsUpdate?.phone &&
+      inputLabel &&
+      tinhLabel &&
+      huyenLabel &&
+      xaLabel
+    ) {
+      setErrInput("");
+      if (isPhoneNumber?.length === 1) {
+        mutationUpdate.mutate({
+          id: user?.id,
+          name: stateUserDetailsUpdate?.name,
+          phone: stateUserDetailsUpdate?.phone,
+          address: address,
+          access_token: user?.access_token,
+        });
+      }
+    } else {
+      setErrInput("Vui lòng nhập đầy đủ thông tin");
     }
   };
 
   console.log("orderedd", order);
 
+  const timeNow = new Date().toString();
+  console.log("timeNow", timeNow);
   const handleAddOrder = () => {
     if (
       user?.access_token &&
@@ -277,6 +291,7 @@ const PaymentPage = () => {
         totalPrice: totalPriceMemo,
         user: user?.id,
         email: user?.email,
+        deliveredAt: timeNow,
       });
     }
   };
@@ -340,124 +355,180 @@ const PaymentPage = () => {
 
   // const pricePaypal = totalPriceMemo / 23;
 
+  //  address
+  const [errInput, setErrInput] = useState("");
+
+  const [address, setAddress] = useState(user?.address);
+
+  console.log(
+    "stateUserDetailsUpdate",
+    stateUserDetailsUpdate?.address?.split(", ")[3]
+  );
+
+  const [tinhOptions, setTinhOptions] = useState([]);
+  const [huyenOptions, setHuyenOptions] = useState([]);
+  const [xaOptions, setXaOptions] = useState([]);
+  const [tinhLabel, setTinhLabel] = useState(user?.address?.split(", ")[3]);
+  console.log("tinhLabel", tinhLabel);
+  const [huyenLabel, setHuyenLabel] = useState(user?.address?.split(", ")[2]);
+  const [xaLabel, setXaLabel] = useState(user?.address?.split(", ")[1]);
+
+  const [inputLabel, setInputLabel] = useState(user?.address?.split(", ")[0]);
+
+  console.log("inputLabel", inputLabel);
+
+  useEffect(() => {
+    fetch("https://provinces.open-api.vn/api/?depth=3")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setTinhOptions(data);
+        const codenameTinh = data.find((dt) => dt.name === tinhLabel);
+        return codenameTinh;
+      })
+      .then((data) => {
+        setHuyenOptions(data?.districts);
+        const codenameHuyen = data?.districts.find(
+          (dt) => dt.name === huyenLabel
+        );
+        return codenameHuyen;
+      })
+      .then((data) => {
+        setXaOptions(data?.wards);
+      });
+  }, [tinhLabel, huyenLabel, xaLabel]);
+
+  const handleOnchangeAddress = (e) => {
+    setInputLabel(e.target.value);
+  };
+
+  const handleChangeSelectTinh = (e) => {
+    console.log("sosanh", e);
+    if (e !== tinhLabel) {
+      setTinhLabel(e);
+      setHuyenLabel("");
+      setXaLabel("");
+    }
+  };
+
+  const handleChangeSelectHuyen = (e) => {
+    if (e !== huyenLabel) {
+      setHuyenLabel(e);
+      setXaLabel("");
+    }
+  };
+
+  const handleChangeSelectXa = (e) => {
+    setXaLabel(e);
+  };
+
+  const optionsTinh = renderOptionsAddress(tinhOptions);
+  const optionsHuyen = renderOptionsAddress(huyenOptions);
+  const optionsXa = renderOptionsAddress(xaOptions);
+
+  console.log("optionsHuyen", optionsHuyen);
+
+  console.log("Label", xaLabel, huyenLabel, tinhLabel);
+
+  useEffect(() => {
+    setAddress(
+      inputLabel + ", " + xaLabel + ", " + huyenLabel + ", " + tinhLabel
+    );
+  }, [inputLabel, xaLabel, huyenLabel, tinhLabel]);
+  console.log("address", address);
+
+  const onCloseModel = () => {
+    formUpdate.resetFields();
+    setIsOpenModalUpdate(false);
+    setIsPhoneNumber(true);
+    setTinhLabel(user?.address?.split(", ")[3]);
+    setHuyenLabel(user?.address?.split(", ")[2]);
+    setXaLabel(user?.address?.split(", ")[1]);
+    setInputLabel(user?.address?.split(", ")[0]);
+    setStateUserDetailsUpdate({ name: user?.name, phone: user?.phone });
+    setErrInput("");
+  };
+
   return (
-    <div>
-      <Toaster />
-      <h1
-        style={{
-          textAlign: "center",
-          marginTop: "20px",
-          textTransform: "uppercase",
-        }}
-      >
-        Thanh toán
-      </h1>
-      <div className="page-payment">
-        <div className="payment">
-          <div className="pay-radio">
-            <div className="method-pay">
-              <h3>Chọn phương thức giao hàng:</h3>
-              <Radio.Group onChange={onChangeGH} value={valueRadioGH}>
-                <div className="radio-text">
-                  <Radio value={"GHTK"}></Radio>
-                  <h4>Giao hàng tiết kiệm</h4>
-                </div>
-                <div className="radio-text">
-                  <Radio value={"GHN"}></Radio>
-                  <h4>Giao hàng nhanh</h4>
-                </div>
-              </Radio.Group>
+    <>
+      <LoadingFullComponents isLoading={isLoadingAddOrder || isLoadingUpdate} />
+      <div>
+        <Toaster />
+        <h1
+          style={{
+            textAlign: "center",
+            marginTop: "30px",
+            textTransform: "uppercase",
+          }}
+        >
+          Thanh toán
+        </h1>
+        <Row className="page-payment">
+          <Col xxl={8} xl={8} lg={8} className="payment">
+            <div className="pay-product">
+              <h3>{order?.orderItemsSelected?.length} sản phẩm</h3>
+              {/* <h3 style={{ margin: 0 }}>Tạm tính: </h3> */}
+              {order?.orderItemsSelected?.map((item, index) => {
+                return (
+                  <div className="product-item">
+                    <img className="product-img" src={item.image} alt="" />
+                    <div className="product-body">
+                      <p className="item-text">{item?.name}</p>
+                      <p className="item-text">{convertPrice(item?.price)}</p>
+                      <p className="item-text">SL: {item?.amount}</p>
+                      <p className="item-text">Size: {item?.size}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-            <div className="method-pay">
-              <h3>Chọn phương thức thanh toán:</h3>
-              <Radio.Group onChange={onChangeTT} value={valueRadioTT}>
-                <div className="radio-text">
-                  <Radio value={"later_money"}></Radio>
-                  <h4>Thanh toán khi nhận hàng</h4>
-                </div>
-                {/* <div className="radio-text" >
-                  <Radio value={"paypal"}></Radio>
-                  <h4>Thanh toán bằng Paypal</h4>
-                </div> */}
-              </Radio.Group>
-            </div>
-          </div>
-          <div className="pay-address">
-            <h3>Địa chỉ giao hàng: </h3>
-            <p
-              onClick={openModalUpdata}
-              style={{
-                textDecoration: "underline",
-                color: "blue",
-                cursor: "pointer",
-                fontSize: "14px",
-                display: "inline-block",
-              }}
-            >
-              Thay đổi
-            </p>
-            <div className="pay-list">
-              <div
+            <div className="pay-address">
+              <h3 className="title">Địa chỉ giao hàng</h3>
+              <p
+                onClick={openModalUpdata}
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: 10,
+                  textDecoration: "underline",
+                  color: "blue",
+                  cursor: "pointer",
+                  fontSize: "15px",
+                  display: "inline-block",
+                  textAlign: "center",
                 }}
               >
+                Thay đổi
+              </p>
+              <div className="pay-list">
                 <div className="pay-item">
-                  <p>Name: </p>
-                  <span>{user?.name}</span>
+                  <p>
+                    Name: <span>{user?.name}</span>
+                  </p>
                 </div>
                 <div className="pay-item">
-                  <p>Phone: </p>
-                  <span>{user?.phone}</span>
+                  <p>
+                    Phone: <span>{user?.phone}</span>
+                  </p>
                 </div>
-              </div>
-              <div style={{ display: "flex", justifyContent: "center" }}>
                 <div className="pay-item">
-                  <p>Address: </p>
-                  <span>{user?.address}</span>
+                  <p>
+                    Address: <span>{user?.address}</span>
+                  </p>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="pay">
-          <div className="pay-product">
-            <h3>Sản phẩm: </h3>
-            {order?.orderItemsSelected?.map((item, index) => {
-              return (
-                <div className="product-item">
-                  <img
-                    style={{ width: 100, height: 100 }}
-                    src={item.image}
-                    alt=""
-                  />
-                  <div style={{ marginLeft: 20 }}>
-                    <p className="item-text">{item?.name}</p>
-                    <p className="item-text">{convertPrice(item?.price)}</p>
-                    <p className="item-text">SL: {item?.amount}</p>
-                    <p className="item-text">Size: {item?.size}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          <div style={{ width: "50%" }}>
-            <p style={{ color: "red", fontSize: 14 }}>
-              {mutationAddOrder?.error?.response?.data?.message}
-            </p>
+          </Col>
+          <Col xxl={4} xl={4} lg={4} className="pay">
             <div className="ok-pay">
               <ul className="pay-list">
                 <li className="pay-item">
-                  <h3>Sản phẩm:</h3>
+                  <h3>Tạm tính:</h3>
                   <span>{convertPrice(priceMemo)}</span>
                 </li>
                 <li className="pay-item">
                   <h3>Phí giao hàng:</h3>
                   <span>{convertPrice(shippingPrice)}</span>
                 </li>
-                <li className="pay-item">
+                <li className="pay-item total">
                   <h3>Tổng tiền:</h3>
                   <span style={{ fontWeight: "bold" }}>
                     {convertPrice(totalPriceMemo)}
@@ -465,48 +536,87 @@ const PaymentPage = () => {
                 </li>
               </ul>
 
+              <div className="pay-radio">
+                <div className="method-pay">
+                  <h3 className="title">Phương thức giao hàng:</h3>
+                  <Radio.Group onChange={onChangeGH} value={valueRadioGH}>
+                    <div className="radio-text">
+                      <Radio value={"GHTK"}></Radio>
+                      <h4>Giao hàng tiết kiệm</h4>
+                    </div>
+                    <div className="radio-text">
+                      <Radio value={"GHN"}></Radio>
+                      <h4>Giao hàng nhanh</h4>
+                    </div>
+                  </Radio.Group>
+                </div>
+                <div className="method-pay">
+                  <h3 className="title">Phương thức thanh toán:</h3>
+                  <Radio.Group onChange={onChangeTT} value={valueRadioTT}>
+                    <div className="radio-text">
+                      <Radio value={"later_money"}></Radio>
+                      <h4>Thanh toán khi nhận hàng</h4>
+                    </div>
+                    {/* <div className="radio-text" >
+                  <Radio value={"paypal"}></Radio>
+                  <h4>Thanh toán bằng Paypal</h4>
+                </div> */}
+                  </Radio.Group>
+                </div>
+              </div>
+
               {valueRadioTT === "paypal" ? (
                 <></>
               ) : (
-                <div style={{ position: "relative" }}>
+                <div className="btn-buy">
+                  <p
+                    style={{ color: "red", fontSize: 14, textAlign: "center" }}
+                  >
+                    {mutationAddOrder?.error?.response?.data?.message}
+                  </p>
                   <button className="pay-btn" onClick={handleAddOrder}>
                     Đặt hàng
                   </button>
-                  <div style={{ position: "absolute", left: "30%", top: 10 }}>
-                    <LoadingComponents isLoading={isLoadingAddOrder} />
-                  </div>
                 </div>
               )}
             </div>
-          </div>
-        </div>
-        <Modal
-          show={isOpenModalUpdate}
-          onHide={() => {
-            setIsOpenModalUpdate(false);
-            setIsPhoneNumber(true);
-          }}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centeredxw
-          style={{ marginTop: 100 }}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-              Chỉnh sửa thông tin giao hàng
-            </Modal.Title>
-          </Modal.Header>
-          <ModelUpdateUserComponent
-            stateUser={stateUserDetailsUpdate}
-            form={formUpdate}
-            handleOnchange={handleOnchangeDetailsUpdate}
-            onFinish={handleUpdate}
-            isLoading={isLoadingUpdate}
-            title="Update"
-            isPhoneNumber={isPhoneNumber}
-          />
-        </Modal>
-        {/* <Modal
+          </Col>
+          <Modal
+            show={isOpenModalUpdate}
+            onHide={onCloseModel}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centeredxw
+            style={{ marginTop: 100 }}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Chỉnh sửa thông tin giao hàng
+              </Modal.Title>
+            </Modal.Header>
+            <ModelUpdateUserComponent
+              stateUser={stateUserDetailsUpdate}
+              form={formUpdate}
+              handleOnchange={handleOnchangeDetailsUpdate}
+              onFinish={handleUpdate}
+              // isLoading={isLoadingUpdate}
+              title="Update"
+              isPhoneNumber={isPhoneNumber}
+              tinhLabel={tinhLabel}
+              optionsTinh={optionsTinh}
+              handleChangeSelectTinh={handleChangeSelectTinh}
+              huyenLabel={huyenLabel}
+              optionsHuyen={optionsHuyen}
+              handleChangeSelectHuyen={handleChangeSelectHuyen}
+              xaLabel={xaLabel}
+              optionsXa={optionsXa}
+              handleChangeSelectXa={handleChangeSelectXa}
+              inputLabel={inputLabel}
+              handleOnchangeAddress={handleOnchangeAddress}
+              errInput={errInput}
+            />
+          </Modal>
+          {/* <Modal
           show={true}
           onHide={() => {
             setIsOpenModalUpdate(false);
@@ -536,8 +646,9 @@ const PaymentPage = () => {
             </div>
           </Modal.Body>
         </Modal> */}
+        </Row>
       </div>
-    </div>
+    </>
   );
 };
 

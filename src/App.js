@@ -3,23 +3,19 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useNavigate,
 } from "react-router-dom";
 import { routes } from "./routes";
 import DefaultComponents from "./components/DefaultComponents";
-import NotFoundPage from "./pages/NotFoundPage";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import { isJsonString } from "./utils";
 import jwt_decode from "jwt-decode";
 import * as UserService from "./services/userServices";
 import { useDispatch, useSelector } from "react-redux";
-import { resetUser, updateUser } from "./redux/slices/userSlice";
-import LoadingComponents from "./components/LoadingComponents";
+import { resetUser } from "./redux/slices/userSlice";
 import FooterComponent from "./components/FooterComponent";
 import ModelSingIn from "./components/ModelSingIn";
 import * as UserServcie from "./services/userServices";
 import HeaderComponents from "./components/HeaderComponents";
+import LoadingFullComponents from "./components/LoadingFullComponents";
 
 function App() {
   // useEffect(() => {
@@ -83,7 +79,6 @@ function App() {
           const data = await UserService.refreshToken(refreshToken);
           config.headers["token"] = `Bearer ${data?.access_token}`;
         } else {
-          console.log("lay cai cu");
           const storageData = localStorage.getItem("access_token");
           config.headers["token"] = `Bearer ${storageData.slice(1, -1)}`;
         }
@@ -137,40 +132,41 @@ function App() {
   };
 
   return (
-    <div onWheel={handleWheel}>
+    <div onWheel={handleWheel} className="web-store">
       {/* <HeaderComponents /> */}
-      <LoadingComponents isLoading={isLoading}>
-        <Router>
-          <Routes>
-            {routes.map((route, index) => {
-              const Page = route.page;
-              // const isCheckAuth = !route.isPrivate || user.isAdmin //nếu isPrivate flase thì hiển thị bth, còn true thì hiển thị user.isAdmin
-              const Layout = route.isShowHeader ? DefaultComponents : Fragment;
-              const LayoutFooter = route.isShowFooter
-                ? FooterComponent
-                : Fragment;
-              return (
-                <Route
-                  key={index}
-                  path={route.path}
-                  element={
-                    <>
-                      <Layout>
-                        {route.isShowHeader && (
-                          <HeaderComponents class={showHeader} />
-                        )}
-                        <Page />
-                        {openModel && <ModelSingIn />}
-                        <LayoutFooter />
-                      </Layout>
-                    </>
-                  }
-                />
-              );
-            })}
-          </Routes>
-        </Router>
-      </LoadingComponents>
+      <LoadingFullComponents isLoading={isLoading} />
+      <Router>
+        <Routes>
+          {routes.map((route, index) => {
+            const Page = route.page;
+            // const isCheckAuth = !route.isPrivate || user.isAdmin //nếu isPrivate flase thì hiển thị bth, còn true thì hiển thị user.isAdmin
+            const Layout = route.isShowHeader ? DefaultComponents : Fragment;
+            const LayoutFooter = route.isShowFooter
+              ? FooterComponent
+              : Fragment;
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <>
+                    <Layout>
+                      {route.isShowHeader && route.isScroll ? (
+                        <HeaderComponents class={showHeader} />
+                      ) : (
+                        <HeaderComponents class="header" />
+                      )}
+                      <Page />
+                      {openModel && <ModelSingIn />}
+                      <LayoutFooter />
+                    </Layout>
+                  </>
+                }
+              />
+            );
+          })}
+        </Routes>
+      </Router>
     </div>
   );
 }

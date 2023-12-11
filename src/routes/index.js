@@ -1,7 +1,6 @@
 import HomePage from "../pages/HomePage";
 import OrderPage from "../pages/OrderPage";
 import MyOrderPage from "../pages/MyOrderPage";
-import ProductsPage from "../pages/ProductsPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import TypeProductPage from "../pages/TypeProductPage";
 import SignUpPage from "../pages/SignUpPage";
@@ -23,6 +22,7 @@ export const routes = [
     page: HomePage,
     isShowHeader: true,
     isShowFooter: true,
+    isScroll: true,
   },
   {
     path: "/order",
@@ -49,12 +49,6 @@ export const routes = [
     isShowFooter: true,
   },
   {
-    path: "/products",
-    page: ProductsPage,
-    isShowHeader: true,
-    isShowFooter: true,
-  },
-  {
     path: "/product/:type",
     page: TypeProductPage,
     isShowHeader: true,
@@ -65,18 +59,21 @@ export const routes = [
     page: ProductNamPage,
     isShowHeader: true,
     isShowFooter: true,
+    isScroll: true,
   },
   {
     path: "/product/Nu",
     page: ProductNuPage,
     isShowHeader: true,
     isShowFooter: true,
+    isScroll: true,
   },
   {
     path: "/product/Best",
     page: ProductBestPage,
     isShowHeader: true,
     isShowFooter: true,
+    isScroll: true,
   },
   {
     path: "/sign-in",
@@ -101,12 +98,14 @@ export const routes = [
     page: ProductSearchPage,
     isShowHeader: true,
     isShowFooter: true,
+    isScroll: true,
   },
   {
     path: "/propose",
     page: ProposePage,
     isShowHeader: true,
     isShowFooter: true,
+    isScroll: true,
   },
   {
     path: "/profile-user",

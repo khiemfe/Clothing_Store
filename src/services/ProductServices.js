@@ -9,11 +9,15 @@ export const getAllProduct = async (search, limit) => {
       `${process.env.REACT_APP_API_URL}/product/get-all?filter=name&filter=${search}&limit=${limit}`
     );
   } else {
-    console.log("landau");
-    console.log("limit", limit);
-    res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/product/get-all?limit=${limit}`
-    );
+    if (!limit) {
+      res = await axios.get(`${process.env.REACT_APP_API_URL}/product/get-all`);
+    } else {
+      console.log("landau");
+      console.log("limit", limit);
+      res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/product/get-all?limit=${limit}`
+      );
+    }
   }
   return res.data;
 };

@@ -94,7 +94,7 @@ const ProductNuPage = () => {
         <LoadingComponents isLoading={isPreviousData} />
       </div>
       <div>
-        {products?.totalPage !== 1 &&
+        {products?.totalPage > 1 &&
           // soluongPage !== 1 &&
           !isLoading &&
           !isPreviousData && (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import * as OrderServcie from "../services/OrderServices";
 import { useQuery } from "@tanstack/react-query";
@@ -17,7 +17,40 @@ const DetailsOrderPage = () => {
   };
   const queryOrderDetails = useQuery(["order-details"], fetchOrderDetails);
   const { data: dataOrderDetails, isLoading } = queryOrderDetails;
-  console.log("dataOrderDetails", dataOrderDetails);
+
+  const [month, setMonth] = useState(
+    dataOrderDetails?.deliveredAt?.split(" ")[1].toString()
+  );
+  useEffect(() => {
+    switch (month) {
+      case "Jan":
+        setMonth("01");
+      case "Feb":
+        setMonth("02");
+      case "Mar":
+        setMonth("03");
+      case "Apr":
+        setMonth("04");
+      case "May":
+        setMonth("05");
+      case "Jun":
+        setMonth("06");
+      case "Jul":
+        setMonth("07");
+      case "Aug":
+        setMonth("08");
+      case "Sep":
+        setMonth("09");
+      case "Oct":
+        setMonth("10");
+      case "Nov":
+        setMonth("11");
+      case "Dec":
+        setMonth("12");
+    }
+  }, []);
+
+  console.log('month', month)
 
   return (
     <>
@@ -49,13 +82,10 @@ const DetailsOrderPage = () => {
               <div style={{ display: "table" }}>
                 <div className="time">
                   <h3 className="text">Thời gian đặt hàng: </h3>
+                  <h3>{dataOrderDetails?.deliveredAt?.split(" ")[4]}</h3>
                   <h3>
-                    {dataOrderDetails?.createdAt?.split("T")[1]?.split(".")[0]}
-                  </h3>
-                  <h3>
-                    {dataOrderDetails?.createdAt?.split("T")[0].split("-")[2]}/
-                    {dataOrderDetails?.createdAt?.split("T")[0].split("-")[1]}/
-                    {dataOrderDetails?.createdAt?.split("T")[0].split("-")[0]}
+                    {dataOrderDetails?.deliveredAt?.split(" ")[2]}/{month}/
+                    {dataOrderDetails?.deliveredAt?.split(" ")[3]}
                   </h3>
                   <h3>Nhận hàng dự kiến: 3-5 ngày</h3>
                 </div>
@@ -96,7 +126,7 @@ const DetailsOrderPage = () => {
               </div>
 
               <div className="price">
-                <h3>Sản phẩm: {convertPrice(dataOrderDetails?.itemsPrice)}</h3>
+                <h3>Tạm tính: {convertPrice(dataOrderDetails?.itemsPrice)}</h3>
                 <h3>
                   Phí ship: {convertPrice(dataOrderDetails?.shippingPrice)}
                 </h3>

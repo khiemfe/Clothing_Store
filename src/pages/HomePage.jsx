@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import CardComponents from "../components/CardComponents";
-import NavbarComponents from "../components/NavbarComponents";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -14,7 +12,7 @@ import SlideAnNavComponent from "../components/SlideAndNavComponent";
 
 const HomePage = () => {
   const refSearch = useRef();
-  const limitState = 8;
+  const limitState = 16;
   const [limit, setLimit] = useState(limitState);
 
   let lengthProducts = limitState;
@@ -141,7 +139,7 @@ const HomePage = () => {
                       //   isPreviousDataNam ||
                       //   products?.totalProduct === products?.data.length
                       // }
-                      onClick={() => setLimit((prev) => prev + 8)}
+                      onClick={() => setLimit((prev) => prev + 16)}
                       variant="outline-primary"
                     >
                       Xem thêm

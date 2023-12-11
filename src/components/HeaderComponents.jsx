@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Dropdown from "react-bootstrap/Dropdown";
 import * as UserServcie from "../services/userServices";
 import { resetUser } from "../redux/slices/userSlice";
-import LoadingComponents from "./LoadingComponents";
 import LoadingCardInfoComponent from "./LoadingCardInfoComponent";
 import { searchProduct } from "../redux/slices/productSlice";
 import { useQuery } from "@tanstack/react-query";
@@ -25,6 +24,7 @@ import * as CartServices from "../services/CartServices";
 import { Drawer } from "antd";
 import { RiMenu2Line } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
+import LoadingFullComponents from "./LoadingFullComponents";
 
 const HeaderComponents = (props) => {
   const order = useSelector((state) => state.order);
@@ -60,11 +60,12 @@ const HeaderComponents = (props) => {
     console.log("reslog", res);
     if (res.status === "OK") {
       dispatch(resetUser());
+      setAmountCart(0);
+      navigate("/");
     }
     localStorage.setItem("email", JSON.stringify(false));
     // localStorage.setItem("access_token", JSON.stringify(false));
     setLoadingLogOut(false);
-    setAmountCart(0);
   };
   console.log("loadingLogOut", loadingLogOut);
 
@@ -152,7 +153,9 @@ const HeaderComponents = (props) => {
   console.log("dataCart", dataCart?.length);
 
   useEffect(() => {
-    setAmountCart(dataCart?.length);
+    if (user?.email) {
+      setAmountCart(dataCart?.length);
+    }
   }, [dataCart]);
 
   console.log("props", props);
@@ -165,7 +168,7 @@ const HeaderComponents = (props) => {
         user?.id,
         user?.access_token
       );
-      if (res?.status === "OK") {
+      if (res?.status === "OK" && user?.email) {
         setAmountCart(res?.data?.length);
       }
     }
@@ -192,6 +195,7 @@ const HeaderComponents = (props) => {
 
   return (
     <>
+      <LoadingFullComponents isLoading={loading} />
       <div className={classOnScroll}>
         <Navbar className="justify-content-between">
           {/* <Toaster /> */}
@@ -356,13 +360,10 @@ const HeaderComponents = (props) => {
                   </div>
                   {/* <FiHeart className="icon heart" /> */}
                   <Button className="btn-cart" onClick={handleOrderCart}>
-                    {(props?.amount || amountCart) && (
-                      <Badge bg="warning">{props?.amount || amountCart}</Badge>
-                    )}
+                    {amountCart && <Badge bg="warning">{amountCart}</Badge>}
                     <BsCart2 className="icon cart" />
                   </Button>
                   <div className="info-user">
-                    {/* <LoadingComponents isLoading={loadingInfo}> */}
                     {user?.email ? (
                       <Dropdown style={{ width: "70px" }}>
                         <Dropdown.Toggle variant="" id="dropdown-basic">
@@ -388,7 +389,7 @@ const HeaderComponents = (props) => {
                           </div>
                         </Dropdown.Toggle>
                         <Dropdown.Menu
-                          style={{ left: "-60%", fontSize: "13px" }}
+                          style={{ left: "-100%", fontSize: "13px" }}
                         >
                           {user?.isAdmin && (
                             <Dropdown.Item href="/system/admin">
@@ -402,11 +403,9 @@ const HeaderComponents = (props) => {
                             Đơn hàng của tôi
                           </Dropdown.Item>
                           <Dropdown.Divider />
-                          <LoadingComponents isLoading={loading}>
-                            <Dropdown.Item onClick={handleLogout} href="#">
-                              Đăng xuất
-                            </Dropdown.Item>
-                          </LoadingComponents>
+                          <Dropdown.Item onClick={handleLogout} href="#">
+                            Đăng xuất
+                          </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
                     ) : (
@@ -431,13 +430,12 @@ const HeaderComponents = (props) => {
                               className="btn-signMobile"
                               variant=""
                             >
-                              Đăng nhập
+                              Đăng Nhập
                             </Button>
                           </>
                         )}
                       </>
                     )}
-                    {/* </LoadingComponents> */}
                   </div>
                 </Form>
               </Col>

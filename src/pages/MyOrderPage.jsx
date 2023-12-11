@@ -11,6 +11,7 @@ import { Modal } from "antd";
 import LoadingComponents from "../components/LoadingComponents";
 import { Toaster } from "react-hot-toast";
 import ModelComponent from "../components/ModelComponent";
+import LoadingFullComponents from "../components/LoadingFullComponents";
 
 const MyOrderPage = () => {
   const location = useLocation();
@@ -81,7 +82,6 @@ const MyOrderPage = () => {
   useEffect(() => {
     if (isSuccessCancel && dataCancel?.status === "OK") {
       success("Bạn đã huỷ đơn hàng thành công");
-      setIsModalOpen(false);
     } else if (isErrorCancel) {
       error("Bạn đã huỷ đơn hàng thành công");
       setIsModalOpen(false);
@@ -96,12 +96,14 @@ const MyOrderPage = () => {
   };
 
   const handleOkModel = () => {
+    setIsModalOpen(false);
     handleCancelOrder(okHuy);
     setOkHuy("");
   };
 
   return (
     <>
+      <LoadingFullComponents isLoading={isLoadingCancel} />
       <div className="my-order">
         <Toaster />
         <h1
@@ -117,69 +119,77 @@ const MyOrderPage = () => {
           <LoadingComponents isLoading={isLoading} />
         </div>
         <div className="body">
-          {dataOrder?.length > 0 &&
-            dataOrder?.map((item, index) => {
-              return (
-                <div key={index}>
-                  {item?.orderItems.length && (
-                    <div className="product">
-                      <div>
-                        {item?.orderItems?.map((order, index) => {
-                          return (
-                            <div className="item" key={index}>
-                              <img src={order?.image} alt="" />
-                              <div className="body-text">
-                                <h3>{order?.name}</h3>
-                                <p>{convertPrice(order?.price)}</p>
-                                <p>Size: {order?.size}</p>
-                                <p>Số lượng: {order?.amount}</p>
+          {dataOrder?.length > 0
+            ? dataOrder?.map((item, index) => {
+                return (
+                  <div key={index}>
+                    {item?.orderItems.length && (
+                      <div className="product">
+                        <div>
+                          {item?.orderItems?.map((order, index) => {
+                            return (
+                              <div className="item" key={index}>
+                                <img src={order?.image} alt="" />
+                                <div className="body-text">
+                                  <h3>{order?.name}</h3>
+                                  <p>{convertPrice(order?.price)}</p>
+                                  <p>Size: {order?.size}</p>
+                                  <p>Số lượng: {order?.amount}</p>
+                                </div>
+                                <div></div>
                               </div>
-                              <div></div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <div className="right">
-                        <div className="price">
-                          <h3>Phí ship: {convertPrice(item?.shippingPrice)}</h3>
-                          <h3>Tổng tiền: {convertPrice(item?.totalPrice)}</h3>
+                            );
+                          })}
                         </div>
+                        <div className="right">
+                          <div className="price">
+                            <h3>
+                              Phí ship: {convertPrice(item?.shippingPrice)}
+                            </h3>
+                            <h3>Tổng tiền: {convertPrice(item?.totalPrice)}</h3>
+                          </div>
 
-                        <div className="action">
-                          <h3
-                            style={{ cursor: "pointer", marginBottom: 10 }}
-                            onClick={() => handleDetailsOrder(item?._id)}
-                          >
-                            Xem chi tiết
-                          </h3>
-                          {/* <h3
+                          <div className="action">
+                            <h3
+                              style={{ cursor: "pointer", marginBottom: 10 }}
+                              onClick={() => handleDetailsOrder(item?._id)}
+                            >
+                              Xem chi tiết
+                            </h3>
+                            {/* <h3
                           style={{ cursor: "pointer" }}
                           onClick={() => handleCancelOrder(item)}
                         >
                           Huỷy
                         </h3> */}
-                          <Button
-                            // type="primary"
-                            onClick={() => showModal(item)}
-                          >
-                            Huỷ
-                          </Button>
-                          <Modal
-                            title="Thông báo"
-                            open={isModalOpen}
-                            onOk={handleOkModel}
-                            onCancel={() => setIsModalOpen(false)}
-                          >
-                            <p className="huy">Bạn có muốn huỷ đơn hàng này?</p>
-                            <LoadingComponents isLoading={isLoadingCancel}/>
-                          </Modal>
+                            <Button
+                              // type="primary"
+                              onClick={() => showModal(item)}
+                            >
+                              Huỷ
+                            </Button>
+                            <Modal
+                              title="Thông báo"
+                              open={isModalOpen}
+                              onOk={handleOkModel}
+                              onCancel={() => setIsModalOpen(false)}
+                            >
+                              <p className="huy">
+                                Bạn có muốn huỷ đơn hàng này?
+                              </p>
+                            </Modal>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                    )}
+                  </div>
+                );
+              })
+            : !isLoading && (
+                <h1 style={{ textAlign: "center" }}>
+                  Bạn chưa đặt sản phẩm nào!
+                </h1>
+              )}
         </div>
       </div>
     </>

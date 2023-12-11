@@ -5,15 +5,12 @@ import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
 import { convertPrice, getBase64 } from "../utils";
 import * as OrderServices from "../services/OrderServices";
 import { useMutationHook } from "../hooks/useMutationHook";
-import LoadingComponents from "./LoadingComponents";
 import { success, error, warning } from "./Message";
 import { useQuery } from "@tanstack/react-query";
 import { MdDeleteOutline } from "react-icons/md";
-import { AiOutlineEdit } from "react-icons/ai";
 import DrawerComponent from "./DrawerComponent";
 import ModelBodyUserComponent from "./ModelBodyUserComponent";
 import { useSelector } from "react-redux";
-import ModelComponent from "./ModelComponent";
 import { Form, Input, Space } from "antd";
 import LoadingUpdateComponent from "./LoadingUpdateComponent";
 import PieChartComponent from "./PieChartComponent";
@@ -324,9 +321,11 @@ const AdminOrder = () => {
         Quản lí đơn hàng
       </h1>
       <div className="adminProduct">
+        {/* {dataOrder?.data.length === 0 && isLoadingOrder && ( */}
         <div style={{ height: "200px", width: "100%" }}>
           <PieChartComponent data={dataOrder?.data} />
         </div>
+        {/* )} */}
         <div className="body-product">
           <TabelComponents
             // handleDeleteManyProduct={handleDeleteManyUser}

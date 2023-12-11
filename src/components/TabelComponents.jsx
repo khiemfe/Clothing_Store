@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import { Table } from "antd";
-import LoadingComponents from "./LoadingComponents";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import LoadingTableComponent from "./LoadingTableComponent";
 
@@ -104,7 +103,7 @@ const TabelComponents = (props) => {
         />
       )}
 
-      {!isLoading && dataTableMain.length === 0 && (
+      {!isLoading && dataTableMain?.length === 0 && (
         <h3
           style={{
             textAlign: "center",

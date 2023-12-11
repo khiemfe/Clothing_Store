@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import * as ProducttServcie from "../services/ProductServices";
 import { useLocation, useNavigate } from "react-router-dom";
-// import { addOrderProduct } from "../redux/slices/orderSlice";
-import LoadingComponents from "../components/LoadingComponents";
 import { convertPrice } from "../utils";
 import { useMutationHook } from "../hooks/useMutationHook";
 import * as CartServices from "../services/CartServices";
@@ -16,6 +14,8 @@ import { Button, Modal } from "antd";
 import { TfiRulerAlt } from "react-icons/tfi";
 import BangSizeAo from "../public/img/BangSIzeAo.png";
 import BangSizeQuan from "../public/img/BangSizeQuan.png";
+import LoadingFullComponents from "../components/LoadingFullComponents";
+import LoadingComponents from "../components/LoadingComponents";
 
 const ProductDetailsPage = () => {
   const { id: idProduct } = useParams();
@@ -349,13 +349,23 @@ const ProductDetailsPage = () => {
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 1);
+  }, []);
+
   return (
     <>
       {/* <HeaderComponents amount={amountCart} /> */}
+      <LoadingFullComponents isLoading={isLoadingAddCart} />
       <Toaster />
       <div className="produc-details">
         {/* <ProductDetailsComponents idProduct={id} /> */}
-        <LoadingProductDetailsComponent isLoading={isLoading} />
+        <span className="noneMobile">
+          <LoadingProductDetailsComponent isLoading={isLoading} />
+        </span>
+        <span style={{ display: "none" }} className="blockMobile">
+          <LoadingComponents isLoading={isLoading} />
+        </span>
         {!isLoading && (
           <div className="flex flex-col justify-between lg:flex-row gap-16 lg:items-center container">
             <div className="flex flex-col gap-6 lg:w-2/4 img-main">
@@ -406,7 +416,7 @@ const ProductDetailsPage = () => {
 
               <div className="size">
                 <div className="size-text">
-                  <p style={{ width: 120 }}>
+                  <p style={{ width: 130 }}>
                     Chọn size: <span>{size}</span>
                   </p>
                   <div style={{ marginLeft: 200 }} className="bangSize">
@@ -626,7 +636,6 @@ const ProductDetailsPage = () => {
                     >
                       Thêm vào giỏ hàng
                     </button>
-                    <LoadingComponents isLoading={isLoadingAddCart} />
                   </>
                 ) : (
                   <div style={{ position: "relative" }}>

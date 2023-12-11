@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import LoadingComponents from "./LoadingComponents";
 import { Modal } from "react-bootstrap";
 import { Form, Input, Upload } from "antd";
 import { Button } from "react-bootstrap";
@@ -20,7 +19,7 @@ const ModelBodyComponent = ({
   handleOnchangeAvatarImg3,
   handleOnchangeAvatarImg4,
   onFinish,
-  isLoading,
+  // isLoading,
   title,
 }) => {
   console.log("stateProducttt", stateProduct);
@@ -175,61 +174,47 @@ const ModelBodyComponent = ({
   // }, [sizeXL]);
 
   return (
-    <Modal.Body>
-      <Form
-        name="basic"
-        // labelCol={{
-        //   span: 8,
-        // }}
-        // wrapperCol={{
-        //   span: 16,
-        // }}
-        // style={{
-        //   maxWidth: 600,
-        // }}
-        //   onFinish={onFinish}
-        // //   onFinishFailed={onFinishFailed}
-        autoComplete="on"
-        form={form}
-      >
-        <div style={{ display: "flex", justifyContent: "start" }}>
-          <Form.Item
-            label="Image"
-            name="upload"
-            valuePropName="fileList"
-            rules={[
-              {
-                required: true,
-                message: stateProduct?.image ? "" : "Please input your image!",
-              },
-            ]}
-            style={{ lineHeight: "80px" }}
-          >
-            <Upload
-              name="image"
-              onChange={handleOnchangeAvatarImg1}
-              maxCount={4}
-              multiple
-              // style={{position:'relative', marginBottom:'20px'}}
+    <>
+      {/* <LoadingFullComponents isLoading={isLoading} /> */}
+      <Modal.Body>
+        <Form
+          name="basic"
+          // labelCol={{
+          //   span: 8,
+          // }}
+          // wrapperCol={{
+          //   span: 16,
+          // }}
+          // style={{
+          //   maxWidth: 600,
+          // }}
+          //   onFinish={onFinish}
+          // //   onFinishFailed={onFinishFailed}
+          autoComplete="on"
+          form={form}
+        >
+          <div className="update-image-mobile" style={{ display: "flex", justifyContent: "start" }}>
+            <Form.Item
+              label="Image"
+              name="upload"
+              valuePropName="fileList"
+              rules={[
+                {
+                  required: true,
+                  message: stateProduct?.image
+                    ? ""
+                    : "Please input your image!",
+                },
+              ]}
+              style={{ lineHeight: "80px" }}
             >
-              <Button
-                icon={<UploadOutlined />}
-                style={{
-                  margin: "0 10px",
-                  backgroundColor: "transparent",
-                  borderColor: "#000",
-                  position: "absolute",
-                  top: "0px",
-                  left: "0px",
-                  width: "80px",
-                  height: "80px",
-                }}
+              <Upload
+                name="image"
+                onChange={handleOnchangeAvatarImg1}
+                maxCount={4}
+                multiple
+                // style={{position:'relative', marginBottom:'20px'}}
               >
-                <GrAdd />
-              </Button>
-            </Upload>
-            {stateProduct?.image && (
-              <Upload name="image" onChange={handleOnchangeAvatarImg1} maxCount={1}>
                 <Button
                   icon={<UploadOutlined />}
                   style={{
@@ -241,62 +226,68 @@ const ModelBodyComponent = ({
                     left: "0px",
                     width: "80px",
                     height: "80px",
-                    overflow: "hidden",
                   }}
                 >
-                  <img
-                    src={stateProduct?.image}
-                    alt="image"
+                  <GrAdd />
+                </Button>
+              </Upload>
+              {stateProduct?.image && (
+                <Upload
+                  name="image"
+                  onChange={handleOnchangeAvatarImg1}
+                  maxCount={1}
+                >
+                  <Button
+                    icon={<UploadOutlined />}
                     style={{
-                      objectFit: "cover",
+                      margin: "0 10px",
+                      backgroundColor: "transparent",
+                      borderColor: "#000",
                       position: "absolute",
                       top: "0px",
                       left: "0px",
-                      width: "100%",
-                      height: "100%",
+                      width: "80px",
+                      height: "80px",
+                      overflow: "hidden",
                     }}
-                  />
-                </Button>
-              </Upload>
-            )}
-          </Form.Item>
-          <Form.Item
-            // label="Image"
-            name="upload"
-            valuePropName="fileList"
-            rules={[
-              {
-                required: true,
-                message: stateProduct?.imageDetails?.image1 ? "" : "Please input your image details 1!",
-              },
-            ]}
-            style={{ lineHeight: "80px", width: "100px" }}
-          >
-            <Upload
-              name="image"
-              onChange={handleOnchangeAvatarImg2}
-              maxCount={4}
-              multiple
-              // style={{position:'relative', marginBottom:'20px'}}
+                  >
+                    <img
+                      src={stateProduct?.image}
+                      alt="image"
+                      style={{
+                        objectFit: "cover",
+                        position: "absolute",
+                        top: "0px",
+                        left: "0px",
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    />
+                  </Button>
+                </Upload>
+              )}
+            </Form.Item>
+            <Form.Item
+              // label="Image"
+              name="upload"
+              valuePropName="fileList"
+              rules={[
+                {
+                  required: true,
+                  message: stateProduct?.imageDetails?.image1
+                    ? ""
+                    : "Please input your image details 1!",
+                },
+              ]}
+              style={{ lineHeight: "80px", width: "100px" }}
             >
-              <Button
-                icon={<UploadOutlined />}
-                style={{
-                  margin: "0 10px",
-                  backgroundColor: "transparent",
-                  borderColor: "#000",
-                  position: "absolute",
-                  top: "0px",
-                  left: "0px",
-                  width: "80px",
-                  height: "80px",
-                }}
+              <Upload
+                name="image"
+                onChange={handleOnchangeAvatarImg2}
+                maxCount={4}
+                multiple
+                // style={{position:'relative', marginBottom:'20px'}}
               >
-                <GrAdd />
-              </Button>
-            </Upload>
-            {stateProduct?.imageDetails?.image1 && (
-              <Upload name="image" onChange={handleOnchangeAvatarImg2} maxCount={1}>
                 <Button
                   icon={<UploadOutlined />}
                   style={{
@@ -308,62 +299,68 @@ const ModelBodyComponent = ({
                     left: "0px",
                     width: "80px",
                     height: "80px",
-                    overflow: "hidden",
                   }}
                 >
-                  <img
-                    src={stateProduct?.imageDetails?.image1}
-                    alt="image"
+                  <GrAdd />
+                </Button>
+              </Upload>
+              {stateProduct?.imageDetails?.image1 && (
+                <Upload
+                  name="image"
+                  onChange={handleOnchangeAvatarImg2}
+                  maxCount={1}
+                >
+                  <Button
+                    icon={<UploadOutlined />}
                     style={{
-                      objectFit: "cover",
+                      margin: "0 10px",
+                      backgroundColor: "transparent",
+                      borderColor: "#000",
                       position: "absolute",
                       top: "0px",
                       left: "0px",
-                      width: "100%",
-                      height: "100%",
+                      width: "80px",
+                      height: "80px",
+                      overflow: "hidden",
                     }}
-                  />
-                </Button>
-              </Upload>
-            )}
-          </Form.Item>
-          <Form.Item
-            // label="Image"
-            name="upload"
-            valuePropName="fileList"
-            rules={[
-              {
-                required: true,
-                message: stateProduct?.imageDetails?.image2 ? "" : "Please input your image details 2!",
-              },
-            ]}
-            style={{ lineHeight: "80px", width: "100px" }}
-          >
-            <Upload
-              name="image"
-              onChange={handleOnchangeAvatarImg3}
-              maxCount={4}
-              multiple
-              // style={{position:'relative', marginBottom:'20px'}}
+                  >
+                    <img
+                      src={stateProduct?.imageDetails?.image1}
+                      alt="image"
+                      style={{
+                        objectFit: "cover",
+                        position: "absolute",
+                        top: "0px",
+                        left: "0px",
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    />
+                  </Button>
+                </Upload>
+              )}
+            </Form.Item>
+            <Form.Item
+              // label="Image"
+              name="upload"
+              valuePropName="fileList"
+              rules={[
+                {
+                  required: true,
+                  message: stateProduct?.imageDetails?.image2
+                    ? ""
+                    : "Please input your image details 2!",
+                },
+              ]}
+              style={{ lineHeight: "80px", width: "100px" }}
             >
-              <Button
-                icon={<UploadOutlined />}
-                style={{
-                  margin: "0 10px",
-                  backgroundColor: "transparent",
-                  borderColor: "#000",
-                  position: "absolute",
-                  top: "0px",
-                  left: "0px",
-                  width: "80px",
-                  height: "80px",
-                }}
+              <Upload
+                name="image"
+                onChange={handleOnchangeAvatarImg3}
+                maxCount={4}
+                multiple
+                // style={{position:'relative', marginBottom:'20px'}}
               >
-                <GrAdd />
-              </Button>
-            </Upload>
-            {stateProduct?.imageDetails?.image2 && (
-              <Upload name="image" onChange={handleOnchangeAvatarImg3} maxCount={1}>
                 <Button
                   icon={<UploadOutlined />}
                   style={{
@@ -375,62 +372,68 @@ const ModelBodyComponent = ({
                     left: "0px",
                     width: "80px",
                     height: "80px",
-                    overflow: "hidden",
                   }}
                 >
-                  <img
-                    src={stateProduct?.imageDetails?.image2}
-                    alt="image"
+                  <GrAdd />
+                </Button>
+              </Upload>
+              {stateProduct?.imageDetails?.image2 && (
+                <Upload
+                  name="image"
+                  onChange={handleOnchangeAvatarImg3}
+                  maxCount={1}
+                >
+                  <Button
+                    icon={<UploadOutlined />}
                     style={{
-                      objectFit: "cover",
+                      margin: "0 10px",
+                      backgroundColor: "transparent",
+                      borderColor: "#000",
                       position: "absolute",
                       top: "0px",
                       left: "0px",
-                      width: "100%",
-                      height: "100%",
+                      width: "80px",
+                      height: "80px",
+                      overflow: "hidden",
                     }}
-                  />
-                </Button>
-              </Upload>
-            )}
-          </Form.Item>
-          <Form.Item
-            // label="Image"
-            name="upload"
-            valuePropName="fileList"
-            rules={[
-              {
-                required: true,
-                message: stateProduct?.imageDetails?.image3 ? "" : "Please input your image details 3!",
-              },
-            ]}
-            style={{ lineHeight: "80px", width: "100px" }}
-          >
-            <Upload
-              name="image"
-              onChange={handleOnchangeAvatarImg4}
-              maxCount={4}
-              multiple
-              // style={{position:'relative', marginBottom:'20px'}}
+                  >
+                    <img
+                      src={stateProduct?.imageDetails?.image2}
+                      alt="image"
+                      style={{
+                        objectFit: "cover",
+                        position: "absolute",
+                        top: "0px",
+                        left: "0px",
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    />
+                  </Button>
+                </Upload>
+              )}
+            </Form.Item>
+            <Form.Item
+              // label="Image"
+              name="upload"
+              valuePropName="fileList"
+              rules={[
+                {
+                  required: true,
+                  message: stateProduct?.imageDetails?.image3
+                    ? ""
+                    : "Please input your image details 3!",
+                },
+              ]}
+              style={{ lineHeight: "80px", width: "100px" }}
             >
-              <Button
-                icon={<UploadOutlined />}
-                style={{
-                  margin: "0 10px",
-                  backgroundColor: "transparent",
-                  borderColor: "#000",
-                  position: "absolute",
-                  top: "0px",
-                  left: "0px",
-                  width: "80px",
-                  height: "80px",
-                }}
+              <Upload
+                name="image"
+                onChange={handleOnchangeAvatarImg4}
+                maxCount={4}
+                multiple
+                // style={{position:'relative', marginBottom:'20px'}}
               >
-                <GrAdd />
-              </Button>
-            </Upload>
-            {stateProduct?.imageDetails?.image3 && (
-              <Upload name="image" onChange={handleOnchangeAvatarImg4} maxCount={1}>
                 <Button
                   icon={<UploadOutlined />}
                   style={{
@@ -442,361 +445,381 @@ const ModelBodyComponent = ({
                     left: "0px",
                     width: "80px",
                     height: "80px",
-                    overflow: "hidden",
                   }}
                 >
-                  <img
-                    src={stateProduct?.imageDetails?.image3}
-                    alt="image"
+                  <GrAdd />
+                </Button>
+              </Upload>
+              {stateProduct?.imageDetails?.image3 && (
+                <Upload
+                  name="image"
+                  onChange={handleOnchangeAvatarImg4}
+                  maxCount={1}
+                >
+                  <Button
+                    icon={<UploadOutlined />}
                     style={{
-                      objectFit: "cover",
+                      margin: "0 10px",
+                      backgroundColor: "transparent",
+                      borderColor: "#000",
                       position: "absolute",
                       top: "0px",
                       left: "0px",
-                      width: "100%",
-                      height: "100%",
+                      width: "80px",
+                      height: "80px",
+                      overflow: "hidden",
                     }}
-                  />
-                </Button>
-              </Upload>
-            )}
-          </Form.Item>
-        </div>
-        <Form.Item
-          label="Name"
-          name="name"
-          rules={[
-            {
-              required: true,
-              message: "Please input your name!",
-            },
-          ]}
-          style={{ marginTop: "10px" }}
-        >
-          <Input
-            value={stateProduct.name}
-            onChange={handleOnchange}
-            name="name"
-          />
-        </Form.Item>
-        {/* name, image, type, price, countInStock, rating, description */}
-        <Form.Item
-          label="Gender"
-          name="gender"
-          rules={[
-            {
-              required: true,
-              message: "Please input your size gender!",
-            },
-          ]}
-        >
-          <Input
-            value={stateProduct.gender}
-            onChange={handleOnchange}
-            name="gender"
-          />
-        </Form.Item>
-        <Form.Item
-          label="Price"
-          name="price"
-          rules={[
-            {
-              required: true,
-              message: "Please input your price!",
-            },
-          ]}
-        >
-          <Input
-            value={stateProduct.price}
-            onChange={handleOnchange}
-            name="price"
-          />
-        </Form.Item>
-        <Form.Item
-          label="Age"
-          name="age"
-          rules={[
-            {
-              required: true,
-              message: "Please input your age!",
-            },
-          ]}
-        >
-          <Input
-            value={stateProduct.age}
-            onChange={handleOnchange}
-            name="age"
-          />
-        </Form.Item>
-        {stateProduct.name.toLowerCase().includes("quần") &&
-        !stateProduct.name.toLowerCase().includes("áo") ? (
-          <Form.Item label="Quantity">
-            <div style={{ display: "flex" }}>
-              <Form.Item>
-                <div className="setSize">
-                  <span>28:</span>
-                  <Input
-                    className="inputSize"
-                    value={size28}
-                    onChange={handleOnchageQuantity28}
-                    // name="size28"
-                    type="number"
-                    min="0"
-                  />
-                </div>
-              </Form.Item>
-              <Form.Item>
-                <div className="setSize">
-                  <span>29:</span>
-                  <Input
-                    className="inputSize"
-                    value={size29}
-                    onChange={handleOnchageQuantity29}
-                    // name="size29"
-                    type="number"
-                    min="0"
-                  />
-                </div>
-              </Form.Item>
-              <Form.Item>
-                <div className="setSize">
-                  <span>30:</span>
-                  <Input
-                    className="inputSize"
-                    value={size30}
-                    onChange={handleOnchageQuantity30}
-                    // name="size30"
-                    type="number"
-                    min="0"
-                  />
-                </div>
-              </Form.Item>
-              <Form.Item>
-                <div className="setSize">
-                  <span>31:</span>
-                  <Input
-                    className="inputSize"
-                    value={size31}
-                    onChange={handleOnchageQuantity31}
-                    // name="size31"
-                    type="number"
-                    min="0"
-                  />
-                </div>
-              </Form.Item>
-            </div>
-            <div style={{ display: "flex" }} className="sizeDuoi">
-              <Form.Item>
-                <div className="setSize">
-                  <span>32:</span>
-                  <Input
-                    className="inputSize"
-                    value={size32}
-                    onChange={handleOnchageQuantity32}
-                    // name="size32"
-                    type="number"
-                    min="0"
-                  />
-                </div>
-              </Form.Item>
-              <Form.Item>
-                <div className="setSize">
-                  <span>33:</span>
-                  <Input
-                    className="inputSize"
-                    value={size33}
-                    onChange={handleOnchageQuantity33}
-                    // name="size33"
-                    type="number"
-                    min="0"
-                  />
-                </div>
-              </Form.Item>
-              <Form.Item>
-                <div className="setSize">
-                  <span>34:</span>
-                  <Input
-                    className="inputSize"
-                    value={size34}
-                    onChange={handleOnchageQuantity34}
-                    // name="size34"
-                    type="number"
-                    min="0"
-                  />
-                </div>
-              </Form.Item>
-              <Form.Item>
-                <div className="setSize">
-                  <span>35:</span>
-                  <Input
-                    className="inputSize"
-                    value={size35}
-                    onChange={handleOnchageQuantity35}
-                    // name="size35"
-                    type="number"
-                    min="0"
-                  />
-                </div>
-              </Form.Item>
-              <Form.Item>
-                <div className="setSize">
-                  <span>36:</span>
-                  <Input
-                    className="inputSize"
-                    value={size36}
-                    onChange={handleOnchageQuantity36}
-                    // name="size36"
-                    type="number"
-                    min="0"
-                  />
-                </div>
-              </Form.Item>
-            </div>
-          </Form.Item>
-        ) : (
-          <Form.Item label="Quantity">
-            <div style={{ display: "flex" }} className="sizeDuoi">
-              <Form.Item>
-                <div className="setSize">
-                  <span>S:</span>
-                  <Input
-                    className="inputSize"
-                    value={sizeS}
-                    onChange={handleOnchageQuantityS}
-                    // name="sizeS"
-                    type="number"
-                    min="0"
-                  />
-                </div>
-              </Form.Item>
-              <Form.Item>
-                <div className="setSize">
-                  <span>M:</span>
-                  <Input
-                    className="inputSize"
-                    value={sizeM}
-                    onChange={handleOnchageQuantityM}
-                    // name="sizeM"
-                    type="number"
-                    min="0"
-                  />
-                </div>
-              </Form.Item>
-              <Form.Item>
-                <div className="setSize">
-                  <span>L:</span>
-                  <Input
-                    className="inputSize"
-                    value={sizeL}
-                    onChange={handleOnchageQuantityL}
-                    // name="sizeL"
-                    type="number"
-                    min="0"
-                  />
-                </div>
-              </Form.Item>
-              <Form.Item>
-                <div className="setSize">
-                  <span>XL:</span>
-                  <Input
-                    className="inputSize"
-                    value={sizeXL}
-                    onChange={handleOnchageQuantityXL}
-                    // name="sizeXL"
-                    type="number"
-                    min="0"
-                  />
-                </div>
-              </Form.Item>
-              <Form.Item>
-                <div className="setSize">
-                  <span>XXL:</span>
-                  <Input
-                    className="inputSize"
-                    value={sizeXXL}
-                    onChange={handleOnchageQuantityXXL}
-                    // name="sizeXXL"
-                    type="number"
-                    min="0"
-                  />
-                </div>
-              </Form.Item>
-            </div>
-          </Form.Item>
-        )}
-
-        <Form.Item
-          label="Size"
-          name="size"
-          rules={[
-            {
-              required: true,
-              message: "Please input your size!",
-            },
-          ]}
-        >
-          <Input
-            value={stateProduct.size}
-            onChange={handleOnchange}
-            name="size"
-          />
-        </Form.Item>
-        
-        <Form.Item
-          label="Type"
-          name="type"
-          rules={[
-            {
-              required: true,
-              message: stateProduct?.type ? "" : "Please input your type!",
-            },
-          ]}
-        >
-          <div className="App">
-            <Select
-              name="type"
-              placeholder={placeholder || ""}
-              // defaultValue={stateProduct.type}
-              onChange={handleChangeSelect}
-              options={options}
-            />
-            {typeSelect === "add_type" && (
-              <Input
-                value={stateProduct.type}
-                onChange={handleOnchange}
-                placeholder="Nhập type bạn muốn thêm"
-                name="type"
-              />
-            )}
+                  >
+                    <img
+                      src={stateProduct?.imageDetails?.image3}
+                      alt="image"
+                      style={{
+                        objectFit: "cover",
+                        position: "absolute",
+                        top: "0px",
+                        left: "0px",
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    />
+                  </Button>
+                </Upload>
+              )}
+            </Form.Item>
           </div>
-        </Form.Item>
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
-          <Button
-            onClick={onFinish}
-            type="submit"
-            className="submit_btn"
-            style={{
-              padding: "10px 24px",
-              float: "right",
-              backgroundColor: "#000",
-              color: "#fff",
-              border: "none",
-              fontSize: "14px",
+          <Form.Item
+            label="Name"
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: "Please input your name!",
+              },
+            ]}
+            style={{ marginTop: "10px" }}
+          >
+            <Input
+              value={stateProduct.name}
+              onChange={handleOnchange}
+              name="name"
+            />
+          </Form.Item>
+          {/* name, image, type, price, countInStock, rating, description */}
+          <Form.Item
+            label="Gender"
+            name="gender"
+            rules={[
+              {
+                required: true,
+                message: "Please input your size gender!",
+              },
+            ]}
+          >
+            <Input
+              value={stateProduct.gender}
+              onChange={handleOnchange}
+              name="gender"
+            />
+          </Form.Item>
+          <Form.Item
+            label="Price"
+            name="price"
+            rules={[
+              {
+                required: true,
+                message: "Please input your price!",
+              },
+            ]}
+          >
+            <Input
+              value={stateProduct.price}
+              onChange={handleOnchange}
+              name="price"
+            />
+          </Form.Item>
+          <Form.Item
+            label="Age"
+            name="age"
+            rules={[
+              {
+                required: true,
+                message: "Please input your age!",
+              },
+            ]}
+          >
+            <Input
+              value={stateProduct.age}
+              onChange={handleOnchange}
+              name="age"
+            />
+          </Form.Item>
+          {stateProduct.name.toLowerCase().includes("quần") &&
+          !stateProduct.name.toLowerCase().includes("áo") ? (
+            <Form.Item label="Quantity">
+              <div style={{ display: "flex" }}>
+                <Form.Item>
+                  <div className="setSize">
+                    <span>28:</span>
+                    <Input
+                      className="inputSize"
+                      value={size28}
+                      onChange={handleOnchageQuantity28}
+                      // name="size28"
+                      type="number"
+                      min="0"
+                    />
+                  </div>
+                </Form.Item>
+                <Form.Item>
+                  <div className="setSize">
+                    <span>29:</span>
+                    <Input
+                      className="inputSize"
+                      value={size29}
+                      onChange={handleOnchageQuantity29}
+                      // name="size29"
+                      type="number"
+                      min="0"
+                    />
+                  </div>
+                </Form.Item>
+                <Form.Item>
+                  <div className="setSize">
+                    <span>30:</span>
+                    <Input
+                      className="inputSize"
+                      value={size30}
+                      onChange={handleOnchageQuantity30}
+                      // name="size30"
+                      type="number"
+                      min="0"
+                    />
+                  </div>
+                </Form.Item>
+                <Form.Item>
+                  <div className="setSize">
+                    <span>31:</span>
+                    <Input
+                      className="inputSize"
+                      value={size31}
+                      onChange={handleOnchageQuantity31}
+                      // name="size31"
+                      type="number"
+                      min="0"
+                    />
+                  </div>
+                </Form.Item>
+              </div>
+              <div style={{ display: "flex" }} className="sizeDuoi">
+                <Form.Item>
+                  <div className="setSize">
+                    <span>32:</span>
+                    <Input
+                      className="inputSize"
+                      value={size32}
+                      onChange={handleOnchageQuantity32}
+                      // name="size32"
+                      type="number"
+                      min="0"
+                    />
+                  </div>
+                </Form.Item>
+                <Form.Item>
+                  <div className="setSize">
+                    <span>33:</span>
+                    <Input
+                      className="inputSize"
+                      value={size33}
+                      onChange={handleOnchageQuantity33}
+                      // name="size33"
+                      type="number"
+                      min="0"
+                    />
+                  </div>
+                </Form.Item>
+                <Form.Item>
+                  <div className="setSize">
+                    <span>34:</span>
+                    <Input
+                      className="inputSize"
+                      value={size34}
+                      onChange={handleOnchageQuantity34}
+                      // name="size34"
+                      type="number"
+                      min="0"
+                    />
+                  </div>
+                </Form.Item>
+                <Form.Item>
+                  <div className="setSize">
+                    <span>35:</span>
+                    <Input
+                      className="inputSize"
+                      value={size35}
+                      onChange={handleOnchageQuantity35}
+                      // name="size35"
+                      type="number"
+                      min="0"
+                    />
+                  </div>
+                </Form.Item>
+                <Form.Item>
+                  <div className="setSize">
+                    <span>36:</span>
+                    <Input
+                      className="inputSize"
+                      value={size36}
+                      onChange={handleOnchageQuantity36}
+                      // name="size36"
+                      type="number"
+                      min="0"
+                    />
+                  </div>
+                </Form.Item>
+              </div>
+            </Form.Item>
+          ) : (
+            <Form.Item label="Quantity">
+              <div style={{ display: "flex" }} className="sizeDuoi">
+                <Form.Item>
+                  <div className="setSize">
+                    <span>S:</span>
+                    <Input
+                      className="inputSize"
+                      value={sizeS}
+                      onChange={handleOnchageQuantityS}
+                      // name="sizeS"
+                      type="number"
+                      min="0"
+                    />
+                  </div>
+                </Form.Item>
+                <Form.Item>
+                  <div className="setSize">
+                    <span>M:</span>
+                    <Input
+                      className="inputSize"
+                      value={sizeM}
+                      onChange={handleOnchageQuantityM}
+                      // name="sizeM"
+                      type="number"
+                      min="0"
+                    />
+                  </div>
+                </Form.Item>
+                <Form.Item>
+                  <div className="setSize">
+                    <span>L:</span>
+                    <Input
+                      className="inputSize"
+                      value={sizeL}
+                      onChange={handleOnchageQuantityL}
+                      // name="sizeL"
+                      type="number"
+                      min="0"
+                    />
+                  </div>
+                </Form.Item>
+                <Form.Item>
+                  <div className="setSize">
+                    <span>XL:</span>
+                    <Input
+                      className="inputSize"
+                      value={sizeXL}
+                      onChange={handleOnchageQuantityXL}
+                      // name="sizeXL"
+                      type="number"
+                      min="0"
+                    />
+                  </div>
+                </Form.Item>
+                <Form.Item>
+                  <div className="setSize">
+                    <span>XXL:</span>
+                    <Input
+                      className="inputSize"
+                      value={sizeXXL}
+                      onChange={handleOnchageQuantityXXL}
+                      // name="sizeXXL"
+                      type="number"
+                      min="0"
+                    />
+                  </div>
+                </Form.Item>
+              </div>
+            </Form.Item>
+          )}
+
+          <Form.Item
+            label="Size"
+            name="size"
+            rules={[
+              {
+                required: true,
+                message: "Please input your size!",
+              },
+            ]}
+          >
+            <Input
+              value={stateProduct.size}
+              onChange={handleOnchange}
+              name="size"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Type"
+            name="type"
+            rules={[
+              {
+                required: true,
+                message: stateProduct?.type ? "" : "Please input your type!",
+              },
+            ]}
+          >
+            <div className="App">
+              <Select
+                name="type"
+                placeholder={placeholder || ""}
+                // defaultValue={stateProduct.type}
+                onChange={handleChangeSelect}
+                options={options}
+              />
+              {typeSelect === "add_type" && (
+                <Input
+                  value={stateProduct.type}
+                  onChange={handleOnchange}
+                  placeholder="Nhập type bạn muốn thêm"
+                  name="type"
+                />
+              )}
+            </div>
+          </Form.Item>
+          <Form.Item
+            wrapperCol={{
+              offset: 8,
+              span: 16,
             }}
           >
-            {title}
-          </Button>
-        </Form.Item>
-      </Form>
-      <div className="loading">
-        <LoadingComponents isLoading={isLoading}></LoadingComponents>
-      </div>
-    </Modal.Body>
+            <Button
+              onClick={onFinish}
+              type="submit"
+              className="submit_btn"
+              style={{
+                padding: "10px 24px",
+                float: "right",
+                backgroundColor: "#000",
+                color: "#fff",
+                border: "none",
+                fontSize: "14px",
+              }}
+            >
+              {title}
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal.Body>
+    </>
   );
 };
 

@@ -5,16 +5,8 @@ import {
   MDBRow,
   MDBCol,
   MDBIcon,
-  MDBBtn,
 } from "mdb-react-ui-kit";
-import {
-  FaFacebook,
-  FaTwitter,
-  FaGoogle,
-  FaInstagram,
-  FaLinkedin,
-  FaGithub,
-} from "react-icons/fa";
+import { FaFacebook, FaGithub } from "react-icons/fa";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaSquarePhone } from "react-icons/fa6";
@@ -26,50 +18,6 @@ const FooterComponent = () => {
         bgColor="light"
         className="text-center text-lg-start text-muted"
       >
-        {/* <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"> */}
-        {/* <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "end",
-            textAlign: "right",
-            width: "100%",
-          }}
-        >
-          <div className="me-5 d-none d-lg-block">
-            <span>Mạng xã hội:</span>
-          </div>
-          <div className="networks">
-            <a
-              href="https://www.facebook.com/khiem.ngoc.142240/"
-              target="_blank"
-              className="me-4 text-reset"
-            >
-              <FaFacebook />
-            </a>
-            <a href="" className="me-4 text-reset">
-              <FaTwitter />
-            </a>
-            <a href="" className="me-4 text-reset">
-              <FaGoogle />
-            </a>
-            <a href="" className="me-4 text-reset">
-              <FaInstagram />
-            </a>
-            <a href="" className="me-4 text-reset">
-              <FaLinkedin />
-            </a>
-            <a
-              href="https://github.com/khiemfe"
-              className="me-4 text-reset"
-              target="_blank"
-            >
-              <FaGithub />
-            </a>
-          </div>
-        </div> */}
-        {/* </section> */}
-
         <section className="">
           <MDBContainer className="text-center text-md-start mt-5">
             <MDBRow className="mt-3">

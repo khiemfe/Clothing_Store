@@ -10,7 +10,7 @@ import {
 } from "../redux/slices/orderSlice";
 import Modal from "react-bootstrap/Modal";
 import { Form } from "antd";
-import { convertPrice } from "../utils";
+import { convertPrice, renderOptionsAddress } from "../utils";
 import LoadingUpdateComponent from "../components/LoadingUpdateComponent";
 import ModelUpdateUserComponent from "../components/ModelUpdateUserComponent";
 import { useMutationHook } from "../hooks/useMutationHook";
@@ -26,6 +26,7 @@ import LoadingProductDetailsComponent from "../components/LoadingProductDetailsC
 import LoadingOrderComponent from "../components/LoadingTypeComponent";
 import LoadingComponents from "../components/LoadingComponents";
 import { Toaster } from "react-hot-toast";
+import LoadingFullComponents from "../components/LoadingFullComponents";
 
 const OrderPage = () => {
   const order = useSelector((state) => state.order);
@@ -260,6 +261,7 @@ const OrderPage = () => {
     if (e.target.name === "phone") {
       setIsPhoneNumber(true);
     }
+    setErrInput("");
   };
 
   console.log("stateUserDetailsUpdate", stateUserDetailsUpdate);
@@ -299,7 +301,7 @@ const OrderPage = () => {
         ...res?.data,
         name: stateUserDetailsUpdate?.name,
         phone: stateUserDetailsUpdate?.phone,
-        address: stateUserDetailsUpdate?.address,
+        address: address,
         access_token: token,
         refreshToken,
       })
@@ -314,18 +316,32 @@ const OrderPage = () => {
     });
   }, [user]);
 
+  const [errInput, setErrInput] = useState("");
+
   const [isPhoneNumber, setIsPhoneNumber] = useState(true);
   console.log("isPhoneNumber", isPhoneNumber?.length);
   const handleUpdate = () => {
     setIsPhoneNumber(stateUserDetailsUpdate?.phone.match(/^[0-9]{10}$/));
-    if (isPhoneNumber?.length === 1) {
-      mutationUpdate.mutate({
-        id: user?.id,
-        name: stateUserDetailsUpdate?.name,
-        phone: stateUserDetailsUpdate?.phone,
-        address: stateUserDetailsUpdate?.address,
-        access_token: user?.access_token,
-      });
+    if (
+      stateUserDetailsUpdate?.name &&
+      stateUserDetailsUpdate?.phone &&
+      inputLabel &&
+      tinhLabel &&
+      huyenLabel &&
+      xaLabel
+    ) {
+      setErrInput("");
+      if (isPhoneNumber?.length === 1) {
+        mutationUpdate.mutate({
+          id: user?.id,
+          name: stateUserDetailsUpdate?.name,
+          phone: stateUserDetailsUpdate?.phone,
+          address: address,
+          access_token: user?.access_token,
+        });
+      }
+    } else {
+      setErrInput("Vui lòng nhập đầy đủ thông tin");
     }
   };
 
@@ -335,232 +351,345 @@ const OrderPage = () => {
       description: "",
     },
     {
-      title: "FreeShip 50%",
+      title: "Free ship 50%",
       description: "500k",
       // subTitle: "Left 00:00:08",
     },
     {
-      title: "FreeShip",
+      title: "Free ship",
       description: "800k",
     },
   ];
 
   console.log("orderItemm", order?.orderItems);
 
+  useEffect(() => {
+    // setIsOpenModalUpdate(true)
+  });
+
+  // ---address---
+
+  const [address, setAddress] = useState(user?.address);
+
+  console.log(
+    "stateUserDetailsUpdate",
+    stateUserDetailsUpdate?.address?.split(", ")[3]
+  );
+
+  const [tinhOptions, setTinhOptions] = useState([]);
+  const [huyenOptions, setHuyenOptions] = useState([]);
+  const [xaOptions, setXaOptions] = useState([]);
+  const [tinhLabel, setTinhLabel] = useState(user?.address?.split(", ")[3]);
+  console.log("tinhLabel", tinhLabel);
+  const [huyenLabel, setHuyenLabel] = useState(user?.address?.split(", ")[2]);
+  const [xaLabel, setXaLabel] = useState(user?.address?.split(", ")[1]);
+
+  const [inputLabel, setInputLabel] = useState(user?.address?.split(", ")[0]);
+
+  console.log("inputLabel", inputLabel);
+
+  useEffect(() => {
+    fetch("https://provinces.open-api.vn/api/?depth=3")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setTinhOptions(data);
+        const codenameTinh = data.find((dt) => dt.name === tinhLabel);
+        return codenameTinh;
+      })
+      .then((data) => {
+        setHuyenOptions(data?.districts);
+        const codenameHuyen = data?.districts.find(
+          (dt) => dt.name === huyenLabel
+        );
+        return codenameHuyen;
+      })
+      .then((data) => {
+        setXaOptions(data?.wards);
+      });
+  }, [tinhLabel, huyenLabel, xaLabel]);
+
+  const handleOnchangeAddress = (e) => {
+    setInputLabel(e.target.value);
+  };
+
+  const handleChangeSelectTinh = (e) => {
+    console.log("sosanh", e);
+    if (e !== tinhLabel) {
+      setTinhLabel(e);
+      setHuyenLabel("");
+      setXaLabel("");
+    }
+  };
+
+  const handleChangeSelectHuyen = (e) => {
+    if (e !== huyenLabel) {
+      setHuyenLabel(e);
+      setXaLabel("");
+    }
+  };
+
+  const handleChangeSelectXa = (e) => {
+    setXaLabel(e);
+  };
+
+  const optionsTinh = renderOptionsAddress(tinhOptions);
+  const optionsHuyen = renderOptionsAddress(huyenOptions);
+  const optionsXa = renderOptionsAddress(xaOptions);
+
+  console.log("optionsHuyen", optionsHuyen);
+
+  console.log("Label", xaLabel, huyenLabel, tinhLabel);
+
+  useEffect(() => {
+    setAddress(
+      inputLabel + ", " + xaLabel + ", " + huyenLabel + ", " + tinhLabel
+    );
+  }, [inputLabel, xaLabel, huyenLabel, tinhLabel]);
+  console.log("address", address);
+
+  const onCloseModel = () => {
+    formUpdate.resetFields();
+    setIsOpenModalUpdate(false);
+    setIsPhoneNumber(true);
+    setTinhLabel(user?.address?.split(", ")[3]);
+    setHuyenLabel(user?.address?.split(", ")[2]);
+    setXaLabel(user?.address?.split(", ")[1]);
+    setInputLabel(user?.address?.split(", ")[0]);
+    setStateUserDetailsUpdate({ name: user?.name, phone: user?.phone });
+    setErrInput("");
+  };
   return (
-    <div style={{ minHeight: "100vh", marginBottom: 50 }} className="orderPage">
-      <Toaster />
-      <h1
-        style={{
-          margin: "30px 0 30px 0",
-          textAlign: "center",
-          textTransform: "uppercase",
-        }}
+    <>
+      <LoadingFullComponents
+        isLoading={isLoadingDeleted || isLoadingDeletedMany || isLoading}
+      />
+      <div
+        style={{ minHeight: "80vh", marginBottom: 50 }}
+        className="orderPage"
       >
-        Giỏ hàng của bạn
-      </h1>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <LoadingComponents isLoading={isLoadingCart} />
-      </div>
-      {!isLoadingCart &&
-        (order?.orderItems?.length > 0 ? (
-          <div className="cart-body">
-            <div className="cart-shopping">
-              <StepsComponent
-                current={
-                  priceMemo >= 800
-                    ? 3
-                    : priceMemo >= 500
-                    ? 2
-                    : priceMemo > 0
-                    ? 1
-                    : 0
-                }
-                items={itemsSteps}
-              />
-              <div className="title">
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <input
-                    onChange={onChangeAll}
-                    checked={
-                      listChecked?.length > 0 &&
-                      listChecked?.length === lengthItem?.length
-                    }
-                    type="checkbox"
-                    className="checkbox"
-                  />
-                  <p style={{ fontSize: "15px", margin: 0 }}>
-                    Chọn tất cả ({order?.orderItems?.length} sản phẩm)
-                  </p>
-                </div>
-                {dataCart?.length > 0 &&
-                  listChecked?.length > 0 &&
-                  (!isLoadingDeletedMany ? (
+        <Toaster />
+        <h1
+          style={{
+            margin: "30px 0 30px 0",
+            textAlign: "center",
+            textTransform: "uppercase",
+          }}
+        >
+          Giỏ hàng của bạn
+        </h1>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <LoadingComponents isLoading={isLoadingCart} />
+        </div>
+        {!isLoadingCart &&
+          (order?.orderItems?.length > 0 ? (
+            <div className="cart-body">
+              <div className="cart-shopping">
+                <StepsComponent
+                  current={
+                    priceMemo >= 800
+                      ? 3
+                      : priceMemo >= 500
+                      ? 2
+                      : priceMemo > 0
+                      ? 1
+                      : 0
+                  }
+                  items={itemsSteps}
+                />
+                <div className="title">
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <input
+                      onChange={onChangeAll}
+                      checked={
+                        listChecked?.length > 0 &&
+                        listChecked?.length === lengthItem?.length
+                      }
+                      type="checkbox"
+                      className="checkbox"
+                    />
+                    <p style={{ fontSize: "15px", margin: 0 }}>
+                      Chọn tất cả ({order?.orderItems?.length} sản phẩm)
+                    </p>
+                  </div>
+                  {dataCart?.length > 0 && listChecked?.length > 0 && (
                     <h4 onClick={handleDeleteAll} style={{ cursor: "pointer" }}>
                       Xoá tất cả
                     </h4>
-                  ) : (
-                    <div>
-                      <LoadingComponents isLoading={isLoadingDeletedMany} />
-                    </div>
-                  ))}
-              </div>
-              <div className="product-cart">
-              {order?.orderItems?.map((item, index) => {
-                return (
-                  <span key={index}>
-                    {item.userId === user?.id && (
-                      <span>
-                        <div
-                          style={{ display: "flex" }}
-                          className="item-product"
-                        >
-                          <input
-                            onChange={onChange}
-                            value={item._id + `size${item.size}`}
-                            checked={listChecked.includes(
-                              item._id + `size${item.size}`
-                            )}
-                            type="checkbox"
-                            className="checkbox"
-                          />
-                          <img
-                            src={item.image}
-                            alt=""
-                            className="img-product"
-                          />
-                          <div className="text-product">
-                            <h3 className="name-product">{item?.name}</h3>
-                            <h3 className="price-product">
-                              {convertPrice(item?.price)}
-                            </h3>
-                            <p style={{ fontSize: 14 }}>Size: {item?.size}</p>
-                            <div className="amount-product">
-                              <button
-                                onClick={() =>
-                                  handleOnchangeCount("decrease", item._id)
-                                }
-                              >
-                                -
-                              </button>
-                              <span style={{ padding: "0 5px" }}>
-                                {item?.amount}
-                              </span>
-                              <button
-                                onClick={() =>
-                                  handleOnchangeCount("increase", item._id)
-                                }
-                              >
-                                +
-                              </button>
-                            </div>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "end",
-                              position: "relative",
-                            }}
-                          >
-                            <h4>{convertPrice(item.price * item.amount)}</h4>
-                            <h4
-                              style={{
-                                cursor: "pointer",
-                                marginLeft: "10px",
-                                fontSize: "26px",
-                              }}
-                              onClick={() => handleDeleteOrder(item._id)}
+                  )}
+                </div>
+                <div className="product-cart">
+                  {order?.orderItems?.map((item, index) => {
+                    return (
+                      <span key={index}>
+                        {item.userId === user?.id && (
+                          <span>
+                            <div
+                              style={{ display: "flex" }}
+                              className="item-product"
                             >
-                              <MdDeleteOutline />
-                            </h4>
-                            {!isLoadingDeleted && (
+                              <div style={{ display: "flex" }}>
+                                <input
+                                  onChange={onChange}
+                                  value={item._id + `size${item.size}`}
+                                  checked={listChecked.includes(
+                                    item._id + `size${item.size}`
+                                  )}
+                                  type="checkbox"
+                                  className="checkbox"
+                                />
+                                <img
+                                  src={item.image}
+                                  alt=""
+                                  className="img-product"
+                                />
+                                <div className="text-product">
+                                  <h3 className="name-product">{item?.name}</h3>
+                                  <h3 className="price-product">
+                                    {convertPrice(item?.price)}
+                                  </h3>
+                                  <p style={{ fontSize: 14 }}>
+                                    Size: {item?.size}
+                                  </p>
+                                  <div className="amount-product">
+                                    <button
+                                      onClick={() =>
+                                        handleOnchangeCount(
+                                          "decrease",
+                                          item._id
+                                        )
+                                      }
+                                    >
+                                      -
+                                    </button>
+                                    <span style={{ padding: "0 5px" }}>
+                                      {item?.amount}
+                                    </span>
+                                    <button
+                                      onClick={() =>
+                                        handleOnchangeCount(
+                                          "increase",
+                                          item._id
+                                        )
+                                      }
+                                    >
+                                      +
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
                               <div
                                 style={{
-                                  position: "absolute",
-                                  right: 0,
-                                  bottom: -30,
+                                  display: "flex",
+                                  alignItems: "end",
+                                  position: "relative",
                                 }}
                               >
-                                <LoadingComponents
-                                  isLoading={isLoadingDeleted}
-                                />
+                                {/* <h4
+                                style={{ width: "70%" }}
+                                className="totalPrice"
+                              >
+                                {convertPrice(item.price * item.amount)}
+                              </h4> */}
+                                <h4
+                                  style={{
+                                    cursor: "pointer",
+                                    marginLeft: "10px",
+                                    fontSize: "26px",
+                                  }}
+                                  onClick={() => handleDeleteOrder(item._id)}
+                                >
+                                  <MdDeleteOutline />
+                                </h4>
                               </div>
-                            )}
-                          </div>
-                        </div>
+                            </div>
+                          </span>
+                        )}
                       </span>
-                    )}
-                  </span>
-                );
-              })}
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-            <div className="pay">
-              {noBuy && listChecked?.length === 0 && (
-                <p style={{ color: "red", fontSize: 14 }}>
-                  Vui lòng chọn sản phẩm
-                </p>
-              )}
-              <div className="pay-body">
-                <ul className="pay-list">
-                  <li className="pay-item">
-                    <h3>Sản phẩm:</h3>
-                    <span>{convertPrice(priceMemo)}</span>
-                  </li>
-                  <li className="pay-item">
-                    <h3>Phí giao hàng:</h3>
-                    <span>{convertPrice(diliveryPriceMemo)}</span>
-                  </li>
-                  <li className="pay-item">
-                    <h3>Tổng tiền:</h3>
-                    <span style={{ fontWeight: "bold" }}>
-                      {convertPrice(totalPriceMemo)}
-                    </span>
-                  </li>
-                </ul>
-                {listChecked?.length > 0 ? (
-                  <button className="pay-btn" onClick={handleBuy}>
-                    Mua ngay({listChecked?.length})
-                  </button>
-                ) : (
-                  <button onClick={handleNoBuy} className="pay-btn">
-                    Mua ngay (0)
-                  </button>
+              <div className="pay">
+                {noBuy && listChecked?.length === 0 && (
+                  <p style={{ color: "red", fontSize: 14 }}>
+                    Vui lòng chọn sản phẩm
+                  </p>
                 )}
+                <div className="pay-body">
+                  <ul className="pay-list">
+                    <li className="pay-item">
+                      <h3>Tạm tính:</h3>
+                      <span>{convertPrice(priceMemo)}</span>
+                    </li>
+                    <li className="pay-item">
+                      <h3>Phí giao hàng:</h3>
+                      <span>{convertPrice(diliveryPriceMemo)}</span>
+                    </li>
+                    <li className="pay-item">
+                      <h3>Tổng tiền:</h3>
+                      <span style={{ fontWeight: "bold" }}>
+                        {convertPrice(totalPriceMemo)}
+                      </span>
+                    </li>
+                  </ul>
+                  {listChecked?.length > 0 ? (
+                    <button className="pay-btn" onClick={handleBuy}>
+                      Mua ngay({listChecked?.length})
+                    </button>
+                  ) : (
+                    <button onClick={handleNoBuy} className="pay-btn">
+                      Mua ngay (0)
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <h2 style={{textAlign: 'center'}}>Bạn không có sản phẩm trong giỏ hàng của bạn</h2>
-        ))}
-      <Modal
-        show={isOpenModalUpdate}
-        onHide={() => {
-          setIsOpenModalUpdate(false);
-          setIsPhoneNumber(true);
-        }}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centeredxw
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Chỉnh sửa người dùng
-          </Modal.Title>
-        </Modal.Header>
-        <LoadingUpdateComponent isLoading={false}>
+          ) : (
+            <h2 style={{ textAlign: "center" }}>
+              Bạn không có sản phẩm trong giỏ hàng!
+            </h2>
+          ))}
+        <Modal
+          show={isOpenModalUpdate}
+          onHide={onCloseModel}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centeredxw
+          style={{ marginTop: 100 }}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Chỉnh sửa người dùng
+            </Modal.Title>
+          </Modal.Header>
+          {/* <LoadingUpdateComponent isLoading={false}> */}
           <ModelUpdateUserComponent
             stateUser={stateUserDetailsUpdate}
             form={formUpdate}
             handleOnchange={handleOnchangeDetailsUpdate}
             onFinish={handleUpdate}
-            isLoading={isLoading}
+            // isLoading={isLoading}
             title="Update"
             isPhoneNumber={isPhoneNumber}
+            tinhLabel={tinhLabel}
+            optionsTinh={optionsTinh}
+            handleChangeSelectTinh={handleChangeSelectTinh}
+            huyenLabel={huyenLabel}
+            optionsHuyen={optionsHuyen}
+            handleChangeSelectHuyen={handleChangeSelectHuyen}
+            xaLabel={xaLabel}
+            optionsXa={optionsXa}
+            handleChangeSelectXa={handleChangeSelectXa}
+            inputLabel={inputLabel}
+            handleOnchangeAddress={handleOnchangeAddress}
+            errInput={errInput}
           />
-        </LoadingUpdateComponent>
-      </Modal>
-    </div>
+          {/* </LoadingUpdateComponent> */}
+        </Modal>
+      </div>
+    </>
   );
 };
 

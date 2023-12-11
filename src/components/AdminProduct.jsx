@@ -8,7 +8,6 @@ import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
 import { convertPrice, getBase64, renderOptions } from "../utils";
 import * as ProducttServcie from "../services/ProductServices";
 import { useMutationHook } from "../hooks/useMutationHook";
-import LoadingComponents from "../components/LoadingComponents";
 import { success, error, warning } from "../components/Message";
 import { useQuery } from "@tanstack/react-query";
 import { MdDeleteOutline } from "react-icons/md";
@@ -22,6 +21,7 @@ import LoadingCardInfoComponent from "./LoadingCardInfoComponent";
 import LoadingUpdateComponent from "./LoadingUpdateComponent";
 import * as CartServices from "../services/CartServices";
 import { Toaster } from "react-hot-toast";
+import LoadingFullComponents from "./LoadingFullComponents";
 
 const AdminProduct = () => {
   const [form] = Form.useForm();
@@ -281,7 +281,6 @@ const AdminProduct = () => {
   useEffect(() => {
     if (isSuccessDeleted && dataDeleted?.status === "OK") {
       success("Bạn đã xoá sản phẩm thành công");
-      handleCanelDelete();
     } else if (isErrorDeleted) {
       error("Bạn đã xoá sản phẩm thất bại");
     }
@@ -736,6 +735,7 @@ const AdminProduct = () => {
   };
 
   const handleDeleteProduct = () => {
+    handleCanelDelete();
     mutationDelete.mutate(
       { id: rowSelected, token: user?.access_token },
       {
@@ -1058,8 +1058,13 @@ const AdminProduct = () => {
     }
   };
   // }
+
+  console.log("isLoadingUpdated", isLoadingUpdated);
   return (
     <>
+      <LoadingFullComponents
+        isLoading={isLoading || isLoadingDeleted || isLoadingUpdated}
+      />
       <Toaster />
       <h1
         style={{ textTransform: "uppercase", margin: "10px 0 20px 0" }}
@@ -1115,6 +1120,7 @@ const AdminProduct = () => {
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            className="systemModel"
           >
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
@@ -1134,7 +1140,7 @@ const AdminProduct = () => {
               handleOnchangeAvatarImg3={handleOnchangeAvatarImg3}
               handleOnchangeAvatarImg4={handleOnchangeAvatarImg4}
               onFinish={onFinish}
-              isLoading={isLoading}
+              // isLoading={isLoading}
               title="Add"
             />
           </Modal>
@@ -1180,7 +1186,7 @@ const AdminProduct = () => {
                 handleOnchangeAvatarImg3={handleOnchangeAvatarDetailsImg3}
                 handleOnchangeAvatarImg4={handleOnchangeAvatarDetailsImg4}
                 onFinish={onUpdateProduct}
-                isLoading={isLoadingUpdated}
+                // isLoading={isLoadingUpdated}
                 title="Update"
               />
               {/* )} */}
@@ -1196,11 +1202,6 @@ const AdminProduct = () => {
             onOk={handleDeleteProduct}
           >
             <div>Bạn có chắc muốn xoá sản phẩm này không?</div>
-            <span
-              style={{ position: "absolute", right: "35%", bottom: "15px" }}
-            >
-              <LoadingComponents isLoading={isLoadingDeleted} />
-            </span>
           </ModelComponent>
         </div>
       </div>
