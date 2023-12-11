@@ -267,7 +267,14 @@ const OrderPage = () => {
   console.log("stateUserDetailsUpdate", stateUserDetailsUpdate);
 
   const handleBuy = () => {
-    if (user?.phone && user?.address && user?.name) {
+    if (
+      user?.phone &&
+      user?.address?.split(", ")[3] &&
+      user?.address?.split(", ")[2] &&
+      user?.address?.split(", ")[1] &&
+      user?.address?.split(", ")[0] &&
+      user?.name
+    ) {
       navigate("/payment", {
         state: {
           id: user?.id,
@@ -460,6 +467,10 @@ const OrderPage = () => {
     setStateUserDetailsUpdate({ name: user?.name, phone: user?.phone });
     setErrInput("");
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 1);
+  }, []);
   return (
     <>
       <LoadingFullComponents
