@@ -8,7 +8,12 @@ const ModelComponent = ({
   ...rest
 }) => {
   return (
-    <Modal style={{position: 'relative'}} title={title} open={isModalOpen} {...rest}>
+    <Modal
+      style={{ position: "relative" }}
+      title={title}
+      open={isModalOpen}
+      {...rest}
+    >
       {children}
     </Modal>
   );

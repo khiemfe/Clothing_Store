@@ -10,19 +10,27 @@ const DetailsOrderPage = () => {
   const { id } = params;
   const location = useLocation();
   const { state } = location;
-  console.log("state", state);
+
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+
   const fetchOrderDetails = async () => {
     const res = await OrderServcie.getDetailsOrder(state?.id, id, state?.token);
+    setIsLoadingDetails(false);
     return res?.data;
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 1);
+    setIsLoadingDetails(true);
+  }, []);
+
   const queryOrderDetails = useQuery(["order-details"], fetchOrderDetails);
   const { data: dataOrderDetails, isLoading } = queryOrderDetails;
 
-  const [month, setMonth] = useState(
-    dataOrderDetails?.deliveredAt?.split(" ")[1].toString()
-  );
+  const [month, setMonth] = useState("");
+  const monthInitial = dataOrderDetails?.deliveredAt?.split(" ")[1].toString();
   useEffect(() => {
-    switch (month) {
+    switch (monthInitial) {
       case "Jan":
         setMonth("01");
       case "Feb":
@@ -50,8 +58,6 @@ const DetailsOrderPage = () => {
     }
   }, []);
 
-  console.log('month', month)
-
   return (
     <>
       <div className="order-details">
@@ -65,12 +71,27 @@ const DetailsOrderPage = () => {
           Chi tiết đơn hàng
         </h1>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <LoadingComponents isLoading={isLoading} />
+          <LoadingComponents isLoading={isLoading || isLoadingDetails} />
         </div>
-        {!isLoading && (
+        {!isLoading && !isLoadingDetails && (
           <div className="body">
             <div className="info">
-              <div style={{ display: "table" }}>
+              <div className="product">
+                {dataOrderDetails?.orderItems?.map((item, index) => {
+                  return (
+                    <div className="item" key={index}>
+                      <img src={item?.image} alt="" />
+                      <div className="text">
+                        <h3>{item?.name}</h3>
+                        <h3>{convertPrice(item?.price)}</h3>
+                        <h3>Size: {item?.size}</h3>
+                        <h3>Số lượng: {item?.amount}</h3>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div>
                 <div className="receiver">
                   <h3 className="text">Thông tin người nhận:</h3>
                   <h3>Name: {dataOrderDetails?.shippingAddres?.fullName}</h3>
@@ -78,20 +99,9 @@ const DetailsOrderPage = () => {
                   <h3>Address: {dataOrderDetails?.shippingAddres?.address}</h3>
                 </div>
               </div>
-
-              <div style={{ display: "table" }}>
-                <div className="time">
-                  <h3 className="text">Thời gian đặt hàng: </h3>
-                  <h3>{dataOrderDetails?.deliveredAt?.split(" ")[4]}</h3>
-                  <h3>
-                    {dataOrderDetails?.deliveredAt?.split(" ")[2]}/{month}/
-                    {dataOrderDetails?.deliveredAt?.split(" ")[3]}
-                  </h3>
-                  <h3>Nhận hàng dự kiến: 3-5 ngày</h3>
-                </div>
-              </div>
-
-              <div style={{ display: "table" }}>
+            </div>
+            <div className="details">
+              <div>
                 <div className="paided">
                   {dataOrderDetails?.isPaid ? (
                     <p style={{ color: "green" }}>Đã thanh toán</p>
@@ -107,22 +117,16 @@ const DetailsOrderPage = () => {
                   )}
                 </div>
               </div>
-            </div>
-            <div className="details">
-              <div className="product">
-                {dataOrderDetails?.orderItems?.map((item, index) => {
-                  return (
-                    <div className="item" key={index}>
-                      <img src={item?.image} alt="" />
-                      <div className="text">
-                        <h3>{item?.name}</h3>
-                        <h3>{convertPrice(item?.price)}</h3>
-                        <h3>Size: {item?.size}</h3>
-                        <h3>Số lượng: {item?.amount}</h3>
-                      </div>
-                    </div>
-                  );
-                })}
+              <div>
+                <div className="time">
+                  <h3 className="text">Thời gian đặt hàng: </h3>
+                  <h3>{dataOrderDetails?.deliveredAt?.split(" ")[4]}</h3>
+                  <h3>
+                    {dataOrderDetails?.deliveredAt?.split(" ")[2]}/{month}/
+                    {dataOrderDetails?.deliveredAt?.split(" ")[3]}
+                  </h3>
+                  <h3>Nhận hàng dự kiến: 3-5 ngày</h3>
+                </div>
               </div>
 
               <div className="price">

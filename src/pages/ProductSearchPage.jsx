@@ -47,9 +47,6 @@ const ProductSearchPage = () => {
     keepPreviousData: true,
   });
 
-  console.log("datadata", products);
-  console.log("isLoading", isLoading);
-
   const [searchParams, setSearchParams] = useSearchParams();
   // search ở trên
   useEffect(() => {
@@ -85,7 +82,6 @@ const ProductSearchPage = () => {
     // ra được product mới thì sẽ dùng
     setIsLoadingSearch(false);
   }, [products?.NameSearch]);
-  console.log("isLoadingSearch", isLoadingSearch);
 
   const arrayProducts = [];
   for (let i = 1; i <= limit; i++) {

@@ -193,7 +193,10 @@ const ModelBodyComponent = ({
           autoComplete="on"
           form={form}
         >
-          <div className="update-image-mobile" style={{ display: "flex", justifyContent: "start" }}>
+          <div
+            className="update-image-mobile"
+            style={{ display: "flex", justifyContent: "start" }}
+          >
             <Form.Item
               label="Image"
               name="upload"

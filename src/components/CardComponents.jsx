@@ -5,20 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { convertPrice } from "../utils";
 
 const CardComponents = (props) => {
-  const {
-    id,
-    key,
-    countInstock,
-    description,
-    image,
-    name,
-    price,
-    gender,
-    rating,
-    type,
-    discount,
-    selled,
-  } = props;
+  const { id, key, image, name, price } = props;
 
   const navigate = useNavigate();
   const handleDetailsProduct = (id) => {

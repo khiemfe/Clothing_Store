@@ -249,8 +249,9 @@ const PaymentPage = () => {
       huyenLabel &&
       xaLabel
     ) {
+      console.log("chayyyy voo");
       setErrInput("");
-      if (isPhoneNumber?.length === 1) {
+      if (true) {
         mutationUpdate.mutate({
           id: user?.id,
           name: stateUserDetailsUpdate?.name,
@@ -449,6 +450,10 @@ const PaymentPage = () => {
     setStateUserDetailsUpdate({ name: user?.name, phone: user?.phone });
     setErrInput("");
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 1);
+  }, []);
 
   return (
     <>

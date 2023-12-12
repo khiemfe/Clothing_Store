@@ -139,7 +139,7 @@ const ModelUpdateUserComponent = ({
           >
             <Button
               onClick={onFinish}
-              type="submit"
+              // type="submit"
               className="submit_btn"
               style={{
                 padding: "10px 24px",

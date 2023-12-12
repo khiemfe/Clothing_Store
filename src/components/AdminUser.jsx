@@ -21,7 +21,6 @@ import LoadingFullComponents from "./LoadingFullComponents";
 // import { getAllUser } from '../services/userServices'
 
 const AdminUser = () => {
-  // const [form] = Form.useForm()
   const [formUpdate] = Form.useForm();
   const [rowSelected, setRowSelected] = useState("");
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
@@ -226,7 +225,7 @@ const AdminUser = () => {
   };
 
   const handleDeleteUser = () => {
-    handleCanelDelete()
+    handleCanelDelete();
     mutationDelete.mutate(
       { id: rowSelected, token: user?.access_token },
       {

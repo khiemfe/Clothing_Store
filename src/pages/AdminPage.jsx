@@ -3,7 +3,6 @@ import { getItem } from "../utils";
 import { FaRegUser } from "react-icons/fa";
 import { SiHomeassistantcommunitystore } from "react-icons/si";
 import { BsCart } from "react-icons/bs";
-import HeaderComponents from "../components/HeaderComponents";
 import { Menu } from "antd";
 import AdminUser from "../components/AdminUser";
 import AdminProduct from "../components/AdminProduct";
@@ -40,7 +39,10 @@ const NotFoundPage = () => {
   return (
     <>
       {/* <HeaderComponents /> */}
-      <div className="systemAdmin-mobile" style={{ display: "flex", overflowX: "hidden", marginBottom: 50 }}>
+      <div
+        className="systemAdmin-mobile"
+        style={{ display: "flex", overflowX: "hidden", marginBottom: 50 }}
+      >
         <Menu
           mode="inline"
           className="left-systemAdmin"
@@ -52,7 +54,7 @@ const NotFoundPage = () => {
           items={items}
           onClick={handleOnClick}
         />
-        <div style={{ flex: 1, padding: "15px"}}>
+        <div style={{ flex: 1, padding: "15px" }}>
           {renderPage(keySelected)}
         </div>
       </div>

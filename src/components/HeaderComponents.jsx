@@ -12,7 +12,6 @@ import { FiSearch, FiHeart } from "react-icons/fi";
 import { BsCart2 } from "react-icons/bs";
 import CameraComponents from "./CameraComponents";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import Dropdown from "react-bootstrap/Dropdown";
 import * as UserServcie from "../services/userServices";
@@ -140,6 +139,7 @@ const HeaderComponents = (props) => {
 
   const [amountCart, setAmountCart] = useState(0);
   const fetchOrderCart = async () => {
+    console.log("chayyyy vo");
     if (user?.email) {
       const res = await CartServices.getCartByUserId(
         user?.id,
@@ -219,6 +219,7 @@ const HeaderComponents = (props) => {
                   placement="left"
                   onClose={onClose}
                   open={open}
+                  style={{ width: "40%" }}
                 >
                   <Nav className="me-auto">
                     <Nav.Link className="item" href="/product/nam">
@@ -317,7 +318,7 @@ const HeaderComponents = (props) => {
                       onClose={onCloseSearch}
                       open={openSearch}
                       key="top"
-                      style={{ minWidth: "100vw" }}
+                      style={{ minWidth: "100vw", height: "60%" }}
                     >
                       <div className="modalSearchMobile">
                         <a className="item" href="/product/nam">

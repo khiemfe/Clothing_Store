@@ -37,7 +37,6 @@ const ProductNamPage = () => {
     keepPreviousData: true,
   });
   //   keepPreviousData: giữ lại product cũ, load những cái mới thôi
-  console.log("isPreviousDataNam", isPreviousData); //loading
 
   return (
     <div style={{ marginBottom: 50, minHeight: "100%" }}>
@@ -49,7 +48,10 @@ const ProductNamPage = () => {
           style={{ width: "100%", height: "450px", objectFit: "cover" }}
         />
       </div>
-      <div className="genderPage" style={{ textAlign: "center", width: "100%", marginTop: 60 }}>
+      <div
+        className="genderPage"
+        style={{ textAlign: "center", width: "100%", marginTop: 60 }}
+      >
         <h1 className="genderPage-text">Thời trang nam</h1>
       </div>
       <div style={{ padding: "0 20px" }}>

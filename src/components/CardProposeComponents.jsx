@@ -9,18 +9,12 @@ import { convertPrice } from "../utils";
 const CardProposeComponents = (props) => {
   let {
     id,
-    // key,
     result_age,
     result_size,
     result_gender,
-    // countInstock,
-    // description,
     image,
     name,
     price,
-    // rating,
-    // discount,
-    // selled,
     gender,
     age,
     size,

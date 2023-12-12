@@ -39,7 +39,6 @@ const ProductDetailsPage = () => {
       enabled: !!idProduct,
     }
   );
-  console.log("productDetailss", productDetails);
 
   const images = {
     img1: productDetails?.image,
@@ -233,17 +232,12 @@ const ProductDetailsPage = () => {
     setQuantity(productDetails?.quantity?.size36);
   };
 
-  // --
-
   // ----
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const location = useLocation();
-  console.log("size", size);
 
   const mutationAddCart = useMutationHook((data) => {
-    console.log("loading cart true");
     const { userId, token, ...rest } = data;
     const res = CartServices.createCart(userId, token, { ...rest }); //rest or {...rest}
     return res;
@@ -264,7 +258,6 @@ const ProductDetailsPage = () => {
       user?.access_token
     );
     setAmountCart(res?.data?.length);
-    console.log("loading cart false");
   };
 
   console.log("amountCart", amountCart);
@@ -331,9 +324,6 @@ const ProductDetailsPage = () => {
   const hanleAddOrderNoSize = () => {
     setNoSize(true);
   };
-
-  console.log("test sản phẩm", productDetails);
-  console.log("test người dùng", user);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 

@@ -19,24 +19,24 @@ import PieChartComponent from "./PieChartComponent";
 
 const AdminOrder = () => {
   // const [form] = Form.useForm()
-  const [formUpdate] = Form.useForm();
+  // const [formUpdate] = Form.useForm();
   const [rowSelected, setRowSelected] = useState("");
-  const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-  const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
+  // const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+  // const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
   const user = useSelector((state) => state?.user);
-  const [isModelOpenDelete, setIsModelOpenDelete] = useState(false);
+  // const [isModelOpenDelete, setIsModelOpenDelete] = useState(false);
   const searchInput = useRef(null);
   const storageToken = localStorage.getItem("access_token");
-  const storageAccessToken = storageToken.split('"')[1];
+  // const storageAccessToken = storageToken.split('"')[1];
 
-  const [stateUserDetails, setStateUserDetails] = useState({
-    name: "",
-    email: "",
-    isAdmin: false,
-    phone: "",
-    address: "",
-    avatar: "",
-  });
+  // const [stateUserDetails, setStateUserDetails] = useState({
+  //   name: "",
+  //   email: "",
+  //   isAdmin: false,
+  //   phone: "",
+  //   address: "",
+  //   avatar: "",
+  // });
 
   // const mutationDelete = useMutationHook((data) => {
   //   const { id, token } = data;

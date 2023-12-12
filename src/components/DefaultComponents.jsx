@@ -1,13 +1,13 @@
-import React from 'react'
-import HeaderComponents from './HeaderComponents'
+import React from "react";
+import HeaderComponents from "./HeaderComponents";
 
-const DefaultComponents = ({children}) => {
-    return (
-        <div>
-            {/* <HeaderComponents /> */}
-            {children}
-        </div>
-    )
-}
+const DefaultComponents = ({ children }) => {
+  return (
+    <div>
+      {/* <HeaderComponents /> */}
+      {children}
+    </div>
+  );
+};
 
-export default DefaultComponents
+export default DefaultComponents;

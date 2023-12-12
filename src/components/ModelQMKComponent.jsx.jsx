@@ -12,7 +12,6 @@ const ModelQMKComponent = ({
   form,
   handleOnchange,
   onFinish,
-  isLoading,
   title,
   dataUpdate,
 }) => {

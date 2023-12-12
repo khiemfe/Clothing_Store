@@ -11,7 +11,6 @@ import {
 import Modal from "react-bootstrap/Modal";
 import { Form } from "antd";
 import { convertPrice, renderOptionsAddress } from "../utils";
-import LoadingUpdateComponent from "../components/LoadingUpdateComponent";
 import ModelUpdateUserComponent from "../components/ModelUpdateUserComponent";
 import { useMutationHook } from "../hooks/useMutationHook";
 import { success, error, warning } from "../components/Message";
@@ -22,17 +21,13 @@ import { MdDeleteOutline } from "react-icons/md";
 import StepsComponent from "../components/StepsComponent";
 import * as CartServices from "../services/CartServices";
 import { useQuery } from "@tanstack/react-query";
-import LoadingProductDetailsComponent from "../components/LoadingProductDetailsComponent";
-import LoadingOrderComponent from "../components/LoadingTypeComponent";
 import LoadingComponents from "../components/LoadingComponents";
 import { Toaster } from "react-hot-toast";
 import LoadingFullComponents from "../components/LoadingFullComponents";
 
 const OrderPage = () => {
   const order = useSelector((state) => state.order);
-  console.log("order", order);
   const user = useSelector((state) => state.user);
-  console.log("userrr", user);
   const [listChecked, setListChecked] = useState([]);
   const [isOpenModalUpdate, setIsOpenModalUpdate] = useState(false);
   const [formUpdate] = Form.useForm();
@@ -48,22 +43,20 @@ const OrderPage = () => {
     return res?.data;
   };
 
-  const [enabled, setEnabled] = useState(false);
-  useEffect(() => {
-    if (state?.id && state?.token) {
-      setEnabled(true);
-    } else {
-      setEnabled(false);
-    }
-  }, [state]);
+  // const [enabled, setEnabled] = useState(false);
+  // useEffect(() => {
+  //   if (state?.id && state?.token) {
+  //     setEnabled(true);
+  //   } else {
+  //     setEnabled(false);
+  //   }
+  // }, [state]);
 
   const queryCart = useQuery(["cart"], fetchOrderCart, {
-    enabled: enabled,
+    enabled: true,
   });
 
   const { data: dataCart, isLoading: isLoadingCart } = queryCart;
-  console.log("dataCart", dataCart);
-  console.log("isLoadingCart", isLoadingCart);
 
   useEffect(() => {
     dispatch(updateOrderProduct({ dataCart }));
@@ -91,7 +84,6 @@ const OrderPage = () => {
   } = mutationDeleteCart;
 
   const handleDeleteOrder = (idProduct) => {
-    console.log("idProduct", idProduct);
     // dispatch(removeOrderProduct({ idProduct }));
     mutationDeleteCart.mutate(
       { userId: user?.id, cartId: idProduct, token: user?.access_token },
@@ -113,12 +105,10 @@ const OrderPage = () => {
   }, [isSuccessDeleted, isErrorDeleted]);
 
   const onChange = (e) => {
-    console.log("e.target.value", e.target.value);
     if (listChecked.includes(e.target.value)) {
       const newListChecked = listChecked.filter(
         (item) => item !== e.target.value
       );
-      console.log("newListChecked", newListChecked);
       setListChecked(newListChecked);
     } else {
       setListChecked([...listChecked, e.target.value]);
@@ -126,13 +116,11 @@ const OrderPage = () => {
   };
 
   const [lengthItem, setLengthItem] = useState([]);
-  console.log("lengthItem", lengthItem);
 
   const onChangeAll = (e) => {
     if (e.target.checked) {
       const newListChecked = [];
       order?.orderItems?.forEach((item) => {
-        console.log("item?.userId", item?.userId === user?.id);
         newListChecked.push(item?._id + `size${item?.size}`);
       });
       // setLengthItem(newListChecked);
@@ -144,19 +132,14 @@ const OrderPage = () => {
 
   useEffect(() => {
     const newListChecked = [];
-    console.log("orderItems", order?.orderItems);
-    console.log("orderItems user", user?.id);
 
     dataCart?.forEach((item) => {
-      console.log("item?.userId", item?.userId);
       if (item?.userId === user?.id) {
         newListChecked.push(item?._id + `size${item?.size}`);
       }
     });
     setLengthItem(newListChecked);
   }, [dataCart]);
-  console.log("listChecked", listChecked);
-  console.log("listChecked2", lengthItem);
 
   const mutationDeleteMany = useMutationHook((data) => {
     const { userId, token, ...ids } = data;
@@ -235,12 +218,10 @@ const OrderPage = () => {
     console.log("dataUpdate: ", data);
     const { id, access_token, ...rest } = data;
     const res = UserServcie.updateUser(id, rest, access_token);
-    console.log("resssss", res);
     return res;
   });
 
   const { data, isLoading, isSuccess, isError, variables } = mutationUpdate;
-  console.log("mutationUpdate", mutationUpdate);
 
   useEffect(() => {
     if (isSuccess && data?.status === "OK") {
@@ -263,8 +244,6 @@ const OrderPage = () => {
     }
     setErrInput("");
   };
-
-  console.log("stateUserDetailsUpdate", stateUserDetailsUpdate);
 
   const handleBuy = () => {
     if (
@@ -300,7 +279,6 @@ const OrderPage = () => {
     const storage = localStorage.getItem("refresh_token");
     const refreshToken = JSON.parse(storage);
     const res = await UserServcie.getDetailsUser(id, token);
-    console.log("res?.data", res);
     setIsLoadingUpdate(false);
 
     dispatch(
@@ -326,7 +304,6 @@ const OrderPage = () => {
   const [errInput, setErrInput] = useState("");
 
   const [isPhoneNumber, setIsPhoneNumber] = useState(true);
-  console.log("isPhoneNumber", isPhoneNumber?.length);
   const handleUpdate = () => {
     setIsPhoneNumber(stateUserDetailsUpdate?.phone.match(/^[0-9]{10}$/));
     if (
@@ -368,8 +345,6 @@ const OrderPage = () => {
     },
   ];
 
-  console.log("orderItemm", order?.orderItems);
-
   useEffect(() => {
     // setIsOpenModalUpdate(true)
   });
@@ -387,13 +362,10 @@ const OrderPage = () => {
   const [huyenOptions, setHuyenOptions] = useState([]);
   const [xaOptions, setXaOptions] = useState([]);
   const [tinhLabel, setTinhLabel] = useState(user?.address?.split(", ")[3]);
-  console.log("tinhLabel", tinhLabel);
   const [huyenLabel, setHuyenLabel] = useState(user?.address?.split(", ")[2]);
   const [xaLabel, setXaLabel] = useState(user?.address?.split(", ")[1]);
 
   const [inputLabel, setInputLabel] = useState(user?.address?.split(", ")[0]);
-
-  console.log("inputLabel", inputLabel);
 
   useEffect(() => {
     fetch("https://provinces.open-api.vn/api/?depth=3")
@@ -422,7 +394,6 @@ const OrderPage = () => {
   };
 
   const handleChangeSelectTinh = (e) => {
-    console.log("sosanh", e);
     if (e !== tinhLabel) {
       setTinhLabel(e);
       setHuyenLabel("");
@@ -445,16 +416,11 @@ const OrderPage = () => {
   const optionsHuyen = renderOptionsAddress(huyenOptions);
   const optionsXa = renderOptionsAddress(xaOptions);
 
-  console.log("optionsHuyen", optionsHuyen);
-
-  console.log("Label", xaLabel, huyenLabel, tinhLabel);
-
   useEffect(() => {
     setAddress(
       inputLabel + ", " + xaLabel + ", " + huyenLabel + ", " + tinhLabel
     );
   }, [inputLabel, xaLabel, huyenLabel, tinhLabel]);
-  console.log("address", address);
 
   const onCloseModel = () => {
     formUpdate.resetFields();

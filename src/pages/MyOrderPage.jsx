@@ -23,17 +23,17 @@ const MyOrderPage = () => {
     return res?.data;
   };
 
-  const [enabled, setEnabled] = useState(false);
-  useEffect(() => {
-    if (state?.id && state?.token) {
-      setEnabled(true);
-    } else {
-      setEnabled(false);
-    }
-  }, []);
+  // const [enabled, setEnabled] = useState(false);
+  // useEffect(() => {
+  //   if (state?.id && state?.token) {
+  //     setEnabled(true);
+  //   } else {
+  //     setEnabled(false);
+  //   }
+  // }, []);
 
   const queryOrder = useQuery(["order"], fetchMyOrder, {
-    enabled: enabled,
+    enabled: true,
   });
   const { data: dataOrder, isLoading } = queryOrder;
   console.log("dataOrder", dataOrder);
@@ -101,6 +101,10 @@ const MyOrderPage = () => {
     setOkHuy("");
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 1);
+  }, []);
+
   return (
     <>
       <LoadingFullComponents isLoading={isLoadingCancel} />
@@ -131,31 +135,37 @@ const MyOrderPage = () => {
                               <div className="item" key={index}>
                                 <img src={order?.image} alt="" />
                                 <div className="body-text">
-                                  <h3>{order?.name}</h3>
+                                  <h3 style={{ marginBottom: 5 }}>
+                                    {order?.name}
+                                  </h3>
                                   <p>{convertPrice(order?.price)}</p>
-                                  <p>Size: {order?.size}</p>
-                                  <p>Số lượng: {order?.amount}</p>
+                                  <p>
+                                    Size: {order?.size} ({order?.amount})
+                                  </p>
+                                  {/* <p>Số lượng: {order?.amount}</p> */}
+                                  <div className="price">
+                                    <p>
+                                      Phí ship:{" "}
+                                      {convertPrice(item?.shippingPrice)}
+                                    </p>
+                                    <p>
+                                      Tổng tiền:{" "}
+                                      {convertPrice(item?.totalPrice)}
+                                    </p>
+                                  </div>
                                 </div>
-                                <div></div>
                               </div>
                             );
                           })}
                         </div>
                         <div className="right">
-                          <div className="price">
-                            <h3>
-                              Phí ship: {convertPrice(item?.shippingPrice)}
-                            </h3>
-                            <h3>Tổng tiền: {convertPrice(item?.totalPrice)}</h3>
-                          </div>
-
                           <div className="action">
-                            <h3
-                              style={{ cursor: "pointer", marginBottom: 10 }}
+                            <Button
+                              className="details"
                               onClick={() => handleDetailsOrder(item?._id)}
                             >
                               Xem chi tiết
-                            </h3>
+                            </Button>
                             {/* <h3
                           style={{ cursor: "pointer" }}
                           onClick={() => handleCancelOrder(item)}

@@ -7,7 +7,6 @@ import { useQuery } from "@tanstack/react-query";
 import * as ProductServices from "../services/ProductServices";
 import LoadingCardComponent from "../components/LoadingCardComponent";
 import LoadingComponents from "../components/LoadingComponents";
-import LoadingTypeComponent from "../components/LoadingTypeComponent";
 import SlideAnNavComponent from "../components/SlideAndNavComponent";
 
 const HomePage = () => {
@@ -23,7 +22,6 @@ const HomePage = () => {
 
   const fetchProductAll = async (context) => {
     console.log("context", context);
-    // const gender = context?.queryKey && context?.queryKey[0];
     const limit = context?.queryKey && context?.queryKey[1];
     const res = await ProductServices.getAllProduct("", limit);
     return res;
@@ -54,9 +52,6 @@ const HomePage = () => {
   useEffect(() => {
     fetchAllType();
   }, []);
-  console.log("loadingType", loadingType);
-
-  console.log("arrType", arrType);
 
   return (
     <div className="home">

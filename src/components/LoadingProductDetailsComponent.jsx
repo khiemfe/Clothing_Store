@@ -7,7 +7,14 @@ import Placeholder from "react-bootstrap/Placeholder";
 const LoadingProductDetails = (props) => {
   const { key } = props;
   return (
-    <div style={{ display: "flex", width: "1400px", justifyContent: "start", marginTop:40 }}>
+    <div
+      style={{
+        display: "flex",
+        width: "1400px",
+        justifyContent: "start",
+        marginTop: 40,
+      }}
+    >
       <Card
         className="imgload"
         style={{ height: "auto", border: "none" }}
@@ -159,7 +166,7 @@ const LoadingProductDetails = (props) => {
               xs={1}
             />
           </Placeholder>
-          
+
           <Placeholder
             style={{ marginTop: 40 }}
             as={Card.Title}
@@ -182,8 +189,7 @@ const LoadingProductDetails = (props) => {
             style={{ marginTop: 40 }}
             as={Card.Title}
             animation="glow"
-          >
-          </Placeholder>
+          ></Placeholder>
           <Placeholder as={Card.Title} animation="glow">
             <Placeholder
               style={{ backgroundColor: "#999", height: 20 }}
@@ -191,10 +197,13 @@ const LoadingProductDetails = (props) => {
             />
           </Placeholder>
 
-          
-          <Placeholder as={Card.Title} animation="glow" style={{marginTop:20}}>
+          <Placeholder
+            as={Card.Title}
+            animation="glow"
+            style={{ marginTop: 20 }}
+          >
             <Placeholder
-              style={{ backgroundColor: "#999", height: 200, width: '100%'}}
+              style={{ backgroundColor: "#999", height: 200, width: "100%" }}
               xs={2}
             />
           </Placeholder>

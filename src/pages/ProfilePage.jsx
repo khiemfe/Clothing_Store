@@ -32,12 +32,10 @@ const ProfilePage = () => {
 
   const mutation = useMutationHook((data) => {
     const { id, access_token, ...rest } = data;
-    console.log("rest", rest);
     const res = UserServcie.updateUser(id, rest, access_token);
     return res;
   });
   const { data, isLoading, isSuccess, isError, variables } = mutation;
-  console.log("dataup", mutation);
 
   // console.log("check", check);
   useEffect(() => {

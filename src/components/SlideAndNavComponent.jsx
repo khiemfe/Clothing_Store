@@ -6,9 +6,7 @@ import slide9 from "../public/img/slide9.jpeg";
 import Col from "react-bootstrap/Col";
 import NavbarComponents from "./NavbarComponents";
 
-
 const SlideAnNavComponent = (props) => {
-
   return (
     <div className="slide">
       <SlideComponents arrImages={[slide7, slide8, slide9]} />

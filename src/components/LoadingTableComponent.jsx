@@ -5,7 +5,7 @@ import Placeholder from "react-bootstrap/Placeholder";
 const LoadingTable = (props) => {
   const { key } = props;
   return (
-    <Card style={{ width: "100%", border: "none", marginTop: '5px' }} key={key}>
+    <Card style={{ width: "100%", border: "none", marginTop: "5px" }} key={key}>
       <Placeholder animation="glow">
         <Placeholder
           style={{

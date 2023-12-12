@@ -858,7 +858,7 @@ body {
 
 // update sp
 .ant-drawer {
-  z-index: 1;
+  z-index: 3;
 }
 .ant-drawer-content-wrapper {
   width: 45% !important;
@@ -1453,6 +1453,7 @@ body {
         .product-img {
           width: 150px;
           height: 150px;
+          object-fit: cover;
         }
 
         .product-body {
@@ -1615,13 +1616,11 @@ body {
     margin: auto;
 
     .product {
-      background-color: #eee;
-      border-bottom: 4px solid #fff;
-      border-radius: 10px;
+      border-bottom: 1px solid #ddd;
       padding: 20px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: end;
 
       .item {
         display: flex;
@@ -1634,41 +1633,32 @@ body {
 
         img {
           margin-right: 20px;
-          height: 120px;
-          width: 120px;
+          height: 150px;
+          width: 150px;
+          object-fit: cover;
         }
 
         .body-text {
           p {
             font-size: 15px;
+            margin-bottom: 5px;
+
+            &:last-child {
+              text-decoration: underline;
+            }
           }
         }
       }
 
       .right {
-        // display: flex;
-
-        .price {
-          background-color: #fff;
-          padding: 10px;
-          text-align: center;
-          border-radius: 10px;
-          margin-bottom: 20px;
-        }
-
-        .paided {
-          background-color: #fff;
-          padding: 10px;
-          text-align: center;
-          border-radius: 10px;
-          margin-bottom: 20px;
-        }
-
         .action {
-          background-color: #fff;
-          text-align: center;
-          padding: 10px;
-          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .details {
+            margin-right: 10px;
+          }
         }
       }
     }
@@ -1676,32 +1666,50 @@ body {
 }
 
 .order-details {
-  width: 60%;
+  width: 80%;
   margin: auto;
   margin-bottom: 50px;
+  min-height: 100vh;
 
   .body {
-    background-color: #eee;
     padding: 20px 40px;
-    // display: flex;
-    // justify-content: space-between;
-    // align-items: center;
     border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
 
     .info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       margin-bottom: 20px;
 
+      .product {
+        // margin-right: 10px;
+
+        .item {
+          display: flex;
+          align-items: center;
+          padding: 20px;
+          border-radius: 10px;
+          margin-top: 10px;
+
+          img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+          }
+
+          .text {
+            margin-left: 20px;
+
+            h3 {
+              font-weight: 400;
+              padding: 5px 0;
+            }
+          }
+        }
+      }
+
       .receiver {
-        background-color: #fff;
         border-radius: 10px;
         padding: 20px;
-        text-align: center;
-        height: 150px;
-        display: table-cell;
-        vertical-align: middle;
 
         h3 {
           font-weight: 400;
@@ -1709,72 +1717,32 @@ body {
 
         .text {
           font-weight: 500;
-        }
-      }
-
-      .time {
-        text-align: center;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        height: 150px;
-        display: table-cell;
-        vertical-align: middle;
-
-        .text {
-          font-weight: 500;
-        }
-
-        h3 {
-          font-weight: 400;
-        }
-      }
-
-      .paided {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        height: 150px;
-        display: table-cell;
-        vertical-align: middle;
-
-        p {
-          font-size: 16px;
         }
       }
     }
 
     .details {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-
-      .product {
-        width: 70%;
-        margin-right: 10px;
-      }
-
-      .item {
-        display: flex;
-        align-items: center;
-        background-color: #fff;
+      .paided {
         padding: 20px;
         border-radius: 10px;
-        margin-top: 10px;
+        text-align: center;
 
-        img {
-          width: 150px;
-          height: 150px;
+        p {
+          font-size: 16px;
         }
+      }
+
+      .time {
+        text-align: center;
+        padding: 20px;
+        border-radius: 10px;
 
         .text {
-          margin-left: 20px;
+          font-weight: 500;
+        }
 
-          h3 {
-            font-weight: 400;
-            padding: 5px 0;
-          }
+        h3 {
+          font-weight: 400;
         }
       }
 
@@ -1783,7 +1751,6 @@ body {
         border-radius: 10px;
         padding: 20px;
         text-align: center;
-        width: 30%;
         margin-left: 10px;
 
         h3 {
@@ -1870,6 +1837,12 @@ body {
   .page-payment {
     padding: 30px 100px !important;
   }
+
+  .my-order {
+    .body {
+      width: 70%;
+    }
+  }
 }
 
 @media (max-width: 1024px) {
@@ -1921,7 +1894,7 @@ body {
   }
 
   .nav-link {
-    font-size: 16px !important;
+    font-size: 20px !important;
   }
 
   .col-12.placeholder {
@@ -1929,6 +1902,12 @@ body {
   }
 
   .name-heart {
+    .align-items_center {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
   }
 
   .col-card {
@@ -2034,6 +2013,16 @@ body {
 
   .left-systemAdmin {
     width: 180px !important;
+  }
+
+  .my-order {
+    .body {
+      width: 80%;
+    }
+  }
+
+  .order-details {
+    width: 92% !important;
   }
 }
 
@@ -2195,6 +2184,21 @@ body {
 
   .ant-drawer-content-wrapper {
     width: 100% !important;
+    box-shadow: none !important;
+  }
+
+  .my-order {
+    .body {
+      width: 85%;
+    }
+  }
+
+  .order-details {
+    width: 90% !important;
+
+    .body {
+      display: block !important;
+    }
   }
 }
 
@@ -2471,10 +2475,11 @@ body {
 
   .fade.modal.show {
     width: 100vw;
-    margin-top: 0 !important;
+    margin-top: 50px !important;
   }
 
   .page-payment {
+    margin: 0;
     padding: 30px 20px !important;
   }
 
@@ -2497,6 +2502,97 @@ body {
 
   .fade.systemModel.modal.show {
     margin-top: 0 !important;
+  }
+
+  .my-order {
+    .body {
+      width: 95%;
+
+      .product {
+        padding: 15px 0 !important;
+        display: block !important;
+
+        .item {
+          .body-text {
+            h3 {
+              font-size: 14px;
+            }
+
+            p {
+              font-size: 13px !important;
+            }
+          }
+
+          img {
+            margin-right: 20px;
+            height: 100px !important;
+            width: 100px !important;
+          }
+        }
+
+        .right {
+          .action {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            margin-top: 10px;
+
+            .details {
+              margin-right: 10px;
+            }
+
+            .ant-btn {
+              span {
+                font-size: 12px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .sign {
+    .text {
+      font-size: 1.4rem !important;
+    }
+
+    .title {
+      font-size: 2.2rem !important;
+    }
+
+    .btn-login {
+      padding: 10px 0 !important;
+      width: 100px !important;
+      font-size: 1.4rem !important;
+    }
+
+    .input {
+      .input-nhap {
+        flex: 1 1;
+        padding: 5px !important;
+        font-size: 1.4rem !important;
+      }
+    }
+    .qmk-dk a {
+      font-size: 15px;
+    }
+  }
+
+  .order-details {
+    width: 95% !important;
+
+    .body {
+      padding: 0px !important;
+
+      .info {
+        .product {
+          .item {
+            padding: 0 !important;
+          }
+        }
+      }
+    }
   }
 }
 

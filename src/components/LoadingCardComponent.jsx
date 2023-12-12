@@ -14,7 +14,11 @@ const LoadingCard = (props) => {
       >
         <Placeholder animation="wave">
           <Placeholder
-            style={{ height: "400px", backgroundColor: "#ccc", borderRadius: '10px' }}
+            style={{
+              height: "400px",
+              backgroundColor: "#ccc",
+              borderRadius: "10px",
+            }}
             xs={12}
           />
         </Placeholder>
@@ -53,38 +57,15 @@ const LoadingCardComponent = ({
         <Row>
           {arrayProducts?.map((arrayProduct) => {
             return (
-              <Col xxl={3} xl={3} lg={4} md={4} sm={6} xs={6} key={arrayProduct} className="col-card">
-                <LoadingCard />
-              </Col>
-            );
-          })}
-        </Row>
-      ) : (
-        <div>{children}</div>
-      )}
-    </>
-  );
-};
-
-export const LoadingCardComponent5SP = ({
-  children,
-  isLoading,
-  arrayProducts,
-  delay = 200,
-}) => {
-  console.log("lengthProducts", arrayProducts);
-
-  return (
-    <>
-      {isLoading ? (
-        <Row>
-          {arrayProducts?.map((arrayProduct) => {
-            return (
               <Col
-                style={{ flex: "0 0 auto", width: "20%" }}
-                // xxl={3}
-                // xl={3}
+                xxl={3}
+                xl={3}
+                lg={4}
+                md={4}
+                sm={6}
+                xs={6}
                 key={arrayProduct}
+                className="col-card"
               >
                 <LoadingCard />
               </Col>
