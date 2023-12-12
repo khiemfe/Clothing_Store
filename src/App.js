@@ -37,17 +37,14 @@ function App() {
   useEffect(() => {
     setIsLoading(true);
     const { storageData, decoded } = handleDecoded();
-    console.log("decoded?.id", decoded?.id);
     // if (decoded?.id) {
     //   handleGetDetailsUser(decoded?.id, storageData);
     // }
-    console.log("storageData", storageData);
     setIsLoading(false);
   }, []);
 
   const handleDecoded = () => {
     let storageData = localStorage.getItem("access_token");
-    console.log("storageData", storageData);
     let decoded = {};
     if (storageData && isJsonString(storageData) && user?.access_token) {
       storageData = JSON.parse(storageData);
@@ -65,14 +62,9 @@ function App() {
       //decoded?.exp là thời gian token hết hạn
       const currentTime = new Date(); //thời gian hiện tại
       const { decoded } = handleDecoded();
-      console.log("decoded", decoded);
-      console.log("decoded", currentTime.getTime() / 1000);
       let storageRefreshToken = localStorage.getItem("refresh_token");
       const refreshToken = JSON.parse(storageRefreshToken);
       const decodedRefreshToken = jwt_decode(refreshToken);
-      console.log("config", config);
-
-      console.log("???", decoded?.exp < currentTime.getTime() / 1000);
 
       if (decodedRefreshToken?.exp > currentTime.getTime() / 1000) {
         if (decoded?.exp < currentTime.getTime() / 1000) {
@@ -83,7 +75,6 @@ function App() {
           config.headers["token"] = `Bearer ${storageData.slice(1, -1)}`;
         }
       } else {
-        console.log("voni");
         setOpenModel(true);
         const res = await UserServcie.logoutUser();
         if (res.status === "OK") {

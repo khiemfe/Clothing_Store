@@ -20,7 +20,6 @@ const ProductBestPage = () => {
   }
 
   const fetchProductAll = async (context) => {
-    console.log("context", context);
     const limit = context?.queryKey && context?.queryKey[1];
     const res = await ProductServices.getBestProduct(limit);
     return res;

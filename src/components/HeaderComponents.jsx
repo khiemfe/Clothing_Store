@@ -34,21 +34,18 @@ const HeaderComponents = (props) => {
   };
 
   const user = useSelector((state) => state.user);
-  console.log("userHeader", user);
 
   if (user?.email) {
     const dataEmail = user?.email;
     localStorage.setItem("email", JSON.stringify(dataEmail));
   }
 
-  console.log("userrr", user);
   useEffect(() => {
     if (user?.access_token && user?.id === undefined) {
       localStorage.setItem("email", JSON.stringify(false));
     }
   }, []);
   let storageEmail = localStorage.getItem("email");
-  console.log("storageEmail", storageEmail);
 
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -56,17 +53,14 @@ const HeaderComponents = (props) => {
   const handleLogout = async () => {
     setLoadingLogOut(true);
     const res = await UserServcie.logoutUser();
-    console.log("reslog", res);
     if (res.status === "OK") {
       dispatch(resetUser());
       setAmountCart(0);
       navigate("/");
     }
     localStorage.setItem("email", JSON.stringify(false));
-    // localStorage.setItem("access_token", JSON.stringify(false));
     setLoadingLogOut(false);
   };
-  console.log("loadingLogOut", loadingLogOut);
 
   const [userName, setUserName] = useState("");
   const [userAvatar, setUserAvatar] = useState("");
@@ -77,22 +71,16 @@ const HeaderComponents = (props) => {
     setLoading(false);
   }, [user?.name, user?.avatar]);
 
-  console.log("user?.name", user?.name);
-  console.log("storageEmail", storageEmail);
-
   const [value, setValue] = useState("");
-
   const [search, setSearch] = useState("");
   const onSearch = (e) => {
     setSearch(e.target.value);
     setValue(e.target.value);
   };
-  console.log("searchh", search);
 
   const searchStorage = localStorage.getItem("search");
 
   const BtnSearchProduct = () => {
-    console.log("searchh", search);
     if (search?.trim()) {
       dispatch(searchProduct(search));
       if (search?.trim() !== searchStorage?.trim()) {
@@ -135,11 +123,9 @@ const HeaderComponents = (props) => {
 
   const location = useLocation();
   const { state } = location;
-  console.log("state", state);
 
   const [amountCart, setAmountCart] = useState(0);
   const fetchOrderCart = async () => {
-    console.log("chayyyy vo");
     if (user?.email) {
       const res = await CartServices.getCartByUserId(
         user?.id,
@@ -150,15 +136,12 @@ const HeaderComponents = (props) => {
   };
   const queryCart = useQuery(["cart"], fetchOrderCart);
   const { data: dataCart, isLoading: isLoadingCart } = queryCart;
-  console.log("dataCart", dataCart?.length);
 
   useEffect(() => {
     if (user?.email) {
       setAmountCart(dataCart?.length);
     }
   }, [dataCart]);
-
-  console.log("props", props);
 
   const classOnScroll = props?.class;
 

@@ -8,7 +8,6 @@ export const createrOTP = async (data) => {
     `${process.env.REACT_APP_API_URL}/otp/create-otp`,
     data
   );
-  console.log(res.data);
   return res.data;
 };
 
@@ -18,7 +17,6 @@ export const createrOTPPassword = async (data) => {
     `${process.env.REACT_APP_API_URL}/otp/create-otp-password`,
     data
   );
-  console.log(res.data);
   return res.data;
 };
 
@@ -26,6 +24,5 @@ export const deleteOTP = async (email) => {
   const res = await axios.delete(
     `${process.env.REACT_APP_API_URL}/otp/delete-otp/${email}`,
   );
-  console.log(res.data);
   return res.data;
 };

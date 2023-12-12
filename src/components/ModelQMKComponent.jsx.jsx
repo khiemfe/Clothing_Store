@@ -15,7 +15,6 @@ const ModelQMKComponent = ({
   title,
   dataUpdate,
 }) => {
-  console.log("stateUser", stateUser);
   const mutationOTP = useMutationHook((email) =>
     OTPServices.createrOTPPassword(email)
   );
@@ -34,7 +33,6 @@ const ModelQMKComponent = ({
       email: stateUser?.email,
     });
   };
-  console.log("dataOTP", dataOTP);
 
   const handleDeleteOTP = () => {
     mutationDeleteOTP.mutate({

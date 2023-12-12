@@ -13,14 +13,13 @@ const TypeProductPage = () => {
   const [products, setProducts] = useState([]);
   const [panigate, setPanigate] = useState({
     page: 0,
-    limit: 4,
+    limit: 8,
     total: 1,
   });
 
   const fetchTypeProduct = async (type, page, limit) => {
     setIsLoading(true);
     const res = await ProductServices.getTypeProduct(type, page, limit);
-    console.log("reees", res);
     if (res?.status === "OK") {
       setIsLoading(false);
       setProducts(res?.data);
@@ -28,9 +27,7 @@ const TypeProductPage = () => {
     } else {
       setIsLoading(false);
     }
-    // return res?.data
   };
-  console.log("productss", products);
   useEffect(() => {
     if (state) {
       fetchTypeProduct(state, panigate?.page, panigate?.limit);
@@ -38,7 +35,6 @@ const TypeProductPage = () => {
   }, [state, panigate?.page, panigate?.limit]);
 
   const onChangePa = (current, pageSize) => {
-    console.log("current", current, pageSize);
     setPanigate({ ...panigate, page: current - 1, limit: pageSize });
   };
 
@@ -52,7 +48,6 @@ const TypeProductPage = () => {
   useEffect(() => {
     fetchAllType();
   }, []);
-  //   console.log("arrTypee", arrType);
 
   let lengthProducts = panigate?.limit;
   const arrayProducts = [];
@@ -67,11 +62,6 @@ const TypeProductPage = () => {
       }}
     >
       <Row className="content">
-        {/* <Col xxl={2} xl={2} className="_navbar">
-          <div style={{ position: "fixed" }}>
-          <NavbarComponents arrType={arrType} />
-          </div>
-        </Col> */}
         <Col xxl={12} xl={12} className="col-slide">
           <SlideAnNavComponent arrType={arrType} />
           <div className="product">
@@ -85,7 +75,6 @@ const TypeProductPage = () => {
             {!isLoading && (
               <Row>
                 {products?.map((product) => {
-                  console.log("productmap", product);
                   return (
                     <Col xxl={3} xl={3} lg={4} sm={6} xs={6} key={product._id}>
                       <CardComponents
@@ -108,7 +97,6 @@ const TypeProductPage = () => {
                   total={panigate?.total}
                   pageSizeOptions={[2, 4, 6]}
                 />
-                ;
               </Row>
             )}
           </div>

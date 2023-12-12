@@ -3,8 +3,6 @@ import { ClipLoader } from "react-spinners";
 
 const LoadingFullComponents = ({ children, isLoading, delay = 200 }) => {
   const refLoad = useRef(null);
-  console.log("ref", refLoad?.current);
-
   const body = document.querySelector("body");
 
   if (isLoading) {

@@ -321,7 +321,6 @@ const AdminOrder = () => {
         Quản lí đơn hàng
       </h1>
       <div className="adminProduct">
-        {/* {dataOrder?.data.length === 0 && isLoadingOrder && ( */}
         <div style={{ height: "200px", width: "100%" }}>
           <PieChartComponent data={dataOrder?.data} />
         </div>

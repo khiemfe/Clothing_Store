@@ -57,12 +57,9 @@ const SignUpPage = () => {
     OTPServices.deleteOTP(email)
   );
 
-  console.log("dataOTP", dataOTP);
-
   useEffect(() => {
     if (isSuccessOTP && dataOTP?.status !== "ERR") {
       success("Đã gửi mã OTP thành công cho email của bạn");
-
       setTimeout(() => {
         handleDeleteOTP();
       }, 300000);
@@ -98,7 +95,6 @@ const SignUpPage = () => {
       confirmPassword,
       otp,
     });
-    console.log("sign-up", email, password, confirmPassword);
   };
 
   const handleCreateOTP = () => {

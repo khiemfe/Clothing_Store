@@ -10,7 +10,6 @@ import LoadingComponents from "../components/LoadingComponents";
 import SlideAnNavComponent from "../components/SlideAndNavComponent";
 
 const HomePage = () => {
-  const refSearch = useRef();
   const limitState = 16;
   const [limit, setLimit] = useState(limitState);
 
@@ -21,7 +20,6 @@ const HomePage = () => {
   }
 
   const fetchProductAll = async (context) => {
-    console.log("context", context);
     const limit = context?.queryKey && context?.queryKey[1];
     const res = await ProductServices.getAllProduct("", limit);
     return res;
@@ -37,7 +35,7 @@ const HomePage = () => {
     keepPreviousData: true,
   });
   //   keepPreviousData: giữ lại product cũ, load những cái mới thôi
-  console.log("isPreviousDataNam", isPreviousData); //loading
+  // console.log("isPreviousDataNam", isPreviousData); //loading
 
   const [arrType, setArrType] = useState([]);
   const [loadingType, setLoadingType] = useState(true);
@@ -78,7 +76,6 @@ const HomePage = () => {
             {!isLoading && (
               <Row>
                 {products?.data?.map((product) => {
-                  console.log("productmap", product);
                   return (
                     <Col
                       xxl={3}

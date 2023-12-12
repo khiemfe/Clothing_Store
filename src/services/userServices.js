@@ -11,12 +11,10 @@ export const loginUser = async (data) => {
 };
 
 export const signupUser = async (data) => {
-  console.log(data);
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}/user/sign-up`,
     data
   );
-  console.log(res.data);
   return res.data;
 };
 
@@ -72,8 +70,6 @@ export const deleteManyUser = async (data, access_token) => {
 };
 
 export const getDetailsUser = async (id, access_token) => {
-  console.log("id details", id);
-  console.log(access_token);
   const res = await axiosJWT.get(
     `${process.env.REACT_APP_API_URL}/user/get-details/${id}`,
     {
@@ -82,7 +78,6 @@ export const getDetailsUser = async (id, access_token) => {
       },
     }
   );
-  console.log("res.data", res.data);
   return res.data;
 };
 
@@ -95,7 +90,6 @@ export const getAllUser = async (access_token) => {
       },
     }
   );
-  console.log("res.data", res.data);
   return res.data;
 };
 
@@ -111,7 +105,6 @@ export const refreshToken = async (refresh_token) => {
       },
     }
   );
-  console.log("res.dataaaaaaaaaaa", res.data.access_token);
   return res.data;
 };
 

@@ -36,7 +36,6 @@ const MyOrderPage = () => {
     enabled: true,
   });
   const { data: dataOrder, isLoading } = queryOrder;
-  console.log("dataOrder", dataOrder);
 
   const navigate = useNavigate();
 
@@ -56,7 +55,6 @@ const MyOrderPage = () => {
   });
 
   const handleCancelOrder = (order) => {
-    console.log("ordercan", order._id);
     mutation.mutate(
       {
         id: order._id,

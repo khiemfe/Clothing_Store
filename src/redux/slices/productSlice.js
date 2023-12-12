@@ -9,7 +9,6 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
     searchProduct: (state, action) => {
-      console.log('stateaction', action)
       state.search = action.payload // state.search = tên tìm kiếm
     },
   },

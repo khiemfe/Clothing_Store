@@ -17,12 +17,10 @@ const TabelComponents = (props) => {
     sheet,
   } = props;
   const [rowSelectedKeys, setRowSelectedKeys] = useState([]);
-  console.log("dataTable", dataTable);
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       setRowSelectedKeys(selectedRowKeys);
-      console.log(`selectedRowKeys: ${selectedRowKeys}`);
     },
     // getCheckboxProps: (record) => ({
     //   disabled: record.name === 'Disabled User',
@@ -35,11 +33,6 @@ const TabelComponents = (props) => {
   };
 
   const tableRef = useRef(null);
-  // const tableRefAll = useRef(null);
-
-  console.log("tableRef.current", tableRef.current);
-  console.log("dataTable", dataTable);
-  console.log("dataTableQuan", dataTableQuan);
 
   let dataTableMain = [];
   if (filename === "Products Table") {
@@ -53,10 +46,6 @@ const TabelComponents = (props) => {
   } else {
     dataTableMain = dataTable;
   }
-
-  console.log("dataTableMain", dataTableMain);
-
-  // const newColumns = columns.pop()
 
   return (
     <>

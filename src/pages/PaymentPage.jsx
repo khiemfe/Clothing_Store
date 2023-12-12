@@ -28,8 +28,6 @@ const PaymentPage = () => {
   const [valueRadioTT, setValueRadioTT] = useState("later_money");
   const navigate = useNavigate();
 
-  console.log("orderr", order);
-
   const priceMemo = useMemo(() => {
     const result = order?.orderItemsSelected.reduce((total, cur) => {
       return total + cur?.price * cur?.amount;
@@ -56,7 +54,6 @@ const PaymentPage = () => {
       setShipingPrice(diliveryPriceMemo);
     }
   }, [valueRadioGH]);
-  console.log("shippingPricee", shippingPrice);
 
   const totalPriceMemo = useMemo(() => {
     return Number(priceMemo) + Number(shippingPrice);
@@ -65,22 +62,16 @@ const PaymentPage = () => {
   const handleBuy = () => {};
 
   const onChangeGH = (e) => {
-    console.log("radio checked", e.target.value);
     setValueRadioGH(e.target.value);
   };
 
   const onChangeTT = (e) => {
-    console.log("radio checked", e.target.value);
     setValueRadioTT(e.target.value);
   };
 
   const mutationAddOrder = useMutationHook((data) => {
-    console.log("dataUpdate: ", data);
     const { user: userId, token, ...rest } = data;
-    console.log("token", token);
-    console.log("rest", rest);
     const res = OrderServcie.createOrder(userId, token, { ...rest }); //rest or {...rest}
-    console.log("resssss", res);
     return res;
   });
 
@@ -104,17 +95,6 @@ const PaymentPage = () => {
     isError: isErrorDeletedMany,
   } = mutationDeleteMany;
 
-  // const location = useLocation();
-  // const { state } = location;
-  // console.log('state', state)
-
-  // const fetchOrderCart = async () => {
-  //   const res = await CartServices.getCartByUserId(state?.id, state?.token);
-  //   return res?.data;
-  // };
-  // const queryCart = useQuery(["cart"], fetchOrderCart);
-
-  // const [successModel, setSuccessModel] = useState(false);
   useEffect(() => {
     if (isSuccessAddOrder && dataAddOrder?.status === "OK") {
       success("Bạn đã đặt hàng thành công");
@@ -123,14 +103,11 @@ const PaymentPage = () => {
         arrayOrdered.push(e._id);
       });
       console.log("arrayOrdered", arrayOrdered);
-      mutationDeleteMany.mutate(
-        { userId: user?.id, ids: arrayOrdered, token: user?.access_token }
-        // {
-        //   onSettled: () => {
-        //     queryCart.refetch();
-        //   },
-        // }
-      );
+      mutationDeleteMany.mutate({
+        userId: user?.id,
+        ids: arrayOrdered,
+        token: user?.access_token,
+      });
       setTimeout(() => {
         navigate("/my-order", {
           state: {
@@ -139,24 +116,8 @@ const PaymentPage = () => {
           },
         });
       }, 0);
-      // setSuccessModel(true);
-
-      // dispatch(removeAllOrderProduct({ listChecked: arrayOrdered }));
-      // navigate("/orderSuccess", {
-      //   state: {
-      //     // chuyển dữ liệu khi create success qua
-      //     order: order?.orderItemsSelected,
-      //     priceMemo,
-      //     shippingPrice,
-      //     totalPriceMemo,
-      //     valueRadioGH,
-      //     valueRadioTT,
-      //   },
-      // });
     } else if (isErrorAddOrder) {
       error("Bạn đã đặt hàng thất bại");
-
-      console.log("loiii");
     }
   }, [isSuccessAddOrder, isErrorAddOrder]);
 
@@ -171,10 +132,8 @@ const PaymentPage = () => {
   }, [formUpdate, stateUserDetailsUpdate]);
 
   const mutationUpdate = useMutationHook((data) => {
-    console.log("dataUpdate: ", data);
     const { id, access_token, ...rest } = data;
     const res = UserServcie.updateUser(id, rest, access_token);
-    console.log("resssss", res);
     return res;
   });
   const {
@@ -249,7 +208,6 @@ const PaymentPage = () => {
       huyenLabel &&
       xaLabel
     ) {
-      console.log("chayyyy voo");
       setErrInput("");
       if (true) {
         mutationUpdate.mutate({
@@ -265,10 +223,7 @@ const PaymentPage = () => {
     }
   };
 
-  console.log("orderedd", order);
-
   const timeNow = new Date().toString();
-  console.log("timeNow", timeNow);
   const handleAddOrder = () => {
     if (
       user?.access_token &&
@@ -361,22 +316,13 @@ const PaymentPage = () => {
 
   const [address, setAddress] = useState(user?.address);
 
-  console.log(
-    "stateUserDetailsUpdate",
-    stateUserDetailsUpdate?.address?.split(", ")[3]
-  );
-
   const [tinhOptions, setTinhOptions] = useState([]);
   const [huyenOptions, setHuyenOptions] = useState([]);
   const [xaOptions, setXaOptions] = useState([]);
   const [tinhLabel, setTinhLabel] = useState(user?.address?.split(", ")[3]);
-  console.log("tinhLabel", tinhLabel);
   const [huyenLabel, setHuyenLabel] = useState(user?.address?.split(", ")[2]);
   const [xaLabel, setXaLabel] = useState(user?.address?.split(", ")[1]);
-
   const [inputLabel, setInputLabel] = useState(user?.address?.split(", ")[0]);
-
-  console.log("inputLabel", inputLabel);
 
   useEffect(() => {
     fetch("https://provinces.open-api.vn/api/?depth=3")
@@ -405,7 +351,6 @@ const PaymentPage = () => {
   };
 
   const handleChangeSelectTinh = (e) => {
-    console.log("sosanh", e);
     if (e !== tinhLabel) {
       setTinhLabel(e);
       setHuyenLabel("");
@@ -428,16 +373,11 @@ const PaymentPage = () => {
   const optionsHuyen = renderOptionsAddress(huyenOptions);
   const optionsXa = renderOptionsAddress(xaOptions);
 
-  console.log("optionsHuyen", optionsHuyen);
-
-  console.log("Label", xaLabel, huyenLabel, tinhLabel);
-
   useEffect(() => {
     setAddress(
       inputLabel + ", " + xaLabel + ", " + huyenLabel + ", " + tinhLabel
     );
   }, [inputLabel, xaLabel, huyenLabel, tinhLabel]);
-  console.log("address", address);
 
   const onCloseModel = () => {
     formUpdate.resetFields();

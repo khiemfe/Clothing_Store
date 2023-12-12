@@ -22,7 +22,6 @@ const ModelBodyComponent = ({
   // isLoading,
   title,
 }) => {
-  console.log("stateProducttt", stateProduct);
 
   const [sizeS, setSizeS] = useState(stateProduct?.quantity?.sizeS);
   const [sizeM, setSizeM] = useState(stateProduct?.quantity?.sizeM);
@@ -135,43 +134,6 @@ const ModelBodyComponent = ({
       setSize36(0);
     }
   }, [size28, size29, size30, size31, size32, size33, size34, size35, size36]);
-
-  // const [requiredSizeS, setRequiredSizeS] = useState(true);
-  // const [requiredSizeM, setRequiredSizeM] = useState(true);
-  // const [requiredSizeL, setRequiredSizeL] = useState(true);
-  // const [requiredSizeXL, setRequiredSizeXL] = useState(true);
-
-  // useEffect(() => {
-  //   if (sizeS) {
-  //     setRequiredSizeS(false);
-  //   } else {
-  //     setRequiredSizeS(true);
-  //   }
-  // }, [sizeS]);
-
-  // useEffect(() => {
-  //   if (sizeM) {
-  //     setRequiredSizeM(false);
-  //   } else {
-  //     setRequiredSizeM(true);
-  //   }
-  // }, [sizeM]);
-
-  // useEffect(() => {
-  //   if (sizeL) {
-  //     setRequiredSizeL(false);
-  //   } else {
-  //     setRequiredSizeL(true);
-  //   }
-  // }, [sizeL]);
-
-  // useEffect(() => {
-  //   if (sizeXL) {
-  //     setRequiredSizeXL(false);
-  //   } else {
-  //     setRequiredSizeXL(true);
-  //   }
-  // }, [sizeXL]);
 
   return (
     <>

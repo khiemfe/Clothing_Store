@@ -41,10 +41,8 @@ const AdminUser = () => {
   });
 
   const mutationUpdate = useMutationHook((data) => {
-    console.log("dataUpdate: ", data);
     const { id, token, ...rest } = data;
     const res = userServices.updateUser(id, { ...rest }, token);
-    console.log("resssss", res);
     return res;
   });
 
@@ -54,7 +52,6 @@ const AdminUser = () => {
     isSuccess: isSuccessUpdated,
     isError: isErrorUpdated,
   } = mutationUpdate;
-  console.log("mutationUpdate", mutationUpdate);
 
   const mutationDelete = useMutationHook((data) => {
     const { id, token } = data;
@@ -166,8 +163,6 @@ const AdminUser = () => {
     setIsLoadingUpdate(false);
   };
 
-  console.log("stateUserDetails", stateUserDetails);
-
   useEffect(() => {
     if (rowSelected && isOpenDrawer) {
       //khi có id và mở drawer ra
@@ -176,7 +171,6 @@ const AdminUser = () => {
   }, [rowSelected, isOpenDrawer]);
 
   // hiển thị value trong thẻ input khi bấm vào sửa
-  console.log("formUpdate", formUpdate);
   useEffect(() => {
     // setIsLoadingUpdate(true)
     // if (formUpdate.__INTERNAL__.name) {
@@ -190,7 +184,6 @@ const AdminUser = () => {
       // fetchGetDetailsUser(rowSelected)
     }
     setIsOpenDrawer(true);
-    console.log("rowSelected", rowSelected);
   };
 
   const onUpdateUser = () => {
@@ -204,7 +197,6 @@ const AdminUser = () => {
         },
       }
     );
-    console.log("stateUserDetailss", stateUserDetails);
   };
 
   const onCloseDrawer = () => {

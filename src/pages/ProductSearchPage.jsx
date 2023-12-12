@@ -18,22 +18,17 @@ const ProductSearchPage = () => {
   const [limit, setLimit] = useState(8);
   const [search, setSearch] = useState();
   const searchStorage = localStorage.getItem("search");
-  console.log("searchStorage", searchStorage);
 
   const fetchProductAll = async (context) => {
-    console.log("contextcontext", context);
     const limit = context?.queryKey && context?.queryKey[1];
     const search = (context?.queryKey && context?.queryKey[2]) || searchStorage;
     setTextSearch(search);
-    console.log("contextsearch", search);
-    console.log("limit", limit);
     const res = await ProductServices.getAllProduct(search, limit);
     return res;
   };
 
   const searchProductRedux =
     useSelector((state) => state.product?.search) || searchStorage || undefined;
-  console.log("productSearchh", searchProductRedux);
 
   const searchDebounce = useDebounce(searchProductRedux, 1000);
 
@@ -70,7 +65,6 @@ const ProductSearchPage = () => {
     if (e.key === "Enter") {
       if (search.trim() && search.trim() !== searchStorage) {
         setIsLoadingSearch(true);
-        console.log("validate", search);
         dispatch(searchProduct(search));
         localStorage.setItem("search", search);
         setSearchParams({ search: `${search}` });
@@ -87,6 +81,10 @@ const ProductSearchPage = () => {
   for (let i = 1; i <= limit; i++) {
     arrayProducts.push(i);
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 1);
+  }, []);
 
   return (
     <div className="search-page">

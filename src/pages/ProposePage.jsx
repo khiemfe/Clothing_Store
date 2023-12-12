@@ -78,7 +78,6 @@ const ProposePage = () => {
       keepPreviousData: true,
     }
   );
-  console.log("productproduct", product);
 
   const arrayProducts = [];
   for (let i = 1; i <= 10; i++) {

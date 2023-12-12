@@ -34,7 +34,6 @@ const NotFoundPage = () => {
   const handleOnClick = ({ key }) => {
     setKeySelected(key);
   };
-  console.log("keySelected", keySelected);
 
   return (
     <>

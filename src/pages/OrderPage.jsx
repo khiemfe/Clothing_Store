@@ -43,15 +43,6 @@ const OrderPage = () => {
     return res?.data;
   };
 
-  // const [enabled, setEnabled] = useState(false);
-  // useEffect(() => {
-  //   if (state?.id && state?.token) {
-  //     setEnabled(true);
-  //   } else {
-  //     setEnabled(false);
-  //   }
-  // }, [state]);
-
   const queryCart = useQuery(["cart"], fetchOrderCart, {
     enabled: true,
   });
@@ -156,7 +147,6 @@ const OrderPage = () => {
 
   const handleDeleteAll = () => {
     if (listChecked?.length > 0) {
-      // dispatch(removeAllOrderProduct({ listChecked }));
       const arrId = [];
       for (let i = 0; i < listChecked?.length; i++) {
         arrId.push(listChecked[i].split("size")[0]);
@@ -215,7 +205,6 @@ const OrderPage = () => {
   });
 
   const mutationUpdate = useMutationHook((data) => {
-    console.log("dataUpdate: ", data);
     const { id, access_token, ...rest } = data;
     const res = UserServcie.updateUser(id, rest, access_token);
     return res;
@@ -345,26 +334,15 @@ const OrderPage = () => {
     },
   ];
 
-  useEffect(() => {
-    // setIsOpenModalUpdate(true)
-  });
-
   // ---address---
 
   const [address, setAddress] = useState(user?.address);
-
-  console.log(
-    "stateUserDetailsUpdate",
-    stateUserDetailsUpdate?.address?.split(", ")[3]
-  );
-
   const [tinhOptions, setTinhOptions] = useState([]);
   const [huyenOptions, setHuyenOptions] = useState([]);
   const [xaOptions, setXaOptions] = useState([]);
   const [tinhLabel, setTinhLabel] = useState(user?.address?.split(", ")[3]);
   const [huyenLabel, setHuyenLabel] = useState(user?.address?.split(", ")[2]);
   const [xaLabel, setXaLabel] = useState(user?.address?.split(", ")[1]);
-
   const [inputLabel, setInputLabel] = useState(user?.address?.split(", ")[0]);
 
   useEffect(() => {

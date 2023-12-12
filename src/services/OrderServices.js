@@ -2,7 +2,6 @@ import axios from "axios";
 import { axiosJWT } from "./userServices";
 
 export const createOrder = async (id, access_token, data) => {
-  console.log("datadata2", data);
   const res = await axiosJWT.post(
     `${process.env.REACT_APP_API_URL}/order/create/${id}`,
     data,
@@ -12,7 +11,6 @@ export const createOrder = async (id, access_token, data) => {
       },
     }
   );
-  console.log("iiiiiiiiiiiiiiiiii", res);
   return res.data;
 };
 
@@ -25,7 +23,6 @@ export const getOrderByUserId = async (id, access_token) => {
       },
     }
   );
-  console.log("iiiiiiiiiiiiiiiiii", res);
   return res.data;
 };
 
@@ -38,7 +35,6 @@ export const getDetailsOrder = async (id, orderId, access_token) => {
       },
     }
   );
-  console.log("iiiiiiiiiiiiiiiiii", res);
   return res.data;
 };
 

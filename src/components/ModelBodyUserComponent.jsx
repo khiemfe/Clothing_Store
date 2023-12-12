@@ -15,8 +15,6 @@ const ModelBodyUserComponent = ({
   // isLoading,
   title,
 }) => {
-  console.log("stateUser.avatar", stateUser);
-
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       onFinish();

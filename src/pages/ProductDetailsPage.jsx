@@ -19,14 +19,10 @@ import LoadingComponents from "../components/LoadingComponents";
 
 const ProductDetailsPage = () => {
   const { id: idProduct } = useParams();
-  console.log("params", idProduct); //id product
-
   const user = useSelector((state) => state.user);
-  console.log("useruser", user); // lấy ra địa chỉ nhận hàng + sđt
 
   const fetchGetDetailsProduct = async (context) => {
     const id = context?.queryKey && context?.queryKey[1];
-    console.log("idid", id);
     if (id) {
       const res = await ProducttServcie.getDetailsProduct(id);
       return res.data;
@@ -260,8 +256,6 @@ const ProductDetailsPage = () => {
     setAmountCart(res?.data?.length);
   };
 
-  console.log("amountCart", amountCart);
-
   useEffect(() => {
     if (isSuccessAddCart && dataAddCart?.status === "OK") {
       success("Bạn đã thêm vào giỏ hàng thành công");
@@ -345,11 +339,9 @@ const ProductDetailsPage = () => {
 
   return (
     <>
-      {/* <HeaderComponents amount={amountCart} /> */}
       <LoadingFullComponents isLoading={isLoadingAddCart} />
       <Toaster />
       <div className="produc-details">
-        {/* <ProductDetailsComponents idProduct={id} /> */}
         <span className="noneMobile">
           <LoadingProductDetailsComponent isLoading={isLoading} />
         </span>

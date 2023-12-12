@@ -20,7 +20,6 @@ const ProductNamPage = () => {
   }
 
   const fetchProductAll = async (context) => {
-    console.log("context", context);
     const gender = context?.queryKey && context?.queryKey[0];
     const limit = context?.queryKey && context?.queryKey[1];
     const res = await ProductServices.getGenderProduct(gender, limit);
@@ -36,7 +35,6 @@ const ProductNamPage = () => {
     retryDelay: 1000,
     keepPreviousData: true,
   });
-  //   keepPreviousData: giữ lại product cũ, load những cái mới thôi
 
   return (
     <div style={{ marginBottom: 50, minHeight: "100%" }}>

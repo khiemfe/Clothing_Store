@@ -98,7 +98,6 @@ const AdminProduct = () => {
   });
 
   const mutation = useMutationHook((data) => {
-    console.log("dateCreate", data);
     const {
       name,
       image,
@@ -185,10 +184,8 @@ const AdminProduct = () => {
   const { data, isLoading, isSuccess, isError } = mutation;
 
   const mutationUpdate = useMutationHook((data) => {
-    console.log("dataUpdate: ", data);
     const { id, token, ...rest } = data;
     const res = ProducttServcie.updateProduct(id, token, { ...rest });
-    console.log("resssss", res);
     return res;
   });
 
@@ -198,7 +195,6 @@ const AdminProduct = () => {
     isSuccess: isSuccessUpdated,
     isError: isErrorUpdated,
   } = mutationUpdate;
-  console.log("mutationUpdate", mutationUpdate);
 
   const mutationUpdateCart = useMutationHook((data) => {
     const { id, token, ...rest } = data;
@@ -300,11 +296,9 @@ const AdminProduct = () => {
     const file2 = fileList?.length > 1 ? fileList[1] : "";
     const file3 = fileList?.length > 2 ? fileList[2] : "";
     const file4 = fileList?.length > 3 ? fileList[3] : "";
-    console.log("fileList", fileList);
     if (!file1?.url && !file1?.preview) {
       file1.preview = await getBase64(file1?.originFileObj);
       if (file2 && !file2?.url && !file2?.preview) {
-        console.log("voo");
         file2.preview = await getBase64(file2?.originFileObj);
         if (file3 && !file3?.url && !file3?.preview) {
           file3.preview = await getBase64(file3?.originFileObj);
@@ -330,7 +324,6 @@ const AdminProduct = () => {
     const file2 = fileList[0];
     const file3 = fileList?.length > 1 ? fileList[1] : "";
     const file4 = fileList?.length > 2 ? fileList[3] : "";
-    console.log("fileList", fileList);
     if (file2 && !file2?.url && !file2?.preview) {
       file2.preview = await getBase64(file2?.originFileObj);
       if (file3 && !file3?.url && !file3?.preview) {
@@ -354,7 +347,6 @@ const AdminProduct = () => {
   const handleOnchangeAvatarImg3 = async ({ fileList }) => {
     const file3 = fileList[0];
     const file4 = fileList?.length > 1 ? fileList[1] : "";
-    console.log("fileList", fileList);
     if (file3 && !file3?.url && !file3?.preview) {
       file3.preview = await getBase64(file3?.originFileObj);
       if (file4 && !file4?.url && !file4?.preview) {
@@ -374,7 +366,6 @@ const AdminProduct = () => {
 
   const handleOnchangeAvatarImg4 = async ({ fileList }) => {
     const file4 = fileList[0];
-    console.log("fileList", fileList);
     if (file4 && !file4?.url && !file4?.preview) {
       file4.preview = await getBase64(file4?.originFileObj);
     }
@@ -407,7 +398,6 @@ const AdminProduct = () => {
 
   const handleOnchangeAvatarDetailsImg1 = async ({ fileList }) => {
     const file1 = fileList[0];
-    console.log("fileList", fileList);
     if (!file1?.url && !file1?.preview) {
       file1.preview = await getBase64(file1?.originFileObj);
     }
@@ -425,7 +415,6 @@ const AdminProduct = () => {
 
   const handleOnchangeAvatarDetailsImg2 = async ({ fileList }) => {
     const file2 = fileList[0];
-    console.log("fileList", fileList);
     if (file2 && !file2?.url && !file2?.preview) {
       file2.preview = await getBase64(file2?.originFileObj);
     }
@@ -442,7 +431,6 @@ const AdminProduct = () => {
 
   const handleOnchangeAvatarDetailsImg3 = async ({ fileList }) => {
     const file3 = fileList[0];
-    console.log("fileList", fileList);
     if (file3 && !file3?.url && !file3?.preview) {
       file3.preview = await getBase64(file3?.originFileObj);
     }
@@ -459,7 +447,6 @@ const AdminProduct = () => {
 
   const handleOnchangeAvatarDetailsImg4 = async ({ fileList }) => {
     const file4 = fileList[0];
-    console.log("fileList", fileList);
     if (file4 && !file4?.url && !file4?.preview) {
       file4.preview = await getBase64(file4?.originFileObj);
     }
@@ -486,18 +473,13 @@ const AdminProduct = () => {
     return res?.data;
   };
   const typeProduct = useQuery(["type-product"], fetchAllType);
-  console.log("typeProduct", typeProduct?.data);
-
   const options = renderOptions(typeProduct?.data);
-  console.log("options", options);
 
   const newOptions = options.filter((item) => item !== undefined);
-  console.log("newOptions", newOptions);
 
   const [typeSelect, setTypeSelect] = useState("");
   const [placeholder, setPlaceholder] = useState("");
   const handleChangeSelect = (e) => {
-    console.log("options value", e);
     if (e?.value !== "add_type") {
       setStateProduct({
         ...stateProduct,
@@ -519,7 +501,6 @@ const AdminProduct = () => {
     }
     setTypeSelect(e?.value);
   };
-  console.log("typeSelect", typeSelect);
 
   const handleOnchangeDetails = (e) => {
     setStateProductDetails({
@@ -638,10 +619,7 @@ const AdminProduct = () => {
     setIsLoadingUpdate(false);
     setTypeSelect(res?.data?.type);
     setPlaceholder(res?.data?.type);
-    console.log("ressss", res.data.type);
   };
-
-  console.log("stateProductDetails", stateProductDetails);
 
   useEffect(() => {
     if (rowSelected && isOpenDrawer) {

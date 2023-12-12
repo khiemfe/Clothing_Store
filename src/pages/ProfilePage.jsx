@@ -23,7 +23,6 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
-  console.log("user", user);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -52,7 +51,6 @@ const ProfilePage = () => {
     const storage = localStorage.getItem("refresh_token");
     const refreshToken = JSON.parse(storage);
     const res = await UserServcie.getDetailsUser(id, token);
-    console.log("rest ...res?.data", res);
     dispatch(
       updateUser({
         ...res?.data,
@@ -67,7 +65,6 @@ const ProfilePage = () => {
     );
   };
 
-  console.log("variables", variables);
   useEffect(() => {
     setName(user?.name);
     setEmail(user?.email);
@@ -138,13 +135,11 @@ const ProfilePage = () => {
   const [tinhLabel, setTinhLabel] = useState(user?.address?.split(", ")[3]);
   const [huyenLabel, setHuyenLabel] = useState(user?.address?.split(", ")[2]);
   const [xaLabel, setXaLabel] = useState(user?.address?.split(", ")[1]);
-
   const [inputLabel, setInputLabel] = useState(user?.address?.split(", ")[0]);
+
   const handleOnchangeAddress = (e) => {
     setInputLabel(e.target.value);
   };
-
-  console.log("inputLabel", inputLabel);
 
   useEffect(() => {
     fetch("https://provinces.open-api.vn/api/?depth=3")
@@ -169,7 +164,6 @@ const ProfilePage = () => {
   }, [tinhLabel, huyenLabel, xaLabel]);
 
   const handleChangeSelectTinh = (e) => {
-    console.log("sosanh", e);
     if (e !== tinhLabel) {
       setTinhLabel(e);
       setHuyenLabel("");
@@ -192,16 +186,11 @@ const ProfilePage = () => {
   const optionsHuyen = renderOptionsAddress(huyenOptions);
   const optionsXa = renderOptionsAddress(xaOptions);
 
-  console.log("optionsHuyen", optionsHuyen);
-
-  console.log("Label", xaLabel, huyenLabel, tinhLabel);
-
   useEffect(() => {
     setAddress(
       inputLabel + ", " + xaLabel + ", " + huyenLabel + ", " + tinhLabel
     );
   }, [inputLabel, xaLabel, huyenLabel, tinhLabel]);
-  console.log("address", address);
 
   return (
     <>

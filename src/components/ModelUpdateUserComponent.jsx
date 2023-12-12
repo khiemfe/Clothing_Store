@@ -24,9 +24,6 @@ const ModelUpdateUserComponent = ({
   inputLabel,
   handleOnchangeAddress,
 }) => {
-  console.log("isPhoneNumber", isPhoneNumber);
-
-  console.log("tinhLabel", tinhLabel);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {

@@ -33,10 +33,8 @@ const SignInPage = () => {
   const dispatch = useDispatch();
 
   const mutation = useMutationHook((data) => UserServcie.loginUser(data));
-  console.log("mutation", mutation);
 
   const { data, isLoading, isSuccess, isError } = mutation;
-  console.log(data, isLoading);
 
   useEffect(() => {
     if (isLoading) {
@@ -59,7 +57,6 @@ const SignInPage = () => {
 
       if (data?.access_token) {
         const decoded = jwt_decode(data?.access_token);
-        console.log("decoded", decoded);
         if (decoded?.id) {
           handleGetDetailsUser(decoded?.id, data?.access_token);
         }
@@ -74,7 +71,6 @@ const SignInPage = () => {
     const refreshToken = JSON.parse(storage);
     const res = await UserServcie.getDetailsUser(id, token);
     dispatch(updateUser({ ...res?.data, access_token: token, refreshToken }));
-    console.log("res", res);
   };
 
   const handleOnChangeEmail = (e) => {
@@ -92,7 +88,6 @@ const SignInPage = () => {
       email,
       password,
     });
-    console.log("sign-in", email, password);
   };
 
   const navigate = useNavigate();
@@ -148,8 +143,6 @@ const SignInPage = () => {
     });
   };
 
-  console.log("stateUserQMK", stateUserQMK);
-
   const mutationUpdate = useMutationHook((data) => {
     const res = UserServcie.updatePassword(data);
     return res;
@@ -161,7 +154,6 @@ const SignInPage = () => {
     isSuccess: isSuccessUpdate,
     isError: isErrorUpdate,
   } = mutationUpdate;
-  console.log("dataUpdate", dataUpdate);
 
   useEffect(() => {
     if (isSuccessUpdate && dataUpdate?.status === "OK") {
@@ -171,8 +163,6 @@ const SignInPage = () => {
       error("Bạn đã đổi mật khẩu thành công");
     }
   }, [isSuccessUpdate, isErrorUpdate]);
-
-  console.log("stateUserQMK", stateUserQMK);
 
   const handleQMK = () => {
     mutationUpdate.mutate({

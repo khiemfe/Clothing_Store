@@ -49,8 +49,6 @@ const LoadingCardComponent = ({
   arrayProducts,
   delay = 200,
 }) => {
-  console.log("lengthProducts", arrayProducts);
-
   return (
     <>
       {isLoading ? (
