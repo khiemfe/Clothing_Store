@@ -16,6 +16,7 @@ import BangSizeAo from "../public/img/BangSIzeAo.png";
 import BangSizeQuan from "../public/img/BangSizeQuan.png";
 import LoadingFullComponents from "../components/LoadingFullComponents";
 import LoadingComponents from "../components/LoadingComponents";
+import ModelComponent from "../components/ModelComponent";
 
 const ProductDetailsPage = () => {
   const { id: idProduct } = useParams();
@@ -286,9 +287,25 @@ const ProductDetailsPage = () => {
     }
   }, [isSuccessAddCart, isErrorAddCart]);
 
+  const [isModelOpen, setIsModelOpen] = useState(false);
+
+  const handleOkSign = () => {
+    navigate("/sign-in", { state: location?.pathname }); // login xong trở về lại trang lúc nảy
+  };
+
+  const handleCanel = () => {
+    setIsModelOpen(false);
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleOkSign();
+    }
+  };
+
   const hanleAddOrder = () => {
     if (!user?.id) {
-      navigate("/sign-in", { state: location?.pathname }); // login xong trở về lại trang lúc nảy
+      setIsModelOpen(true);
     } else {
       if (
         productDetails?.name &&
@@ -739,6 +756,17 @@ const ProductDetailsPage = () => {
             </div>
           </div>
         )}
+      </div>
+
+      <div onKeyDown={handleKeyDown}>
+        <ModelComponent
+          title="Thông báo!"
+          isModalOpen={isModelOpen}
+          onCancel={handleCanel}
+          onOk={handleOkSign}
+        >
+          <div>Bạn chưa đăng nhập, đi đến đăng nhập?</div>
+        </ModelComponent>
       </div>
     </>
   );
