@@ -747,7 +747,7 @@ const ProductDetailsPage = () => {
                     <div className="text">
                       <div>Hotline hỗ trợ</div>
                       <h4>
-                        <span>03534</span> <span>54***</span>
+                        <span>03534</span> <span>54096</span>
                       </h4>
                     </div>
                   </li>

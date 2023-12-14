@@ -70,7 +70,7 @@ const FooterComponent = () => {
                   <span>khiemdev24@gmail.com</span>
                 </p>
                 <p className="item">
-                  <FaSquarePhone /> <span>0353454***</span>
+                  <FaSquarePhone /> <span>0353454096</span>
                 </p>
               </MDBCol>
             </MDBRow>
