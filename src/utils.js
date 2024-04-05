@@ -48,17 +48,29 @@ export const renderOptions = (arr) => {
   return results;
 };
 
-export const renderOptionsAddress = (arr) => {
-  let results = [];
-  if (arr) {
-    results = arr?.map((item) => {
-      return {
-        value: item?.name,
-        // label: item?.codename,
-      };
+export const renderOptionsAddress = (arr, code) => {
+  console.log(code)
+  if (!arr) return [];
+  let result = [];
+  if (arr && code) {
+    arr?.map((item) => {
+      if (item?.parent_code === code) {
+        result.push({
+          value: item?.code,
+          label: item?.name,
+        });
+      }
     });
+    return result;
+  } else {
+    arr?.map((item) => {
+      result.push({
+        value: item?.code,
+        label: item?.name,
+      });
+    });
+    return result;
   }
-  return results;
 };
 
 export const convertPrice = (price) => {

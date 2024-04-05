@@ -21,7 +21,7 @@ const HomePage = () => {
 
   const fetchProductAll = async (context) => {
     const limit = context?.queryKey && context?.queryKey[1];
-    const res = await ProductServices.getAllProduct("", limit);
+    const res = await ProductServices.getAllProduct(limit);
     return res;
   };
 
@@ -31,7 +31,7 @@ const HomePage = () => {
     isPreviousData,
   } = useQuery(["product", limit], fetchProductAll, {
     retry: 3,
-    retryDelay: 1000,
+    retryDelay: 0,
     keepPreviousData: true,
   });
   //   keepPreviousData: giữ lại product cũ, load những cái mới thôi

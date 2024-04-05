@@ -19,7 +19,7 @@ const TypeProductPage = () => {
 
   const fetchTypeProduct = async (type, page, limit) => {
     setIsLoading(true);
-    const res = await ProductServices.getTypeProduct(type, page, limit);
+    const res = await ProductServices.getProductType(type, page, limit);
     if (res?.status === "OK") {
       setIsLoading(false);
       setProducts(res?.data);

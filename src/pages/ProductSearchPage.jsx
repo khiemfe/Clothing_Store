@@ -16,29 +16,30 @@ const ProductSearchPage = () => {
   const dispatch = useDispatch();
   const [textSearch, setTextSearch] = useState("");
   const [limit, setLimit] = useState(8);
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState('');
   const searchStorage = localStorage.getItem("search");
 
-  const fetchProductAll = async (context) => {
+  const fetchProductSearch = async (context) => {
     const limit = context?.queryKey && context?.queryKey[1];
-    const search = (context?.queryKey && context?.queryKey[2]) || searchStorage;
+    console.log('search', context?.queryKey[2])
+    const search = (context?.queryKey && context?.queryKey[2]) || search;
     setTextSearch(search);
-    const res = await ProductServices.getAllProduct(search, limit);
+    const res = await ProductServices.getProductSearch(search, limit);
     return res;
   };
 
   const searchProductRedux =
     useSelector((state) => state.product?.search) || searchStorage || undefined;
 
-  const searchDebounce = useDebounce(searchProductRedux, 1000);
+  // const searchDebounce = useDebounce(searchProductRedux, 1000);
 
   const {
     isLoading: isLoading,
     data: products,
     isPreviousData,
-  } = useQuery(["products", limit, searchDebounce], fetchProductAll, {
+  } = useQuery(["products", limit, searchProductRedux], fetchProductSearch, {
     retry: 3,
-    retryDelay: 1000,
+    retryDelay: 0,
     keepPreviousData: true,
   });
 

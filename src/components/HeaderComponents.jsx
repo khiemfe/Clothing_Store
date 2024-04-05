@@ -269,7 +269,7 @@ const HeaderComponents = (props) => {
                 className="right "
               >
                 <Form className="d-flex form align-items_center">
-                  {/* <CameraComponents /> */}
+                  <CameraComponents />
                   <div className="search">
                     <Button
                       variant="outline-success"

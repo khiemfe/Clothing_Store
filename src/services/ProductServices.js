@@ -1,45 +1,44 @@
 import axios from "axios";
 import { axiosJWT } from "./userServices";
 
-export const getAllProduct = async (search, limit) => {
-  let res;
-  if (search?.length > 0) {
-    res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/product/get-all?filter=name&filter=${search}&limit=${limit}`
-    );
-  } else {
-    if (!limit) {
-      res = await axios.get(`${process.env.REACT_APP_API_URL}/product/get-all`);
-    } else {
-      res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/product/get-all?limit=${limit}`
-      );
-    }
-  }
+export const getAllProduct = async (limit) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_API_URL}/product/get-all?limit=${limit}`
+  );
   return res.data;
 };
 
-export const getGenderProduct = async (type, limit) => {
-  if (type) {
+export const getProductSearch = async (search, limit) => {
+  if (search?.length > 0) {
     const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/product/get-all?filter=gender&filter=${type}&limit=${limit}`
+      `${process.env.REACT_APP_API_URL}/product/get-all-search?filter=name&filter=${search}&limit=${limit}`
     );
     return res.data;
   }
 };
 
-export const getTypeProduct = async (type, page, limit) => {
-  if (type) {
+export const getProductType = async (type, page, limit) => {
+  if (type?.length > 0) {
     const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/product/get-all?filter=type&filter=${type}&limit=${limit}&page=${page}`
+      `${process.env.REACT_APP_API_URL}/product/get-all-type-product?filter=type&filter=${type}&limit=${limit}&&page=${page}`
+    );
+    return res.data;
+  }
+};
+
+export const getGenderProduct = async (gender, limit) => {
+  if (gender) {
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_URL}/product/get-all-type-product?filter=gender&filter=${gender}&limit=${limit}`
     );
     return res.data;
   }
 };
 
 export const getAllProductPropose = async (gender, age, size, limit) => {
+  console.log('gender', gender)
   const res = await axios.get(
-    `${process.env.REACT_APP_API_URL}/product/get-all?filter=gender&filter=${gender}&filter=age&filter=${age}&filter=size&filter=${size}&limit=${limit}`
+    `${process.env.REACT_APP_API_URL}/product/get-all-propose?filter=gender&filter=${gender}&filter=age&filter=${age}&filter=size&filter=${size}&limit=${limit}`
   );
   return res.data;
 };

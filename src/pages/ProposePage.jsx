@@ -49,7 +49,10 @@ const ProposePage = () => {
     arrResult();
   }, []);
 
+  console.log('result_gender', result_gender)
+
   const fetchProductAll = async (context) => {
+
     const gender = context?.queryKey && context?.queryKey[1];
     const age = context?.queryKey && context?.queryKey[2];
     const size = context?.queryKey && context?.queryKey[3];
@@ -80,17 +83,41 @@ const ProposePage = () => {
   );
 
   const arrayProducts = [];
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= limit; i++) {
     arrayProducts.push(i);
   }
+
+  const [resultGenderText, setResultGenderText] = useState("");
+  const [resultSizeText, setResultSizeText] = useState("");
+  useEffect(() => {
+    if (result_gender.toLocaleLowerCase() === "nam") {
+      setResultGenderText("Nam");
+    } else {
+      if (result_gender.toLocaleLowerCase() === "nu") {
+        setResultGenderText("Nữ");
+      } else {
+        setResultGenderText("Undefined");
+      }
+    }
+  }, [result_gender])
+
+  useEffect(() => {
+    if (result_size.toLocaleLowerCase() === "Beo") {
+      setResultSizeText("Mập");
+    } else if (result_size.toLocaleLowerCase() === "om") {
+      setResultSizeText("Ốm");
+    } else {
+      setResultSizeText("Bình thường");
+    }
+  }, [result_size])
 
   return (
     <div>
       <div className="card-propose">
         <div style={{ display: "flex" }}>
-          <h3>{result_gender}</h3>
-          <h3>{result_age}</h3>
-          <h3>{result_size}</h3>
+          <h3 style={{ marginRight: 10 }}>{result_gender && resultGenderText}</h3>
+          <h3 style={{ marginRight: 10 }}>{result_age}</h3>
+          <h3>{result_size && resultSizeText}</h3>
         </div>
         {/* <DuDoan /> */}
         <h2>Sản phẩm đề xuất cho bạn</h2>
@@ -110,13 +137,9 @@ const ProposePage = () => {
                       id={product._id}
                       key={index}
                       className="card_Propose"
-                      // countInstock={product.countInstock}
-                      // description={product.description}
                       image={product.image}
                       name={product.name}
                       price={product.price}
-                      // rating={product.rating}
-                      // discount={product.discount}
                       // selled={product.selled}
                       //   gender={product.gender}
                       //   age={product.age}

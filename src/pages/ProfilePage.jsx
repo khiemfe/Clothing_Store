@@ -17,8 +17,10 @@ import { GrAdd } from "react-icons/gr";
 import { Toaster } from "react-hot-toast";
 import LoadingFullComponents from "../components/LoadingFullComponents";
 import { Select } from "antd";
+import tinh from "../address/tinh_tp.json";
+import quan_huyen from "../address/quan_huyen.json";
+import xa_phuong from "../address/xa_phuong.json";
 
-// let check = 0;
 const ProfilePage = () => {
   const dispatch = useDispatch();
 
@@ -36,7 +38,6 @@ const ProfilePage = () => {
   });
   const { data, isLoading, isSuccess, isError, variables } = mutation;
 
-  // console.log("check", check);
   useEffect(() => {
     if (isSuccess && data?.status !== "ERR") {
       success("Bạn đã cập nhật thông tin thành công");
@@ -129,62 +130,63 @@ const ProfilePage = () => {
     }
   };
 
-  const [tinhOptions, setTinhOptions] = useState([]);
-  const [huyenOptions, setHuyenOptions] = useState([]);
-  const [xaOptions, setXaOptions] = useState([]);
   const [tinhLabel, setTinhLabel] = useState(user?.address?.split(", ")[3]);
   const [huyenLabel, setHuyenLabel] = useState(user?.address?.split(", ")[2]);
   const [xaLabel, setXaLabel] = useState(user?.address?.split(", ")[1]);
   const [inputLabel, setInputLabel] = useState(user?.address?.split(", ")[0]);
+  const [codeTinh, setCodeTinh] = useState("");
+  const [codeHuyen, setCodeHuyen] = useState("");
 
   const handleOnchangeAddress = (e) => {
     setInputLabel(e.target.value);
   };
 
-  useEffect(() => {
-    fetch("https://provinces.open-api.vn/api/?depth=3")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setTinhOptions(data);
-        const codenameTinh = data.find((dt) => dt.name === tinhLabel);
-        return codenameTinh;
-      })
-      .then((data) => {
-        setHuyenOptions(data?.districts);
-        const codenameHuyen = data?.districts.find(
-          (dt) => dt.name === huyenLabel
-        );
-        return codenameHuyen;
-      })
-      .then((data) => {
-        setXaOptions(data?.wards);
-      });
-  }, [tinhLabel, huyenLabel, xaLabel]);
+  // useEffect(() => {
+  //   fetch("https://provinces.open-api.vn/api/?depth=3")
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setTinhOptions(data);
+  //       const codenameTinh = data.find((dt) => dt.name === tinhLabel);
+  //       return codenameTinh;
+  //     })
+  //     .then((data) => {
+  //       setHuyenOptions(data?.districts);
+  //       const codenameHuyen = data?.districts.find(
+  //         (dt) => dt.name === huyenLabel
+  //       );
+  //       return codenameHuyen;
+  //     })
+  //     .then((data) => {
+  //       setXaOptions(data?.wards);
+  //     });
+  // }, [tinhLabel, huyenLabel, xaLabel]);
 
-  const handleChangeSelectTinh = (e) => {
-    if (e !== tinhLabel) {
-      setTinhLabel(e);
+  const handleChangeSelectTinh = (code, e) => {
+    setCodeTinh(code);
+    if (e.label !== tinhLabel) {
+      setTinhLabel(e.label);
       setHuyenLabel("");
       setXaLabel("");
     }
   };
 
-  const handleChangeSelectHuyen = (e) => {
-    if (e !== huyenLabel) {
-      setHuyenLabel(e);
+  const handleChangeSelectHuyen = (code, e) => {
+    setCodeHuyen(code);
+    if (e.label !== huyenLabel) {
+      setHuyenLabel(e.label);
       setXaLabel("");
     }
   };
 
-  const handleChangeSelectXa = (e) => {
-    setXaLabel(e);
+  const handleChangeSelectXa = (code, e) => {
+    setXaLabel(e.label);
   };
 
-  const optionsTinh = renderOptionsAddress(tinhOptions);
-  const optionsHuyen = renderOptionsAddress(huyenOptions);
-  const optionsXa = renderOptionsAddress(xaOptions);
+  const optionsTinh = renderOptionsAddress(tinh);
+  const optionsHuyen = renderOptionsAddress(quan_huyen, codeTinh);
+  const optionsXa = renderOptionsAddress(xa_phuong, codeHuyen);
 
   useEffect(() => {
     setAddress(
@@ -350,27 +352,35 @@ const ProfilePage = () => {
                     <div>
                       <Select
                         // defaultValue={null}
-                        placeholder={tinhLabel || "Tỉnh/Thành phố *"}
-                        value={tinhLabel}
+                        placeholder={"Tỉnh/Thành phố *"}
+                        value={tinhLabel || undefined}
                         options={optionsTinh}
                         onChange={handleChangeSelectTinh}
                       />
                     </div>
                     <div>
-                      <Select
-                        placeholder={huyenLabel || "Quận/Huyện *"}
-                        value={huyenLabel}
-                        options={optionsHuyen}
-                        onChange={handleChangeSelectHuyen}
-                      />
+                      {tinhLabel ? (
+                        <Select
+                          placeholder={"Quận/Huyện *"}
+                          value={huyenLabel || undefined}
+                          options={optionsHuyen}
+                          onChange={handleChangeSelectHuyen}
+                        />
+                      ) : (
+                        <Select placeholder={"Quận/Huyện *"} disabled />
+                      )}
                     </div>
                     <div>
-                      <Select
-                        placeholder={xaLabel || "Phường/Xã *"}
-                        value={xaLabel}
-                        options={optionsXa}
-                        onChange={handleChangeSelectXa}
-                      />
+                      {huyenLabel ? (
+                        <Select
+                          placeholder={"Phường/Xã *"}
+                          value={xaLabel || undefined}
+                          options={optionsXa}
+                          onChange={handleChangeSelectXa}
+                        />
+                      ) : (
+                        <Select placeholder={"Phường/Xã *"} disabled />
+                      )}
                     </div>
                     <Form.Control
                       value={inputLabel}

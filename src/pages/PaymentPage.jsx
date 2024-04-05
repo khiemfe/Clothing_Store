@@ -12,11 +12,12 @@ import Modal from "react-bootstrap/Modal";
 import { Form } from "antd";
 import ModelUpdateUserComponent from "../components/ModelUpdateUserComponent";
 import { success, error, warning } from "../components/Message";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as CartServices from "../services/CartServices";
 import * as PaymentServices from "../services/PaymentServices";
 import { Toaster } from "react-hot-toast";
 import LoadingFullComponents from "../components/LoadingFullComponents";
+import { PayPalButton } from "react-paypal-button-v2";
 
 const PaymentPage = () => {
   const order = useSelector((state) => state.order);
@@ -252,64 +253,64 @@ const PaymentPage = () => {
     }
   };
 
-  // const [sdkReady, setSdkReady] = useState(false); //set xem nó đã có hay chưa
-  // const addPaypalScript = async () => {
-  //   const { data } = await PaymentServices.getConfig();
-  //   const script = document.createElement("script");
-  //   script.type = "text/javascript"; //đặt type là js
-  //   script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
-  //   script.async = true; // tránh bất đồng bộ
-  //   script.onload = () => {
-  //     //đang load
-  //     setSdkReady(true);
-  //   };
-  //   document.body.appendChild(script);
-  //   console.log("datapaypal", data);
-  // };
+  const [sdkReady, setSdkReady] = useState(false); //set xem nó đã có hay chưa
+  const addPaypalScript = async () => {
+    const { data } = await PaymentServices.getConfig();
+    const script = document.createElement("script");
+    script.type = "text/javascript"; //đặt type là js
+    script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
+    script.async = true; // tránh bất đồng bộ
+    script.onload = () => {
+      //đang load
+      setSdkReady(true);
+    };
+    document.body.appendChild(script);
+    console.log("datapaypal", data);
+  };
 
-  // useEffect(() => {
-  //   if (!window.paypal) {
-  //     //nếu chưa có giao diện paypal
-  //     addPaypalScript();
-  //   } else {
-  //     setSdkReady(true);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!window.paypal) {
+      //nếu chưa có giao diện paypal
+      addPaypalScript();
+    } else {
+      setSdkReady(true);
+    }
+  }, []);
 
-  // const onSuccessPaypal = (details, data) => {
-  //   mutationAddOrder.mutate({
-  //     token: user?.access_token,
-  //     orderItems: order?.orderItemsSelected,
-  //     fullName: user?.name,
-  //     phone: user?.phone,
-  //     address: user?.address,
-  //     paymentMethod: valueRadioTT,
-  //     itemsPrice: priceMemo,
-  //     shippingPrice: shippingPrice,
-  //     totalPrice: totalPriceMemo,
-  //     user: user?.id,
-  //     isPaid: true,
-  //     paidAt: details.update_time,
-  //     email: user?.email,
-  //   });
-  //   console.log("details", details, data);
+  const onSuccessPaypal = (details, data) => {
+    mutationAddOrder.mutate({
+      token: user?.access_token,
+      orderItems: order?.orderItemsSelected,
+      fullName: user?.name,
+      phone: user?.phone,
+      address: user?.address,
+      paymentMethod: valueRadioTT,
+      itemsPrice: priceMemo,
+      shippingPrice: shippingPrice,
+      totalPrice: totalPriceMemo,
+      user: user?.id,
+      isPaid: true,
+      paidAt: details.update_time,
+      email: user?.email,
+    });
+    console.log("details", details, data);
 
-  // const arrayOrdered = []; //lấy id của các sản phẩm mua để remove khỏi giỏ hàng
-  // order?.orderItemsSelected?.forEach((e) => {
-  //   arrayOrdered.push(e._id);
-  // });
-  //   console.log("arrayOrdered", arrayOrdered);
-  //   mutationDeleteMany.mutate(
-  //     { ids: arrayOrdered, token: user?.access_token }
-  //     // {
-  //     //   onSettled: () => {
-  //     //     queryCart.refetch();
-  //     //   },
-  //     // }
-  //   );
-  // };
+    const arrayOrdered = []; //lấy id của các sản phẩm mua để remove khỏi giỏ hàng
+    order?.orderItemsSelected?.forEach((e) => {
+      arrayOrdered.push(e._id);
+    });
+    console.log("arrayOrdered", arrayOrdered);
+    mutationDeleteMany.mutate(
+      { ids: arrayOrdered, token: user?.access_token }
+      // {
+      //   onSettled: () => {
+      //     queryCart.refetch();
+      //   },
+      // }
+    );
+  };
 
-  // const pricePaypal = totalPriceMemo / 23;
+  const pricePaypal = totalPriceMemo / 23;
 
   //  address
   const [errInput, setErrInput] = useState("");
@@ -502,16 +503,25 @@ const PaymentPage = () => {
                       <Radio value={"later_money"}></Radio>
                       <h4>Thanh toán khi nhận hàng</h4>
                     </div>
-                    {/* <div className="radio-text" >
-                  <Radio value={"paypal"}></Radio>
-                  <h4>Thanh toán bằng Paypal</h4>
-                </div> */}
+                    <div className="radio-text">
+                      <Radio value={"paypal"}></Radio>
+                      <h4>Thanh toán bằng Paypal</h4>
+                    </div>
                   </Radio.Group>
                 </div>
               </div>
 
-              {valueRadioTT === "paypal" ? (
-                <></>
+              {valueRadioTT === "paypal" && sdkReady ? (
+                <div style={{ width: "320px", marginTop: "20px" }}>
+                  <PayPalButton
+                    amount={Math.round(pricePaypal)}
+                    // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+                    onSuccess={onSuccessPaypal}
+                    onError={() => {
+                      alert("Error");
+                    }}
+                  />
+                </div>
               ) : (
                 <div className="btn-buy">
                   <p
@@ -562,35 +572,34 @@ const PaymentPage = () => {
             />
           </Modal>
           {/* <Modal
-          show={true}
-          onHide={() => {
-            setIsOpenModalUpdate(false);
-          }}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centeredxw
-          style={{ marginTop: 200 }}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-              <h3>Bạn đã đặt hàng thành công</h3>
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body style={{ padding: 20 }}>
-            <p style={{ fontSize: 16 }}>Bạn muốn di chuyển đến đâu?</p>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                
-              }}
-            >
-              <Button>Trang chủ</Button>
-              <Button>Giỏ hàng</Button>
-              <Button>Đơn hàng của bạn</Button>
-            </div>
-          </Modal.Body>
-        </Modal> */}
+            show={true}
+            onHide={() => {
+              setIsOpenModalUpdate(false);
+            }}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centeredxw
+            style={{ marginTop: 200 }}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                <h3>Bạn đã đặt hàng thành công</h3>
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body style={{ padding: 20 }}>
+              <p style={{ fontSize: 16 }}>Bạn muốn di chuyển đến đâu?</p>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Button>Trang chủ</Button>
+                <Button>Giỏ hàng</Button>
+                <Button>Đơn hàng của bạn</Button>
+              </div>
+            </Modal.Body>
+          </Modal> */}
         </Row>
       </div>
     </>

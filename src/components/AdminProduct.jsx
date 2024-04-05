@@ -447,6 +447,7 @@ const AdminProduct = () => {
 
   const handleOnchangeAvatarDetailsImg4 = async ({ fileList }) => {
     const file4 = fileList[0];
+    console.log("fileList", fileList);
     if (file4 && !file4?.url && !file4?.preview) {
       file4.preview = await getBase64(file4?.originFileObj);
     }
@@ -1047,7 +1048,7 @@ const AdminProduct = () => {
         style={{ textTransform: "uppercase", margin: "10px 0 20px 0" }}
         className="text_QLSP"
       >
-        Quản lí sản phẩm
+        Quản lý sản phẩm
       </h1>
       <div className="adminProduct">
         <Button

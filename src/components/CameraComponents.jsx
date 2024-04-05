@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -44,7 +44,40 @@ const CameraComponents = () => {
   const capture = React.useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
     setShow(imageSrc);
+    console.log(imageSrc);
   }, [webcamRef, setShow]);
+
+  // const [bgRemove, setBgRemove] = useState(null);
+  // const handleRemoveBackground = async () => {
+  //   const apiKey = "CAntaHuSk8NKNg8jZVRfsemq";
+  //   const apiUrl = "https://api.remove.bg/v1.0/removebg";
+
+  //   const formData = new FormData();
+  //   formData.append("image_file", show, show.name);
+  //   formData.append("size", "auto");
+
+  //   try {
+  //     const res = await fetch(apiUrl, {
+  //       method: "POST",
+  //       headers: {
+  //         "X-api-key": apiKey,
+  //       },
+  //       body: formData,
+  //     });
+
+  //     const data = await res.blob();
+
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => setBgRemove(reader.result);
+  //     reader.readAsDataURL(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   handleRemoveBackground();
+  // }, []);
 
   const handleShow = React.useCallback(() => setShow(true), [setShow]);
 
@@ -78,7 +111,7 @@ const CameraComponents = () => {
             </span>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{ padding: 10 }}>
           <Webcam
             mirrored={true}
             audio={false}
@@ -94,9 +127,10 @@ const CameraComponents = () => {
         </button>
         {show !== true && (
           <>
-            <div style={{ padding: "10px" }}>
+            <div style={{ padding: "20px 10px 10px 10px" }}>
               <img
                 alt=""
+                style={{ width: "100%" }}
                 // ref={countRef}
                 src={show.toString()}
               />
