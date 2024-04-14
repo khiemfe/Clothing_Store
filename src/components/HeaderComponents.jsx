@@ -176,6 +176,8 @@ const HeaderComponents = (props) => {
     setOpenSearch(false);
   };
 
+  console.log(amountCart);
+
   return (
     <>
       <LoadingFullComponents isLoading={loading} />

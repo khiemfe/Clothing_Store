@@ -15,11 +15,62 @@ const ProposePage = () => {
   const [limit, setLimit] = useState(8);
   const [isLoadingPropose, setIsLoadingPropose] = useState(true);
 
+  const [bgRemove, setBgRemove] = useState(null);
+  const base64ToBlob = (base64) => {
+    const byteCharacters = atob(base64.split(",")[1]);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+      const slice = byteCharacters.slice(offset, offset + 512);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    return new Blob(byteArrays, { type: "image/jpeg" });
+  };
+
+  const handleRemoveBackground = async () => {
+    // const apiKey = "dGDWZ79TfFWA9sacewdipzA9";
+    const apiKey = "h2Dw87W2iMC1zEQFpcYGAzYe";
+    const apiUrl = "https://api.remove.bg/v1.0/removebg";
+    const blobImage = base64ToBlob(imageBase64);
+    console.log(blobImage);
+    const formData = new FormData();
+    formData.append("image_file", blobImage, "image.jpg");
+    formData.append("size", "auto");
+
+    try {
+      const res = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "X-api-key": apiKey,
+        },
+        body: formData,
+      });
+
+      const data = await res.blob();
+      const reader = new FileReader();
+      reader.onloadend = () => setBgRemove(reader.result);
+      reader.readAsDataURL(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    if (!isLoaded) {
+    handleRemoveBackground();
+  }, []);
+
+  useEffect(() => {
+    if (!isLoaded && bgRemove !== null) {
       axios
         .post(`${process.env.REACT_APP_API_URL}/save/proposed`, {
-          imageBase64,
+          bgRemove,
         })
         .then((res) => {
           console.log("Ok", res);
@@ -29,7 +80,7 @@ const ProposePage = () => {
         });
       setIsLoaded(true);
     }
-  }, [isLoaded]);
+  }, [bgRemove]);
 
   const [result_age, set_result_age] = useState("");
   const [result_size, set_result_size] = useState("");
@@ -49,10 +100,9 @@ const ProposePage = () => {
     arrResult();
   }, []);
 
-  console.log('result_gender', result_gender)
+  console.log("result_gender", result_gender);
 
   const fetchProductAll = async (context) => {
-
     const gender = context?.queryKey && context?.queryKey[1];
     const age = context?.queryKey && context?.queryKey[2];
     const size = context?.queryKey && context?.queryKey[3];
@@ -99,7 +149,7 @@ const ProposePage = () => {
         setResultGenderText("Undefined");
       }
     }
-  }, [result_gender])
+  }, [result_gender]);
 
   useEffect(() => {
     if (result_size.toLocaleLowerCase() === "Beo") {
@@ -109,13 +159,15 @@ const ProposePage = () => {
     } else {
       setResultSizeText("Bình thường");
     }
-  }, [result_size])
+  }, [result_size]);
 
   return (
     <div>
       <div className="card-propose">
         <div style={{ display: "flex" }}>
-          <h3 style={{ marginRight: 10 }}>{result_gender && resultGenderText}</h3>
+          <h3 style={{ marginRight: 10 }}>
+            {result_gender && resultGenderText}
+          </h3>
           <h3 style={{ marginRight: 10 }}>{result_age}</h3>
           <h3>{result_size && resultSizeText}</h3>
         </div>

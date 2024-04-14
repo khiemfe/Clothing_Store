@@ -24,6 +24,9 @@ import { useQuery } from "@tanstack/react-query";
 import LoadingComponents from "../components/LoadingComponents";
 import { Toaster } from "react-hot-toast";
 import LoadingFullComponents from "../components/LoadingFullComponents";
+import tinh from "../address/tinh_tp.json";
+import quan_huyen from "../address/quan_huyen.json";
+import xa_phuong from "../address/xa_phuong.json";
 
 const OrderPage = () => {
   const order = useSelector((state) => state.order);
@@ -34,6 +37,7 @@ const OrderPage = () => {
   const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [address, setAddress] = useState(user?.address);
 
   const location = useLocation();
   const { state } = location;
@@ -336,63 +340,41 @@ const OrderPage = () => {
 
   // ---address---
 
-  const [address, setAddress] = useState(user?.address);
-  const [tinhOptions, setTinhOptions] = useState([]);
-  const [huyenOptions, setHuyenOptions] = useState([]);
-  const [xaOptions, setXaOptions] = useState([]);
   const [tinhLabel, setTinhLabel] = useState(user?.address?.split(", ")[3]);
   const [huyenLabel, setHuyenLabel] = useState(user?.address?.split(", ")[2]);
   const [xaLabel, setXaLabel] = useState(user?.address?.split(", ")[1]);
   const [inputLabel, setInputLabel] = useState(user?.address?.split(", ")[0]);
-
-  useEffect(() => {
-    fetch("https://provinces.open-api.vn/api/?depth=3")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setTinhOptions(data);
-        const codenameTinh = data.find((dt) => dt.name === tinhLabel);
-        return codenameTinh;
-      })
-      .then((data) => {
-        setHuyenOptions(data?.districts);
-        const codenameHuyen = data?.districts.find(
-          (dt) => dt.name === huyenLabel
-        );
-        return codenameHuyen;
-      })
-      .then((data) => {
-        setXaOptions(data?.wards);
-      });
-  }, [tinhLabel, huyenLabel, xaLabel]);
+  const [codeTinh, setCodeTinh] = useState("");
+  const [codeHuyen, setCodeHuyen] = useState("");
 
   const handleOnchangeAddress = (e) => {
     setInputLabel(e.target.value);
   };
 
-  const handleChangeSelectTinh = (e) => {
-    if (e !== tinhLabel) {
-      setTinhLabel(e);
+  const handleChangeSelectTinh = (code, e) => {
+    setCodeTinh(code);
+    if (e.label !== tinhLabel) {
+      setTinhLabel(e.label);
       setHuyenLabel("");
       setXaLabel("");
     }
   };
 
-  const handleChangeSelectHuyen = (e) => {
-    if (e !== huyenLabel) {
-      setHuyenLabel(e);
+  const handleChangeSelectHuyen = (code, e) => {
+    setCodeHuyen(code);
+    if (e.label !== huyenLabel) {
+      setHuyenLabel(e.label);
       setXaLabel("");
     }
   };
 
-  const handleChangeSelectXa = (e) => {
-    setXaLabel(e);
+  const handleChangeSelectXa = (code, e) => {
+    setXaLabel(e.label);
   };
 
-  const optionsTinh = renderOptionsAddress(tinhOptions);
-  const optionsHuyen = renderOptionsAddress(huyenOptions);
-  const optionsXa = renderOptionsAddress(xaOptions);
+  const optionsTinh = renderOptionsAddress(tinh);
+  const optionsHuyen = renderOptionsAddress(quan_huyen, codeTinh);
+  const optionsXa = renderOptionsAddress(xa_phuong, codeHuyen);
 
   useEffect(() => {
     setAddress(

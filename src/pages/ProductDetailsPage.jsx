@@ -261,14 +261,14 @@ const ProductDetailsPage = () => {
     if (isSuccessAddCart && dataAddCart?.status === "OK") {
       success("Bạn đã thêm vào giỏ hàng thành công");
       fetchOrderCart();
-      setTimeout(() => {
-        navigate("/order", {
-          state: {
-            id: user?.id,
-            token: user?.access_token,
-          },
-        });
-      }, 0);
+      // setTimeout(() => {
+      //   navigate("/order", {
+      //     state: {
+      //       id: user?.id,
+      //       token: user?.access_token,
+      //     },
+      //   });
+      // }, 0);
       // dispatch(
       //   addOrderProduct({
       //     orderItem: {

@@ -288,10 +288,11 @@ const SignInPage = () => {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centeredxw
+          style={{ marginTop: "140px" }}
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Đổi mật khẩu
+              Lấy lại mật khẩu
             </Modal.Title>
           </Modal.Header>
           <ModelQMKComponent

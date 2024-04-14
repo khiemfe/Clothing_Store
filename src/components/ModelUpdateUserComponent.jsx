@@ -24,7 +24,6 @@ const ModelUpdateUserComponent = ({
   inputLabel,
   handleOnchangeAddress,
 }) => {
-
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       onFinish();
@@ -48,34 +47,14 @@ const ModelUpdateUserComponent = ({
           autoComplete="on"
           form={form}
         >
-          <Form.Item
-            label="Name"
-            // name="name"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Please input your name!",
-            //   },
-            // ]}
-            style={{ marginTop: "10px" }}
-          >
+          <Form.Item label="Name" style={{ marginTop: "10px" }}>
             <Input
               value={stateUser?.name}
               onChange={handleOnchange}
               name="name"
             />
           </Form.Item>
-          <Form.Item
-            style={{ position: "relative" }}
-            label="Phone"
-            // name="phone"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Please input your phone!",
-            //   },
-            // ]}
-          >
+          <Form.Item style={{ position: "relative" }} label="Phone">
             <Input
               value={stateUser?.phone}
               onChange={handleOnchange}
@@ -87,39 +66,38 @@ const ModelUpdateUserComponent = ({
               </p>
             )}
           </Form.Item>
-          <Form.Item
-            label="Address"
-            name="address"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: inputLabel ? "" : " Please input your address!",
-            //   },
-            // ]}
-          >
+          <Form.Item label="Address" name="address">
             <div>
               <Select
-                placeholder={tinhLabel || "Tỉnh/Thành phố *"}
+                placeholder={"Tỉnh/Thành phố *"}
                 value={tinhLabel}
                 options={optionsTinh}
                 onChange={handleChangeSelectTinh}
               />
             </div>
             <div>
-              <Select
-                placeholder={huyenLabel || "Quận/Huyện *"}
-                value={huyenLabel}
-                options={optionsHuyen}
-                onChange={handleChangeSelectHuyen}
-              />
+              {tinhLabel ? (
+                <Select
+                  placeholder={"Quận/Huyện *"}
+                  value={huyenLabel || undefined}
+                  options={optionsHuyen}
+                  onChange={handleChangeSelectHuyen}
+                />
+              ) : (
+                <Select placeholder={"Quận/Huyện *"} disabled />
+              )}
             </div>
             <div>
-              <Select
-                placeholder={xaLabel || "Phường/Xã *"}
-                value={xaLabel}
-                options={optionsXa}
-                onChange={handleChangeSelectXa}
-              />
+              {huyenLabel ? (
+                <Select
+                  placeholder={"Phường/Xã *"}
+                  value={xaLabel || undefined}
+                  options={optionsXa}
+                  onChange={handleChangeSelectXa}
+                />
+              ) : (
+                <Select placeholder={"Phường/Xã *"} disabled />
+              )}
             </div>
             <Input
               placeholder={"Số nhà, đường *"}
