@@ -49,7 +49,6 @@ export const renderOptions = (arr) => {
 };
 
 export const renderOptionsAddress = (arr, code) => {
-  console.log(code)
   if (!arr) return [];
   let result = [];
   if (arr && code) {
@@ -88,11 +87,9 @@ export const convertDataChart = (data, type) => {
     Array.isArray(data) &&
       data.forEach((option) => {
         option?.orderItems?.forEach((item) => {
-          console.log("itemm", item[type]);
           object[item[type]] = item?.amount;
         });
       });
-    console.log("objectt", object);
     const results =
       Array.isArray(Object.keys(object)) && //Object.keys(object): chuyển thành array keys
       Object.keys(object)?.map((item) => {
@@ -101,7 +98,6 @@ export const convertDataChart = (data, type) => {
           value: object[item],
         };
       });
-    console.log("results", results);
     return results;
   } catch (e) {
     return [];

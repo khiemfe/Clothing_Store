@@ -8,7 +8,7 @@ import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
 import { convertPrice, getBase64, renderOptions } from "../utils";
 import * as ProducttServcie from "../services/ProductServices";
 import { useMutationHook } from "../hooks/useMutationHook";
-import { success, error, warning } from "../components/Message";
+import { success, error } from "../components/Message";
 import { useQuery } from "@tanstack/react-query";
 import { MdDeleteOutline } from "react-icons/md";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -16,8 +16,6 @@ import DrawerComponent from "./DrawerComponent";
 import ModelBodyComponent from "./ModelBodyComponent";
 import { useSelector } from "react-redux";
 import ModelComponent from "./ModelComponent";
-import { Select } from "antd";
-import LoadingCardInfoComponent from "./LoadingCardInfoComponent";
 import LoadingUpdateComponent from "./LoadingUpdateComponent";
 import * as CartServices from "../services/CartServices";
 import { Toaster } from "react-hot-toast";
@@ -33,6 +31,8 @@ const AdminProduct = () => {
   const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
   const user = useSelector((state) => state?.user);
   const [isModelOpenDelete, setIsModelOpenDelete] = useState(false);
+  const [checkUpload, setCheckUpload] = useState(0);
+  const [checkUploadUpdate, setCheckUploadUpdate] = useState(false);
   const searchInput = useRef(null);
 
   const [stateProduct, setStateProduct] = useState({
@@ -183,6 +183,18 @@ const AdminProduct = () => {
 
   const { data, isLoading, isSuccess, isError } = mutation;
 
+  const mutationUploadImage = useMutationHook(async (images) => {
+    const res = await ProducttServcie.uploadImage(images);
+    return res;
+  });
+
+  const {
+    data: dataUpload,
+    isLoading: isLoadingUpload,
+    isSuccess: isSuccessUpload,
+    isError: isErrorUpload,
+  } = mutationUploadImage;
+
   const mutationUpdate = useMutationHook((data) => {
     const { id, token, ...rest } = data;
     const res = ProducttServcie.updateProduct(id, token, { ...rest });
@@ -291,94 +303,139 @@ const AdminProduct = () => {
     }
   }, [isSuccessDeletedMany]);
 
-  const handleOnchangeAvatarImg1 = async ({ fileList }) => {
-    const file1 = fileList[0];
-    const file2 = fileList?.length > 1 ? fileList[1] : "";
-    const file3 = fileList?.length > 2 ? fileList[2] : "";
-    const file4 = fileList?.length > 3 ? fileList[3] : "";
-    if (!file1?.url && !file1?.preview) {
-      file1.preview = await getBase64(file1?.originFileObj);
-      if (file2 && !file2?.url && !file2?.preview) {
-        file2.preview = await getBase64(file2?.originFileObj);
-        if (file3 && !file3?.url && !file3?.preview) {
-          file3.preview = await getBase64(file3?.originFileObj);
-          if (file4 && !file4?.url && !file4?.preview) {
-            file4.preview = await getBase64(file4?.originFileObj);
-          }
-        }
-      }
-    }
+  // const uploadImage = async (event) => {
+  //   const files = event.target.files;
+  //   const base64s = [];
+  //   for (var i = 0; i < files.length; i++) {
+  //     var base = await convertBase64(files[i]);
+  //     base64s.push(base);
+  //   }
+  //   mutationUploadImage.mutate(base64s);
+  // };
 
+  const handleOnchangeAvatarImg1 = async ({ fileList }) => {
+    setCheckUploadUpdate(false);
+    setCheckUpload(1);
+    const base64s = [];
+    for (var i = 0; i < fileList?.length; i++) {
+      let base = await getBase64(fileList[i].originFileObj);
+      base64s.push(base);
+    }
+    mutationUploadImage.mutate(base64s);
     setStateProduct({
       ...stateProduct,
-      image: file1?.preview,
+      image: base64s[0],
       imageDetails: {
-        image1: file2 && file2?.preview,
-        image2: file3 && file3?.preview,
-        image3: file4 && file4?.preview,
+        image1: base64s[1] || stateProduct?.imageDetails?.image1 || "",
+        image2: base64s[2] || stateProduct?.imageDetails?.image2 || "",
+        image3: base64s[3] || stateProduct?.imageDetails?.image3 || "",
       },
     });
   };
 
   const handleOnchangeAvatarImg2 = async ({ fileList }) => {
-    const file2 = fileList[0];
-    const file3 = fileList?.length > 1 ? fileList[1] : "";
-    const file4 = fileList?.length > 2 ? fileList[3] : "";
-    if (file2 && !file2?.url && !file2?.preview) {
-      file2.preview = await getBase64(file2?.originFileObj);
-      if (file3 && !file3?.url && !file3?.preview) {
-        file3.preview = await getBase64(file3?.originFileObj);
-        if (file4 && !file4?.url && !file4?.preview) {
-          file4.preview = await getBase64(file4?.originFileObj);
-        }
-      }
+    setCheckUploadUpdate(false);
+    setCheckUpload(2);
+    const base64s = [];
+    for (var i = 0; i < fileList?.length; i++) {
+      let base = await getBase64(fileList[i].originFileObj);
+      base64s.push(base);
     }
-
+    mutationUploadImage.mutate(base64s);
     setStateProduct({
       ...stateProduct,
       imageDetails: {
-        image1: file2 && file2?.preview,
-        image2: file3 ? file3?.preview : stateProduct?.imageDetails?.image2,
-        image3: file4 ? file4?.preview : stateProduct?.imageDetails?.image3,
+        image1: base64s[0] || stateProduct?.imageDetails?.image1 || "",
+        image2: base64s[1] || stateProduct?.imageDetails?.image2 || "",
+        image3: base64s[2] || stateProduct?.imageDetails?.image3 || "",
       },
     });
   };
 
   const handleOnchangeAvatarImg3 = async ({ fileList }) => {
-    const file3 = fileList[0];
-    const file4 = fileList?.length > 1 ? fileList[1] : "";
-    if (file3 && !file3?.url && !file3?.preview) {
-      file3.preview = await getBase64(file3?.originFileObj);
-      if (file4 && !file4?.url && !file4?.preview) {
-        file4.preview = await getBase64(file4?.originFileObj);
-      }
+    setCheckUploadUpdate(false);
+    setCheckUpload(3);
+    const base64s = [];
+    for (var i = 0; i < fileList?.length; i++) {
+      let base = await getBase64(fileList[i].originFileObj);
+      base64s.push(base);
     }
-
+    mutationUploadImage.mutate(base64s);
     setStateProduct({
       ...stateProduct,
       imageDetails: {
-        image1: stateProduct?.imageDetails?.image1,
-        image2: file3?.preview,
-        image3: file4 ? file4?.preview : stateProduct?.imageDetails?.image3,
+        image1: stateProduct?.imageDetails?.image1 || "",
+        image2: base64s[0] || stateProduct?.imageDetails?.image2 || "",
+        image3: base64s[1] || stateProduct?.imageDetails?.image3 || "",
       },
     });
   };
 
   const handleOnchangeAvatarImg4 = async ({ fileList }) => {
-    const file4 = fileList[0];
-    if (file4 && !file4?.url && !file4?.preview) {
-      file4.preview = await getBase64(file4?.originFileObj);
+    setCheckUploadUpdate(false);
+    setCheckUpload(4);
+    const base64s = [];
+    for (var i = 0; i < fileList?.length; i++) {
+      let base = await getBase64(fileList[i].originFileObj);
+      base64s.push(base);
     }
-
+    mutationUploadImage.mutate(base64s);
     setStateProduct({
       ...stateProduct,
       imageDetails: {
-        image1: stateProduct?.imageDetails?.image1,
-        image2: stateProduct?.imageDetails?.image2,
-        image3: file4?.preview,
+        image1: stateProduct?.imageDetails?.image1 || "",
+        image2: stateProduct?.imageDetails?.image2 || "",
+        image3: base64s[0] || stateProduct?.imageDetails?.image3 || "",
       },
     });
   };
+
+  useEffect(() => {
+    if (
+      dataUpload?.data[dataUpload?.data?.length - 1]?.url &&
+      !checkUploadUpdate
+    ) {
+      setStateProduct({
+        ...stateProduct,
+        image:
+          checkUpload === 1 ? dataUpload?.data[0]?.url : stateProduct?.image,
+        imageDetails: {
+          image1:
+            dataUpload?.data?.[
+              checkUpload === 1 ? 1 : checkUpload === 2 ? 0 : 5
+            ]?.url ||
+            stateProduct?.imageDetails?.image1 ||
+            "",
+          image2:
+            dataUpload?.data?.[
+              checkUpload === 1
+                ? 2
+                : checkUpload === 2
+                ? 1
+                : checkUpload === 3
+                ? 0
+                : 5
+            ]?.url ||
+            stateProduct?.imageDetails?.image2 ||
+            "",
+          image3:
+            dataUpload?.data?.[
+              checkUpload === 1
+                ? 3
+                : checkUpload === 2
+                ? 2
+                : checkUpload === 3
+                ? 1
+                : checkUpload === 4
+                ? 0
+                : 5
+            ]?.url ||
+            stateProduct?.imageDetails?.image3 ||
+            "",
+        },
+      });
+    }
+  }, [dataUpload]);
 
   // const handleOnchangeAvatarDetails = async ({ fileList }) => {
   //   const file = fileList[0];
@@ -397,32 +454,29 @@ const AdminProduct = () => {
   // };
 
   const handleOnchangeAvatarDetailsImg1 = async ({ fileList }) => {
-    const file1 = fileList[0];
-    if (!file1?.url && !file1?.preview) {
-      file1.preview = await getBase64(file1?.originFileObj);
-    }
-
+    setCheckUploadUpdate(true);
+    setCheckUpload(1);
+    const base64s = [];
+    let base = await getBase64(fileList[0].originFileObj);
+    base64s.push(base);
+    mutationUploadImage.mutate(base64s);
     setStateProductDetails({
       ...stateProductDetails,
-      image: file1?.preview,
-      imageDetails: {
-        image1: stateProductDetails?.imageDetails?.image1,
-        image2: stateProductDetails?.imageDetails?.image2,
-        image3: stateProductDetails?.imageDetails?.image3,
-      },
+      image: base,
     });
   };
 
   const handleOnchangeAvatarDetailsImg2 = async ({ fileList }) => {
-    const file2 = fileList[0];
-    if (file2 && !file2?.url && !file2?.preview) {
-      file2.preview = await getBase64(file2?.originFileObj);
-    }
-
+    setCheckUploadUpdate(true);
+    setCheckUpload(2);
+    const base64s = [];
+    let base = await getBase64(fileList[0].originFileObj);
+    base64s.push(base);
+    mutationUploadImage.mutate(base64s);
     setStateProductDetails({
       ...stateProductDetails,
       imageDetails: {
-        image1: file2?.preview,
+        image1: base,
         image2: stateProductDetails?.imageDetails?.image2,
         image3: stateProductDetails?.imageDetails?.image3,
       },
@@ -430,37 +484,65 @@ const AdminProduct = () => {
   };
 
   const handleOnchangeAvatarDetailsImg3 = async ({ fileList }) => {
-    const file3 = fileList[0];
-    if (file3 && !file3?.url && !file3?.preview) {
-      file3.preview = await getBase64(file3?.originFileObj);
-    }
-
+    setCheckUploadUpdate(true);
+    setCheckUpload(3);
+    const base64s = [];
+    let base = await getBase64(fileList[0].originFileObj);
+    base64s.push(base);
+    mutationUploadImage.mutate(base64s);
     setStateProductDetails({
       ...stateProductDetails,
       imageDetails: {
         image1: stateProductDetails?.imageDetails?.image1,
-        image2: file3?.preview,
+        image2: base,
         image3: stateProductDetails?.imageDetails?.image3,
       },
     });
   };
 
   const handleOnchangeAvatarDetailsImg4 = async ({ fileList }) => {
-    const file4 = fileList[0];
-    console.log("fileList", fileList);
-    if (file4 && !file4?.url && !file4?.preview) {
-      file4.preview = await getBase64(file4?.originFileObj);
-    }
-
+    setCheckUploadUpdate(true);
+    setCheckUpload(4);
+    const base64s = [];
+    let base = await getBase64(fileList[0].originFileObj);
+    base64s.push(base);
+    mutationUploadImage.mutate(base64s);
     setStateProductDetails({
       ...stateProductDetails,
       imageDetails: {
         image1: stateProductDetails?.imageDetails?.image1,
         image2: stateProductDetails?.imageDetails?.image2,
-        image3: file4?.preview,
+        image3: base,
       },
     });
   };
+
+  useEffect(() => {
+    if (dataUpload?.data[0]?.url && checkUploadUpdate) {
+      setStateProductDetails({
+        ...stateProductDetails,
+        image:
+          checkUpload === 1
+            ? dataUpload?.data[0]?.url
+            : stateProductDetails?.image,
+        imageDetails: {
+          image1:
+            checkUpload === 2
+              ? dataUpload?.data[0]?.url
+              : stateProductDetails?.imageDetails?.image1,
+          image2:
+            checkUpload === 3
+              ? dataUpload?.data[0]?.url
+              : stateProductDetails?.imageDetails?.image2,
+          image3:
+            checkUpload === 4
+              ? dataUpload?.data[0]?.url
+              : stateProductDetails?.imageDetails?.image3,
+        },
+      });
+    }
+  }, [dataUpload]);
+  console.log(stateProductDetails);
 
   const handleOnchange = (e) => {
     setStateProduct({
@@ -523,7 +605,6 @@ const AdminProduct = () => {
       // stateProduct.quantity !== "" &&
       stateProduct.type
     ) {
-      console.log("Success:", stateProduct);
       mutation.mutate(
         { token: user?.access_token, ...stateProduct },
         {
@@ -642,7 +723,6 @@ const AdminProduct = () => {
       // fetchGetDetailsProduct(rowSelected)
     }
     setIsOpenDrawer(true);
-    console.log("rowSelected", rowSelected);
   };
 
   const onUpdateProduct = () => {
@@ -670,7 +750,6 @@ const AdminProduct = () => {
       );
     }
     setTypeSelect("");
-    console.log("stateProductDetailss", stateProductDetails);
   };
 
   const onCloseDrawer = () => {
@@ -1028,8 +1107,6 @@ const AdminProduct = () => {
       };
     });
 
-  console.log("dataTable", dataTable);
-
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleDeleteProduct();
@@ -1037,7 +1114,6 @@ const AdminProduct = () => {
   };
   // }
 
-  console.log("isLoadingUpdated", isLoadingUpdated);
   return (
     <>
       <LoadingFullComponents
@@ -1118,7 +1194,7 @@ const AdminProduct = () => {
               handleOnchangeAvatarImg3={handleOnchangeAvatarImg3}
               handleOnchangeAvatarImg4={handleOnchangeAvatarImg4}
               onFinish={onFinish}
-              // isLoading={isLoading}
+              isLoading={isLoadingUpload}
               title="Add"
             />
           </Modal>
@@ -1166,6 +1242,7 @@ const AdminProduct = () => {
                 onFinish={onUpdateProduct}
                 // isLoading={isLoadingUpdated}
                 title="Update"
+                isLoading={isLoadingUpload}
               />
               {/* )} */}
             </LoadingUpdateComponent>

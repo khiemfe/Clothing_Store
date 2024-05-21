@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Form, Input, Upload } from "antd";
@@ -5,6 +6,7 @@ import { Button } from "react-bootstrap";
 import { UploadOutlined } from "@ant-design/icons";
 import { GrAdd } from "react-icons/gr";
 import Select from "react-select";
+import { LoadingComponents } from "./LoadingFullComponents";
 
 const ModelBodyComponent = ({
   stateProduct,
@@ -18,11 +20,11 @@ const ModelBodyComponent = ({
   handleOnchangeAvatarImg2,
   handleOnchangeAvatarImg3,
   handleOnchangeAvatarImg4,
+  handleFileChange,
   onFinish,
-  // isLoading,
+  isLoading,
   title,
 }) => {
-
   const [sizeS, setSizeS] = useState(stateProduct?.quantity?.sizeS);
   const [sizeM, setSizeM] = useState(stateProduct?.quantity?.sizeM);
   const [sizeL, setSizeL] = useState(stateProduct?.quantity?.sizeL);
@@ -156,8 +158,15 @@ const ModelBodyComponent = ({
           form={form}
         >
           <div
-            className="update-image-mobile"
-            style={{ display: "flex", justifyContent: "start" }}
+            className={`update-image-mobile ${
+              isLoading ? "pointerEventsNone cursorNot" : ""
+            }`}
+            style={{
+              display: "flex",
+              justifyContent: "start",
+              alignItems: "center",
+              // opacity: "0.5",
+            }}
           >
             <Form.Item
               label="Image"
@@ -196,6 +205,7 @@ const ModelBodyComponent = ({
                   <GrAdd />
                 </Button>
               </Upload>
+              {/* <input type="file" onChange={handleFileChange} /> */}
               {stateProduct?.image && (
                 <Upload
                   name="image"
@@ -451,6 +461,9 @@ const ModelBodyComponent = ({
                 </Upload>
               )}
             </Form.Item>
+            <div style={{ marginBottom: "24px", marginLeft: "10px" }}>
+              <LoadingComponents isLoading={isLoading} />
+            </div>
           </div>
           <Form.Item
             label="Name"
@@ -770,6 +783,7 @@ const ModelBodyComponent = ({
               onClick={onFinish}
               type="submit"
               className="submit_btn"
+              disabled={isLoading}
               style={{
                 padding: "10px 24px",
                 float: "right",

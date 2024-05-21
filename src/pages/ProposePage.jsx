@@ -36,7 +36,8 @@ const ProposePage = () => {
 
   const handleRemoveBackground = async () => {
     // const apiKey = "dGDWZ79TfFWA9sacewdipzA9";
-    const apiKey = "h2Dw87W2iMC1zEQFpcYGAzYe";
+    const apiKey = "HYHyFT5ohEZDQqo29ryihDKB";
+    // const apiKey = "h2Dw87W2iMC1zEQFpcYGAzYe";
     const apiUrl = "https://api.remove.bg/v1.0/removebg";
     const blobImage = base64ToBlob(imageBase64);
     console.log(blobImage);

@@ -114,11 +114,12 @@ export const routes = [
     isShowFooter: true,
   },
   {
-    path: "/system/admin",
+    path: "/system-admin",
     page: AdminPage,
     isShowHeader: true,
     isShowFooter: true,
     isPrivate: true,
+    pageUser: NotFoundPage,
   },
   {
     path: "*",

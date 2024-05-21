@@ -176,7 +176,9 @@ const HeaderComponents = (props) => {
     setOpenSearch(false);
   };
 
-  console.log(amountCart);
+  const handleSystemAdmin = () => {
+    navigate("/system-admin");
+  };
 
   return (
     <>
@@ -378,7 +380,7 @@ const HeaderComponents = (props) => {
                           style={{ left: "-100%", fontSize: "13px" }}
                         >
                           {user?.isAdmin && (
-                            <Dropdown.Item href="/system/admin">
+                            <Dropdown.Item onClick={handleSystemAdmin}>
                               Trang chủ ADMIN
                             </Dropdown.Item>
                           )}

@@ -36,7 +36,7 @@ export const getGenderProduct = async (gender, limit) => {
 };
 
 export const getAllProductPropose = async (gender, age, size, limit) => {
-  console.log('gender', gender)
+  console.log("gender", gender);
   const res = await axios.get(
     `${process.env.REACT_APP_API_URL}/product/get-all-propose?filter=gender&filter=${gender}&filter=age&filter=${age}&filter=size&filter=${size}&limit=${limit}`
   );
@@ -52,6 +52,14 @@ export const createProduct = async (access_token, data) => {
         token: `Bearer ${access_token}`,
       },
     }
+  );
+  return res.data;
+};
+
+export const uploadImage = async (images) => {
+  const res = await axios.post(
+    `${process.env.REACT_APP_API_URL}/images/upload`,
+    { images }
   );
   return res.data;
 };

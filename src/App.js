@@ -1,9 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { routes } from "./routes";
 import DefaultComponents from "./components/DefaultComponents";
 import { isJsonString } from "./utils";
@@ -129,8 +125,8 @@ function App() {
       <Router>
         <Routes>
           {routes.map((route, index) => {
-            const Page = route.page;
-            // const isCheckAuth = !route.isPrivate || user.isAdmin //nếu isPrivate flase thì hiển thị bth, còn true thì hiển thị user.isAdmin
+            const isCheckAuth = !route.isPrivate || user.isAdmin; //nếu isPrivate flase thì hiển thị bth, còn true thì hiển thị user.isAdmin
+            const Page = isCheckAuth ? route.page : route.pageUser;
             const Layout = route.isShowHeader ? DefaultComponents : Fragment;
             const LayoutFooter = route.isShowFooter
               ? FooterComponent
