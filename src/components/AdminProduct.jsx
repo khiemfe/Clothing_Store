@@ -303,91 +303,89 @@ const AdminProduct = () => {
     }
   }, [isSuccessDeletedMany]);
 
-  // const uploadImage = async (event) => {
-  //   const files = event.target.files;
-  //   const base64s = [];
-  //   for (var i = 0; i < files.length; i++) {
-  //     var base = await convertBase64(files[i]);
-  //     base64s.push(base);
-  //   }
-  //   mutationUploadImage.mutate(base64s);
-  // };
-
   const handleOnchangeAvatarImg1 = async ({ fileList }) => {
-    setCheckUploadUpdate(false);
-    setCheckUpload(1);
-    const base64s = [];
-    for (var i = 0; i < fileList?.length; i++) {
-      let base = await getBase64(fileList[i].originFileObj);
-      base64s.push(base);
+    if (!isLoadingUpload) {
+      setCheckUploadUpdate(false);
+      setCheckUpload(1);
+      const base64s = [];
+      for (var i = 0; i < fileList?.length; i++) {
+        let base = await getBase64(fileList[i].originFileObj);
+        base64s.push(base);
+      }
+      mutationUploadImage.mutate(base64s);
+      setStateProduct({
+        ...stateProduct,
+        image: base64s[0],
+        imageDetails: {
+          image1: base64s[1] || stateProduct?.imageDetails?.image1 || "",
+          image2: base64s[2] || stateProduct?.imageDetails?.image2 || "",
+          image3: base64s[3] || stateProduct?.imageDetails?.image3 || "",
+        },
+      });
     }
-    mutationUploadImage.mutate(base64s);
-    setStateProduct({
-      ...stateProduct,
-      image: base64s[0],
-      imageDetails: {
-        image1: base64s[1] || stateProduct?.imageDetails?.image1 || "",
-        image2: base64s[2] || stateProduct?.imageDetails?.image2 || "",
-        image3: base64s[3] || stateProduct?.imageDetails?.image3 || "",
-      },
-    });
   };
 
   const handleOnchangeAvatarImg2 = async ({ fileList }) => {
-    setCheckUploadUpdate(false);
-    setCheckUpload(2);
-    const base64s = [];
-    for (var i = 0; i < fileList?.length; i++) {
-      let base = await getBase64(fileList[i].originFileObj);
-      base64s.push(base);
+    if (!isLoadingUpload) {
+      setCheckUploadUpdate(false);
+      setCheckUpload(2);
+      const base64s = [];
+      for (var i = 0; i < fileList?.length; i++) {
+        let base = await getBase64(fileList[i].originFileObj);
+        base64s.push(base);
+      }
+      mutationUploadImage.mutate(base64s);
+      setStateProduct({
+        ...stateProduct,
+        imageDetails: {
+          image1: base64s[0] || stateProduct?.imageDetails?.image1 || "",
+          image2: base64s[1] || stateProduct?.imageDetails?.image2 || "",
+          image3: base64s[2] || stateProduct?.imageDetails?.image3 || "",
+        },
+      });
     }
-    mutationUploadImage.mutate(base64s);
-    setStateProduct({
-      ...stateProduct,
-      imageDetails: {
-        image1: base64s[0] || stateProduct?.imageDetails?.image1 || "",
-        image2: base64s[1] || stateProduct?.imageDetails?.image2 || "",
-        image3: base64s[2] || stateProduct?.imageDetails?.image3 || "",
-      },
-    });
   };
 
   const handleOnchangeAvatarImg3 = async ({ fileList }) => {
-    setCheckUploadUpdate(false);
-    setCheckUpload(3);
-    const base64s = [];
-    for (var i = 0; i < fileList?.length; i++) {
-      let base = await getBase64(fileList[i].originFileObj);
-      base64s.push(base);
+    if (!isLoadingUpload) {
+      setCheckUploadUpdate(false);
+      setCheckUpload(3);
+      const base64s = [];
+      for (var i = 0; i < fileList?.length; i++) {
+        let base = await getBase64(fileList[i].originFileObj);
+        base64s.push(base);
+      }
+      mutationUploadImage.mutate(base64s);
+      setStateProduct({
+        ...stateProduct,
+        imageDetails: {
+          image1: stateProduct?.imageDetails?.image1 || "",
+          image2: base64s[0] || stateProduct?.imageDetails?.image2 || "",
+          image3: base64s[1] || stateProduct?.imageDetails?.image3 || "",
+        },
+      });
     }
-    mutationUploadImage.mutate(base64s);
-    setStateProduct({
-      ...stateProduct,
-      imageDetails: {
-        image1: stateProduct?.imageDetails?.image1 || "",
-        image2: base64s[0] || stateProduct?.imageDetails?.image2 || "",
-        image3: base64s[1] || stateProduct?.imageDetails?.image3 || "",
-      },
-    });
   };
 
   const handleOnchangeAvatarImg4 = async ({ fileList }) => {
-    setCheckUploadUpdate(false);
-    setCheckUpload(4);
-    const base64s = [];
-    for (var i = 0; i < fileList?.length; i++) {
-      let base = await getBase64(fileList[i].originFileObj);
-      base64s.push(base);
+    if (!isLoadingUpload) {
+      setCheckUploadUpdate(false);
+      setCheckUpload(4);
+      const base64s = [];
+      for (var i = 0; i < fileList?.length; i++) {
+        let base = await getBase64(fileList[i].originFileObj);
+        base64s.push(base);
+      }
+      mutationUploadImage.mutate(base64s);
+      setStateProduct({
+        ...stateProduct,
+        imageDetails: {
+          image1: stateProduct?.imageDetails?.image1 || "",
+          image2: stateProduct?.imageDetails?.image2 || "",
+          image3: base64s[0] || stateProduct?.imageDetails?.image3 || "",
+        },
+      });
     }
-    mutationUploadImage.mutate(base64s);
-    setStateProduct({
-      ...stateProduct,
-      imageDetails: {
-        image1: stateProduct?.imageDetails?.image1 || "",
-        image2: stateProduct?.imageDetails?.image2 || "",
-        image3: base64s[0] || stateProduct?.imageDetails?.image3 || "",
-      },
-    });
   };
 
   useEffect(() => {
@@ -437,84 +435,76 @@ const AdminProduct = () => {
     }
   }, [dataUpload]);
 
-  // const handleOnchangeAvatarDetails = async ({ fileList }) => {
-  //   const file = fileList[0];
-  //   if (!file.url && !file.preview) {
-  //     file.preview = await getBase64(file.originFileObj);
-  //   }
-  //   setStateProductDetails({
-  //     ...stateProductDetails,
-  //     image: file.preview,
-  //     imageDetails: {
-  //       image1: file.preview,
-  //       image2: file.preview,
-  //       image3: file.preview,
-  //     },
-  //   });
-  // };
-
   const handleOnchangeAvatarDetailsImg1 = async ({ fileList }) => {
-    setCheckUploadUpdate(true);
-    setCheckUpload(1);
-    const base64s = [];
-    let base = await getBase64(fileList[0].originFileObj);
-    base64s.push(base);
-    mutationUploadImage.mutate(base64s);
-    setStateProductDetails({
-      ...stateProductDetails,
-      image: base,
-    });
+    if (!isLoadingUpload) {
+      setCheckUpload(1);
+      setCheckUploadUpdate(true);
+      const base64s = [];
+      let base = await getBase64(fileList[0].originFileObj);
+      base64s.push(base);
+      mutationUploadImage.mutate(base64s);
+      setStateProductDetails({
+        ...stateProductDetails,
+        image: base,
+      });
+    }
   };
 
   const handleOnchangeAvatarDetailsImg2 = async ({ fileList }) => {
-    setCheckUploadUpdate(true);
-    setCheckUpload(2);
-    const base64s = [];
-    let base = await getBase64(fileList[0].originFileObj);
-    base64s.push(base);
-    mutationUploadImage.mutate(base64s);
-    setStateProductDetails({
-      ...stateProductDetails,
-      imageDetails: {
-        image1: base,
-        image2: stateProductDetails?.imageDetails?.image2,
-        image3: stateProductDetails?.imageDetails?.image3,
-      },
-    });
+    if (!isLoadingUpload) {
+      setCheckUploadUpdate(true);
+      setCheckUpload(2);
+      const base64s = [];
+      let base = await getBase64(fileList[0].originFileObj);
+      base64s.push(base);
+      mutationUploadImage.mutate(base64s);
+      setStateProductDetails({
+        ...stateProductDetails,
+        imageDetails: {
+          image1: base,
+          image2: stateProductDetails?.imageDetails?.image2,
+          image3: stateProductDetails?.imageDetails?.image3,
+        },
+      });
+    }
   };
 
   const handleOnchangeAvatarDetailsImg3 = async ({ fileList }) => {
-    setCheckUploadUpdate(true);
-    setCheckUpload(3);
-    const base64s = [];
-    let base = await getBase64(fileList[0].originFileObj);
-    base64s.push(base);
-    mutationUploadImage.mutate(base64s);
-    setStateProductDetails({
-      ...stateProductDetails,
-      imageDetails: {
-        image1: stateProductDetails?.imageDetails?.image1,
-        image2: base,
-        image3: stateProductDetails?.imageDetails?.image3,
-      },
-    });
+    if (!isLoadingUpload) {
+      setCheckUploadUpdate(true);
+      setCheckUpload(3);
+      const base64s = [];
+      let base = await getBase64(fileList[0].originFileObj);
+      base64s.push(base);
+      mutationUploadImage.mutate(base64s);
+      setStateProductDetails({
+        ...stateProductDetails,
+        imageDetails: {
+          image1: stateProductDetails?.imageDetails?.image1,
+          image2: base,
+          image3: stateProductDetails?.imageDetails?.image3,
+        },
+      });
+    }
   };
 
   const handleOnchangeAvatarDetailsImg4 = async ({ fileList }) => {
-    setCheckUploadUpdate(true);
-    setCheckUpload(4);
-    const base64s = [];
-    let base = await getBase64(fileList[0].originFileObj);
-    base64s.push(base);
-    mutationUploadImage.mutate(base64s);
-    setStateProductDetails({
-      ...stateProductDetails,
-      imageDetails: {
-        image1: stateProductDetails?.imageDetails?.image1,
-        image2: stateProductDetails?.imageDetails?.image2,
-        image3: base,
-      },
-    });
+    if (!isLoadingUpload) {
+      setCheckUploadUpdate(true);
+      setCheckUpload(4);
+      const base64s = [];
+      let base = await getBase64(fileList[0].originFileObj);
+      base64s.push(base);
+      mutationUploadImage.mutate(base64s);
+      setStateProductDetails({
+        ...stateProductDetails,
+        imageDetails: {
+          image1: stateProductDetails?.imageDetails?.image1,
+          image2: stateProductDetails?.imageDetails?.image2,
+          image3: base,
+        },
+      });
+    }
   };
 
   useEffect(() => {

@@ -35,7 +35,6 @@ const ProductBestPage = () => {
     keepPreviousData: true,
   });
   //   keepPreviousData: giữ lại product cũ, load những cái mới thôi
-  console.log("isPreviousDataNam", isPreviousData); //loading
 
   return (
     <div style={{ marginBottom: 50, minHeight: "100%" }}>
@@ -60,7 +59,6 @@ const ProductBestPage = () => {
         >
           <Row>
             {products?.data?.map((product) => {
-              console.log("productmap", product);
               return (
                 <Col
                   xxl={3}

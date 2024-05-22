@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect } from "react";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
@@ -20,9 +21,12 @@ import { Select } from "antd";
 import tinh from "../address/tinh_tp.json";
 import quan_huyen from "../address/quan_huyen.json";
 import xa_phuong from "../address/xa_phuong.json";
+import * as ProducttServcie from "../services/ProductServices";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
+  const [isPhoneNumber, setIsPhoneNumber] = useState(true);
+  const [isCheckOnChange, setIsCheckOnChange] = useState(false);
 
   const user = useSelector((state) => state.user);
   const [name, setName] = useState("");
@@ -76,28 +80,60 @@ const ProfilePage = () => {
 
   const handleOnchangeName = (e) => {
     setName(e.target.value);
+    if (user?.name !== e.target.value) {
+      setIsCheckOnChange(true);
+    } else {
+      setIsCheckOnChange(false);
+    }
   };
 
-  const handleOnchangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
+  // const handleOnchangeEmail = (e) => {
+  //   setEmail(e.target.value);
+  // };
 
   const handleOnchangePhone = (e) => {
     setPhone(e.target.value);
     setIsPhoneNumber(true);
+    if (user?.phone !== e.target.value) {
+      setIsCheckOnChange(true);
+    } else {
+      setIsCheckOnChange(false);
+    }
   };
+
+  const mutationUploadImage = useMutationHook(async (images) => {
+    const res = await ProducttServcie.uploadImage(images);
+    return res;
+  });
+
+  const {
+    data: dataUpload,
+    isLoading: isLoadingUpload,
+    isSuccess: isSuccessUpload,
+    isError: isErrorUpload,
+  } = mutationUploadImage;
 
   const handleOnchangeAvatar = async ({ fileList }) => {
-    const file = fileList[0];
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
+    if (!isLoadingUpload) {
+      const base64s = [];
+      let base = await getBase64(fileList[0].originFileObj);
+      base64s.push(base);
+      mutationUploadImage.mutate(base64s);
+      setAvatar(base);
     }
-    setAvatar(file.preview);
   };
-  console.log(avatar);
 
-  const [isPhoneNumber, setIsPhoneNumber] = useState(true);
-  const handleUpdate = (event) => {
+  useEffect(() => {
+    if (dataUpload?.data[0]?.url) {
+      setAvatar(dataUpload?.data[0]?.url);
+    }
+  }, [dataUpload]);
+
+  useEffect(() => {
+    setIsPhoneNumber(phone?.match(/^[0-9]{10}$/));
+  }, [phone]);
+
+  const handleUpdate = () => {
     setIsPhoneNumber(phone?.match(/^[0-9]{10}$/));
     if ((isPhoneNumber && isPhoneNumber?.length === 1) || !phone) {
       mutation.mutate({
@@ -109,7 +145,6 @@ const ProfilePage = () => {
         avatar,
         access_token: user?.access_token,
       });
-      console.log("updatee", user?.id, name, email, phone, address, avatar);
     }
   };
 
@@ -139,29 +174,12 @@ const ProfilePage = () => {
 
   const handleOnchangeAddress = (e) => {
     setInputLabel(e.target.value);
+    if (user?.address.split(",")[0].trim() !== e.label) {
+      setIsCheckOnChange(true);
+    } else {
+      setIsCheckOnChange(false);
+    }
   };
-
-  // useEffect(() => {
-  //   fetch("https://provinces.open-api.vn/api/?depth=3")
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       setTinhOptions(data);
-  //       const codenameTinh = data.find((dt) => dt.name === tinhLabel);
-  //       return codenameTinh;
-  //     })
-  //     .then((data) => {
-  //       setHuyenOptions(data?.districts);
-  //       const codenameHuyen = data?.districts.find(
-  //         (dt) => dt.name === huyenLabel
-  //       );
-  //       return codenameHuyen;
-  //     })
-  //     .then((data) => {
-  //       setXaOptions(data?.wards);
-  //     });
-  // }, [tinhLabel, huyenLabel, xaLabel]);
 
   const handleChangeSelectTinh = (code, e) => {
     setCodeTinh(code);
@@ -169,6 +187,11 @@ const ProfilePage = () => {
       setTinhLabel(e.label);
       setHuyenLabel("");
       setXaLabel("");
+    }
+    if (user?.address.split(",")[3].trim() !== e.label) {
+      setIsCheckOnChange(true);
+    } else {
+      setIsCheckOnChange(false);
     }
   };
 
@@ -178,10 +201,20 @@ const ProfilePage = () => {
       setHuyenLabel(e.label);
       setXaLabel("");
     }
+    if (user?.address.split(",")[2].trim() !== e.label) {
+      setIsCheckOnChange(true);
+    } else {
+      setIsCheckOnChange(false);
+    }
   };
 
   const handleChangeSelectXa = (code, e) => {
     setXaLabel(e.label);
+    if (user?.address.split(",")[1].trim() !== e.label) {
+      setIsCheckOnChange(true);
+    } else {
+      setIsCheckOnChange(false);
+    }
   };
 
   const optionsTinh = renderOptionsAddress(tinh);
@@ -192,6 +225,13 @@ const ProfilePage = () => {
     setAddress(
       inputLabel + ", " + xaLabel + ", " + huyenLabel + ", " + tinhLabel
     );
+    if (
+      (tinhLabel && !huyenLabel) ||
+      (huyenLabel && !xaLabel) ||
+      (xaLabel && !inputLabel)
+    ) {
+      setIsCheckOnChange(false);
+    }
   }, [inputLabel, xaLabel, huyenLabel, tinhLabel]);
 
   return (
@@ -296,18 +336,12 @@ const ProfilePage = () => {
                     required
                     value={email}
                     type="email"
-                    onChange={handleOnchangeEmail}
+                    // onChange={handleOnchangeEmail}
                     placeholder="email@gmail.com"
                     disabled
                   />
                 </div>
               </Form.Group>
-              {/* {!email && (
-              <p style={{ color: "red", marginLeft: 120 }}>Vui lòng nhập email</p>
-            )}
-            {email && data?.message === "Wrong email format" && (
-              <p style={{ color: "red", marginLeft: 120 }}>Sai định dạng email</p>
-            )} */}
               <Form.Group controlId="validationCustom01">
                 <div className="item">
                   <Form.Label>Name:</Form.Label>
@@ -399,11 +433,17 @@ const ProfilePage = () => {
             </div>
           </Row>
           {/* <Button type="submit">Submit form</Button> */}
-          <div style={{ width: "100%", textAlign: "center", marginTop: 30 }}>
-            <span className="submit" onClick={handleUpdate}>
-              Update form
-            </span>
-          </div>
+          {isCheckOnChange ? (
+            <div style={{ width: "100%", textAlign: "center", marginTop: 30 }}>
+              <span className="submit" onClick={handleUpdate}>
+                Update form
+              </span>
+            </div>
+          ) : (
+            <div style={{ width: "100%", textAlign: "center", marginTop: 30 }}>
+              <span className="submit disabled">Update form</span>
+            </div>
+          )}
         </Form>
       </div>
     </>

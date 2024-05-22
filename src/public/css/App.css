@@ -3,6 +3,15 @@
   color: red;
 }
 
+.disabled {
+  opacity: 0.5;
+  cursor: default !important;
+}
+
+.disabled:hover {
+  opacity: 0.5 !important;
+}
+
 .pointerEventsNone {
   pointer-events: none;
 }
@@ -1022,7 +1031,7 @@ body {
   color: #fff;
   cursor: pointer;
 }
-.formProfile .submit:hover {
+.formProfile .submit.disabled:hover {
   opacity: 0.8;
 }
 

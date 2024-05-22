@@ -3,7 +3,6 @@ import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer } from "recharts";
 import { convertDataChart } from "../utils";
 
 const PieChartComponent = (props) => {
-  console.log("dataProps", props?.data);
   //   const data = [
   //     { name: "Group A", value: 400 },
   //     { name: "Group B", value: 300 },

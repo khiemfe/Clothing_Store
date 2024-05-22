@@ -249,7 +249,6 @@ const ProductDetailsPage = () => {
 
   const [amountCart, setAmountCart] = useState(0);
   const fetchOrderCart = async () => {
-    // console.log('loading cart true')
     const res = await CartServices.getCartByUserId(
       user?.id,
       user?.access_token

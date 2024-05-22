@@ -21,7 +21,6 @@ const ProductSearchPage = () => {
 
   const fetchProductSearch = async (context) => {
     const limit = context?.queryKey && context?.queryKey[1];
-    console.log('search', context?.queryKey[2])
     const search = (context?.queryKey && context?.queryKey[2]) || search;
     setTextSearch(search);
     const res = await ProductServices.getProductSearch(search, limit);
@@ -107,7 +106,6 @@ const ProductSearchPage = () => {
         >
           <Row>
             {products?.data?.map((product) => {
-              console.log("productmap", product);
               return (
                 <Col
                   xxl={3}

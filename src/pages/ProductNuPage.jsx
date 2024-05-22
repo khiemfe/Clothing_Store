@@ -59,7 +59,6 @@ const ProductNuPage = () => {
         >
           <Row>
             {products?.data?.map((product) => {
-              console.log("productmap", product);
               return (
                 <Col
                   xxl={3}

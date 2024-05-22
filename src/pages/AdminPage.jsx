@@ -37,7 +37,6 @@ const NotFoundPage = () => {
 
   return (
     <>
-      {/* <HeaderComponents /> */}
       <div
         className="systemAdmin-mobile"
         style={{ display: "flex", overflowX: "hidden", marginBottom: 50 }}
