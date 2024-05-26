@@ -140,7 +140,6 @@ const MyOrderPage = () => {
                                   <p>
                                     Size: {order?.size} ({order?.amount})
                                   </p>
-                                  {/* <p>Số lượng: {order?.amount}</p> */}
                                   <div className="price">
                                     <p>
                                       Phí ship:{" "}
@@ -164,28 +163,12 @@ const MyOrderPage = () => {
                             >
                               Xem chi tiết
                             </Button>
-                            {/* <h3
-                          style={{ cursor: "pointer" }}
-                          onClick={() => handleCancelOrder(item)}
-                        >
-                          Huỷy
-                        </h3> */}
                             <Button
                               // type="primary"
                               onClick={() => showModal(item)}
                             >
                               Huỷ
                             </Button>
-                            <Modal
-                              title="Thông báo"
-                              open={isModalOpen}
-                              onOk={handleOkModel}
-                              onCancel={() => setIsModalOpen(false)}
-                            >
-                              <p className="huy">
-                                Bạn có muốn huỷ đơn hàng này?
-                              </p>
-                            </Modal>
                           </div>
                         </div>
                       </div>
@@ -200,6 +183,14 @@ const MyOrderPage = () => {
               )}
         </div>
       </div>
+      <Modal
+        title="Thông báo"
+        open={isModalOpen}
+        onOk={handleOkModel}
+        onCancel={() => setIsModalOpen(false)}
+      >
+        <p className="huy">Bạn có muốn huỷ đơn hàng này?</p>
+      </Modal>
     </>
   );
 };

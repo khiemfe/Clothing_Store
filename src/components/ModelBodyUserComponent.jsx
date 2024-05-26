@@ -52,9 +52,9 @@ const ModelBodyUserComponent = ({
           >
             <Upload
               name="avatar"
-              onChange={handleOnchangeAvatar}
+              // onChange={handleOnchangeAvatar}
               maxCount={1}
-              // style={{position:'relative', marginBottom:'20px'}}
+              disabled
             >
               <Button
                 icon={<UploadOutlined />}
@@ -67,6 +67,7 @@ const ModelBodyUserComponent = ({
                   left: "0px",
                   width: "80px",
                   height: "80px",
+                  cursor: "not-allowed",
                 }}
               >
                 <GrAdd />
@@ -75,8 +76,9 @@ const ModelBodyUserComponent = ({
             {stateUser?.avatar && (
               <Upload
                 name="avatar"
-                onChange={handleOnchangeAvatar}
+                // onChange={handleOnchangeAvatar}
                 maxCount={1}
+                disabled
               >
                 <Button
                   icon={<UploadOutlined />}
@@ -90,6 +92,7 @@ const ModelBodyUserComponent = ({
                     width: "80px",
                     height: "80px",
                     overflow: "hidden",
+                    cursor: "not-allowed",
                   }}
                 >
                   <img
@@ -123,6 +126,7 @@ const ModelBodyUserComponent = ({
             <Input
               value={stateUser.name}
               onChange={handleOnchange}
+              disabled
               name="name"
             />
           </Form.Item>
@@ -141,6 +145,7 @@ const ModelBodyUserComponent = ({
               value={stateUser.email}
               onChange={handleOnchange}
               name="email"
+              disabled
             />
           </Form.Item>
 
@@ -175,6 +180,7 @@ const ModelBodyUserComponent = ({
               value={stateUser.phone}
               onChange={handleOnchange}
               name="phone"
+              disabled
             />
           </Form.Item>
 
@@ -192,6 +198,7 @@ const ModelBodyUserComponent = ({
               value={stateUser.address}
               onChange={handleOnchange}
               name="address"
+              disabled
             />
           </Form.Item>
 

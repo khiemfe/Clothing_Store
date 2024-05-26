@@ -16,7 +16,7 @@ const ProductSearchPage = () => {
   const dispatch = useDispatch();
   const [textSearch, setTextSearch] = useState("");
   const [limit, setLimit] = useState(8);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const searchStorage = localStorage.getItem("search");
 
   const fetchProductSearch = async (context) => {
@@ -97,7 +97,9 @@ const ProductSearchPage = () => {
           onKeyDown={handleKeyDown}
         />
       </p>
-      {products?.noProduct && <h2>{products?.noProduct}</h2>}
+      {products?.noProduct && !isLoading && !isLoadingSearch && (
+        <h2>{products?.noProduct}</h2>
+      )}
       <div className="product">
         <LoadingCardComponent
           isLoading={isLoading || isLoadingSearch}

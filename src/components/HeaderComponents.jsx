@@ -136,29 +136,24 @@ const HeaderComponents = (props) => {
   };
   const queryCart = useQuery(["cart"], fetchOrderCart);
   const { data: dataCart, isLoading: isLoadingCart } = queryCart;
-
   useEffect(() => {
     if (user?.email) {
       setAmountCart(dataCart?.length);
     }
   }, [dataCart]);
 
-  const classOnScroll = props?.class;
-
-  const fetchAllCart = async () => {
+  const fetchOrderCart2 = async () => {
     if (user?.email) {
       const res = await CartServices.getCartByUserId(
         user?.id,
         user?.access_token
       );
-      if (res?.status === "OK" && user?.email) {
-        setAmountCart(res?.data?.length);
-      }
+      setAmountCart(res?.data?.length);
     }
   };
-  useEffect(() => {
-    fetchAllCart();
-  }, [user?.email]);
+  fetchOrderCart2();
+
+  const classOnScroll = props?.class;
 
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
@@ -348,7 +343,12 @@ const HeaderComponents = (props) => {
                   </div>
                   {/* <FiHeart className="icon heart" /> */}
                   <Button className="btn-cart" onClick={handleOrderCart}>
-                    {amountCart && <Badge bg="warning">{amountCart}</Badge>}
+                    {!isLoadingCart ? (
+                      amountCart && <Badge bg="warning">{amountCart}</Badge>
+                    ) : (
+                      <div class="loader"></div>
+                    )}
+
                     <BsCart2 className="icon cart" />
                   </Button>
                   <div className="info-user">

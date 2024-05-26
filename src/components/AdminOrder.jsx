@@ -224,6 +224,10 @@ const AdminOrder = () => {
 
   const columns = [
     {
+      title: "",
+      dataIndex: "key",
+    },
+    {
       title: "Thông tin người nhận",
       dataIndex: "recevierInfomation",
       ...getColumnSearchProps("recevierInfomation"),
@@ -277,16 +281,15 @@ const AdminOrder = () => {
   ];
   const dataTable =
     dataOrder?.data?.length &&
-    dataOrder?.data?.map((order) => {
+    dataOrder?.data?.map((order, index) => {
       return {
-        key: order._id,
+        key: index + 1,
         recevierInfomation: (
-          <div>
+          <div style={{ width: "350px" }}>
             <div>
               <b style={{ marginRight: "10px" }}>Name:</b>{" "}
               {order?.shippingAddres.fullName}
             </div>
-            {/* <div>{order?.shippingAddres.email}</div> */}
             <div>
               <b style={{ marginRight: "10px" }}>Address:</b>{" "}
               {order?.shippingAddres.address}
@@ -308,8 +311,8 @@ const AdminOrder = () => {
         productInformation: order?.orderItems.map((item) => {
           return (
             <div>
-              {item?.name} <b>SL:</b> {item?.amount} <b>Price:</b>{" "}
-              {convertPrice(item?.price)}
+              - {item?.name} (<b>SL:</b> {item?.amount} <b>Price:</b>{" "}
+              {convertPrice(item?.price)})
             </div>
           );
         }),
@@ -344,19 +347,6 @@ const AdminOrder = () => {
             }}
           />
         </div>
-
-        {/* <div>
-          <ModelComponent
-            title="Xoá người dùng"
-            isModalOpen={isModelOpenDelete}
-            onCancel={handleCanelDelete}
-            onOk={handleDeleteUser}
-          >
-            <LoadingComponents isLoading={isLoadingDeleted}>
-              <div>Bạn có chắc muốn xoá người dùng này không?</div>
-            </LoadingComponents>
-          </ModelComponent>
-        </div> */}
       </div>
     </>
   );

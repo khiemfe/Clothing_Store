@@ -202,6 +202,10 @@ const PaymentPage = () => {
 
   const [isPhoneNumber, setIsPhoneNumber] = useState(true);
 
+  useEffect(() => {
+    setIsPhoneNumber(stateUserDetailsUpdate?.phone?.match(/^[0-9]{10}$/));
+  }, [stateUserDetailsUpdate?.phone]);
+
   const handleUpdate = () => {
     setIsPhoneNumber(stateUserDetailsUpdate?.phone.match(/^[0-9]{10}$/));
     if (

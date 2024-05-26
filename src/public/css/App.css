@@ -2,6 +2,63 @@
 .color-red {
   color: red;
 }
+.ant-radio-inner {
+  border-color: #000; /* Custom border color */
+}
+.ant-radio-inner::after {
+  border-color: #000; /* Custom hover border color */
+  background-color: #000; /* Custom check color */
+}
+.ant-radio-wrapper:hover .ant-radio,
+.ant-radio:hover .ant-radio-inner,
+.ant-radio-input:focus + .ant-radio-inner {
+  border-color: #000; /* Custom hover border color */
+}
+.ant-radio-input:focus + .ant-radio-inner {
+  background-color: #000; /* Custom check color */
+}
+.ant-radio-checked .ant-radio-inner {
+  border-color: #000; /* Custom checked border color */
+  background-color: #000; /* Custom checked background color */
+}
+
+.ant-input.ant-input-disabled.css-dev-only-do-not-override-1vr7spz {
+  color: #000;
+}
+
+/* loading */
+.loader {
+  width: 15px;
+  aspect-ratio: 1;
+  display: grid;
+  -webkit-mask: conic-gradient(from 15deg, #0000, #000);
+  animation: l26 1s infinite steps(12);
+  position: absolute;
+  right: 0;
+}
+.loader,
+.loader:before,
+.loader:after {
+  background: radial-gradient(closest-side at 50% 12.5%, #000 96%, #0000) 50% 0/20%
+      80% repeat-y,
+    radial-gradient(closest-side at 12.5% 50%, #000 96%, #0000) 0 50%/80% 20%
+      repeat-x;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  grid-area: 1/1;
+  transform: rotate(30deg);
+}
+.loader:after {
+  transform: rotate(60deg);
+}
+
+@keyframes l26 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
 
 .disabled {
   opacity: 0.5;
@@ -74,9 +131,9 @@ body {
   z-index: 1;
 }
 
-.css-1jqq78o-placeholder {
+/* .css-1jqq78o-placeholder {
   color: #000 !important;
-}
+} */
 
 .translateY-100 {
   transform: translateY(-100%);
@@ -640,7 +697,7 @@ body {
 }
 
 .ant-drawer-content-wrapper {
-  width: 45% !important;
+  width: 50% !important;
 }
 .ant-drawer-content-wrapper .modal-body {
   padding: 30px 0;
@@ -699,12 +756,16 @@ body {
   width: 100%;
 }
 
+.ant-col.ant-form-item-control.css-dev-only-do-not-override-1vr7spz {
+  width: 100px !important;
+}
+
 .text_QLSP {
   margin-bottom: 20px;
 }
 
 .modal-body {
-  padding: 30px 80px;
+  padding: 30px 60px;
 }
 .modal-body .sizeDuoi {
   flex-wrap: wrap;
@@ -727,7 +788,7 @@ body {
   justify-content: start;
 }
 .modal-body .ant-form .ant-row .ant-col {
-  width: 100px;
+  width: 150px;
   text-align: left;
 }
 .modal-body .inputSize {

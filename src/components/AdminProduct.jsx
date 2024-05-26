@@ -532,7 +532,6 @@ const AdminProduct = () => {
       });
     }
   }, [dataUpload]);
-  console.log(stateProductDetails);
 
   const handleOnchange = (e) => {
     setStateProduct({
@@ -552,6 +551,7 @@ const AdminProduct = () => {
 
   const [typeSelect, setTypeSelect] = useState("");
   const [placeholder, setPlaceholder] = useState("");
+  const [placeholderBMI, setPlaceholderBMI] = useState("");
   const handleChangeSelect = (e) => {
     if (e?.value !== "add_type") {
       setStateProduct({
@@ -573,6 +573,18 @@ const AdminProduct = () => {
       });
     }
     setTypeSelect(e?.value);
+  };
+
+  const handleChangeSelectBMI = (e) => {
+    const result = e?.map((item) => item.value).join(", ");
+    setStateProduct({
+      ...stateProduct,
+      size: result,
+    });
+    setStateProductDetails({
+      ...stateProductDetails,
+      size: result,
+    });
   };
 
   const handleOnchangeDetails = (e) => {
@@ -690,7 +702,16 @@ const AdminProduct = () => {
     }
     setIsLoadingUpdate(false);
     setTypeSelect(res?.data?.type);
-    setPlaceholder(res?.data?.type);
+    setPlaceholder({ value: res?.data?.type, label: res?.data?.type });
+
+    const str = res?.data?.size;
+    const values = str.split(", ");
+
+    const arrBMI = values.map((value) => {
+      return { value: value, label: value };
+    });
+    console.log(arrBMI);
+    setPlaceholderBMI(arrBMI);
   };
 
   useEffect(() => {
@@ -1102,7 +1123,8 @@ const AdminProduct = () => {
       handleDeleteProduct();
     }
   };
-  // }
+
+  console.log(stateProductDetails);
 
   return (
     <>
@@ -1168,7 +1190,7 @@ const AdminProduct = () => {
           >
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
-                Tạo sản phẩm
+                Thêm sản phẩm
               </Modal.Title>
             </Modal.Header>
 
@@ -1177,6 +1199,7 @@ const AdminProduct = () => {
               form={form}
               handleOnchange={handleOnchange}
               handleChangeSelect={handleChangeSelect}
+              handleChangeSelectBMI={handleChangeSelectBMI}
               options={newOptions}
               typeSelect={typeSelect}
               handleOnchangeAvatarImg1={handleOnchangeAvatarImg1}
@@ -1185,7 +1208,7 @@ const AdminProduct = () => {
               handleOnchangeAvatarImg4={handleOnchangeAvatarImg4}
               onFinish={onFinish}
               isLoading={isLoadingUpload}
-              title="Add"
+              title="THÊM"
             />
           </Modal>
         </div>
@@ -1197,46 +1220,29 @@ const AdminProduct = () => {
               setIsOpenDrawer(false);
               setTypeSelect("");
               setPlaceholder("");
+              setPlaceholderBMI("");
             }}
           >
-            {/* <Modal
-            show={isOpenDrawer}
-            onHide={() => {
-              setIsOpenDrawer(false);
-              setTypeSelect("");
-              setPlaceholder("");
-            }}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-          > */}
-            {/* <Modal.Header closeButton>
-              <Modal.Title id="contained-modal-title-vcenter">
-                Chỉnh sửa sản phẩm
-              </Modal.Title>
-            </Modal.Header> */}
             <LoadingUpdateComponent isLoading={isLoadingUpdate}>
-              {/* {!isLoadingUpdate && ( */}
               <ModelBodyComponent
                 stateProduct={stateProductDetails}
                 form={formUpdate}
                 handleOnchange={handleOnchangeDetails}
                 handleChangeSelect={handleChangeSelect}
+                handleChangeSelectBMI={handleChangeSelectBMI}
                 options={newOptions}
                 typeSelect={typeSelect}
                 placeholder={placeholder}
+                placeholderBMI={placeholderBMI}
                 handleOnchangeAvatarImg1={handleOnchangeAvatarDetailsImg1}
                 handleOnchangeAvatarImg2={handleOnchangeAvatarDetailsImg2}
                 handleOnchangeAvatarImg3={handleOnchangeAvatarDetailsImg3}
                 handleOnchangeAvatarImg4={handleOnchangeAvatarDetailsImg4}
                 onFinish={onUpdateProduct}
-                // isLoading={isLoadingUpdated}
-                title="Update"
+                title="CẬP NHẬT"
                 isLoading={isLoadingUpload}
               />
-              {/* )} */}
             </LoadingUpdateComponent>
-            {/* </Modal> */}
           </DrawerComponent>
         </div>
         <div onKeyDown={handleKeyDown}>

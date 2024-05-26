@@ -16,6 +16,8 @@ import { success, error, warning } from "../components/Message";
 import { Button } from "react-bootstrap";
 import { Toaster } from "react-hot-toast";
 import LoadingFullComponents from "../components/LoadingFullComponents";
+import { IoMdEyeOff } from "react-icons/io";
+import { IoMdEye } from "react-icons/io";
 
 const SignUpPage = () => {
   const [email, setEmail] = useState();
@@ -23,6 +25,8 @@ const SignUpPage = () => {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [disabled, setDisabled] = useState(false);
+  const [typeInput, setTypeInput] = useState("password");
+  const [typeInputConfirm, setTypeInputComfirm] = useState("password");
 
   const mutation = useMutationHook((data) => UserServcie.signupUser(data));
   const { data, isLoading, isSuccess, isError } = mutation;
@@ -204,27 +208,65 @@ const SignUpPage = () => {
                       Gửi OTP
                     </button>
                   </div>
-                  <div className="input">
+                  <div className="input" style={{ position: "relative" }}>
                     <h5 className="text">Password:</h5>
                     <MDBInput
                       className="input-nhap"
                       wrapperClass="mb-4"
                       onChange={handleOnChangePassword}
                       id="formControlLg"
-                      type="password"
+                      type={typeInput}
                       size="lg"
                     />
+                    {typeInput === "password" ? (
+                      <IoMdEyeOff
+                        style={{
+                          position: "absolute",
+                          right: "12px",
+                          fontSize: "20px",
+                        }}
+                        onClick={() => setTypeInput("text")}
+                      />
+                    ) : (
+                      <IoMdEye
+                        style={{
+                          position: "absolute",
+                          right: "12px",
+                          fontSize: "20px",
+                        }}
+                        onClick={() => setTypeInput("password")}
+                      />
+                    )}
                   </div>
-                  <div className="input">
+                  <div className="input" style={{ position: "relative" }}>
                     <h5 className="text">Cofirm Password:</h5>
                     <MDBInput
                       className="input-nhap"
                       wrapperClass="mb-4"
                       onChange={handleOnChangeConfirmPassword}
                       id="formControlLg"
-                      type="password"
+                      type={typeInputConfirm}
                       size="lg"
                     />
+                    {typeInputConfirm === "password" ? (
+                      <IoMdEyeOff
+                        style={{
+                          position: "absolute",
+                          right: "12px",
+                          fontSize: "20px",
+                        }}
+                        onClick={() => setTypeInputComfirm("text")}
+                      />
+                    ) : (
+                      <IoMdEye
+                        style={{
+                          position: "absolute",
+                          right: "12px",
+                          fontSize: "20px",
+                        }}
+                        onClick={() => setTypeInputComfirm("password")}
+                      />
+                    )}
                   </div>
                   <div className="footer">
                     <div className="more">

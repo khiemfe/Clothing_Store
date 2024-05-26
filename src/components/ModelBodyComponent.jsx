@@ -7,6 +7,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { GrAdd } from "react-icons/gr";
 import Select from "react-select";
 import { LoadingComponents } from "./LoadingFullComponents";
+import { Radio } from "antd";
 
 const ModelBodyComponent = ({
   stateProduct,
@@ -16,11 +17,13 @@ const ModelBodyComponent = ({
   options,
   typeSelect,
   placeholder,
+  placeholderBMI,
   handleOnchangeAvatarImg1,
   handleOnchangeAvatarImg2,
   handleOnchangeAvatarImg3,
   handleOnchangeAvatarImg4,
   handleFileChange,
+  handleChangeSelectBMI,
   onFinish,
   isLoading,
   title,
@@ -137,6 +140,12 @@ const ModelBodyComponent = ({
     }
   }, [size28, size29, size30, size31, size32, size33, size34, size35, size36]);
 
+  const optionsBMI = [
+    { value: "Ốm", label: "Ốm" },
+    { value: "Bình thường", label: "Bình thường" },
+    { value: "Mập", label: "Mập" },
+  ];
+
   return (
     <>
       {/* <LoadingFullComponents isLoading={isLoading} /> */}
@@ -169,15 +178,13 @@ const ModelBodyComponent = ({
             }}
           >
             <Form.Item
-              label="Image"
+              label="Hình ảnh"
               name="upload"
               valuePropName="fileList"
               rules={[
                 {
                   required: true,
-                  message: stateProduct?.image
-                    ? ""
-                    : "Please input your image!",
+                  message: stateProduct?.image ? "" : "Vui lòng chọn ảnh!",
                 },
               ]}
               style={{ lineHeight: "80px" }}
@@ -251,7 +258,7 @@ const ModelBodyComponent = ({
                   required: true,
                   message: stateProduct?.imageDetails?.image1
                     ? ""
-                    : "Please input your image details 1!",
+                    : "Vui lòng chọn ảnh!",
                 },
               ]}
               style={{ lineHeight: "80px", width: "100px" }}
@@ -324,7 +331,7 @@ const ModelBodyComponent = ({
                   required: true,
                   message: stateProduct?.imageDetails?.image2
                     ? ""
-                    : "Please input your image details 2!",
+                    : "Vui lòng chọn ảnh!",
                 },
               ]}
               style={{ lineHeight: "80px", width: "100px" }}
@@ -397,7 +404,7 @@ const ModelBodyComponent = ({
                   required: true,
                   message: stateProduct?.imageDetails?.image3
                     ? ""
-                    : "Please input your image details 3!",
+                    : "Vui lòng chọn ảnh!",
                 },
               ]}
               style={{ lineHeight: "80px", width: "100px" }}
@@ -466,12 +473,12 @@ const ModelBodyComponent = ({
             </div>
           </div>
           <Form.Item
-            label="Name"
+            label="Tên sản phẩm"
             name="name"
             rules={[
               {
                 required: true,
-                message: "Please input your name!",
+                message: "Vui lòng nhập tên sản phẩm!",
               },
             ]}
             style={{ marginTop: "10px" }}
@@ -482,30 +489,28 @@ const ModelBodyComponent = ({
               name="name"
             />
           </Form.Item>
-          {/* name, image, type, price, countInStock, rating, description */}
           <Form.Item
-            label="Gender"
+            label="Giới tính"
             name="gender"
             rules={[
               {
                 required: true,
-                message: "Please input your size gender!",
+                message: "Vui lòng chọn giới tính!",
               },
             ]}
           >
-            <Input
-              value={stateProduct.gender}
-              onChange={handleOnchange}
-              name="gender"
-            />
+            <Radio.Group name="gender" onChange={handleOnchange}>
+              <Radio value={"Nam"}>Nam</Radio>
+              <Radio value={"Nữ"}>Nữ</Radio>
+            </Radio.Group>
           </Form.Item>
           <Form.Item
-            label="Price"
+            label="Giá (Nghìn đồng)"
             name="price"
             rules={[
               {
                 required: true,
-                message: "Please input your price!",
+                message: "Vui lòng nhập giá!",
               },
             ]}
           >
@@ -516,12 +521,12 @@ const ModelBodyComponent = ({
             />
           </Form.Item>
           <Form.Item
-            label="Age"
+            label="Độ tuổi"
             name="age"
             rules={[
               {
                 required: true,
-                message: "Please input your age!",
+                message: "Vui lòng nhập độ tuổi!",
               },
             ]}
           >
@@ -533,7 +538,7 @@ const ModelBodyComponent = ({
           </Form.Item>
           {stateProduct.name.toLowerCase().includes("quần") &&
           !stateProduct.name.toLowerCase().includes("áo") ? (
-            <Form.Item label="Quantity">
+            <Form.Item label="Số lượng">
               <div style={{ display: "flex" }}>
                 <Form.Item>
                   <div className="setSize">
@@ -657,7 +662,7 @@ const ModelBodyComponent = ({
               </div>
             </Form.Item>
           ) : (
-            <Form.Item label="Quantity">
+            <Form.Item label="Số lượng">
               <div style={{ display: "flex" }} className="sizeDuoi">
                 <Form.Item>
                   <div className="setSize">
@@ -729,37 +734,40 @@ const ModelBodyComponent = ({
           )}
 
           <Form.Item
-            label="Size"
-            name="size"
+            label="Độ mập ốm"
+            name="uploadSize"
             rules={[
               {
                 required: true,
-                message: "Please input your size!",
+                message: "Vui lòng nhập độ mập ốm!",
               },
             ]}
           >
-            <Input
-              value={stateProduct.size}
-              onChange={handleOnchange}
+            <Select
               name="size"
+              defaultValue={placeholderBMI}
+              placeholder="Chọn độ mập ốm"
+              onChange={handleChangeSelectBMI}
+              options={optionsBMI}
+              isMulti={true}
             />
           </Form.Item>
 
           <Form.Item
-            label="Type"
+            label="Danh mục"
             name="type"
             rules={[
               {
                 required: true,
-                message: stateProduct?.type ? "" : "Please input your type!",
+                message: stateProduct?.type ? "" : "Vui lòng chọn danh mục!",
               },
             ]}
           >
             <div className="App">
               <Select
                 name="type"
-                placeholder={placeholder || ""}
-                // defaultValue={stateProduct.type}
+                placeholder="Chọn danh mục"
+                value={placeholder}
                 onChange={handleChangeSelect}
                 options={options}
               />

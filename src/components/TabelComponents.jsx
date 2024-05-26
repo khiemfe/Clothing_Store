@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import LoadingTableComponent from "./LoadingTableComponent";
+import { MdDownload } from "react-icons/md";
 
 const TabelComponents = (props) => {
   const {
@@ -33,6 +34,7 @@ const TabelComponents = (props) => {
   };
 
   const tableRef = useRef(null);
+  const tableRefAll = useRef(null);
 
   let dataTableMain = [];
   if (filename === "Products Table") {
@@ -47,6 +49,8 @@ const TabelComponents = (props) => {
     dataTableMain = dataTable;
   }
 
+  console.log(dataTableMain);
+
   return (
     <>
       {/* <Divider /> */}
@@ -56,20 +60,27 @@ const TabelComponents = (props) => {
         </div>
       )}
 
-      {/* <DownloadTableExcel
-        filename={filename}
-        sheet={sheet}
-        currentTableRef={tableRef.current}
-      >
-        <button> Export Excel 1 </button>
-      </DownloadTableExcel>
-      <DownloadTableExcel
-        filename={filename}
-        sheet={sheet}
-        currentTableRef={tableRefAll.current}
-      >
-        <button> Export Excel All </button>
-      </DownloadTableExcel> */}
+      <div style={{ marginBottom: "20px", float: "right" }}>
+        <DownloadTableExcel
+          filename={filename}
+          sheet={sheet}
+          currentTableRef={tableRef.current}
+        >
+          <Button style={{ marginRight: "20px" }}>
+            <MdDownload style={{ marginRight: "5px" }} /> Export {text} (CSV){" "}
+          </Button>
+        </DownloadTableExcel>
+        <DownloadTableExcel
+          filename={filename}
+          sheet={sheet}
+          currentTableRef={tableRefAll.current}
+        >
+          <Button>
+            <MdDownload style={{ marginRight: "5px" }} /> Export tất cả {text}
+            (CSV)
+          </Button>
+        </DownloadTableExcel>
+      </div>
       {filename === "Order Table" ? (
         <Table
           // style={{display: 'none'}}
@@ -104,8 +115,8 @@ const TabelComponents = (props) => {
         </h3>
       )}
       <LoadingTableComponent isLoading={isLoading}></LoadingTableComponent>
-      {/* <Table
-        style={{display: 'none'}}
+      <Table
+        style={{ display: "none" }}
         ref={tableRefAll}
         // rowKey="id"
         pagination={false}
@@ -113,10 +124,10 @@ const TabelComponents = (props) => {
           type: selectionType,
           ...rowSelection,
         }}
-        columns={newColumns}
+        columns={columns}
         dataSource={dataTable}
         {...props}
-      /> */}
+      />
     </>
   );
 };

@@ -10,22 +10,22 @@ import AdminOrder from "../components/AdminOrder";
 
 const NotFoundPage = () => {
   const items = [
+    getItem("Đơn hàng", "order", <BsCart />),
     getItem("Người dùng", "user", <FaRegUser />),
     getItem("Sản phẩm", "product", <SiHomeassistantcommunitystore />),
-    getItem("Đơn hàng", "order", <BsCart />),
   ];
 
   // const rootSubmenuKeys = ['user', 'product']
-  const [keySelected, setKeySelected] = useState("");
+  const [keySelected, setKeySelected] = useState("order");
 
   const renderPage = (key) => {
     switch (key) {
+      case "order":
+        return <AdminOrder />;
       case "user":
         return <AdminUser />;
       case "product":
         return <AdminProduct />;
-      case "order":
-        return <AdminOrder />;
       default:
         return <></>;
     }
@@ -49,6 +49,7 @@ const NotFoundPage = () => {
             boxShadow: "1px 1px 2px #ccc",
             height: "100vh",
           }}
+          defaultSelectedKeys={"order"}
           items={items}
           onClick={handleOnClick}
         />

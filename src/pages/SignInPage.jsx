@@ -23,11 +23,14 @@ import { success, error, warning } from "../components/Message";
 import { Toaster } from "react-hot-toast";
 import ModelQMKComponent from "../components/ModelQMKComponent.jsx";
 import LoadingFullComponents from "../components/LoadingFullComponents.jsx";
+import { IoMdEyeOff } from "react-icons/io";
+import { IoMdEye } from "react-icons/io";
 
 const SignInPage = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [disabled, setDisabled] = useState(false);
+  const [typeInput, setTypeInput] = useState("password");
   const location = useLocation();
 
   const dispatch = useDispatch();
@@ -226,16 +229,35 @@ const SignInPage = () => {
                       size="lg"
                     />
                   </div>
-                  <div className="input">
+                  <div className="input" style={{ position: "relative" }}>
                     <h5 className="text">Password:</h5>
                     <MDBInput
                       className="input-nhap"
                       wrapperClass="mb-4"
                       onChange={handleOnChangePassword}
                       id="formControlLg"
-                      type="password"
+                      type={typeInput}
                       size="lg"
                     />
+                    {typeInput === "password" ? (
+                      <IoMdEyeOff
+                        style={{
+                          position: "absolute",
+                          right: "12px",
+                          fontSize: "20px",
+                        }}
+                        onClick={() => setTypeInput("text")}
+                      />
+                    ) : (
+                      <IoMdEye
+                        style={{
+                          position: "absolute",
+                          right: "12px",
+                          fontSize: "20px",
+                        }}
+                        onClick={() => setTypeInput("password")}
+                      />
+                    )}
                   </div>
                   <div className="footer">
                     <div className="more">

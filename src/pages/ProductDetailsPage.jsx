@@ -17,6 +17,8 @@ import BangSizeQuan from "../public/img/BangSizeQuan.png";
 import LoadingFullComponents from "../components/LoadingFullComponents";
 import LoadingComponents from "../components/LoadingComponents";
 import ModelComponent from "../components/ModelComponent";
+import { random } from "lodash";
+import HeaderComponents from "../components/HeaderComponents";
 
 const ProductDetailsPage = () => {
   const { id: idProduct } = useParams();
@@ -236,7 +238,7 @@ const ProductDetailsPage = () => {
 
   const mutationAddCart = useMutationHook((data) => {
     const { userId, token, ...rest } = data;
-    const res = CartServices.createCart(userId, token, { ...rest }); //rest or {...rest}
+    const res = CartServices.createCart(userId, token, { ...rest });
     return res;
   });
 
@@ -247,40 +249,17 @@ const ProductDetailsPage = () => {
     isError: isErrorAddCart,
   } = mutationAddCart;
 
-  const [amountCart, setAmountCart] = useState(0);
-  const fetchOrderCart = async () => {
-    const res = await CartServices.getCartByUserId(
-      user?.id,
-      user?.access_token
-    );
-    setAmountCart(res?.data?.length);
-  };
+  useEffect(() => {
+    if (isLoadingAddCart) {
+      localStorage.setItem("isCart", JSON.stringify(1));
+    } else {
+      localStorage.setItem("isCart", JSON.stringify(0));
+    }
+  }, [isLoadingAddCart]);
 
   useEffect(() => {
     if (isSuccessAddCart && dataAddCart?.status === "OK") {
       success("Bạn đã thêm vào giỏ hàng thành công");
-      fetchOrderCart();
-      // setTimeout(() => {
-      //   navigate("/order", {
-      //     state: {
-      //       id: user?.id,
-      //       token: user?.access_token,
-      //     },
-      //   });
-      // }, 0);
-      // dispatch(
-      //   addOrderProduct({
-      //     orderItem: {
-      //       name: productDetails?.name,
-      //       amount: amount,
-      //       size: size,
-      //       image: productDetails?.image,
-      //       price: productDetails?.price,
-      //       product: productDetails?._id,
-      //       userId: user?.id,
-      //     },
-      //   })
-      // );
     } else if (isErrorAddCart) {
       error("Bạn đã thêm vào giỏ hàng thất bại");
     }
@@ -294,7 +273,7 @@ const ProductDetailsPage = () => {
 
   const handleCanel = () => {
     setIsModelOpen(false);
-  }
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
