@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import * as OrderServcie from "../services/OrderServices";
@@ -33,30 +34,42 @@ const DetailsOrderPage = () => {
     switch (monthInitial) {
       case "Jan":
         setMonth("01");
+        break;
       case "Feb":
         setMonth("02");
+        break;
       case "Mar":
         setMonth("03");
+        break;
       case "Apr":
         setMonth("04");
+        break;
       case "May":
         setMonth("05");
+        break;
       case "Jun":
         setMonth("06");
+        break;
       case "Jul":
         setMonth("07");
+        break;
       case "Aug":
         setMonth("08");
+        break;
       case "Sep":
         setMonth("09");
+        break;
       case "Oct":
         setMonth("10");
+        break;
       case "Nov":
         setMonth("11");
+        break;
       case "Dec":
         setMonth("12");
+        break;
     }
-  }, []);
+  }, [monthInitial]);
 
   return (
     <>

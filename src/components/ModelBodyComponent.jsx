@@ -146,6 +146,8 @@ const ModelBodyComponent = ({
     { value: "Mập", label: "Mập" },
   ];
 
+  console.log(stateProduct);
+
   return (
     <>
       {/* <LoadingFullComponents isLoading={isLoading} /> */}
@@ -739,7 +741,7 @@ const ModelBodyComponent = ({
             rules={[
               {
                 required: true,
-                message: "Vui lòng nhập độ mập ốm!",
+                message: stateProduct?.size ? "" : "Vui lòng nhập độ mập ốm!",
               },
             ]}
           >

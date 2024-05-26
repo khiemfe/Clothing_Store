@@ -101,6 +101,8 @@ const SignUpPage = () => {
     });
   };
 
+  console.log(email);
+
   const handleCreateOTP = () => {
     mutationOTP.mutate({
       email: email,

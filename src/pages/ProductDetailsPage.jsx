@@ -1,24 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import * as ProducttServcie from "../services/ProductServices";
 import { useLocation, useNavigate } from "react-router-dom";
 import { convertPrice } from "../utils";
 import { useMutationHook } from "../hooks/useMutationHook";
 import * as CartServices from "../services/CartServices";
-import { success, error, warning } from "../components/Message";
+import { success, error } from "../components/Message";
 import LoadingProductDetailsComponent from "../components/LoadingProductDetailsComponent";
 import { Toaster } from "react-hot-toast";
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import { TfiRulerAlt } from "react-icons/tfi";
 import BangSizeAo from "../public/img/BangSIzeAo.png";
 import BangSizeQuan from "../public/img/BangSizeQuan.png";
 import LoadingFullComponents from "../components/LoadingFullComponents";
 import LoadingComponents from "../components/LoadingComponents";
 import ModelComponent from "../components/ModelComponent";
-import { random } from "lodash";
-import HeaderComponents from "../components/HeaderComponents";
 
 const ProductDetailsPage = () => {
   const { id: idProduct } = useParams();

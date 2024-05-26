@@ -99,6 +99,12 @@ const MyOrderPage = () => {
     setOkHuy("");
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleOkModel();
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 1);
   }, []);
@@ -183,14 +189,16 @@ const MyOrderPage = () => {
               )}
         </div>
       </div>
-      <Modal
-        title="Thông báo"
-        open={isModalOpen}
-        onOk={handleOkModel}
-        onCancel={() => setIsModalOpen(false)}
-      >
-        <p className="huy">Bạn có muốn huỷ đơn hàng này?</p>
-      </Modal>
+      <div onKeyDown={handleKeyDown}>
+        <Modal
+          title="Thông báo"
+          open={isModalOpen}
+          onOk={handleOkModel}
+          onCancel={() => setIsModalOpen(false)}
+        >
+          <p className="huy">Bạn có muốn huỷ đơn hàng này?</p>
+        </Modal>
+      </div>
     </>
   );
 };

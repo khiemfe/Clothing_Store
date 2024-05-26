@@ -76,7 +76,7 @@ const TabelComponents = (props) => {
           currentTableRef={tableRefAll.current}
         >
           <Button>
-            <MdDownload style={{ marginRight: "5px" }} /> Export tất cả {text}
+            <MdDownload style={{ marginRight: "5px" }} /> Export tất cả {text}{" "}
             (CSV)
           </Button>
         </DownloadTableExcel>

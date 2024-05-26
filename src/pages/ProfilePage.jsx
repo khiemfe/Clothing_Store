@@ -120,6 +120,7 @@ const ProfilePage = () => {
       base64s.push(base);
       mutationUploadImage.mutate(base64s);
       setAvatar(base);
+      setIsCheckOnChange(true);
     }
   };
 
@@ -344,7 +345,7 @@ const ProfilePage = () => {
               </Form.Group>
               <Form.Group controlId="validationCustom01">
                 <div className="item">
-                  <Form.Label>Name:</Form.Label>
+                  <Form.Label>Tên:</Form.Label>
                   <Form.Control
                     // required
                     value={name}
@@ -358,7 +359,7 @@ const ProfilePage = () => {
 
               <Form.Group controlId="validationCustomUsername">
                 <div className="item" style={{ marginBottom: 10 }}>
-                  <Form.Label>Phone:</Form.Label>
+                  <Form.Label>SĐT:</Form.Label>
                   <InputGroup hasValidation>
                     <Form.Control
                       value={phone}
@@ -381,7 +382,7 @@ const ProfilePage = () => {
               )}
               <Form.Group md="6" controlId="validationCustom03">
                 <div className="item address">
-                  <Form.Label>Address:</Form.Label>
+                  <Form.Label>Địa chỉ:</Form.Label>
                   <div className="selectAddress">
                     <div>
                       <Select
@@ -436,12 +437,12 @@ const ProfilePage = () => {
           {isCheckOnChange ? (
             <div style={{ width: "100%", textAlign: "center", marginTop: 30 }}>
               <span className="submit" onClick={handleUpdate}>
-                Update form
+                Cập nhật
               </span>
             </div>
           ) : (
             <div style={{ width: "100%", textAlign: "center", marginTop: 30 }}>
-              <span className="submit disabled">Update form</span>
+              <span className="submit disabled">Cập nhật</span>
             </div>
           )}
         </Form>
